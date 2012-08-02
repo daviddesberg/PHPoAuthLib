@@ -3,8 +3,8 @@ use OAuth2\Service\Google;
 use OAuth2\Client\Credentials;
 
 // Testing params
-define('GOOGLE_KEY', '15162372208.apps.googleusercontent.com');
-define('GOOGLE_SECRET', 'qPGTrOIprFWUVbFbFNBRlkJn');
+define('GOOGLE_KEY', '');
+define('GOOGLE_SECRET', '');
 
 
 require_once __DIR__ . '/../Artax/Artax.php';

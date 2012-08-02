@@ -4,10 +4,20 @@
  * Released under the MIT license.
  */
 
-namespace OAuth2\Token;
+namespace OAuth\Common\Token;
 
 interface TokenInterface
 {
+    /**
+     * Denotes an unknown end of life time.
+     */
+    const EOL_UNKNOWN = -9001;
+
+    /**
+     * Denotes a token which never expires, should only happen in OAuth1.
+     */
+    const EOL_NEVER_EXPIRES = -9002;
+
     public function __construct($accessToken = null, $refreshToken = null, $lifetime = null, $extraParams = array() );
 
     /**
@@ -15,12 +25,6 @@ interface TokenInterface
      * @return string
      */
     public function getAccessToken();
-
-    /**
-     * @abstract
-     * @return string
-     */
-    public function getRefreshToken();
 
     /**
      * @abstract
@@ -42,12 +46,6 @@ interface TokenInterface
 
     /**
      * @abstract
-     * @param $refreshToken
-     */
-    public function setRefreshToken($refreshToken);
-
-    /**
-     * @abstract
      */
     public function setEndOfLife($endOfLife);
 
@@ -62,6 +60,5 @@ interface TokenInterface
      * @param array $extraParams
      */
     public function setExtraParams(array $extraParams);
-
 
 }

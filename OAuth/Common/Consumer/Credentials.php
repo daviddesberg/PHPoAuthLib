@@ -4,7 +4,7 @@
  * Released under the MIT license.
  */
 
-namespace OAuth2\Client;
+namespace OAuth\Common\Consumer;
 
 class Credentials
 {

@@ -1,32 +1,34 @@
 <?php
-namespace OAuth2\Service;
+/**
+ * @author Lusitanian <alusitanian@gmail.com>
+ * Released under the MIT license.
+ */
 
-use OAuth2\Client\Credentials;
-use OAuth2\DataStore\DataStoreInterface;
-use OAuth2\Exception\InvalidTokenResponseException;
-use OAuth2\Exception\InvalidScopeException;
-use OAuth2\Exception\MissingRefreshTokenException;
-use OAuth2\Token\TokenInterface;
+namespace OAuth\OAuth2\Service;
+
+use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\Common\Exception\InvalidTokenResponseException;
+use OAuth\Common\Exception\InvalidScopeException;
+use OAuth\Common\Exception\MissingRefreshTokenException;
+use OAuth\Common\Token\TokenInterface;
+use OAuth\Common\Service\ServiceInterface;
 
 use Artax\Http\Client;
 use Artax\Http\Response;
 use Artax\Http\StdRequest;
 
-/**
- * @author Lusitanian <alusitanian@gmail.com>
- * Released under the MIT license.
- */
 abstract class AbstractService implements ServiceInterface
 {
     /**
-     * @var \OAuth2\Client\Credentials
+     * @var \OAuth\Common\Consumer\Credentials
      */
     protected $credentials;
 
     /**
-     * @var \OAuth2\DataStore\DataStoreInterface
+     * @var \OAuth\Common\Storage\TokenStorageInterface
      */
-    protected $dataStore;
+    protected $storage;
 
     /**
      * @var array
@@ -34,15 +36,15 @@ abstract class AbstractService implements ServiceInterface
     protected $scopes;
 
     /**
-     * @param \OAuth2\Client\Credentials $credentials
-     * @param \OAuth2\DataStore\DataStoreInterface $dataStore
+     * @param \OAuth\Common\Consumer\Credentials $credentials
+     * @param \OAuth\Common\Storage\TokenStorageInterface $storage
      * @param array $scopes array of scope values
      * @throws InvalidScopeException
      */
-    public function __construct(Credentials $credentials, DataStoreInterface $dataStore, $scopes = [])
+    public function __construct(Credentials $credentials, TokenStorageInterface $storage, $scopes = [])
     {
         $this->credentials = $credentials;
-        $this->dataStore = $dataStore;
+        $this->storage = $storage;
 
         foreach($scopes as $scope)
         {
@@ -101,14 +103,14 @@ abstract class AbstractService implements ServiceInterface
         ];
 
         // Yay three nested method calls
-        $this->dataStore->storeAccessToken( $this->parseAccessTokenResponse( $this->sendTokenRequest($parameters) ) );
+        $this->storage->storeAccessToken( $this->parseAccessTokenResponse( $this->sendTokenRequest($parameters) ) );
     }
 
     /**
      * Refreshes an OAuth2 access token.
      *
-     * @param \OAuth2\Token\TokenInterface $token
-     * @throws \OAuth2\Exception\MissingRefreshTokenException
+     * @param \OAuth\Common\Token\TokenInterface $token
+     * @throws \OAuth\Common\Exception\MissingRefreshTokenException
      */
     public function refreshAccessToken(TokenInterface $token)
     {
@@ -124,10 +126,10 @@ abstract class AbstractService implements ServiceInterface
             'type' => 'web_server',
             'client_id' => $this->credentials->getKey(),
             'client_secret' => $this->credentials->getSecret(),
-            'refresh_token' => $refreshToken(),
+            'refresh_token' => $refreshToken,
         ];
 
-        $this->dataStore->storeAccessToken( $this->parseAccessTokenResponse( $this->sendTokenRequest($parameters) )  );
+        $this->storage->storeAccessToken( $this->parseAccessTokenResponse( $this->sendTokenRequest($parameters) )  );
     }
 
     /**
@@ -138,9 +140,10 @@ abstract class AbstractService implements ServiceInterface
      */
     protected function sendTokenRequest(array $parameters)
     {
-        // Add the scope and common params to the request
-       // $parameters['scope'] = implode(' ', $this->scopes);
-        //$parameters['response_type'] = '';
+        /*
+        $parameters['scope'] = implode(' ', $this->scopes);
+        $parameters['response_type'] = '';
+        */
 
         // Build and send the HTTP request
         $request = new StdRequest( $this->getAccessTokenEndpoint(), 'POST', [], http_build_query($parameters), [ 'Content-type' => 'application/x-www-form-urlencoded', 'Host' => parse_url($this->getAccessTokenEndpoint(), PHP_URL_HOST)] );
@@ -160,13 +163,5 @@ abstract class AbstractService implements ServiceInterface
     {
         return true;
     }
-
-    /**
-     * Parses the access token response and returns a TokenInterface.
-     *
-     * @return \OAuth2\Token\TokenInterface
-     * @param \Artax\Http\Response $response
-     */
-    abstract protected function parseAccessTokenResponse(Response $response);
 
 }

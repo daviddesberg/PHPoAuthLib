@@ -4,15 +4,10 @@
  * Released under the MIT license.
  */
 
-namespace OAuth2\Token;
+namespace OAuth\OAuth2\Token;
 
-class StdToken implements TokenInterface
+class StdOAuth2Token implements TokenInterface
 {
-    /**
-     * Defines an unknown end of life time.
-     */
-    const UNKNOWN_EOL = -1001;
-
     /**
      * @var string
      */

@@ -1,7 +1,7 @@
 <?php
-namespace OAuth2\Service;
-use OAuth2\Token\GoogleToken;
-use OAuth2\Exception\InvalidTokenResponseException;
+namespace OAuth\OAuth2\Service;
+use OAuth\OAuth2\Token\StdOAuth2Token;
+use OAuth\Common\Exception\InvalidTokenResponseException;
 use Artax\Http\Response;
 
 /**
@@ -40,7 +40,7 @@ class Google extends AbstractService
             throw new InvalidTokenResponseException('Unable to parse response.');
         }
 
-        $token = new GoogleToken();
+        $token = new StdOAuth2Token();
         $token->setAccessToken( $data['access_token'] );
         $token->setLifetime( $data['expires_in'] );
 

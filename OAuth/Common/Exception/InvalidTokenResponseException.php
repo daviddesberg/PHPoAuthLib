@@ -1,5 +1,5 @@
 <?php
-namespace OAuth2\Exception;
+namespace OAuth\Common\Exception;
 
 class InvalidTokenResponseException extends Exception
 {

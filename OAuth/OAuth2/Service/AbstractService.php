@@ -68,7 +68,7 @@ abstract class AbstractService implements ServiceInterface
         $parameters = array_merge($additionalParameters,
             [
                 'type' => 'web_server',
-                'client_id' => $this->credentials->getKey(),
+                'client_id' => $this->credentials->getConsumerId(),
                 'redirect_uri' => $this->credentials->getCallbackUrl(),
                 'response_type' => 'code',
             ]
@@ -88,6 +88,7 @@ abstract class AbstractService implements ServiceInterface
      * Retrieves and stores the OAuth2 access token after a successful authorization.
      *
      * @param string $code The access code from the callback.
+     * @return TokenInterface $token
      * @throws InvalidTokenResponseException
      */
     public function requestAccessToken($code)
@@ -95,15 +96,18 @@ abstract class AbstractService implements ServiceInterface
         $parameters =
         [
             'code' => $code,
-            'client_id' => $this->credentials->getKey(),
-            'client_secret' => $this->credentials->getSecret(),
+            'client_id' => $this->credentials->getConsumerId(),
+            'client_secret' => $this->credentials->getConsumerSecret(),
             'redirect_uri' => $this->credentials->getCallbackUrl(),
             'grant_type' => 'authorization_code',
 
         ];
 
         // Yay three nested method calls
-        $this->storage->storeAccessToken( $this->parseAccessTokenResponse( $this->sendTokenRequest($parameters) ) );
+        $token = $this->parseAccessTokenResponse( $this->sendTokenRequest($parameters) );
+        $this->storage->storeAccessToken( $token );
+
+        return $token;
     }
 
     /**
@@ -124,8 +128,8 @@ abstract class AbstractService implements ServiceInterface
         [
             'grant_type' => 'refresh_token',
             'type' => 'web_server',
-            'client_id' => $this->credentials->getKey(),
-            'client_secret' => $this->credentials->getSecret(),
+            'client_id' => $this->credentials->getConsumerId(),
+            'client_secret' => $this->credentials->getConsumerSecret(),
             'refresh_token' => $refreshToken,
         ];
 
@@ -140,13 +144,10 @@ abstract class AbstractService implements ServiceInterface
      */
     protected function sendTokenRequest(array $parameters)
     {
-        /*
-        $parameters['scope'] = implode(' ', $this->scopes);
-        $parameters['response_type'] = '';
-        */
-
         // Build and send the HTTP request
-        $request = new StdRequest( $this->getAccessTokenEndpoint(), 'POST', [], http_build_query($parameters), [ 'Content-type' => 'application/x-www-form-urlencoded', 'Host' => parse_url($this->getAccessTokenEndpoint(), PHP_URL_HOST)] );
+        $par = http_build_query($parameters);
+        $len = strlen($par);
+        $request = new StdRequest( $this->getAccessTokenEndpoint(), 'POST', ['Content-length' => $len], $par );
         $client = new Client();
 
         // Retrieve the response
@@ -164,4 +165,12 @@ abstract class AbstractService implements ServiceInterface
         return true;
     }
 
+    /**
+     * Parses the access token response and returns a TokenInterface.
+     *
+     * @abstract
+     * @return \OAuth\Common\Token\TokenInterface
+     * @param \Artax\Http\Response $response
+     */
+    abstract protected function parseAccessTokenResponse(Response $response);
 }

@@ -20,10 +20,11 @@ interface ServiceInterface
     public function __construct(Credentials $credentials, TokenStorageInterface $storage, $scopes = []);
 
     /**
-     * Retrieves and stores the OAuth2 access token after a successful authorization.
+     * Retrieves and stores/returns the OAuth2 access token after a successful authorization.
      *
      * @param string $code The access code from the callback.
-     * @abstract
+     * @return TokenInterface $token
+     * @throws InvalidTokenResponseException
      */
     public function requestAccessToken($code);
 
@@ -47,13 +48,4 @@ interface ServiceInterface
      * @return string
      */
     public function getAccessTokenEndpoint();
-
-    /**
-     * Parses the access token response and returns a TokenInterface.
-     *
-     * @abstract
-     * @return \OAuth\Common\Token\TokenInterface
-     * @param \Artax\Http\Response $response
-     */
-    function parseAccessTokenResponse(Response $response);
 }

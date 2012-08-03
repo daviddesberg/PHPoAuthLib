@@ -11,12 +11,12 @@ class Credentials
     /**
      * @var string
      */
-    protected $key;
+    protected $consumerId;
 
     /**
      * @var string
      */
-    protected $secret;
+    protected $consumerSecret;
 
     /**
      * @var string
@@ -25,14 +25,14 @@ class Credentials
 
 
     /**
-     * @param string $key
-     * @param string $secret
+     * @param string $consumerId
+     * @param string $consumerSecret
      * @param string $callbackUrl
      */
-    public function __construct($key, $secret, $callbackUrl)
+    public function __construct($consumerId, $consumerSecret, $callbackUrl)
     {
-        $this->key = $key;
-        $this->secret = $secret;
+        $this->consumerId = $consumerId;
+        $this->consumerSecret = $consumerSecret;
         $this->callbackUrl = $callbackUrl;
     }
 
@@ -47,16 +47,16 @@ class Credentials
     /**
      * @return string
      */
-    public function getKey()
+    public function getConsumerId()
     {
-        return $this->key;
+        return $this->consumerId;
     }
 
     /**
      * @return string
      */
-    public function getSecret()
+    public function getConsumerSecret()
     {
-        return $this->secret;
+        return $this->consumerSecret;
     }
 }

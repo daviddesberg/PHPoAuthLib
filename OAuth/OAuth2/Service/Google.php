@@ -19,12 +19,12 @@ class Google extends AbstractService
 
     public function getAuthorizationEndpoint()
     {
-        return 'https://accounts.google.com/o/oauth2/auth';
+        return 'https://accounts.google.com:443/o/oauth2/auth';
     }
 
     public function getAccessTokenEndpoint()
     {
-        return 'https://accounts.google.com/o/oauth2/token';
+        return 'https://accounts.google.com:443/o/oauth2/token';
     }
 
     protected function parseAccessTokenResponse(Response $response)

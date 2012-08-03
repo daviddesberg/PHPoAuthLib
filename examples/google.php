@@ -1,9 +1,10 @@
 <?php
-use OAuth2\Service\Google;
-use OAuth2\Client\Credentials;
+use OAuth\OAuth2\Service\Google;
+use OAuth\Common\Storage\Null;
+use OAuth\Common\Consumer\Credentials;
 
 // Testing params
-define('GOOGLE_KEY', '');
+define('GOOGLE_CLIENT', '');
 define('GOOGLE_SECRET', '');
 
 
@@ -15,7 +16,7 @@ function get_own_url()
     $s = empty($_SERVER['HTTPS']) ? '' : ($_SERVER['HTTPS'] == 'on') ? 's' : '';
     $protocol = strleft(strtolower($_SERVER["SERVER_PROTOCOL"]), '/').$s;
     $port = ( $_SERVER['SERVER_PORT'] == '80' || $_SERVER['SERVER_PORT'] == '443' ) ? '' : (':' . $_SERVER['SERVER_PORT'] );
-    return $protocol . '://' . $_SERVER['SERVER_NAME'] . $port . $_SERVER['REQUEST_URI'];
+    return $protocol . '://' . $_SERVER['SERVER_NAME'] . $port . $_SERVER['SCRIPT_NAME'];
 }
 
 function strleft($s1, $s2) { return substr($s1, 0, strpos($s1, $s2)); }
@@ -32,14 +33,13 @@ spl_autoload_register
 );
 
 
-$sessionStore = new OAuth2\DataStore\Session();
-$credentials = new Credentials(GOOGLE_KEY, GOOGLE_SECRET, 'http://localhost/temp/oauth/examples/google.php' );
-$googleService = new Google($credentials, $sessionStore, [ Google::SCOPE_EMAIL, Google::SCOPE_PROFILE ]);
+$storage = new Null(); //lolololol new Null
+$credentials = new Credentials(GOOGLE_CLIENT, GOOGLE_SECRET, get_own_url() );
+$googleService = new Google($credentials, $storage, [ Google::SCOPE_EMAIL, Google::SCOPE_PROFILE ]);
 
 // This was a callback request from google
 if( !empty( $_GET['code'] ) ) {
     $googleService->requestAccessToken( $_GET['code'] );
-    $token = $sessionStore->retrieveAccessToken();
     var_dump($token);
 } elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
     $url = $googleService->getAuthorizationUrl();

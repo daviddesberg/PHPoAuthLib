@@ -4,19 +4,18 @@
  * Released under the MIT license.
  */
 
-namespace OAuth\OAuth2\Token;
+namespace OAuth\OAuth1\Token;
 
-class StdOAuth2Token implements TokenInterface
+/**
+ * Standard OAuth1 token implementation.
+ * @todo make an abstract base token which combines common functionality between oauth2/oauth1 tokens
+ */
+class StdOAuth1Token implements TokenInterface
 {
     /**
      * @var string
      */
     protected $accessToken;
-
-    /**
-     * @var string
-     */
-    protected $refreshToken;
 
     /**
      * @var int
@@ -49,14 +48,6 @@ class StdOAuth2Token implements TokenInterface
     public function getAccessToken()
     {
         return $this->accessToken;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRefreshToken()
-    {
-        return $this->refreshToken;
     }
 
     /**
@@ -104,23 +95,6 @@ class StdOAuth2Token implements TokenInterface
      */
     public function setLifetime($lifetime)
     {
-        /**
-         * @todo verify that this is the correct behavior
-         */
-        if( 0 === $lifetime || static::EOL_NEVER_EXPIRES === $lifetime ) {
-            $this->endOfLife = static::EOL_NEVER_EXPIRES;
-        } elseif ( null !== $lifetime )  {
-            $this->endOfLife = intval($lifetime) + time();
-        } else {
-            $this->endOfLife = static::UNKNOWN_EOL;
-        }
-    }
-
-    /**
-     * @param string $refreshToken
-     */
-    public function setRefreshToken($refreshToken)
-    {
-        $this->refreshToken = $refreshToken;
+        $this->endOfLife = intval($lifetime) + time();
     }
 }

@@ -124,7 +124,11 @@ class Uri implements UriInterface
      */
     protected function setProtocol($protocol)
     {
-        $this->protocol = strtolower(substr($protocol, 0, strpos($protocol, '/')));
+        if( false !== ($slashPos =  strpos($protocol, '/') ) ) {
+            $this->protocol = strtolower( substr($protocol, 0, $slashPos) );
+        } else {
+            $this->protocol = $protocol;
+        }
     }
 
     /**
@@ -156,9 +160,11 @@ class Uri implements UriInterface
      */
     protected function getPort()
     {
-        if (!in_array($this->port, array(80, 443))) {
+        if (!in_array( $this->port, [80, 443] ) ) {
             return ':' . $this->port;
         }
+
+        return '';
     }
 
     /**

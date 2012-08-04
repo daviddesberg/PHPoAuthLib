@@ -5,18 +5,19 @@ class UriTest extends PHPUnit_Framework_TestCase
 {
     public function getDefaultsForInstance()
     {
-        return array(
+        return
+        [
             'domain'    => 'example.com',
             'path'      => '/some/nested/path',
             'protocol'  => 'HTTP/1.1',
             'port'      => 80,
             'https'     => null,
-        );
+        ];
     }
 
     public function testGetRelativeUriWithSlashesAroundPath()
     {
-        $defaults = $this->getDefaultsForInstance();
+        $default = $this->getDefaultsForInstance();
 
         $uri = new Uri(
             $default['domain'],
@@ -31,7 +32,7 @@ class UriTest extends PHPUnit_Framework_TestCase
 
     public function testGetRelativeUriWithOnlyASlash()
     {
-        $defaults = $this->getDefaultsForInstance();
+        $default = $this->getDefaultsForInstance();
 
         $uri = new Uri(
             $default['domain'],
@@ -46,7 +47,7 @@ class UriTest extends PHPUnit_Framework_TestCase
 
     public function testGetAbsoluteUriWithHttps()
     {
-        $defaults = $this->getDefaultsForInstance();
+        $default = $this->getDefaultsForInstance();
 
         $uri = new Uri(
             $default['domain'],
@@ -61,7 +62,7 @@ class UriTest extends PHPUnit_Framework_TestCase
 
     public function testGetAbsoluteUriWithNonStandardPort()
     {
-        $defaults = $this->getDefaultsForInstance();
+        $default = $this->getDefaultsForInstance();
 
         $uri = new Uri(
             $default['domain'],
@@ -76,19 +77,19 @@ class UriTest extends PHPUnit_Framework_TestCase
 
     public function testGetAbsoluteUriWithOnlyRequiredParameters()
     {
-        $defaults = $this->getDefaultsForInstance();
+        $default = $this->getDefaultsForInstance();
 
         $uri = new Uri(
             $default['domain'],
             $default['path']
         );
 
-        $this->assertEquals('http://example.com:81/some/nested/path', $uri->getAbsoluteUri());
+        $this->assertEquals('http://example.com/some/nested/path', $uri->getAbsoluteUri());
     }
 
     public function testGetAbsoluteUriWithAllOptionalParametersDifferent()
     {
-        $defaults = $this->getDefaultsForInstance();
+        $default = $this->getDefaultsForInstance();
 
         $uri = new Uri(
             $default['domain'],

@@ -13,7 +13,7 @@
 /**
  * Bootstrap the library
  */
-require_once '/../OAuth/bootstrap.php';
+require_once '/../lib/OAuth/bootstrap.php';
 
 /**
  * Setup error reporting

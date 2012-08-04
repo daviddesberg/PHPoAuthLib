@@ -25,6 +25,7 @@ An example for logging in with Google is included in examples/google.php
 Authorizing a user with any service is very concise:
 
 ```php
+<?php
 $storage = new Null();
 $credentials = new Credentials(GOOGLE_CLIENT, GOOGLE_SECRET, get_own_url() );
 $googleService = new Google(new OAuth\Common\Consumer\Credentials('yourClient', 'yourSecret', 'yourCallBackUrl'), new OAuth\Common\Http\StreamClient(), new OAuth\Common\Storage\Null(), [ Google::SCOPE_EMAIL, Google::SCOPE_PROFILE ]);
@@ -32,6 +33,7 @@ header('Location: ' . $googleService->getAuthorizationUrl());
 ```
 To handle the callback and obtain the token:
 ```php
+<?php
 $token = $googleService->requestAccessToken( $_GET['code'] ); // note that the token will also be passed to the `TokenStorageInterface` passed to the service
 // do what you want with the token -- a concise API for making calls to the service's API will be added soon, making it easy to get user information, etc.
 ```

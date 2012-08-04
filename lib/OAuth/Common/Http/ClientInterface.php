@@ -14,11 +14,11 @@ interface ClientInterface
      * They should return, in string form, the response body and throw an exception on error.
      *
      * @abstract
-     * @param string $endpoint
+     * @param UriInterface $endpoint
      * @param array $params
      * @param array $extraHeaders
      * @return string
      * @throws TokenResponseException
      */
-    public function retrieveResponse($endpoint, array $params, array $extraHeaders = []);
+    public function retrieveResponse(UriInterface $endpoint, array $params, array $extraHeaders = []);
 }

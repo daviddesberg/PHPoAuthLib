@@ -15,13 +15,13 @@ class StreamClient implements ClientInterface
      * Any implementing HTTP providers should send a POST request to the provided endpoint with the parameters.
      * They should return, in string form, the response body and throw an exception on error.
      *
-     * @param string $endpoint
+     * @param UriInterface $endpoint
      * @param array $params
      * @param array $extraHeaders
      * @throws TokenResponseException
      * @return string
      */
-    public function retrieveResponse($endpoint, array $params, array $extraHeaders = [])
+    public function retrieveResponse(UriInterface $endpoint, array $params, array $extraHeaders = [])
     {
         // Normalize headers
         array_walk( $extraHeaders,
@@ -49,7 +49,7 @@ class StreamClient implements ClientInterface
         $streamContext = stream_context_create( [ 'http' => [ 'method' => 'POST', 'content' => $requestBody, 'header' => $headerArray ] ] );
 
         // Get the result and resultant status code from the wonderful magical PHP var $http_response_header
-        $result = @file_get_contents($endpoint, false, $streamContext); // the "@" operator makes me a sad panda
+        $result = @file_get_contents($endpoint->getAbsoluteUri(), false, $streamContext); // the "@" operator makes me a sad panda
         $statusCode = intval( explode(' ', $http_response_header[0])[1] );
 
         if( $statusCode >= 400 ) {

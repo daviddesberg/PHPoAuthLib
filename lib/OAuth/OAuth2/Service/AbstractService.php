@@ -15,10 +15,6 @@ use OAuth\Common\Service\Exception\MissingRefreshTokenException;
 use OAuth\Common\Token\TokenInterface;
 use OAuth\Common\Service\ServiceInterface;
 
-use Artax\Http\Client;
-use Artax\Http\Response;
-use Artax\Http\StdRequest;
-
 abstract class AbstractService implements ServiceInterface
 {
     /**

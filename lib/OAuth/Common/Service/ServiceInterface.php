@@ -8,7 +8,7 @@ namespace OAuth\Common\Service;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\ClientInterface;
-use Artax\Http\Response;
+use OAuth\Common\Http\UriInterface;
 
 /**
  * Defines the common methods across any OAuth service, be it version 1 or 2.
@@ -39,19 +39,19 @@ interface ServiceInterface
      *
      * @abstract
      * @param array $additionalParameters
-     * @return string
+     * @return UriInterface
      */
     public function getAuthorizationUrl( array $additionalParameters = [] );
 
     /**
      * @abstract
-     * @return string
+     * @return UriInterface
      */
     public function getAuthorizationEndpoint();
 
     /**
      * @abstract
-     * @return string
+     * @return UriInterface
      */
     public function getAccessTokenEndpoint();
 }

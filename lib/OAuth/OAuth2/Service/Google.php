@@ -7,6 +7,7 @@
 namespace OAuth\OAuth2\Service;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
+use OAuth\Common\Http\Uri;
 
 class Google extends AbstractService
 {
@@ -19,12 +20,12 @@ class Google extends AbstractService
 
     public function getAuthorizationEndpoint()
     {
-        return 'https://accounts.google.com:443/o/oauth2/auth';
+        return new Uri('accounts.google.com', '/o/oauth2/auth', 'http', 443, true);
     }
 
     public function getAccessTokenEndpoint()
     {
-        return 'https://accounts.google.com:443/o/oauth2/token';
+        return new Uri('accounts.google.com', '/o/oauth2/token', 'http', 443, true);
     }
 
     protected function parseAccessTokenResponse($responseBody)

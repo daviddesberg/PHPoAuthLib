@@ -1,6 +1,7 @@
 <?php
 /**
  * @author Lusitanian <alusitanian@gmail.com>
+ * @author Pieter Hordijk <info@pieterhordijk.com>
  * Released under the MIT license.
  */
 
@@ -8,9 +9,7 @@ use OAuth\OAuth2\Service\Google;
 use OAuth\Common\Storage\Null;
 use OAuth\Common\Consumer\Credentials;
 
-// Testing params
-define('GOOGLE_CLIENT', '');
-define('GOOGLE_SECRET', '');
+require_once __DIR__ . '/bootstrap.php';
 
 // public domain code that i'm using because of how lazy i was when trying to test this
 function get_own_url()
@@ -23,20 +22,8 @@ function get_own_url()
 
 function strleft($s1, $s2) { return substr($s1, 0, strpos($s1, $s2)); }
 
-spl_autoload_register
-(
-    function ($class)
-    {
-        $class = ltrim($class, '\\');
-        preg_match('/^(.+)?([^\\\\]+)$/U', $class, $match);
-        $class = str_replace('\\', '/', $match[1]) . str_replace(['\\', '_'], '/', $match[2]) . '.php';
-        require_once __DIR__ . '/../' .$class;
-    }
-);
-
-
 $storage = new Null();
-$credentials = new Credentials(GOOGLE_CLIENT, GOOGLE_SECRET, get_own_url() );
+$credentials = new Credentials('xxx', 'xxx', get_own_url() );
 $httpClient = new OAuth\Common\Http\StreamClient();
 $googleService = new Google($credentials, $httpClient, $storage, [ Google::SCOPE_EMAIL, Google::SCOPE_PROFILE ]);
 

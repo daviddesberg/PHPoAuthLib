@@ -8,9 +8,10 @@ namespace OAuth\OAuth2\Service;
 
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Exception\InvalidTokenResponseException;
-use OAuth\Common\Exception\InvalidScopeException;
-use OAuth\Common\Exception\MissingRefreshTokenException;
+use OAuth\Common\Http\Exception\TokenResponseException;
+use OAuth\Common\Http\ClientInterface;
+use OAuth\Common\Service\Exception\InvalidScopeException;
+use OAuth\Common\Service\Exception\MissingRefreshTokenException;
 use OAuth\Common\Token\TokenInterface;
 use OAuth\Common\Service\ServiceInterface;
 
@@ -36,14 +37,21 @@ abstract class AbstractService implements ServiceInterface
     protected $scopes;
 
     /**
+     * @var \OAuth\Common\Http\ClientInterface
+     */
+    protected $httpClient;
+
+    /**
      * @param \OAuth\Common\Consumer\Credentials $credentials
+     * @param \OAuth\Common\Http\ClientInterface $httpClient
      * @param \OAuth\Common\Storage\TokenStorageInterface $storage
-     * @param array $scopes array of scope values
+     * @param array $scopes
      * @throws InvalidScopeException
      */
-    public function __construct(Credentials $credentials, TokenStorageInterface $storage, $scopes = [])
+    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = [])
     {
         $this->credentials = $credentials;
+        $this->httpClient = $httpClient;
         $this->storage = $storage;
 
         foreach($scopes as $scope)
@@ -89,7 +97,7 @@ abstract class AbstractService implements ServiceInterface
      *
      * @param string $code The access code from the callback.
      * @return TokenInterface $token
-     * @throws InvalidTokenResponseException
+     * @throws TokenResponseException
      */
     public function requestAccessToken($code)
     {
@@ -103,8 +111,8 @@ abstract class AbstractService implements ServiceInterface
 
         ];
 
-        // Yay three nested method calls
-        $token = $this->parseAccessTokenResponse( $this->sendTokenRequest($parameters) );
+        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $parameters);
+        $token = $this->parseAccessTokenResponse( $responseBody );
         $this->storage->storeAccessToken( $token );
 
         return $token;
@@ -114,7 +122,8 @@ abstract class AbstractService implements ServiceInterface
      * Refreshes an OAuth2 access token.
      *
      * @param \OAuth\Common\Token\TokenInterface $token
-     * @throws \OAuth\Common\Exception\MissingRefreshTokenException
+     * @return \OAuth\Common\Token\TokenInterface $token
+     * @throws \OAuth\Common\Service\Exception\MissingRefreshTokenException
      */
     public function refreshAccessToken(TokenInterface $token)
     {
@@ -133,25 +142,11 @@ abstract class AbstractService implements ServiceInterface
             'refresh_token' => $refreshToken,
         ];
 
-        $this->storage->storeAccessToken( $this->parseAccessTokenResponse( $this->sendTokenRequest($parameters) )  );
-    }
+        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $parameters);
+        $token = $this->parseAccessTokenResponse( $responseBody );
+        $this->storage->storeAccessToken( $token );
 
-    /**
-     * Sends a request to the token endpoint.
-     *
-     * @param $parameters
-     * @return \Artax\Http\Response
-     */
-    protected function sendTokenRequest(array $parameters)
-    {
-        // Build and send the HTTP request
-        $par = http_build_query($parameters);
-        $len = strlen($par);
-        $request = new StdRequest( $this->getAccessTokenEndpoint(), 'POST', ['Content-length' => $len], $par );
-        $client = new Client();
-
-        // Retrieve the response
-        return $client->request($request);
+        return $token;
     }
 
     /**
@@ -170,7 +165,7 @@ abstract class AbstractService implements ServiceInterface
      *
      * @abstract
      * @return \OAuth\Common\Token\TokenInterface
-     * @param \Artax\Http\Response $response
+     * @param string $responseBody
      */
-    abstract protected function parseAccessTokenResponse(Response $response);
+    abstract protected function parseAccessTokenResponse($responseBody);
 }

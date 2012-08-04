@@ -5,7 +5,7 @@
  */
 
 namespace OAuth\Common\Storage;
-use OAuth\Common\Exception\TokenNotFoundException;
+use OAuth\Common\Storage\Exception\TokenNotFoundException;
 use OAuth\Common\Token\TokenInterface;
 
 /**
@@ -23,6 +23,7 @@ class Null implements TokenStorageInterface
 
     /**
      * @return \OAuth\Common\Token\TokenInterface
+     * @throws TokenNotFoundException
      */
     public function retrieveAccessToken()
     {

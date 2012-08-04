@@ -7,7 +7,7 @@
 namespace OAuth\Common\Storage;
 
 use OAuth\Common\Token\TokenInterface;
-use OAuth\Common\Exception\TokenNotFoundException;
+use OAuth\Common\Storage\Exception\TokenNotFoundException;
 
 class Session implements StorageInterface
 {

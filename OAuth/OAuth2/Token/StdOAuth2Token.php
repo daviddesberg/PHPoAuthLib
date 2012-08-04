@@ -112,7 +112,7 @@ class StdOAuth2Token implements TokenInterface
         } elseif ( null !== $lifetime )  {
             $this->endOfLife = intval($lifetime) + time();
         } else {
-            $this->endOfLife = static::UNKNOWN_EOL;
+            $this->endOfLife = static::EOL_UNKNOWN;
         }
     }
 

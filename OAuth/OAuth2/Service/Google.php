@@ -1,8 +1,7 @@
 <?php
 namespace OAuth\OAuth2\Service;
 use OAuth\OAuth2\Token\StdOAuth2Token;
-use OAuth\Common\Exception\InvalidTokenResponseException;
-use Artax\Http\Response;
+use OAuth\Common\Http\Exception\TokenResponseException;
 
 /**
  * @author Lusitanian <alusitanian@gmail.com>
@@ -12,7 +11,7 @@ class Google extends AbstractService
 {
     /**
      * Defined scopes
-     * @todo complete this list
+     * @todo complete this list (place in array?)
      */
     const SCOPE_EMAIL = 'https://www.googleapis.com/auth/userinfo.email';
     CONST SCOPE_PROFILE = 'https://www.googleapis.com/auth/userinfo.profile';
@@ -27,17 +26,12 @@ class Google extends AbstractService
         return 'https://accounts.google.com:443/o/oauth2/token';
     }
 
-    protected function parseAccessTokenResponse(Response $response)
+    protected function parseAccessTokenResponse($responseBody)
     {
-        if( $response->getStatusCode() >= 400 ) {
-            throw new InvalidTokenResponseException( $response->getStatusCode() . ': ' . $response->getStatusDescription() );
-        }
-
-
-        $data = json_decode( $response->getBody(), true );
+        $data = json_decode( $responseBody, true );
 
         if( null === $data || !is_array($data) ) {
-            throw new InvalidTokenResponseException('Unable to parse response.');
+            throw new TokenResponseException('Unable to parse response.');
         }
 
         $token = new StdOAuth2Token();

@@ -7,9 +7,6 @@ use OAuth\Common\Consumer\Credentials;
 define('GOOGLE_CLIENT', '');
 define('GOOGLE_SECRET', '');
 
-
-require_once __DIR__ . '/../Artax/Artax.php';
-
 // public domain code that i'm using because of how lazy i was when trying to test this
 function get_own_url()
 {
@@ -35,11 +32,12 @@ spl_autoload_register
 
 $storage = new Null(); //lolololol new Null
 $credentials = new Credentials(GOOGLE_CLIENT, GOOGLE_SECRET, get_own_url() );
-$googleService = new Google($credentials, $storage, [ Google::SCOPE_EMAIL, Google::SCOPE_PROFILE ]);
+$httpClient = new OAuth\Common\Http\StreamClient();
+$googleService = new Google($credentials, $httpClient, $storage, [ Google::SCOPE_EMAIL, Google::SCOPE_PROFILE ]);
 
 // This was a callback request from google
 if( !empty( $_GET['code'] ) ) {
-    $googleService->requestAccessToken( $_GET['code'] );
+    $token = $googleService->requestAccessToken( $_GET['code'] );
     var_dump($token);
 } elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
     $url = $googleService->getAuthorizationUrl();

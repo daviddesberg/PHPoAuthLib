@@ -1,12 +1,13 @@
 <?php
-namespace OAuth\OAuth2\Service;
-use OAuth\OAuth2\Token\StdOAuth2Token;
-use OAuth\Common\Http\Exception\TokenResponseException;
-
 /**
  * @author Lusitanian <alusitanian@gmail.com>
  * Released under the MIT license.
  */
+
+namespace OAuth\OAuth2\Service;
+use OAuth\OAuth2\Token\StdOAuth2Token;
+use OAuth\Common\Http\Exception\TokenResponseException;
+
 class Google extends AbstractService
 {
     /**

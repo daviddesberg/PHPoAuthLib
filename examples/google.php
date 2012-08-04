@@ -1,4 +1,9 @@
 <?php
+/**
+ * @author Lusitanian <alusitanian@gmail.com>
+ * Released under the MIT license.
+ */
+
 use OAuth\OAuth2\Service\Google;
 use OAuth\Common\Storage\Null;
 use OAuth\Common\Consumer\Credentials;
@@ -30,13 +35,13 @@ spl_autoload_register
 );
 
 
-$storage = new Null(); //lolololol new Null
+$storage = new Null();
 $credentials = new Credentials(GOOGLE_CLIENT, GOOGLE_SECRET, get_own_url() );
 $httpClient = new OAuth\Common\Http\StreamClient();
 $googleService = new Google($credentials, $httpClient, $storage, [ Google::SCOPE_EMAIL, Google::SCOPE_PROFILE ]);
 
-// This was a callback request from google
 if( !empty( $_GET['code'] ) ) {
+    // This was a callback request from google, get and display the token
     $token = $googleService->requestAccessToken( $_GET['code'] );
     var_dump($token);
 } elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {

@@ -22,9 +22,12 @@ Included service implementations
    - BitLy
  - more to come!
 
+Examples
+--------
+Examples of basic usage are located in the examples/ directory.
+
 Usage
 ------
-An example for logging in with Google is included in examples/google.php
 Authorizing a user with any service is very concise:
 
 ```php

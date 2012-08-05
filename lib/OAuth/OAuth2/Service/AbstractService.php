@@ -117,21 +117,18 @@ abstract class AbstractService implements ServiceInterface
     }
 
     /**
-     * Sends an authenticated request to the given endpoint using either the stored token or the given token.
+     * Sends an authenticated request to the given endpoint using stored token.
      *
      * @param UriInterface $uri
      * @param array $bodyParams
      * @param string $method
      * @param array $extraHeaders
-     * @param \OAuth\Common\Token\TokenInterface $token
      * @return string
      * @throws \OAuth\Common\Token\Exception\ExpiredTokenException
      */
-    public function sendAuthenticatedRequest(UriInterface $uri, array $bodyParams, $method = 'POST', $extraHeaders = [], TokenInterface $token = null)
+    public function sendAuthenticatedRequest(UriInterface $uri, array $bodyParams, $method = 'POST', $extraHeaders = [])
     {
-        if( null === $token ) {
-            $token = $this->storage->retrieveAccessToken();
-        }
+        $token = $this->storage->retrieveAccessToken();
 
         if( time() > $token->getEndOfLife() ) {
             throw new ExpiredTokenException('Token expired on ' . date('m/d/Y', $token->getEndOfLife()) . ' at ' . date('h:i:s A', $token->getEndOfLife()) );

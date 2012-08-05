@@ -57,16 +57,15 @@ interface ServiceInterface
     public function getAccessTokenEndpoint();
 
     /**
-     * Sends an authenticated request to the given endpoint using either the stored token or the given token.
+     * Sends an authenticated request to the given endpoint using stored token.
      *
      * @abstract
      * @param UriInterface $uri
      * @param array $bodyParams
      * @param string $method
      * @param array $extraHeaders
-     * @param \OAuth\Common\Token\TokenInterface $token
      * @return string
      * @throws \OAuth\Common\Token\Exception\ExpiredTokenException
      */
-    public function sendAuthenticatedRequest(UriInterface $uri, array $bodyParams, $method = 'POST', $extraHeaders = [], TokenInterface $token = null);
+    public function sendAuthenticatedRequest(UriInterface $uri, array $bodyParams, $method = 'POST', $extraHeaders = []);
 }

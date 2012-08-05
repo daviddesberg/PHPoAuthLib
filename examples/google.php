@@ -10,7 +10,7 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 use OAuth\OAuth2\Service\Google;
-use OAuth\Common\Storage\Session;
+use OAuth\Common\Storage\Memory;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Http\Uri;
 
@@ -19,16 +19,28 @@ use OAuth\Common\Http\Uri;
  */
 require_once __DIR__ . '/bootstrap.php';
 
-$storage = new Session();
-$credentials = new Credentials('xxx', 'xxx', $currentUri->getAbsoluteUri());
+// In-memory storage
+$storage = new Memory();
+
+// Replace 'xxx' with your client id and 'yyy' with your secret
+$credentials = new Credentials('xxx', 'yyy', $currentUri->getAbsoluteUri());
+
+// Use the StreamClient http client
 $httpClient = new OAuth\Common\Http\StreamClient();
+
+// Instantiate the google service using the credentials, http client and storage mechanism for the token
 $googleService = new Google($credentials, $httpClient, $storage, [ Google::SCOPE_USERINFO_EMAIL, Google::SCOPE_USERINFO_PROFILE ]);
 
 if( !empty( $_GET['code'] ) ) {
-    // This was a callback request from google, get the token and send a request with it
+    // This was a callback request from google, get the token
     $googleService->requestAccessToken( $_GET['code'] );
+
+    // Send a request with it
     $result = json_decode( $googleService->sendAuthenticatedRequest( new Uri('https://www.googleapis.com/oauth2/v1/userinfo'), [], 'GET' ), true );
+
+    // Show some of the resultant data
     echo 'Your unique google user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
+
 } elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
     $url = $googleService->getAuthorizationUrl();
     header('Location: ' . $url);

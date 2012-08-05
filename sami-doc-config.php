@@ -11,7 +11,7 @@ $iterator = Finder::create()
 return new Sami($iterator, array(
     'theme'                => 'default',
     'title'                => 'PHPoAuthLib API',
-    'build_dir'            => __DIR__.'/doc',
+    'build_dir'            => __DIR__.'/doc/api',
     'cache_dir'            => '/tmp/cache',
     'default_opened_level' => 2,
 ));

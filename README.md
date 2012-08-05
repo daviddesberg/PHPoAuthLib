@@ -16,8 +16,10 @@ The library currently works with any oAuth 2.0 compliant service. oAuth 1.x supp
 
 Included service implementations
 ------------------
- - Google
- - GitHub
+ - OAuth2
+   - Google
+   - GitHub
+   - BitLy
  - more to come!
 
 Usage

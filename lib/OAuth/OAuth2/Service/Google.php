@@ -1,16 +1,31 @@
 <?php
 /**
- * @author Lusitanian <alusitanian@gmail.com>
- * Released under the MIT license.
+ * OAuth2 service implementation for Google.
+ *
+ * PHP version 5.4
+ *
+ * @category   OAuth
+ * @package    OAuth2
+ * @subpackage Service
+ * @author     Lusitanian <alusitanian@gmail.com>
+ * @author     Pieter Hordijk <info@pieterhordijk.com>
+ * @copyright  Copyright (c) 2012 The authors
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
-
 namespace OAuth\OAuth2\Service;
+
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri;
 
 /**
- * OAuth2 service implementation for Google
+ * OAuth2 service implementation for Google.
+ *
+ * @category   OAuth
+ * @package    OAuth2
+ * @subpackage Service
+ * @author     Lusitanian <alusitanian@gmail.com>
+ * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
 class Google extends AbstractService
 {

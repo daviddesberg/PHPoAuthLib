@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Pieter Hordijl <info@pieterhordijk.com>
+ * @author Pieter Hordijk <info@pieterhordijk.com>
  * Released under the MIT license.
  */
 

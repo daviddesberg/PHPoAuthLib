@@ -17,6 +17,12 @@ use OAuth\Common\Http\UriInterface;
 interface ServiceInterface
 {
     /**
+     * Authorization methods for various services
+     */
+    const AUTHORIZATION_METHOD_HEADER = 0;
+    const AUTHORIZATION_METHOD_QUERY_STRING = 1;
+
+    /**
      * @param \OAuth\Common\Consumer\Credentials $credentials
      * @param \OAuth\Common\Http\ClientInterface $httpClient
      * @param \OAuth\Common\Storage\TokenStorageInterface $storage

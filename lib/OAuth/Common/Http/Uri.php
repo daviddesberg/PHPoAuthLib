@@ -164,6 +164,17 @@ class Uri implements UriInterface
     }
 
     /**
+     * @param string $var
+     * @param string $val
+     */
+    public function addToQuery($var, $val) {
+        if( strlen($this->query) > 0 ) {
+            $this->query .= '&';
+        }
+        $this->query .= http_build_query( [ $var => $val ] );
+    }
+
+    /**
      * @return string
      */
     public function getFragment() {

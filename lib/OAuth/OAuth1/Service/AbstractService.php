@@ -14,10 +14,6 @@ use OAuth\Common\Exception\MissingRefreshTokenException;
 use OAuth\Common\Token\TokenInterface;
 use OAuth\Common\Service\ServiceInterface;
 
-use Artax\Http\Client;
-use Artax\Http\Response;
-use Artax\Http\StdRequest;
-
 abstract class AbstractService implements ServiceInterface
 {
     /**
@@ -25,7 +21,7 @@ abstract class AbstractService implements ServiceInterface
      *
      * @abstract
      * @return \OAuth\Common\Token\TokenInterface
-     * @param \Artax\Http\Response $response
+     * @param string $responseBody
      */
-    abstract protected function parseAccessTokenResponse(Response $response);
+    abstract protected function parseAccessTokenResponse($responseBody);
 }

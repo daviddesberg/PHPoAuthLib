@@ -56,6 +56,15 @@ interface UriInterface
     function getQuery();
 
     /**
+     * We need the ability to manipulate the uri from the service class.
+     *
+     * @abstract
+     * @param string $var
+     * @param string $val
+     */
+    function addToQuery($var, $val);
+
+    /**
      * @abstract
      * @return string
      */

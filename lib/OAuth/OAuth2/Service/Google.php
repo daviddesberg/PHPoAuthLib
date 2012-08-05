@@ -75,22 +75,35 @@ class Google extends AbstractService
 
     const SCOPE_YOUTUBE = 'https://gdata.youtube.com';
 
+    /**
+     * @return \OAuth\Common\Http\Uri|\OAuth\Common\Http\UriInterface
+     */
     public function getAuthorizationEndpoint()
     {
         return new Uri('https://accounts.google.com/o/oauth2/auth');
     }
 
+    /**
+     * @return \OAuth\Common\Http\Uri|\OAuth\Common\Http\UriInterface
+     */
     public function getAccessTokenEndpoint()
     {
         return new Uri('https://accounts.google.com/o/oauth2/token');
     }
 
+    /**
+     * @param string $responseBody
+     * @return \OAuth\Common\Token\TokenInterface|\OAuth\OAuth2\Token\StdOAuth2Token
+     * @throws \OAuth\Common\Http\Exception\TokenResponseException
+     */
     protected function parseAccessTokenResponse($responseBody)
     {
         $data = json_decode( $responseBody, true );
 
         if( null === $data || !is_array($data) ) {
             throw new TokenResponseException('Unable to parse response.');
+        } elseif( isset($data['error'] ) ) {
+            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
         }
 
         $token = new StdOAuth2Token();

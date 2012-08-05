@@ -9,7 +9,7 @@
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
-use OAuth\OAuth2\Service\Google;
+use OAuth\OAuth2\Service\GitHub;
 use OAuth\Common\Storage\Memory;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Http\Uri;
@@ -25,26 +25,23 @@ $storage = new Memory();
 // Replace 'xxx' with your client id and 'yyy' with your secret
 $credentials = new Credentials('xxx', 'yyy', $currentUri->getAbsoluteUri());
 
-// Use the GuzzleClient http client (requires the Guzzle phar)
+// Use the StreamClient http client (requires the Guzzle phar)
 $httpClient = new OAuth\Common\Http\GuzzleClient();
 
 // Instantiate the google service using the credentials, http client and storage mechanism for the token
-$googleService = new Google($credentials, $httpClient, $storage, [ Google::SCOPE_USERINFO_EMAIL, Google::SCOPE_USERINFO_PROFILE ]);
+$gitHub = new GitHub($credentials, $httpClient, $storage, [ GitHub::SCOPE_USER ]);
 
 if( !empty( $_GET['code'] ) ) {
     // This was a callback request from google, get the token
-    $googleService->requestAccessToken( $_GET['code'] );
-
-    // Send a request with it
-    $result = json_decode( $googleService->sendAuthenticatedRequest( new Uri('https://www.googleapis.com/oauth2/v1/userinfo'), [], 'GET' ), true );
-
-    // Show some of the resultant data
-    echo 'Your unique google user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
+    $gitHub->requestAccessToken( $_GET['code'] );
+    $result = json_decode( $gitHub->sendAuthenticatedRequest( new Uri( 'https://api.github.com/user/emails' ), [], 'GET' ), true );
+    echo 'The first email on your github account is ' . $result[0];
 
 } elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
-    $url = $googleService->getAuthorizationUrl();
+    $url = $gitHub->getAuthorizationUrl();
     header('Location: ' . $url);
+
 } else {
     $url = $currentUri->getRelativeUri() . '?go=go';
-    echo "<a href='$url'>Login with Google!</a>";
+    echo "<a href='$url'>Login with Github!</a>";
 }

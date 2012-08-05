@@ -112,7 +112,7 @@ abstract class AbstractService implements ServiceInterface
 
         ];
 
-        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $bodyParams, $this->getExtraHeaders());
+        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $bodyParams, $this->getExtraOAuthHeaders());
         $token = $this->parseAccessTokenResponse( $responseBody );
         $this->storage->storeAccessToken( $token );
 
@@ -140,9 +140,14 @@ abstract class AbstractService implements ServiceInterface
             throw new ExpiredTokenException('Token expired on ' . date('m/d/Y', $token->getEndOfLife()) . ' at ' . date('h:i:s A', $token->getEndOfLife()) );
         }
 
-        // add the token to the request headers
-        $extraHeaders = array_merge( ['Authorization' => 'OAuth ' . $token->getAccessToken() ], $extraHeaders );
-        $extraHeaders = array_merge( $extraHeaders, $this->getExtraHeaders() );
+        // add the token where it may be needed
+        if( static::AUTHORIZATION_METHOD_HEADER === $this->getAuthorizationMethod() ) {
+            $extraHeaders = array_merge( ['Authorization' => 'OAuth ' . $token->getAccessToken() ], $extraHeaders );
+        } elseif( static::AUTHORIZATION_METHOD_QUERY_STRING === $this->getAuthorizationMethod() ) {
+            $uri->addToQuery( 'access_token', $token->getAccessToken() );
+        }
+
+        $extraHeaders = array_merge( $extraHeaders, $this->getExtraApiHeaders() );
 
         return $this->httpClient->retrieveResponse($uri, $bodyParams, $extraHeaders, $method);
     }
@@ -171,7 +176,7 @@ abstract class AbstractService implements ServiceInterface
             'refresh_token' => $refreshToken,
         ];
 
-        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $parameters, $this->getExtraHeaders());
+        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $parameters, $this->getExtraOAuthHeaders());
         $token = $this->parseAccessTokenResponse( $responseBody );
         $this->storage->storeAccessToken( $token );
 
@@ -190,11 +195,21 @@ abstract class AbstractService implements ServiceInterface
     }
 
     /**
-     * Return any additional headers always needed for this service implementation.
+     * Return any additional headers always needed for this service implementation's OAuth calls.
      *
      * @return array
      */
-    protected function getExtraHeaders()
+    protected function getExtraOAuthHeaders()
+    {
+        return [];
+    }
+
+    /**
+     * Return any additional headers always needed for this service implementation's API calls.
+     *
+     * @return array
+     */
+    protected function getExtraApiHeaders()
     {
         return [];
     }
@@ -207,4 +222,15 @@ abstract class AbstractService implements ServiceInterface
      * @param string $responseBody
      */
     abstract protected function parseAccessTokenResponse($responseBody);
+
+    /**
+     * Returns a class constant from ServiceInterface defining the authorization method used for the API
+     * Header is the sane default.
+     *
+     * @return int
+     */
+    protected function getAuthorizationMethod()
+    {
+        return static::AUTHORIZATION_METHOD_HEADER;
+    }
 }

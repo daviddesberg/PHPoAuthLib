@@ -38,5 +38,6 @@ To handle the callback and obtain the token:
 ```php
 <?php
 $token = $googleService->requestAccessToken( $_GET['code'] ); // note that the token will also be passed to the `TokenStorageInterface` passed to the service
-// do what you want with the token -- a concise API for making calls to the service's API will be added soon, making it easy to get user information, etc.
+// get userinfo
+$result = json_decode( $googleService->sendAuthenticatedRequest( new Uri('https://www.googleapis.com/oauth2/v1/userinfo'), [], 'GET' ), true );
 ```

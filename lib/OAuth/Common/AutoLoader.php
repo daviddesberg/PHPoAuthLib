@@ -54,12 +54,14 @@ class AutoLoader
     public function load($class)
     {
         $class = ltrim($class, '\\');
+
         if (strpos($class, $this->namespace) === 0) {
             $nsparts   = explode('\\', $class);
             $class     = array_pop($nsparts);
             $nsparts[] = '';
             $path      = $this->path . implode(DIRECTORY_SEPARATOR, $nsparts);
             $path     .= str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
+
             if (file_exists($path)) {
                 require $path;
                 return true;

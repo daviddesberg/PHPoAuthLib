@@ -5,7 +5,8 @@
  * PHP version 5.4
  *
  * @category   OAuth
- * @package    Http
+ * @package    Common
+ * @subpackage Http
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  * @copyright  Copyright (c) 2012 Pieter Hordijk
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -17,7 +18,8 @@ namespace OAuth\Common\Http;
  * Implementation of an pure PHP HTTP client using cURL
  *
  * @category   OAuth
- * @package    Http
+ * @package    Common
+ * @subpackage Http
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
 class CurlClient implements \OAuth\Common\Http\ClientInterface

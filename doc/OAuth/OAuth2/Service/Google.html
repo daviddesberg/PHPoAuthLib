@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>OAuth\OAuth2\Service\Google | PHPoAuthLib API</title>
+                    <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../../classes.html">Classes</a></li>
+                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../../doc-index.html">Index</a></li>
+                <li><a href="../../../index.html" target="_top">Frames</a></li>
+    <li><a href="#" target="_top">No Frames</a></li>
+
+        </ul>
+
+        <div id="title">PHPoAuthLib API</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../../OAuth/OAuth2/Service.html">OAuth\OAuth2\Service</a>\Google</h1>
+    </div>
+        <div class="content">
+                <p>class    <strong>Google</strong>        extends <a href="../../../OAuth/OAuth2/Service/AbstractService.html"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a></p>
+
+            <div class="description">
+            <p>OAuth2 service implementation for Google.</p>
+            <p></p>
+        </div>
+    
+            <h2>Constants</h2>
+
+            <table>
+                    <tr>
+                <td>SCOPE_ADSENSE</td>
+                <td class="last">
+                    <p><em>Defined scopes -- Google has way too many Application Programming Interfaces</em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_GAN</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_ANALYTICS</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_BOOKS</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_BLOGGER</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_CALENDAR</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_CLOUDSTORAGE</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_CONTACT</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_CONTENTFORSHOPPING</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_CHROMEWEBSTORE</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_DOCUMENTSLIST</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_GOOGLEDRIVE</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_GOOGLEDRIVE_FILES</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_GMAIL</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_GPLUS</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_GROUPS_PROVISIONING</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_GOOGLELATITUDE</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_MODERATOR</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_NICKNAME_PROVISIONING</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_ORKUT</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_PICASAWEB</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_SITES</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_SPREADSHEETS</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_TASKS</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_URLSHORTENER</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_USERINFO_EMAIL</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_USERINFO_PROFILE</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_USER_PROVISIONING</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_WEBMASTERTOOLS</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>SCOPE_YOUTUBE</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+            </table>
+
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(<a href="../../../OAuth/Common/Consumer/Credentials.html"><abbr title="OAuth\Common\Consumer\Credentials">Credentials</abbr></a> $credentials, <a href="../../../OAuth/Common/Http/ClientInterface.html"><abbr title="OAuth\Common\Http\ClientInterface">ClientInterface</abbr></a> $httpClient, <a href="../../../OAuth/Common/Storage/TokenStorageInterface.html"><abbr title="OAuth\Common\Storage\TokenStorageInterface">TokenStorageInterface</abbr></a> $storage, array $scopes = array())
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../OAuth/OAuth2/Service/AbstractService.html#method___construct"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getAuthorizationUrl">getAuthorizationUrl</a>(array $additionalParameters = array())
+                    <p>Returns the url to redirect to for authorization purposes.</p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_getAuthorizationUrl"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_requestAccessToken">requestAccessToken</a>(string $code)
+                    <p>Retrieves and stores the OAuth2 access token after a successful authorization.</p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_requestAccessToken"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_sendAuthenticatedRequest">sendAuthenticatedRequest</a>(<a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a> $uri, array $bodyParams, string $method = &#039;POST&#039;, array $extraHeaders = array())
+                    <p>Sends an authenticated request to the given endpoint using stored token.</p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_sendAuthenticatedRequest"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_refreshAccessToken">refreshAccessToken</a>(<a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a> $token)
+                    <p>Refreshes an OAuth2 access token.</p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_refreshAccessToken"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    bool
+                </td>
+                <td class="last">
+                    <a href="#method_isValidScope">isValidScope</a>(<abbr title="OAuth\OAuth2\Service\$scope">$scope</abbr> $scope)
+                    <p>Returns whether or not the passed scope value is valid.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../OAuth/Common/Http/Uri.html"><abbr title="OAuth\Common\Http\Uri">Uri</abbr></a>|<a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_getAuthorizationEndpoint">getAuthorizationEndpoint</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../OAuth/Common/Http/Uri.html"><abbr title="OAuth\Common\Http\Uri">Uri</abbr></a>|<a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_getAccessTokenEndpoint">getAccessTokenEndpoint</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">in <a href="../../../OAuth/OAuth2/Service/AbstractService.html#method___construct"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a> at line 52</div>
+        <code>            public            
+    <strong>__construct</strong>(<a href="../../../OAuth/Common/Consumer/Credentials.html"><abbr title="OAuth\Common\Consumer\Credentials">Credentials</abbr></a> $credentials, <a href="../../../OAuth/Common/Http/ClientInterface.html"><abbr title="OAuth\Common\Http\ClientInterface">ClientInterface</abbr></a> $httpClient, <a href="../../../OAuth/Common/Storage/TokenStorageInterface.html"><abbr title="OAuth\Common\Storage\TokenStorageInterface">TokenStorageInterface</abbr></a> $storage, array $scopes = array())</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../OAuth/Common/Consumer/Credentials.html"><abbr title="OAuth\Common\Consumer\Credentials">Credentials</abbr></a></td>
+                <td>$credentials</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../../OAuth/Common/Http/ClientInterface.html"><abbr title="OAuth\Common\Http\ClientInterface">ClientInterface</abbr></a></td>
+                <td>$httpClient</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../../OAuth/Common/Storage/TokenStorageInterface.html"><abbr title="OAuth\Common\Storage\TokenStorageInterface">TokenStorageInterface</abbr></a></td>
+                <td>$storage</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$scopes</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="InvalidScopeException">InvalidScopeException</abbr></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getAuthorizationUrl">
+        <div class="location">in <a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_getAuthorizationUrl"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a> at line 75</div>
+        <code>            public            string
+    <strong>getAuthorizationUrl</strong>(array $additionalParameters = array())</code>
+    </h3>
+    <div class="details">
+        <p>Returns the url to redirect to for authorization purposes.</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$additionalParameters</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_requestAccessToken">
+        <div class="location">in <a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_requestAccessToken"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a> at line 103</div>
+        <code>            public            <a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a>
+    <strong>requestAccessToken</strong>(string $code)</code>
+    </h3>
+    <div class="details">
+        <p>Retrieves and stores the OAuth2 access token after a successful authorization.</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$code</td>
+                <td>The access code from the callback.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a></td>
+            <td>$token</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="TokenResponseException">TokenResponseException</abbr></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_sendAuthenticatedRequest">
+        <div class="location">in <a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_sendAuthenticatedRequest"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a> at line 132</div>
+        <code>            public            string
+    <strong>sendAuthenticatedRequest</strong>(<a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a> $uri, array $bodyParams, string $method = &#039;POST&#039;, array $extraHeaders = array())</code>
+    </h3>
+    <div class="details">
+        <p>Sends an authenticated request to the given endpoint using stored token.</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a></td>
+                <td>$uri</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$bodyParams</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$method</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$extraHeaders</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../OAuth/Common/Token/Exception/ExpiredTokenException.html"><abbr title="OAuth\Common\Token\Exception\ExpiredTokenException">ExpiredTokenException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_refreshAccessToken">
+        <div class="location">in <a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_refreshAccessToken"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a> at line 162</div>
+        <code>            public            <a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a>
+    <strong>refreshAccessToken</strong>(<a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a> $token)</code>
+    </h3>
+    <div class="details">
+        <p>Refreshes an OAuth2 access token.</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a></td>
+                <td>$token</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a></td>
+            <td>$token</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../OAuth/Common/Service/Exception/MissingRefreshTokenException.html"><abbr title="OAuth\Common\Service\Exception\MissingRefreshTokenException">MissingRefreshTokenException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_isValidScope">
+        <div class="location">at line 147</div>
+        <code>            public            bool
+    <strong>isValidScope</strong>(<abbr title="OAuth\OAuth2\Service\$scope">$scope</abbr> $scope)</code>
+    </h3>
+    <div class="details">
+        <p>Returns whether or not the passed scope value is valid.</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="OAuth\OAuth2\Service\$scope">$scope</abbr></td>
+                <td>$scope</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getAuthorizationEndpoint">
+        <div class="location">at line 96</div>
+        <code>            public            <a href="../../../OAuth/Common/Http/Uri.html"><abbr title="OAuth\Common\Http\Uri">Uri</abbr></a>|<a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a>
+    <strong>getAuthorizationEndpoint</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../OAuth/Common/Http/Uri.html"><abbr title="OAuth\Common\Http\Uri">Uri</abbr></a>|<a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getAccessTokenEndpoint">
+        <div class="location">at line 104</div>
+        <code>            public            <a href="../../../OAuth/Common/Http/Uri.html"><abbr title="OAuth\Common\Http\Uri">Uri</abbr></a>|<a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a>
+    <strong>getAccessTokenEndpoint</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../OAuth/Common/Http/Uri.html"><abbr title="OAuth\Common\Http\Uri">Uri</abbr></a>|<a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

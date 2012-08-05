@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>OAuth\OAuth2\Token\TokenInterface | PHPoAuthLib API</title>
+                    <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../../classes.html">Classes</a></li>
+                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../../doc-index.html">Index</a></li>
+                <li><a href="../../../index.html" target="_top">Frames</a></li>
+    <li><a href="#" target="_top">No Frames</a></li>
+
+        </ul>
+
+        <div id="title">PHPoAuthLib API</div>
+
+            <div class="type">Interface</div>
+    <h1><a href="../../../OAuth/OAuth2/Token.html">OAuth\OAuth2\Token</a>\TokenInterface</h1>
+    </div>
+        <div class="content">
+                <p>interface    <strong>TokenInterface</strong>        implements
+        <a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a></p>
+
+            <div class="description">
+            <p>OAuth2 specific TokenInterface</p>
+            <p></p>
+        </div>
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>($accessToken = null, $refreshToken = null, $lifetime = null, $extraParams = array())
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../OAuth/Common/Token/TokenInterface.html#method___construct"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_getAccessToken">getAccessToken</a>()
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../OAuth/Common/Token/TokenInterface.html#method_getAccessToken"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_getEndOfLife">getEndOfLife</a>()
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../OAuth/Common/Token/TokenInterface.html#method_getEndOfLife"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_getExtraParams">getExtraParams</a>()
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../OAuth/Common/Token/TokenInterface.html#method_getExtraParams"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setAccessToken">setAccessToken</a>($accessToken)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../OAuth/Common/Token/TokenInterface.html#method_setAccessToken"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setEndOfLife">setEndOfLife</a>($endOfLife)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../OAuth/Common/Token/TokenInterface.html#method_setEndOfLife"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setLifetime">setLifetime</a>($lifetime)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../OAuth/Common/Token/TokenInterface.html#method_setLifetime"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setExtraParams">setExtraParams</a>(array $extraParams)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../OAuth/Common/Token/TokenInterface.html#method_setExtraParams"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_getRefreshToken">getRefreshToken</a>()
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../OAuth/Common/Token/TokenInterface.html#method_getRefreshToken"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setRefreshToken">setRefreshToken</a>($refreshToken)
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../OAuth/Common/Token/TokenInterface.html#method_setRefreshToken"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a></small></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">in <a href="../../../OAuth/Common/Token/TokenInterface.html#method___construct"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a> at line 24</div>
+        <code>            public            
+    <strong>__construct</strong>($accessToken = null, $refreshToken = null, $lifetime = null, $extraParams = array())</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$accessToken</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$refreshToken</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$lifetime</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$extraParams</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getAccessToken">
+        <div class="location">in <a href="../../../OAuth/Common/Token/TokenInterface.html#method_getAccessToken"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a> at line 30</div>
+        <code>            public            
+    <strong>getAccessToken</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getEndOfLife">
+        <div class="location">in <a href="../../../OAuth/Common/Token/TokenInterface.html#method_getEndOfLife"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a> at line 36</div>
+        <code>            public            
+    <strong>getEndOfLife</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getExtraParams">
+        <div class="location">in <a href="../../../OAuth/Common/Token/TokenInterface.html#method_getExtraParams"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a> at line 42</div>
+        <code>            public            
+    <strong>getExtraParams</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setAccessToken">
+        <div class="location">in <a href="../../../OAuth/Common/Token/TokenInterface.html#method_setAccessToken"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a> at line 48</div>
+        <code>            public            
+    <strong>setAccessToken</strong>($accessToken)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$accessToken</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setEndOfLife">
+        <div class="location">in <a href="../../../OAuth/Common/Token/TokenInterface.html#method_setEndOfLife"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a> at line 53</div>
+        <code>            public            
+    <strong>setEndOfLife</strong>($endOfLife)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$endOfLife</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setLifetime">
+        <div class="location">in <a href="../../../OAuth/Common/Token/TokenInterface.html#method_setLifetime"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a> at line 59</div>
+        <code>            public            
+    <strong>setLifetime</strong>($lifetime)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$lifetime</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setExtraParams">
+        <div class="location">in <a href="../../../OAuth/Common/Token/TokenInterface.html#method_setExtraParams"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a> at line 65</div>
+        <code>            public            
+    <strong>setExtraParams</strong>(array $extraParams)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$extraParams</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getRefreshToken">
+        <div class="location">in <a href="../../../OAuth/Common/Token/TokenInterface.html#method_getRefreshToken"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a> at line 71</div>
+        <code>            public            
+    <strong>getRefreshToken</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setRefreshToken">
+        <div class="location">in <a href="../../../OAuth/Common/Token/TokenInterface.html#method_setRefreshToken"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a> at line 77</div>
+        <code>            public            
+    <strong>setRefreshToken</strong>($refreshToken)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$refreshToken</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

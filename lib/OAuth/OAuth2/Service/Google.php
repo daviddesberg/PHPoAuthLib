@@ -9,6 +9,9 @@ use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri;
 
+/**
+ * OAuth2 service implementation for Google
+ */
 class Google extends AbstractService
 {
     /**

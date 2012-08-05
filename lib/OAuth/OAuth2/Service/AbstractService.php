@@ -17,6 +17,9 @@ use OAuth\Common\Token\TokenInterface;
 use OAuth\Common\Token\Exception\ExpiredTokenException;
 use OAuth\Common\Service\ServiceInterface;
 
+/**
+ * AbstractService class for OAuth 2, implements basic methods in compliance with that protocol
+ */
 abstract class AbstractService implements ServiceInterface
 {
     /**
@@ -99,7 +102,7 @@ abstract class AbstractService implements ServiceInterface
      */
     public function requestAccessToken($code)
     {
-        $parameters =
+        $bodyParams =
         [
             'code' => $code,
             'client_id' => $this->credentials->getConsumerId(),
@@ -109,7 +112,7 @@ abstract class AbstractService implements ServiceInterface
 
         ];
 
-        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $parameters);
+        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $bodyParams, $this->getExtraHeaders());
         $token = $this->parseAccessTokenResponse( $responseBody );
         $this->storage->storeAccessToken( $token );
 
@@ -130,12 +133,16 @@ abstract class AbstractService implements ServiceInterface
     {
         $token = $this->storage->retrieveAccessToken();
 
-        if( time() > $token->getEndOfLife() ) {
+        if( ( $token->getEndOfLife() !== TokenInterface::EOL_NEVER_EXPIRES ) &&
+            ( $token->getEndOfLife() !== TokenInterface::EOL_UNKNOWN ) &&
+            ( time() > $token->getEndOfLife() ) ) {
+
             throw new ExpiredTokenException('Token expired on ' . date('m/d/Y', $token->getEndOfLife()) . ' at ' . date('h:i:s A', $token->getEndOfLife()) );
         }
 
         // add the token to the request headers
         $extraHeaders = array_merge( ['Authorization' => 'OAuth ' . $token->getAccessToken() ], $extraHeaders );
+        $extraHeaders = array_merge( $extraHeaders, $this->getExtraHeaders() );
 
         return $this->httpClient->retrieveResponse($uri, $bodyParams, $extraHeaders, $method);
     }
@@ -164,7 +171,7 @@ abstract class AbstractService implements ServiceInterface
             'refresh_token' => $refreshToken,
         ];
 
-        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $parameters);
+        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $parameters, $this->getExtraHeaders());
         $token = $this->parseAccessTokenResponse( $responseBody );
         $this->storage->storeAccessToken( $token );
 
@@ -180,6 +187,16 @@ abstract class AbstractService implements ServiceInterface
     public function isValidScope($scope)
     {
         return true;
+    }
+
+    /**
+     * Return any additional headers always needed for this service implementation.
+     *
+     * @return array
+     */
+    protected function getExtraHeaders()
+    {
+        return [];
     }
 
     /**

@@ -176,7 +176,15 @@ class Uri implements UriInterface
      */
     protected function setHttps($https)
     {
-        $this->https = ($https === 'on') ? true : false;
+        if( is_string($https) ) {
+            $this->https = ($https === 'on') ? true : false;
+        } elseif( is_bool($https) ) {
+            $this->https = $https;
+        } elseif( null === $https )  {
+            $this->https = false;
+        } else {
+            throw new \UnexpectedValueException('Expected boolean or string, instead got ' . gettype($https) );
+        }
     }
 
     /**

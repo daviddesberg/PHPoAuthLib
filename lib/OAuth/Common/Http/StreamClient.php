@@ -33,7 +33,7 @@ class StreamClient implements ClientInterface
 
         // Build the request headers
         if( !isset($extraHeaders['host'] ) ) {
-            $headerArray = ['Host: ' . parse_url($endpoint, PHP_URL_HOST)];
+            $headerArray = ['Host: ' . parse_url($endpoint->getAbsoluteUri(), PHP_URL_HOST)];
         }
 
         // Content-type

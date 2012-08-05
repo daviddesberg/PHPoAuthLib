@@ -1,33 +1,16 @@
 <?php
 /**
- * OAuth2 service implementation for Bitly. Note that bitly for some reason uses two different domains for the
- * authorization endpoint and the accesstoken endpoint.
- *
- * PHP version 5.4
- *
- * @category   OAuth
- * @package    OAuth2
- * @subpackage Service
- * @author     Lusitanian <alusitanian@gmail.com>
- * @author     Pieter Hordijk <info@pieterhordijk.com>
- * @copyright  Copyright (c) 2012 The authors
- * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
+ * @author Pieter Hordijk <info@pieterhordijk.com>
+ * Released under the MIT license.
  */
-namespace OAuth\OAuth2\Service;
 
+namespace OAuth\OAuth2\Service;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri;
 
 /**
- * OAuth2 service implementation for Bitly. Note that bitly for some reason uses two different domains for the
- * authorization endpoint and the accesstoken endpoint.
- *
- * @category   OAuth
- * @package    OAuth2
- * @subpackage Service
- * @author     Lusitanian <alusitanian@gmail.com>
- * @author     Pieter Hordijk <info@pieterhordijk.com>
+ * OAuth2 service implementation for Bitly
  */
 class Bitly extends AbstractService
 {

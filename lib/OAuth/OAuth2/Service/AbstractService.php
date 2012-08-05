@@ -10,9 +10,11 @@ use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\ClientInterface;
+use OAuth\Common\Http\UriInterface;
 use OAuth\Common\Service\Exception\InvalidScopeException;
 use OAuth\Common\Service\Exception\MissingRefreshTokenException;
 use OAuth\Common\Token\TokenInterface;
+use OAuth\Common\Token\Exception\ExpiredTokenException;
 use OAuth\Common\Service\ServiceInterface;
 
 abstract class AbstractService implements ServiceInterface
@@ -112,6 +114,33 @@ abstract class AbstractService implements ServiceInterface
         $this->storage->storeAccessToken( $token );
 
         return $token;
+    }
+
+    /**
+     * Sends an authenticated request to the given endpoint using either the stored token or the given token.
+     *
+     * @param UriInterface $uri
+     * @param array $bodyParams
+     * @param string $method
+     * @param array $extraHeaders
+     * @param \OAuth\Common\Token\TokenInterface $token
+     * @return string
+     * @throws \OAuth\Common\Token\Exception\ExpiredTokenException
+     */
+    public function sendAuthenticatedRequest(UriInterface $uri, array $bodyParams, $method = 'POST', $extraHeaders = [], TokenInterface $token = null)
+    {
+        if( null === $token ) {
+            $token = $this->storage->retrieveAccessToken();
+        }
+
+        if( time() > $token->getEndOfLife() ) {
+            throw new ExpiredTokenException('Token expired on ' . date('m/d/Y', $token->getEndOfLife()) . ' at ' . date('h:i:s A', $token->getEndOfLife()) );
+        }
+
+        // add the token to the request headers
+        $extraHeaders = array_merge( ['Authorization' => 'OAuth ' . $token->getAccessToken() ], $extraHeaders );
+
+        return $this->httpClient->retrieveResponse($uri, $bodyParams, $extraHeaders, $method);
     }
 
     /**

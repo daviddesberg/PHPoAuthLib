@@ -7,6 +7,7 @@
 namespace OAuth\Common\Service;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\Common\Token\TokenInterface;
 use OAuth\Common\Http\ClientInterface;
 use OAuth\Common\Http\UriInterface;
 
@@ -54,4 +55,18 @@ interface ServiceInterface
      * @return UriInterface
      */
     public function getAccessTokenEndpoint();
+
+    /**
+     * Sends an authenticated request to the given endpoint using either the stored token or the given token.
+     *
+     * @abstract
+     * @param UriInterface $uri
+     * @param array $bodyParams
+     * @param string $method
+     * @param array $extraHeaders
+     * @param \OAuth\Common\Token\TokenInterface $token
+     * @return string
+     * @throws \OAuth\Common\Token\Exception\ExpiredTokenException
+     */
+    public function sendAuthenticatedRequest(UriInterface $uri, array $bodyParams, $method = 'POST', $extraHeaders = [], TokenInterface $token = null);
 }

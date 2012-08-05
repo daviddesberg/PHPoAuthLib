@@ -13,7 +13,7 @@
 /**
  * Bootstrap the library
  */
-require_once '/../lib/OAuth/bootstrap.php';
+require_once __DIR__ . '/../lib/OAuth/bootstrap.php';
 
 /**
  * Setup error reporting
@@ -27,12 +27,7 @@ ini_set('display_errors', 1);
 ini_set('date.timezone', 'Europe/Amsterdam');
 
 /**
- * Create a new instance of the URI class with the current URI
+ * Create a new instance of the URI class with the current URI, stripping the query string
  */
-$currentUri = new OAuth\Common\Http\Uri(
-    $_SERVER['SERVER_NAME'],
-    $_SERVER['REQUEST_URI'],
-    $_SERVER['SERVER_PROTOCOL'],
-    $_SERVER['SERVER_PORT'],
-    empty($_SERVER['HTTPS']) ? null : $_SERVER['HTTPS']
-);
+$uriGenerator = new \OAuth\Common\Http\UriGenerator();
+$currentUri = $uriGenerator->make($_SERVER, false);

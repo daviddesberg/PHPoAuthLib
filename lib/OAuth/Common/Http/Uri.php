@@ -1,221 +1,267 @@
 <?php
 /**
- * URI class. Note that the getters in this class don't return the raw values of the properties, but rather the parsed
- *            values to be used to build the full URI.
- *
- * PHP version 5.4
- *
- * @category   OAuth
- * @package    Common
- * @subpackage Http
- * @author     Pieter Hordijk <info@pieterhordijk.com>
- * @copyright  Copyright (c) 2012 Pieter Hordijk
- * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
+ * @author Daniel Lowery
  */
 namespace OAuth\Common\Http;
 
+use InvalidArgumentException;
+
 /**
- * URI class. Note that the getters in this class don't return the raw values of the properties, but rather the parsed
- *            values to be used to build the full URI.
- *
- * @category   OAuth
- * @package    Common
- * @subpackage Http
- * @author     Pieter Hordijk <info@pieterhordijk.com>
+ * @author Daniel Lowery
+ * @author Lusitanian <alusitanian@gmail.com>
  */
 class Uri implements UriInterface
 {
-    /**
-     * @var string
-     */
-    protected $domain;
 
-    /**
-     * @var string
-     */
-    protected $path;
+    private $scheme = 'http';
+    private $userInfo = '';
+    private $rawUserInfo = '';
+    private $host;
+    private $port = 80;
+    private $path = '/';
+    private $query = '';
+    private $fragment = '';
 
-    /**
-     * @var string
-     */
-    protected $protocol;
+    private $explicitPortSpecified = false;
+    private $explicitTrailingHostSlash = false;
 
-    /**
-     * @var int
-     */
-    protected $port;
-
-    /**
-     * @var boolean
-     */
-    protected $https;
-
-    /**
-     * Constructs the instance
-     *
-     * @param string            $domain     The domainname
-     * @param string            $path       The path of the URI
-     * @param string            $protocol   The protocol used by the URI
-     * @param string|int        $port       The port used by the URI
-     * @param string|boolean    $https      Whether it is an https connection
-     *
-     * @return string The full URI
-     */
-    public function __construct($domain, $path, $protocol = 'http', $port = '80', $https = false)
+    public static function fromServerGlobals()
     {
-        $this->setDomain($domain);
-        $this->setPath($path);
-        $this->setProtocol($protocol);
-        $this->SetPort($port);
-        $this->setHttps($https);
+
+    }
+    /**
+     * @param string $uri
+     */
+    public function __construct($uri) {
+        $this->parseUri($uri);
     }
 
     /**
-     * Sets the domainname
-     *
-     * @param string    $domain The domainname
-     *
-     * @return void
+     * @param string $uri
+     * @throws \InvalidArgumentException
      */
-    protected function setDomain($domain)
-    {
-        $this->domain = $domain;
+    protected function parseUri($uri) {
+        if (!$uriParts = @parse_url($uri)) {
+            throw new InvalidArgumentException(
+                "Invalid URI: $uri"
+            );
+        }
+
+        if (!isset($uriParts['scheme'])) {
+            throw new InvalidArgumentException(
+                'Invalid URI: http|https scheme required'
+            );
+        }
+
+        $this->scheme = $uriParts['scheme'];
+        $this->host = $uriParts['host'];
+
+        if (isset($uriParts['port'])) {
+            $this->port = $uriParts['port'];
+            $this->explicitPortSpecified = true;
+        } else {
+            $this->port = strcmp('https', $uriParts['scheme']) ? 80 : 443;
+            $this->explicitPortSpecified = false;
+        }
+
+        if (isset($uriParts['path'])) {
+            $this->path = $uriParts['path'];
+            if ('/' == $uriParts['path']) {
+                $this->explicitTrailingHostSlash = true;
+            }
+        } else {
+            $this->path = '/';
+        }
+
+        $this->query = isset($uriParts['query']) ? $uriParts['query'] : '';
+        $this->fragment = isset($uriParts['fragment']) ? $uriParts['fragment'] : '';
+
+        $userInfo = '';
+        if (!empty($uriParts['user'])) {
+            $userInfo .= $uriParts['user'];
+        }
+        if ($userInfo && !empty($uriParts['pass'])) {
+            $userInfo .= ':' . $uriParts['pass'];
+        }
+
+        $this->setUserInfo($userInfo);
     }
 
     /**
-     * Gets the domainname
-     *
-     * @return string The domainname
+     * @param string $userInfo
      */
-    protected function getDomain()
-    {
-        return $this->domain;
+    protected function setUserInfo($userInfo) {
+        $this->userInfo = $userInfo ? $this->protectUserInfo($userInfo) : '';
+        $this->rawUserInfo = $userInfo;
     }
 
     /**
-     * Sets the path. The path is the part after the domainname (excluding the optional port and querystring)
-     * The path gets normalized (i.e. slashes will be trimmed).
-     *
-     * @param string    $path   The path of the URI
-     *
-     * @return void
+     * @param string $rawUserInfo
+     * @return string
      */
-    protected function setPath($path)
-    {
-        $this->path = trim($path, '/');
+    protected function protectUserInfo($rawUserInfo) {
+        $colonPos = strpos($rawUserInfo, ':');
+
+        // rfc3986-3.2.1 | http://tools.ietf.org/html/rfc3986#section-3.2
+        // "Applications should not render as clear text any data
+        // after the first colon (":") character found within a userinfo
+        // subcomponent unless the data after the colon is the empty string
+        // (indicating no password)"
+        if ($colonPos !== FALSE && strlen($rawUserInfo)-1 > $colonPos) {
+            return substr($rawUserInfo, 0, $colonPos) . ':********';
+        } else {
+            return $rawUserInfo;
+        }
     }
 
     /**
-     * Gets the path
-     *
-     * @return string The path
+     * @return string
      */
-    protected function getPath()
-    {
+    public function getScheme() {
+        return $this->scheme;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserInfo() {
+        return $this->userInfo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRawUserInfo() {
+        return $this->rawUserInfo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHost() {
+        return $this->host;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPort() {
+        return $this->port;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath() {
         return $this->path;
     }
 
     /**
-     * Sets the protocol. Note that the protocol version will be stripped and normalized (e.g. HTTP/1.1 will become http).
-     *
-     * @param string    $protocol   The protocol used by the URI
-     *
-     * @return void
+     * @return string
      */
-    protected function setProtocol($protocol)
-    {
-        if( false !== ($slashPos =  strpos($protocol, '/') ) ) {
-            $this->protocol = strtolower( substr($protocol, 0, $slashPos) );
+    public function getQuery() {
+        return $this->query;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFragment() {
+        return $this->fragment;
+    }
+
+    /**
+     * Uses protected user info by default as per rfc3986-3.2.1
+     * Uri::getRawAuthority() is available if plain-text password information is desirable.
+     *
+     * @return string
+     */
+    public function getAuthority() {
+        $authority = $this->userInfo ? $this->userInfo.'@' : '';
+        $authority .= $this->host;
+
+        if ($this->explicitPortSpecified) {
+            $authority .= ":{$this->port}";
+        }
+
+        return $authority;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRawAuthority() {
+        $authority = $this->rawUserInfo ? $this->rawUserInfo.'@' : '';
+        $authority .= $this->host;
+
+        if ($this->explicitPortSpecified) {
+            $authority .= ":{$this->port}";
+        }
+
+        return $authority;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAbsoluteUri() {
+        $uri = $this->scheme . '://' . $this->getRawAuthority();
+
+        if ('/' == $this->path) {
+            $uri .= $this->explicitTrailingHostSlash ? '/' : '';
         } else {
-            $this->protocol = $protocol;
-        }
-    }
-
-    /**
-     * Gets the protocol
-     *
-     * @return string The protocol
-     */
-    protected function getProtocol()
-    {
-        return $this->protocol;
-    }
-
-    /**
-     * Sets the port
-     *
-     * @param string|int    $port   The port used by the URI
-     *
-     * @return void
-     */
-    protected function setPort($port)
-    {
-        $this->port = $port;
-    }
-
-    /**
-     * Gets the port. Note that the
-     *
-     * @return string The port as used in the URI when it is not a standard HTTP port prepended by the port delimiter (:).
-     */
-    protected function getPort()
-    {
-        if (!in_array( $this->port, [80, 443] ) ) {
-            return ':' . $this->port;
+            $uri .= $this->path;
         }
 
-        return '';
+        if (!empty($this->query)) {
+            $uri .= "?{$this->query}";
+        }
+
+        if (!empty($this->fragment)) {
+            $uri .= "#{$this->fragment}";
+        }
+
+        return $uri;
     }
 
     /**
-     * Sets whether the URI is an https URI
-     *
-     * @param string|boolean    $https  Whether it is an https connection
-     *
-     * @return void
+     * @return string
      */
-    protected function setHttps($https)
-    {
-        if( is_string($https) ) {
-            $this->https = ($https === 'on') ? true : false;
-        } elseif( is_bool($https) ) {
-            $this->https = $https;
-        } elseif( null === $https )  {
-            $this->https = false;
+    public function getRelativeUri() {
+        $uri = '';
+
+        if ('/' == $this->path) {
+            $uri .= $this->explicitTrailingHostSlash ? '/' : '';
         } else {
-            throw new \UnexpectedValueException('Expected boolean or string, instead got ' . gettype($https) );
+            $uri .= $this->path;
         }
+
+        return $uri;
     }
 
     /**
-     * Gets the https suffix
+     * Uses protected user info by default as per rfc3986-3.2.1
+     * Uri::getAbsoluteUri() is available if plain-text password information is desirable.
      *
-     * @return string|null https suffix (s) of the protocol when the URI is https
+     * @return string
      */
-    protected function getHttps()
-    {
-        if ($this->https) {
-            return 's';
+    public function __toString() {
+        $uri = $this->scheme . '://' . $this->getAuthority();
+
+        if ('/' == $this->path) {
+            $uri .= $this->explicitTrailingHostSlash ? '/' : '';
+        } else {
+            $uri .= $this->path;
         }
-    }
 
-    /**
-     * Build the relative URI based on all the properties
-     *
-     * @return string The relative URI
-     */
-    public function getRelativeUri()
-    {
-        return '/' . $this->getPath();
-    }
+        if (!empty($this->query)) {
+            $uri .= "?{$this->query}";
+        }
 
-    /**
-     * Build the full URI based on all the properties
-     *
-     * @return string The full URI
-     */
-    public function getAbsoluteUri()
-    {
-        return $this->getProtocol() . $this->getHttps() . '://' . $this->getDomain() . $this->getPort() . $this->getRelativeUri();
+        if (!empty($this->fragment)) {
+            $uri .= "#{$this->fragment}";
+        }
+
+        return $uri;
     }
 }

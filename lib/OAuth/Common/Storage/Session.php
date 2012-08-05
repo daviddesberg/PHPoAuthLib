@@ -9,7 +9,7 @@ namespace OAuth\Common\Storage;
 use OAuth\Common\Token\TokenInterface;
 use OAuth\Common\Storage\Exception\TokenNotFoundException;
 
-class Session implements StorageInterface
+class Session implements TokenStorageInterface
 {
     /**
      * @var string

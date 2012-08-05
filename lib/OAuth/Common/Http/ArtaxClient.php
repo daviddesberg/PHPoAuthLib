@@ -22,13 +22,19 @@ class ArtaxClient implements ClientInterface
      * @param UriInterface $endpoint
      * @param array $params
      * @param array $extraHeaders
+     * @param string $method
      * @return string
      * @throws TokenResponseException
+     * @throws \InvalidArgumentException
      */
-    public function retrieveResponse(UriInterface $endpoint, array $params, array $extraHeaders = [])
+    public function retrieveResponse(UriInterface $endpoint, array $params, array $extraHeaders = [], $method = 'POST')
     {
+        if( $method === 'GET' && !empty($params) ) {
+            throw new \InvalidArgumentException('No body parameters expected for "GET" request.');
+        }
+
         // Build and send the HTTP request
-        $request = new StdRequest( $endpoint->getAbsoluteUri(), 'POST', $extraHeaders, http_build_query($params) );
+        $request = new StdRequest( $endpoint->getAbsoluteUri(), $method, $extraHeaders, http_build_query($params) );
         $client = new Client();
 
         // Retrieve the response

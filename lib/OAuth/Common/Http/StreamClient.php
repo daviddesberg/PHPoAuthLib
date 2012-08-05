@@ -18,11 +18,19 @@ class StreamClient implements ClientInterface
      * @param UriInterface $endpoint
      * @param array $params
      * @param array $extraHeaders
+     * @param string $method
      * @throws TokenResponseException
+     * @throws \InvalidArgumentException
      * @return string
      */
-    public function retrieveResponse(UriInterface $endpoint, array $params, array $extraHeaders = [])
+    public function retrieveResponse(UriInterface $endpoint, array $params, array $extraHeaders = [], $method = 'POST')
     {
+        $method = strtoupper($method);
+
+        if( $method === 'GET' && !empty($params) ) {
+            throw new \InvalidArgumentException('No body parameters expected for "GET" request.');
+        }
+
         // Normalize headers
         array_walk( $extraHeaders,
             function(&$val, &$key)
@@ -33,7 +41,7 @@ class StreamClient implements ClientInterface
 
         // Build the request headers
         if( !isset($extraHeaders['host'] ) ) {
-            $headerArray = ['Host: ' . parse_url($endpoint->getAbsoluteUri(), PHP_URL_HOST)];
+            $headerArray = ['Host: ' . $endpoint->getHost()];
         }
 
         // Content-type
@@ -46,7 +54,7 @@ class StreamClient implements ClientInterface
 
         // Build the request body and stream context
         $requestBody = http_build_query($params);
-        $streamContext = stream_context_create( [ 'http' => [ 'method' => 'POST', 'content' => $requestBody, 'header' => $headerArray ] ] );
+        $streamContext = stream_context_create( [ 'http' => [ 'method' => $method, 'content' => $requestBody, 'header' => $headerArray ] ] );
 
         // Get the result and resultant status code from the wonderful magical PHP var $http_response_header
         $result = @file_get_contents($endpoint->getAbsoluteUri(), false, $streamContext); // the "@" operator makes me a sad panda

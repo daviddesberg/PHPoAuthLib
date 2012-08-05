@@ -21,7 +21,8 @@ class StreamClientTest extends PHPUnit_Framework_TestCase
 
     public function testRetrieveResponse()
     {
-        $testUri = new Uri('httpbin.org', '/post');
+        // http test server
+        $testUri = new Uri('http://httpbin.org/post');
 
         // if the request fails, an exception will be thrown
         $response = $this->streamClient->retrieveResponse($testUri, ['testKey' => 'testValue'] );

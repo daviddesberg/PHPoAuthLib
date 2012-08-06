@@ -28,7 +28,7 @@ $credentials = new Credentials('xxx', 'yyy', $currentUri->getAbsoluteUri());
 // Use the CurlClient http client
 $httpClient = new OAuth\Common\Http\CurlClient();
 
-// Instantiate the google service using the credentials, http client and storage mechanism for the token
+// Instantiate the bitly service using the credentials, http client and storage mechanism for the token
 $bitlyService = new Bitly($credentials, $httpClient, $storage, []);
 
 if( !empty( $_GET['code'] ) ) {
@@ -39,10 +39,10 @@ if( !empty( $_GET['code'] ) ) {
     $result = json_decode( $bitlyService->sendAuthenticatedRequest( new Uri('https://api-ssl.bitly.com/v3/user/info'), [], 'GET' ), true );
 
     // Show some of the resultant data
-    echo 'Your unique google user id is: ' . $result['data']['login'] . ' and your name is ' . $result['data']['display_name'];
+    echo 'Your unique user id is: ' . $result['data']['login'] . ' and your name is ' . $result['data']['display_name'];
 
 } elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
-    $url = $bitlyService->getAuthorizationUrl();
+    $url = $bitlyService->getAuthorizationUri();
     header('Location: ' . $url);
 } else {
     $url = $currentUri->getRelativeUri() . '?go=go';

@@ -72,7 +72,7 @@ abstract class AbstractService implements ServiceInterface
      * @param array $additionalParameters
      * @return string
      */
-    public function getAuthorizationUrl( array $additionalParameters = [] )
+    public function getAuthorizationUri( array $additionalParameters = [] )
     {
         $parameters = array_merge($additionalParameters,
             [
@@ -86,8 +86,11 @@ abstract class AbstractService implements ServiceInterface
         $parameters['scope'] = implode(' ', $this->scopes);
 
         // Build the url
-        $url = $this->getAuthorizationEndpoint();
-        $url .= (strpos($url, '?') !== false ? '&' : '?') . http_build_query($parameters);
+        $url = clone $this->getAuthorizationEndpoint();
+        foreach($parameters as $key => $val)
+        {
+            $url->addToQuery($key, $val);
+        }
 
         return $url;
     }
@@ -141,11 +144,14 @@ abstract class AbstractService implements ServiceInterface
         }
 
         // add the token where it may be needed
-        if( static::AUTHORIZATION_METHOD_HEADER === $this->getAuthorizationMethod() ) {
+        if( static::AUTHORIZATION_METHOD_HEADER_OAUTH === $this->getAuthorizationMethod() ) {
             $extraHeaders = array_merge( ['Authorization' => 'OAuth ' . $token->getAccessToken() ], $extraHeaders );
         } elseif( static::AUTHORIZATION_METHOD_QUERY_STRING === $this->getAuthorizationMethod() ) {
             $uri->addToQuery( 'access_token', $token->getAccessToken() );
+        } elseif( static::AUTHORIZATION_METHOD_HEADER_BEARER === $this->getAuthorizationMethod() ) {
+            $extraHeaders = array_merge( ['Authorization' => 'Bearer ' . $token->getAccessToken() ], $extraHeaders );
         }
+
 
         $extraHeaders = array_merge( $extraHeaders, $this->getExtraApiHeaders() );
 
@@ -232,6 +238,6 @@ abstract class AbstractService implements ServiceInterface
      */
     protected function getAuthorizationMethod()
     {
-        return static::AUTHORIZATION_METHOD_HEADER;
+        return static::AUTHORIZATION_METHOD_HEADER_OAUTH;
     }
 }

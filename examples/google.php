@@ -42,7 +42,7 @@ if( !empty( $_GET['code'] ) ) {
     echo 'Your unique google user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
 
 } elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
-    $url = $googleService->getAuthorizationUrl();
+    $url = $googleService->getAuthorizationUri();
     header('Location: ' . $url);
 } else {
     $url = $currentUri->getRelativeUri() . '?go=go';

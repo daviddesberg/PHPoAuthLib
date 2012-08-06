@@ -29,12 +29,30 @@ class ArtaxClient implements ClientInterface
      */
     public function retrieveResponse(UriInterface $endpoint, array $params, array $extraHeaders = [], $method = 'POST')
     {
+        // Normalize method name
+        $method = strtoupper($method);
+
+        // Normalize headers
+        array_walk( $extraHeaders,
+            function(&$val, &$key)
+            {
+                $key = ucfirst( strtolower($key) );
+            }
+        );
+
+
         if( $method === 'GET' && !empty($params) ) {
             throw new \InvalidArgumentException('No body parameters expected for "GET" request.');
         }
 
+        $requestBody = http_build_query($params);
+
+        if( !isset( $extraHeaders['Content-length'] ) ) {
+            $extraHeaders['Content-length'] = strlen( $requestBody );
+        }
+
         // Build and send the HTTP request
-        $request = new StdRequest( $endpoint->getAbsoluteUri(), $method, $extraHeaders, http_build_query($params) );
+        $request = new StdRequest( $endpoint->getAbsoluteUri(), $method, $extraHeaders, $requestBody );
         $client = new Client();
 
         // Retrieve the response

@@ -82,18 +82,6 @@ class GitHub extends AbstractService
     }
 
     /**
-     * Returns whether or not the passed scope value is valid.
-     *
-     * @param $scope
-     * @return bool
-     */
-    public function isValidScope($scope)
-    {
-        $reflectionClass = new \ReflectionClass(get_class($this));
-        return in_array( $scope, $reflectionClass->getConstants() );
-    }
-
-    /**
      * Used to configure response type -- we want JSON from github, default is query string format
      *
      * @return array

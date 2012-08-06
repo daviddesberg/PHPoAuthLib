@@ -9,7 +9,7 @@ $iterator = Finder::create()
 ;
 
 return new Sami($iterator, array(
-    'theme'                => 'default',
+    'theme'                => 'enhanced',
     'title'                => 'PHPoAuthLib API',
     'build_dir'            => __DIR__.'/doc/api',
     'cache_dir'            => '/tmp/cache',

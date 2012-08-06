@@ -25,8 +25,8 @@ $storage = new Memory();
 // Replace 'xxx' with your client id and 'yyy' with your secret
 $credentials = new Credentials('xxx', 'yyy', $currentUri->getAbsoluteUri());
 
-// Use the GuzzleClient http client (requires the Guzzle phar)
-$httpClient = new OAuth\Common\Http\GuzzleClient();
+// Use the CurlClient http client
+$httpClient = new OAuth\Common\Http\CurlClient();
 
 // Instantiate the google service using the credentials, http client and storage mechanism for the token
 $googleService = new Google($credentials, $httpClient, $storage, [ Google::SCOPE_USERINFO_EMAIL, Google::SCOPE_USERINFO_PROFILE ]);

@@ -1,6 +1,6 @@
 <?php
 /**
- * Example of retrieving an authentication token of the Google service
+ * Example of retrieving an authentication token of the Bitly service
  *
  * PHP version 5.4
  *
@@ -25,7 +25,7 @@ $storage = new Memory();
 // Replace 'xxx' with your client id and 'yyy' with your secret
 $credentials = new Credentials('xxx', 'yyy', $currentUri->getAbsoluteUri());
 
-// Use the GuzzleClient http client (requires the Guzzle phar)
+// Use the CurlClient http client
 $httpClient = new OAuth\Common\Http\CurlClient();
 
 // Instantiate the google service using the credentials, http client and storage mechanism for the token

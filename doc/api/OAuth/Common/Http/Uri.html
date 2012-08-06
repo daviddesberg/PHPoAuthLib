@@ -13,9 +13,7 @@
                             <li><a href="../../../namespaces.html">Namespaces</a></li>
                         <li><a href="../../../interfaces.html">Interfaces</a></li>
             <li><a href="../../../doc-index.html">Index</a></li>
-                <li><a href="../../../index.html" target="_top">Frames</a></li>
-    <li><a href="#" target="_top">No Frames</a></li>
-
+            
         </ul>
 
         <div id="title">PHPoAuthLib API</div>
@@ -63,7 +61,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_getUserInfo">getUserInfo</a>()
-                    <p></p>
+                    <p>Should return URI user info, masking protected user info data according to rfc3986-3.2.1</p>
                 </td>
                 <td></td>
             </tr>
@@ -73,7 +71,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_getRawUserInfo">getRawUserInfo</a>()
-                    <p></p>
+                    <p>Should return the URI user info without masking protected user info data</p>
                 </td>
                 <td></td>
             </tr>
@@ -123,7 +121,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_addToQuery">addToQuery</a>(string $var, string $val)
-                    <p></p>
+                    <p>We need the ability to manipulate the uri from the service class.</p>
                 </td>
                 <td></td>
             </tr>
@@ -143,7 +141,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_getAuthority">getAuthority</a>()
-                    <p>Uses protected user info by default as per rfc3986-3.2.1 Uri::getRawAuthority() is available if plain-text password information is desirable.</p>
+                    <p>Should return the URI Authority, masking protected user info data according to rfc3986-3.2.1</p>
                 </td>
                 <td></td>
             </tr>
@@ -153,7 +151,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_getRawAuthority">getRawAuthority</a>()
-                    <p></p>
+                    <p>Should return the URI Authority without masking protected user info data</p>
                 </td>
                 <td></td>
             </tr>
@@ -163,7 +161,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_getAbsoluteUri">getAbsoluteUri</a>()
-                    <p></p>
+                    <p>Build the full URI based on all the properties</p>
                 </td>
                 <td></td>
             </tr>
@@ -173,7 +171,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_getRelativeUri">getRelativeUri</a>()
-                    <p></p>
+                    <p>Build the relative URI based on all the properties</p>
                 </td>
                 <td></td>
             </tr>
@@ -183,7 +181,7 @@
                 </td>
                 <td class="last">
                     <a href="#method___toString">__toString</a>()
-                    <p>Uses protected user info by default as per rfc3986-3.2.1 Uri::getAbsoluteUri() is available if plain-text password information is desirable.</p>
+                    <p>Should return the URI string, masking protected user info data according to rfc3986-3.2.1</p>
                 </td>
                 <td></td>
             </tr>
@@ -247,7 +245,7 @@
     <strong>getUserInfo</strong>()</code>
     </h3>
     <div class="details">
-        <p></p>
+        <p>Should return URI user info, masking protected user info data according to rfc3986-3.2.1</p>
         <p></p>
         <div class="tags">
             
@@ -271,7 +269,7 @@
     <strong>getRawUserInfo</strong>()</code>
     </h3>
     <div class="details">
-        <p></p>
+        <p>Should return the URI user info without masking protected user info data</p>
         <p></p>
         <div class="tags">
             
@@ -391,7 +389,7 @@
     <strong>addToQuery</strong>(string $var, string $val)</code>
     </h3>
     <div class="details">
-        <p></p>
+        <p>We need the ability to manipulate the uri from the service class.</p>
         <p></p>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -445,7 +443,7 @@
     <strong>getAuthority</strong>()</code>
     </h3>
     <div class="details">
-        <p>Uses protected user info by default as per rfc3986-3.2.1 Uri::getRawAuthority() is available if plain-text password information is desirable.</p>
+        <p>Should return the URI Authority, masking protected user info data according to rfc3986-3.2.1</p>
         <p></p>
         <div class="tags">
             
@@ -469,7 +467,7 @@
     <strong>getRawAuthority</strong>()</code>
     </h3>
     <div class="details">
-        <p></p>
+        <p>Should return the URI Authority without masking protected user info data</p>
         <p></p>
         <div class="tags">
             
@@ -493,7 +491,7 @@
     <strong>getAbsoluteUri</strong>()</code>
     </h3>
     <div class="details">
-        <p></p>
+        <p>Build the full URI based on all the properties</p>
         <p></p>
         <div class="tags">
             
@@ -517,7 +515,7 @@
     <strong>getRelativeUri</strong>()</code>
     </h3>
     <div class="details">
-        <p></p>
+        <p>Build the relative URI based on all the properties</p>
         <p></p>
         <div class="tags">
             
@@ -541,7 +539,7 @@
     <strong>__toString</strong>()</code>
     </h3>
     <div class="details">
-        <p>Uses protected user info by default as per rfc3986-3.2.1 Uri::getAbsoluteUri() is available if plain-text password information is desirable.</p>
+        <p>Should return the URI string, masking protected user info data according to rfc3986-3.2.1</p>
         <p></p>
         <div class="tags">
             

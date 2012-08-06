@@ -191,7 +191,8 @@ abstract class AbstractService implements ServiceInterface
      */
     public function isValidScope($scope)
     {
-        return true;
+        $reflectionClass = new \ReflectionClass(get_class($this));
+        return in_array( $scope, $reflectionClass->getConstants() );
     }
 
     /**

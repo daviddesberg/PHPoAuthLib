@@ -1,6 +1,6 @@
 <?php
 /**
- * Example of retrieving an authentication token of the Google service
+ * Example of retrieving an authentication token of the Github service
  *
  * PHP version 5.4
  *
@@ -25,8 +25,8 @@ $storage = new Memory();
 // Replace 'xxx' with your client id and 'yyy' with your secret
 $credentials = new Credentials('xxx', 'yyy', $currentUri->getAbsoluteUri());
 
-// Use the StreamClient http client (requires the Guzzle phar)
-$httpClient = new OAuth\Common\Http\GuzzleClient();
+// Use the CurlClient http client
+$httpClient = new OAuth\Common\Http\CurlClient();
 
 // Instantiate the google service using the credentials, http client and storage mechanism for the token
 $gitHub = new GitHub($credentials, $httpClient, $storage, [ GitHub::SCOPE_USER ]);

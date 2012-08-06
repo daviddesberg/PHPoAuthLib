@@ -13,7 +13,7 @@
 
 namespace test;
 
-require_once __DIR__ . '/../lib/OAuth/Common/AutoLoader.php';
+require_once __DIR__ . '/../src/OAuth/Common/AutoLoader.php';
 
 $autoloader = new \OAuth\Common\AutoLoader('OAuth', dirname(__DIR__) . '/lib');
 

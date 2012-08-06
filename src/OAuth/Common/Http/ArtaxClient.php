@@ -47,6 +47,10 @@ class ArtaxClient implements ClientInterface
 
         $requestBody = http_build_query($params);
 
+        if( !isset($extraHeaders['Content-type'] ) && $method === 'POST' ) {
+            $extraHeaders['Content-type'] = 'application/x-www-form-urlencoded';
+        }
+
         if( !isset( $extraHeaders['Content-length'] ) ) {
             $extraHeaders['Content-length'] = strlen( $requestBody );
         }

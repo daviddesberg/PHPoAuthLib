@@ -18,6 +18,7 @@ Included service implementations
 ------------------
  - OAuth2
    - Google
+   - Microsoft
    - GitHub
    - BitLy
  - more to come!

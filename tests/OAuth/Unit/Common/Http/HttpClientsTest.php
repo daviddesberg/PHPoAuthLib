@@ -71,7 +71,9 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
         {
             // verify the post response
             $data = json_decode($response, true);
-            $this->assertEquals( 'testKey=testValue', $data['data'] );
+            // note that we check this because the retrieveResponse wrapper function automatically adds a content-type
+            // if there isn't one and it
+            $this->assertEquals( 'testValue', $data['form']['testKey'] );
         };
 
         $this->__doTestRetrieveResponse($testUri, ['testKey' => 'testValue'], [], 'POST', $postTestCb );

@@ -51,10 +51,6 @@ class ArtaxClient implements ClientInterface
             $extraHeaders['Content-type'] = 'application/x-www-form-urlencoded';
         }
 
-        if( !isset( $extraHeaders['Content-length'] ) ) {
-            $extraHeaders['Content-length'] = strlen( $requestBody );
-        }
-
         // Build and send the HTTP request
         $request = new StdRequest( $endpoint->getAbsoluteUri(), $method, $extraHeaders, $requestBody );
         $client = new Client();

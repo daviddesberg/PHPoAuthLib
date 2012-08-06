@@ -33,9 +33,16 @@
 
             <table>
                     <tr>
-                <td>AUTHORIZATION_METHOD_HEADER</td>
+                <td>AUTHORIZATION_METHOD_HEADER_OAUTH</td>
                 <td class="last">
                     <p><em>Authorization methods for various services</em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>AUTHORIZATION_METHOD_HEADER_BEARER</td>
+                <td class="last">
+                    <p><em></em></p>
                     <p></p>
                 </td>
             </tr>
@@ -78,7 +85,7 @@
                     <a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a>
                 </td>
                 <td class="last">
-                    <a href="#method_getAuthorizationUrl">getAuthorizationUri</a>(array $additionalParameters = array())
+                    <a href="#method_getAuthorizationUri">getAuthorizationUri</a>(array $additionalParameters = array())
                     <p>Returns the url to redirect to for authorization purposes.</p>
                 </td>
                 <td></td>
@@ -119,7 +126,7 @@
         <h2>Details</h2>
 
                         <h3 id="method___construct">
-        <div class="location">at line 32</div>
+        <div class="location">at line 33</div>
         <code>            public            
     <strong>__construct</strong>(<a href="../../../OAuth/Common/Consumer/Credentials.html"><abbr title="OAuth\Common\Consumer\Credentials">Credentials</abbr></a> $credentials, <a href="../../../OAuth/Common/Http/ClientInterface.html"><abbr title="OAuth\Common\Http\ClientInterface">ClientInterface</abbr></a> $httpClient, <a href="../../../OAuth/Common/Storage/TokenStorageInterface.html"><abbr title="OAuth\Common\Storage\TokenStorageInterface">TokenStorageInterface</abbr></a> $storage, array $scopes = array())</code>
     </h3>
@@ -159,7 +166,7 @@
     </div>
 
                 <h3 id="method_requestAccessToken">
-        <div class="location">at line 42</div>
+        <div class="location">at line 43</div>
         <code>            public            <a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a>
     <strong>requestAccessToken</strong>($code)</code>
     </h3>
@@ -201,8 +208,8 @@
                     </div>
     </div>
 
-                <h3 id="method_getAuthorizationUrl">
-        <div class="location">at line 51</div>
+                <h3 id="method_getAuthorizationUri">
+        <div class="location">at line 52</div>
         <code>            public            <a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a>
     <strong>getAuthorizationUri</strong>(array $additionalParameters = array())</code>
     </h3>
@@ -236,7 +243,7 @@
     </div>
 
                 <h3 id="method_getAuthorizationEndpoint">
-        <div class="location">at line 57</div>
+        <div class="location">at line 58</div>
         <code>            public            
     <strong>getAuthorizationEndpoint</strong>()</code>
     </h3>
@@ -251,7 +258,7 @@
     </div>
 
                 <h3 id="method_getAccessTokenEndpoint">
-        <div class="location">at line 63</div>
+        <div class="location">at line 64</div>
         <code>            public            
     <strong>getAccessTokenEndpoint</strong>()</code>
     </h3>
@@ -266,7 +273,7 @@
     </div>
 
                 <h3 id="method_sendAuthenticatedRequest">
-        <div class="location">at line 76</div>
+        <div class="location">at line 77</div>
         <code>            public            string
     <strong>sendAuthenticatedRequest</strong>(<a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a> $uri, array $bodyParams, $method = &#039;POST&#039;, $extraHeaders = array())</code>
     </h3>

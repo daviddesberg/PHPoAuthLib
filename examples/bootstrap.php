@@ -31,3 +31,8 @@ ini_set('date.timezone', 'Europe/Amsterdam');
  */
 $uriGenerator = new \OAuth\Common\Http\UriGenerator();
 $currentUri = $uriGenerator->make($_SERVER, false);
+
+/**
+ * Load the credential for the different services
+ */
+require_once __DIR__ . '/init.php';

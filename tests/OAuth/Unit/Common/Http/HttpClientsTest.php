@@ -23,6 +23,23 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * Test that extra headers are passed properly
+     */
+    public function testHeaders()
+    {
+        $testUri = new Uri('http://httpbin.org/get');
+        $headerCb = function($response)
+        {
+            $data = json_decode($response, true);
+            $this->assertEquals('extraheadertest', $data['headers']['Testingheader']);
+        };
+
+        $this->__doTestRetrieveResponse($testUri, [], [ 'Testingheader' => 'extraheadertest'], 'GET', $headerCb);
+    }
+    /**
+     * Tests that we get an exception for a >= 400 status code
+     */
     public function testException()
     {
         // sending a post here should get us a 405 which should trigger an exception
@@ -35,6 +52,9 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Tests the DELETE method
+     */
     public function testDelete()
     {
         $testUri = new Uri('http://httpbin.org/delete');
@@ -48,6 +68,9 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
         $this->__doTestRetrieveResponse($testUri, [], [], 'DELETE', $deleteTestCb );
     }
 
+    /**
+     * Tests the PUT method
+     */
     public function testPut()
     {
         $testUri = new Uri('http://httpbin.org/put');
@@ -62,6 +85,9 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
         $this->__doTestRetrieveResponse($testUri, ['testKey' => 'testValue'], [], 'PUT', $putTestCb );
     }
 
+    /**
+     * Tests the POST method
+     */
     public function testPost()
     {
         // http test server
@@ -79,6 +105,9 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
         $this->__doTestRetrieveResponse($testUri, ['testKey' => 'testValue'], [], 'POST', $postTestCb );
     }
 
+    /**
+     * Tests the GET method
+     */
     public function testGet()
     {
         // test uri

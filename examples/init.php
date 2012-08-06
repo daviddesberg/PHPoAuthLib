@@ -37,7 +37,7 @@ $servicesCredentials = [
 ];
 
 /**
- * @var callable This will return an instance of the prefered HTTP client used for requests to services
+ * @var callable This will return an instance of the preferred HTTP client used for requests to services
  * @return \OAuth\Common\Http\ArtaxClient
  */
 $httpClientProvider = function()

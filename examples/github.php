@@ -30,7 +30,7 @@ $credentials = new Credentials(
 );
 
 // Instantiate the google service using the credentials, http client and storage mechanism for the token
-$gitHub = new GitHub($credentials, $httpClientProvider();, $storage, [ GitHub::SCOPE_USER ]);
+$gitHub = new GitHub($credentials, $httpClientProvider(), $storage, [ GitHub::SCOPE_USER ]);
 
 if( !empty( $_GET['code'] ) ) {
     // This was a callback request from google, get the token

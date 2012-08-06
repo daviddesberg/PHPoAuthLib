@@ -21,6 +21,7 @@ Included service implementations
    - Microsoft
    - GitHub
    - BitLy
+   - Yammer
  - more to come!
 
 Examples

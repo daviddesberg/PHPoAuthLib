@@ -22,14 +22,15 @@ require_once __DIR__ . '/bootstrap.php';
 // In-memory storage
 $storage = new Memory();
 
-// Replace 'xxx' with your client id and 'yyy' with your secret
-$credentials = new Credentials('xxx', 'yyy', $currentUri->getAbsoluteUri());
-
-// Use the CurlClient http client
-$httpClient = new OAuth\Common\Http\CurlClient();
+// Setup the credentials for the requests
+$credentials = new Credentials(
+    $servicesCredentials['bitly']['key'],
+    $servicesCredentials['bitly']['secret'],
+    $currentUri->getAbsoluteUri()
+);
 
 // Instantiate the google service using the credentials, http client and storage mechanism for the token
-$bitlyService = new Bitly($credentials, $httpClient, $storage, []);
+$bitlyService = new Bitly($credentials, $httpClientProvider(), $storage, []);
 
 if( !empty( $_GET['code'] ) ) {
     // This was a callback request from bitly, get the token

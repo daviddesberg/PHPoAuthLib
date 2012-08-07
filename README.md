@@ -34,7 +34,7 @@ Authorizing a user with any service is very concise:
 
 ```php
 <?php
-$storage = new Null();
+$storage = new OAuth\Common\Storage\Memory();
 $credentials = new Credentials(GOOGLE_CLIENT, GOOGLE_SECRET, get_own_url() );
 $googleService = new Google(new OAuth\Common\Consumer\Credentials('yourClient', 'yourSecret', 'yourCallBackUrl'), new OAuth\Common\Http\StreamClient(), new OAuth\Common\Storage\Null(), [ Google::SCOPE_EMAIL, Google::SCOPE_PROFILE ]);
 header('Location: ' . $googleService->getAuthorizationUri());

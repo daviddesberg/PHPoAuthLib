@@ -34,7 +34,7 @@ Authorizing a user with any service is very concise:
 
 ```php
 <?php
-$storage = new Null();
+$storage = new OAuth\Common\Storage\Memory();
 $credentials = new Credentials(GOOGLE_CLIENT, GOOGLE_SECRET, get_own_url() );
 $googleService = new Google(new OAuth\Common\Consumer\Credentials('yourClient', 'yourSecret', 'yourCallBackUrl'), new OAuth\Common\Http\StreamClient(), new OAuth\Common\Storage\Null(), [ Google::SCOPE_EMAIL, Google::SCOPE_PROFILE ]);
 header('Location: ' . $googleService->getAuthorizationUri());
@@ -46,3 +46,7 @@ $token = $googleService->requestAccessToken( $_GET['code'] ); // note that the t
 // get userinfo
 $result = json_decode( $googleService->sendAuthenticatedRequest( new Uri('https://www.googleapis.com/oauth2/v1/userinfo'), [], 'GET' ), true );
 ```
+
+API Docs
+---------
+View the API docs [here](http://lusitanian.github.com/PHPoAuthLib/doc/api/).

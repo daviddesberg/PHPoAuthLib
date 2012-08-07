@@ -46,3 +46,7 @@ $token = $googleService->requestAccessToken( $_GET['code'] ); // note that the t
 // get userinfo
 $result = json_decode( $googleService->sendAuthenticatedRequest( new Uri('https://www.googleapis.com/oauth2/v1/userinfo'), [], 'GET' ), true );
 ```
+
+API Docs
+---------
+View the API docs [here](http://lusitanian.github.com/PHPoAuthLib/doc/api/).

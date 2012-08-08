@@ -33,7 +33,11 @@ $servicesCredentials = [
     'yammer' => [
         'key'       => '',
         'secret'    => ''
-    ]
+    ],
+    'soundcloud' => [
+        'key'       => '',
+        'secret'    => '',
+    ],
 ];
 
 /**

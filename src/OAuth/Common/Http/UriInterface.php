@@ -33,9 +33,21 @@ interface UriInterface
 
     /**
      * @abstract
+     * @param string $scheme
+     */
+    function setScheme($scheme);
+
+    /**
+     * @abstract
      * @return string
      */
     function getHost();
+
+    /**
+     * @abstract
+     * @param string $host
+     */
+    function setHost($host);
 
     /**
      * @abstract
@@ -45,9 +57,21 @@ interface UriInterface
 
     /**
      * @abstract
+     * @param int $port
+     */
+    function setPort($port);
+
+    /**
+     * @abstract
      * @return string
      */
     function getPath();
+
+    /**
+     * @abstract
+     * @param string $path
+     */
+    function setPath($path);
 
     /**
      * @abstract
@@ -56,7 +80,13 @@ interface UriInterface
     function getQuery();
 
     /**
-     * We need the ability to manipulate the uri from the service class.
+     * @abstract
+     * @param string $query
+     */
+    function setQuery($query);
+
+    /**
+     * Adds a param to the query string.
      *
      * @abstract
      * @param string $var
@@ -77,6 +107,12 @@ interface UriInterface
      * @return string
      */
     function getUserInfo();
+
+    /**
+     * @abstract
+     * @param string $userInfo
+     */
+    function setUserInfo($userInfo);
 
     /**
      * Should return the URI Authority, masking protected user info data according to rfc3986-3.2.1

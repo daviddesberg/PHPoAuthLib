@@ -58,8 +58,37 @@ class Uri implements UriInterface
     /**
      * @param string $uri
      */
-    public function __construct($uri) {
-        $this->parseUri($uri);
+    public function __construct($uri = null) {
+        if( null !== $uri ) {
+            $this->parseUri($uri);
+        }
+    }
+
+    /**
+     * Factory method to build a URI from parts
+     *
+     * @static
+     * @param $scheme
+     * @param $userInfo
+     * @param $host
+     * @param $port
+     * @param $path
+     * @param $query
+     * @param $fragment
+     * @return Uri
+     */
+    public static function fromParts($scheme, $userInfo, $host, $port, $path = '', $query = '', $fragment = '')
+    {
+        $uri = new static();
+        $uri->setScheme($scheme);
+        $uri->setUserInfo($userInfo);
+        $uri->setHost($host);
+        $uri->setPort($port);
+        $uri->setPath($path);
+        $uri->setQuery($query);
+        $uri->setFragment($fragment);
+
+        return $uri;
     }
 
     /**
@@ -111,14 +140,6 @@ class Uri implements UriInterface
         }
 
         $this->setUserInfo($userInfo);
-    }
-
-    /**
-     * @param string $userInfo
-     */
-    protected function setUserInfo($userInfo) {
-        $this->userInfo = $userInfo ? $this->protectUserInfo($userInfo) : '';
-        $this->rawUserInfo = $userInfo;
     }
 
     /**
@@ -187,17 +208,6 @@ class Uri implements UriInterface
      */
     public function getQuery() {
         return $this->query;
-    }
-
-    /**
-     * @param string $var
-     * @param string $val
-     */
-    public function addToQuery($var, $val) {
-        if( strlen($this->query) > 0 ) {
-            $this->query .= '&';
-        }
-        $this->query .= http_build_query( [ $var => $val ] );
     }
 
     /**
@@ -300,5 +310,87 @@ class Uri implements UriInterface
         }
 
         return $uri;
+    }
+
+    /**
+     * @param $path
+     */
+    public function setPath($path)
+    {
+        if( empty($path) ) {
+            $this->path = '/';
+            $this->explicitTrailingHostSlash = false;
+        } else {
+            $this->path = $path;
+            if( '/' === $this->path ) {
+                $this->explicitTrailingHostSlash = true;
+            }
+        }
+    }
+
+    /**
+     * @param string $query
+     */
+    public function setQuery($query)
+    {
+        $this->query = $query;
+    }
+
+    /**
+     * @param string $var
+     * @param string $val
+     */
+    public function addToQuery($var, $val) {
+        if( strlen($this->query) > 0 ) {
+            $this->query .= '&';
+        }
+        $this->query .= http_build_query( [ $var => $val ] );
+    }
+
+    /**
+     * @param string $fragment
+     */
+    public function setFragment($fragment)
+    {
+        $this->fragment = $fragment;
+    }
+
+    /**
+     * @param string $scheme
+     */
+    public function setScheme($scheme)
+    {
+        $this->scheme = $scheme;
+    }
+
+
+    /**
+     * @param string $userInfo
+     */
+    public function setUserInfo($userInfo) {
+        $this->userInfo = $userInfo ? $this->protectUserInfo($userInfo) : '';
+        $this->rawUserInfo = $userInfo;
+    }
+
+
+    /**
+     * @param int $port
+     */
+    public function setPort($port) {
+        $this->port = intval($port);
+
+        if( ( 'https' === $this->scheme && $this->port === 443 ) || ( 'http' === $this->scheme && $this->port === 80 ) ) {
+            $this->explicitPortSpecified = false;
+        } else {
+            $this->explicitPortSpecified = true;
+        }
+    }
+
+
+    /**
+     * @param string $host
+     */
+    public function setHost($host) {
+        $this->host = $host;
     }
 }

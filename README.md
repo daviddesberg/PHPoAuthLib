@@ -22,6 +22,7 @@ Included service implementations
    - GitHub
    - BitLy
    - Yammer
+   - SoundCloud
  - more to come!
 
 Examples

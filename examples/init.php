@@ -38,6 +38,10 @@ $servicesCredentials = [
         'key'       => '',
         'secret'    => '',
     ],
+    'foursquare' => [
+        'key'       => '',
+        'secret'    => '',
+    ],
 ];
 
 /**

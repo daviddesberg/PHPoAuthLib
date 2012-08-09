@@ -40,8 +40,18 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method___construct">__construct</a>(string $uri)
+                    <a href="#method___construct">__construct</a>(string $uri = null)
                     <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    static&nbsp;<a href="../../../OAuth/Common/Http/Uri.html"><abbr title="OAuth\Common\Http\Uri">Uri</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_fromParts">fromParts</a>($scheme, $userInfo, $host, $port, $path = &#039;&#039;, $query = &#039;&#039;, $fragment = &#039;&#039;)
+                    <p>Factory method to build a URI from parts</p>
                 </td>
                 <td></td>
             </tr>
@@ -61,7 +71,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_getUserInfo">getUserInfo</a>()
-                    <p>Should return URI user info, masking protected user info data according to rfc3986-3.2.1</p>
+                    <p></p>
                 </td>
                 <td></td>
             </tr>
@@ -71,7 +81,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_getRawUserInfo">getRawUserInfo</a>()
-                    <p>Should return the URI user info without masking protected user info data</p>
+                    <p></p>
                 </td>
                 <td></td>
             </tr>
@@ -117,16 +127,6 @@
             </tr>
                     <tr>
                 <td class="type">
-                    
-                </td>
-                <td class="last">
-                    <a href="#method_addToQuery">addToQuery</a>(string $var, string $val)
-                    <p>We need the ability to manipulate the uri from the service class.</p>
-                </td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type">
                     string
                 </td>
                 <td class="last">
@@ -141,7 +141,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_getAuthority">getAuthority</a>()
-                    <p>Should return the URI Authority, masking protected user info data according to rfc3986-3.2.1</p>
+                    <p>Uses protected user info by default as per rfc3986-3.2.1 Uri::getRawAuthority() is available if plain-text password information is desirable.</p>
                 </td>
                 <td></td>
             </tr>
@@ -151,7 +151,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_getRawAuthority">getRawAuthority</a>()
-                    <p>Should return the URI Authority without masking protected user info data</p>
+                    <p></p>
                 </td>
                 <td></td>
             </tr>
@@ -161,7 +161,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_getAbsoluteUri">getAbsoluteUri</a>()
-                    <p>Build the full URI based on all the properties</p>
+                    <p></p>
                 </td>
                 <td></td>
             </tr>
@@ -171,7 +171,7 @@
                 </td>
                 <td class="last">
                     <a href="#method_getRelativeUri">getRelativeUri</a>()
-                    <p>Build the relative URI based on all the properties</p>
+                    <p></p>
                 </td>
                 <td></td>
             </tr>
@@ -181,7 +181,87 @@
                 </td>
                 <td class="last">
                     <a href="#method___toString">__toString</a>()
-                    <p>Should return the URI string, masking protected user info data according to rfc3986-3.2.1</p>
+                    <p>Uses protected user info by default as per rfc3986-3.2.1 Uri::getAbsoluteUri() is available if plain-text password information is desirable.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setPath">setPath</a>(<abbr title="OAuth\Common\Http\$path">$path</abbr> $path)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setQuery">setQuery</a>(string $query)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_addToQuery">addToQuery</a>(string $var, string $val)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setFragment">setFragment</a>(string $fragment)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setScheme">setScheme</a>(string $scheme)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setUserInfo">setUserInfo</a>(string $userInfo)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setPort">setPort</a>(int $port)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setHost">setHost</a>(string $host)
+                    <p></p>
                 </td>
                 <td></td>
             </tr>
@@ -193,7 +273,7 @@
                         <h3 id="method___construct">
         <div class="location">at line 61</div>
         <code>            public            
-    <strong>__construct</strong>(string $uri)</code>
+    <strong>__construct</strong>(string $uri = null)</code>
     </h3>
     <div class="details">
         <p></p>
@@ -215,8 +295,72 @@
                     </div>
     </div>
 
+                <h3 id="method_fromParts">
+        <div class="location">at line 80</div>
+        <code>        static    public            <a href="../../../OAuth/Common/Http/Uri.html"><abbr title="OAuth\Common\Http\Uri">Uri</abbr></a>
+    <strong>fromParts</strong>($scheme, $userInfo, $host, $port, $path = &#039;&#039;, $query = &#039;&#039;, $fragment = &#039;&#039;)</code>
+    </h3>
+    <div class="details">
+        <p>Factory method to build a URI from parts</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$scheme</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$userInfo</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$host</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$port</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$path</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$query</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$fragment</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../OAuth/Common/Http/Uri.html"><abbr title="OAuth\Common\Http\Uri">Uri</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
                 <h3 id="method_getScheme">
-        <div class="location">at line 146</div>
+        <div class="location">at line 167</div>
         <code>            public            string
     <strong>getScheme</strong>()</code>
     </h3>
@@ -240,12 +384,12 @@
     </div>
 
                 <h3 id="method_getUserInfo">
-        <div class="location">at line 153</div>
+        <div class="location">at line 174</div>
         <code>            public            string
     <strong>getUserInfo</strong>()</code>
     </h3>
     <div class="details">
-        <p>Should return URI user info, masking protected user info data according to rfc3986-3.2.1</p>
+        <p></p>
         <p></p>
         <div class="tags">
             
@@ -264,12 +408,12 @@
     </div>
 
                 <h3 id="method_getRawUserInfo">
-        <div class="location">at line 160</div>
+        <div class="location">at line 181</div>
         <code>            public            string
     <strong>getRawUserInfo</strong>()</code>
     </h3>
     <div class="details">
-        <p>Should return the URI user info without masking protected user info data</p>
+        <p></p>
         <p></p>
         <div class="tags">
             
@@ -288,7 +432,7 @@
     </div>
 
                 <h3 id="method_getHost">
-        <div class="location">at line 167</div>
+        <div class="location">at line 188</div>
         <code>            public            string
     <strong>getHost</strong>()</code>
     </h3>
@@ -312,7 +456,7 @@
     </div>
 
                 <h3 id="method_getPort">
-        <div class="location">at line 174</div>
+        <div class="location">at line 195</div>
         <code>            public            int
     <strong>getPort</strong>()</code>
     </h3>
@@ -336,7 +480,7 @@
     </div>
 
                 <h3 id="method_getPath">
-        <div class="location">at line 181</div>
+        <div class="location">at line 202</div>
         <code>            public            string
     <strong>getPath</strong>()</code>
     </h3>
@@ -360,7 +504,7 @@
     </div>
 
                 <h3 id="method_getQuery">
-        <div class="location">at line 188</div>
+        <div class="location">at line 209</div>
         <code>            public            string
     <strong>getQuery</strong>()</code>
     </h3>
@@ -383,38 +527,8 @@
                     </div>
     </div>
 
-                <h3 id="method_addToQuery">
-        <div class="location">at line 196</div>
-        <code>            public            
-    <strong>addToQuery</strong>(string $var, string $val)</code>
-    </h3>
-    <div class="details">
-        <p>We need the ability to manipulate the uri from the service class.</p>
-        <p></p>
-        <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table>
-                    <tr>
-                <td>string</td>
-                <td>$var</td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td>string</td>
-                <td>$val</td>
-                <td></td>
-            </tr>
-            </table>
-
-            
-            
-            
-                    </div>
-    </div>
-
                 <h3 id="method_getFragment">
-        <div class="location">at line 206</div>
+        <div class="location">at line 216</div>
         <code>            public            string
     <strong>getFragment</strong>()</code>
     </h3>
@@ -438,12 +552,12 @@
     </div>
 
                 <h3 id="method_getAuthority">
-        <div class="location">at line 216</div>
+        <div class="location">at line 226</div>
         <code>            public            string
     <strong>getAuthority</strong>()</code>
     </h3>
     <div class="details">
-        <p>Should return the URI Authority, masking protected user info data according to rfc3986-3.2.1</p>
+        <p>Uses protected user info by default as per rfc3986-3.2.1 Uri::getRawAuthority() is available if plain-text password information is desirable.</p>
         <p></p>
         <div class="tags">
             
@@ -462,12 +576,12 @@
     </div>
 
                 <h3 id="method_getRawAuthority">
-        <div class="location">at line 230</div>
+        <div class="location">at line 240</div>
         <code>            public            string
     <strong>getRawAuthority</strong>()</code>
     </h3>
     <div class="details">
-        <p>Should return the URI Authority without masking protected user info data</p>
+        <p></p>
         <p></p>
         <div class="tags">
             
@@ -486,12 +600,12 @@
     </div>
 
                 <h3 id="method_getAbsoluteUri">
-        <div class="location">at line 244</div>
+        <div class="location">at line 254</div>
         <code>            public            string
     <strong>getAbsoluteUri</strong>()</code>
     </h3>
     <div class="details">
-        <p>Build the full URI based on all the properties</p>
+        <p></p>
         <p></p>
         <div class="tags">
             
@@ -510,12 +624,12 @@
     </div>
 
                 <h3 id="method_getRelativeUri">
-        <div class="location">at line 267</div>
+        <div class="location">at line 277</div>
         <code>            public            string
     <strong>getRelativeUri</strong>()</code>
     </h3>
     <div class="details">
-        <p>Build the relative URI based on all the properties</p>
+        <p></p>
         <p></p>
         <div class="tags">
             
@@ -534,12 +648,12 @@
     </div>
 
                 <h3 id="method___toString">
-        <div class="location">at line 285</div>
+        <div class="location">at line 295</div>
         <code>            public            string
     <strong>__toString</strong>()</code>
     </h3>
     <div class="details">
-        <p>Should return the URI string, masking protected user info data according to rfc3986-3.2.1</p>
+        <p>Uses protected user info by default as per rfc3986-3.2.1 Uri::getAbsoluteUri() is available if plain-text password information is desirable.</p>
         <p></p>
         <div class="tags">
             
@@ -552,6 +666,211 @@
         </tr>
     </table>
 
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setPath">
+        <div class="location">at line 318</div>
+        <code>            public            
+    <strong>setPath</strong>(<abbr title="OAuth\Common\Http\$path">$path</abbr> $path)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="OAuth\Common\Http\$path">$path</abbr></td>
+                <td>$path</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setQuery">
+        <div class="location">at line 334</div>
+        <code>            public            
+    <strong>setQuery</strong>(string $query)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$query</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_addToQuery">
+        <div class="location">at line 343</div>
+        <code>            public            
+    <strong>addToQuery</strong>(string $var, string $val)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$var</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$val</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setFragment">
+        <div class="location">at line 353</div>
+        <code>            public            
+    <strong>setFragment</strong>(string $fragment)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$fragment</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setScheme">
+        <div class="location">at line 361</div>
+        <code>            public            
+    <strong>setScheme</strong>(string $scheme)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$scheme</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setUserInfo">
+        <div class="location">at line 370</div>
+        <code>            public            
+    <strong>setUserInfo</strong>(string $userInfo)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$userInfo</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setPort">
+        <div class="location">at line 379</div>
+        <code>            public            
+    <strong>setPort</strong>(int $port)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>int</td>
+                <td>$port</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setHost">
+        <div class="location">at line 393</div>
+        <code>            public            
+    <strong>setHost</strong>(string $host)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$host</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
             
             
                     </div>

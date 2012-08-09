@@ -40,8 +40,8 @@
                     string
                 </td>
                 <td class="last">
-                    <a href="#method_retrieveResponse">retrieveResponse</a>(<a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a> $endpoint, array $params, array $extraHeaders = array(), string $method = &#039;POST&#039;)
-                    <p>Any implementing HTTP providers should send a POST request to the provided endpoint with the parameters.</p>
+                    <a href="#method_retrieveResponse">retrieveResponse</a>(<a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a> $endpoint, mixed $requestBody, array $extraHeaders = array(), string $method = &#039;POST&#039;)
+                    <p>Any implementing HTTP providers should send a request to the provided endpoint with the parameters.</p>
                 </td>
                 <td></td>
             </tr>
@@ -53,10 +53,10 @@
                         <h3 id="method_retrieveResponse">
         <div class="location">at line 30</div>
         <code>            public            string
-    <strong>retrieveResponse</strong>(<a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a> $endpoint, array $params, array $extraHeaders = array(), string $method = &#039;POST&#039;)</code>
+    <strong>retrieveResponse</strong>(<a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a> $endpoint, mixed $requestBody, array $extraHeaders = array(), string $method = &#039;POST&#039;)</code>
     </h3>
     <div class="details">
-        <p>Any implementing HTTP providers should send a POST request to the provided endpoint with the parameters.</p>
+        <p>Any implementing HTTP providers should send a request to the provided endpoint with the parameters.</p>
         <p>They should return, in string form, the response body and throw an exception on error.</p>
         <div class="tags">
                             <h4>Parameters</h4>
@@ -68,8 +68,8 @@
                 <td></td>
             </tr>
                     <tr>
-                <td>array</td>
-                <td>$params</td>
+                <td>mixed</td>
+                <td>$requestBody</td>
                 <td></td>
             </tr>
                     <tr>

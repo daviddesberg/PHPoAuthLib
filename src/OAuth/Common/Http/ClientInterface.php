@@ -18,11 +18,11 @@ interface ClientInterface
      *
      * @abstract
      * @param UriInterface $endpoint
-     * @param array $params
+     * @param mixed $requestBody
      * @param array $extraHeaders
      * @param string $method
      * @return string
      * @throws TokenResponseException
      */
-    public function retrieveResponse(UriInterface $endpoint, array $params, array $extraHeaders = [], $method = 'POST');
+    public function retrieveResponse(UriInterface $endpoint, $requestBody, array $extraHeaders = [], $method = 'POST');
 }

@@ -4,7 +4,7 @@
  * Released under the MIT license.
  */
 
-namespace OAuth\Common\Service;
+namespace OAuth\Oauth2\Service;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Token\TokenInterface;
@@ -12,7 +12,7 @@ use OAuth\Common\Http\ClientInterface;
 use OAuth\Common\Http\UriInterface;
 
 /**
- * Defines the common methods across any OAuth service, be it version 1 or 2.
+ * Defines the common methods across OAuth 2 services.
  */
 interface ServiceInterface
 {

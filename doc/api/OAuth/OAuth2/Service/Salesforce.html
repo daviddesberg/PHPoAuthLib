@@ -93,7 +93,7 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method___construct">__construct</a>(<a href="../../../OAuth/Common/Consumer/Credentials.html"><abbr title="OAuth\Common\Consumer\Credentials">Credentials</abbr></a> $credentials, <a href="../../../OAuth/Common/Http/ClientInterface.html"><abbr title="OAuth\Common\Http\ClientInterface">ClientInterface</abbr></a> $httpClient, <a href="../../../OAuth/Common/Storage/TokenStorageInterface.html"><abbr title="OAuth\Common\Storage\TokenStorageInterface">TokenStorageInterface</abbr></a> $storage, array $scopes = array())
+                    <a href="#method___construct">__construct</a>(<a href="../../../OAuth/Common/Consumer/Credentials.html"><abbr title="OAuth\Common\Consumer\Credentials">Credentials</abbr></a> $credentials, <abbr title="OAuth\Common\Http\ClientInterface">ClientInterface</abbr> $httpClient, <a href="../../../OAuth/Common/Storage/TokenStorageInterface.html"><abbr title="OAuth\Common\Storage\TokenStorageInterface">TokenStorageInterface</abbr></a> $storage, array $scopes = array())
                     <p></p>
                 </td>
                 <td><small>from&nbsp;<a href="../../../OAuth/OAuth2/Service/AbstractService.html#method___construct"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a></small></td>
@@ -123,7 +123,7 @@
                     string
                 </td>
                 <td class="last">
-                    <a href="#method_sendAuthenticatedRequest">sendAuthenticatedRequest</a>(<a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a> $uri, array $bodyParams, string $method = &#039;POST&#039;, array $extraHeaders = array())
+                    <a href="#method_sendAuthenticatedRequest">sendAuthenticatedRequest</a>(<abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr> $uri, array $bodyParams, string $method = &#039;POST&#039;, array $extraHeaders = array())
                     <p>Sends an authenticated request to the given endpoint using stored token.</p>
                 </td>
                 <td><small>from&nbsp;<a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_sendAuthenticatedRequest"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a></small></td>
@@ -150,7 +150,7 @@
             </tr>
                     <tr>
                 <td class="type">
-                    <a href="../../../OAuth/Common/Http/Uri.html"><abbr title="OAuth\Common\Http\Uri">Uri</abbr></a>|<a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a>
+                    <a href="../../../OAuth/Common/Http/Uri/UriInterface.html"><abbr title="OAuth\Common\Http\Uri\UriInterface">UriInterface</abbr></a>
                 </td>
                 <td class="last">
                     <a href="#method_getAuthorizationEndpoint">getAuthorizationEndpoint</a>()
@@ -160,7 +160,7 @@
             </tr>
                     <tr>
                 <td class="type">
-                    <a href="../../../OAuth/Common/Http/Uri.html"><abbr title="OAuth\Common\Http\Uri">Uri</abbr></a>|<a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a>
+                    <a href="../../../OAuth/Common/Http/Uri/UriInterface.html"><abbr title="OAuth\Common\Http\Uri\UriInterface">UriInterface</abbr></a>
                 </td>
                 <td class="last">
                     <a href="#method_getAccessTokenEndpoint">getAccessTokenEndpoint</a>()
@@ -174,9 +174,9 @@
         <h2>Details</h2>
 
                         <h3 id="method___construct">
-        <div class="location">in <a href="../../../OAuth/OAuth2/Service/AbstractService.html#method___construct"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a> at line 52</div>
+        <div class="location">in <a href="../../../OAuth/OAuth2/Service/AbstractService.html#method___construct"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a> at line 65</div>
         <code>            public            
-    <strong>__construct</strong>(<a href="../../../OAuth/Common/Consumer/Credentials.html"><abbr title="OAuth\Common\Consumer\Credentials">Credentials</abbr></a> $credentials, <a href="../../../OAuth/Common/Http/ClientInterface.html"><abbr title="OAuth\Common\Http\ClientInterface">ClientInterface</abbr></a> $httpClient, <a href="../../../OAuth/Common/Storage/TokenStorageInterface.html"><abbr title="OAuth\Common\Storage\TokenStorageInterface">TokenStorageInterface</abbr></a> $storage, array $scopes = array())</code>
+    <strong>__construct</strong>(<a href="../../../OAuth/Common/Consumer/Credentials.html"><abbr title="OAuth\Common\Consumer\Credentials">Credentials</abbr></a> $credentials, <abbr title="OAuth\Common\Http\ClientInterface">ClientInterface</abbr> $httpClient, <a href="../../../OAuth/Common/Storage/TokenStorageInterface.html"><abbr title="OAuth\Common\Storage\TokenStorageInterface">TokenStorageInterface</abbr></a> $storage, array $scopes = array())</code>
     </h3>
     <div class="details">
         <p></p>
@@ -191,7 +191,7 @@
                 <td></td>
             </tr>
                     <tr>
-                <td><a href="../../../OAuth/Common/Http/ClientInterface.html"><abbr title="OAuth\Common\Http\ClientInterface">ClientInterface</abbr></a></td>
+                <td><abbr title="OAuth\Common\Http\ClientInterface">ClientInterface</abbr></td>
                 <td>$httpClient</td>
                 <td></td>
             </tr>
@@ -223,7 +223,7 @@
     </div>
 
                 <h3 id="method_getAuthorizationUri">
-        <div class="location">in <a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_getAuthorizationUri"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a> at line 75</div>
+        <div class="location">in <a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_getAuthorizationUri"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a> at line 88</div>
         <code>            public            string
     <strong>getAuthorizationUri</strong>(array $additionalParameters = array())</code>
     </h3>
@@ -257,7 +257,7 @@
     </div>
 
                 <h3 id="method_requestAccessToken">
-        <div class="location">in <a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_requestAccessToken"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a> at line 106</div>
+        <div class="location">in <a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_requestAccessToken"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a> at line 119</div>
         <code>            public            <a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a>
     <strong>requestAccessToken</strong>(string $code)</code>
     </h3>
@@ -300,9 +300,9 @@
     </div>
 
                 <h3 id="method_sendAuthenticatedRequest">
-        <div class="location">in <a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_sendAuthenticatedRequest"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a> at line 135</div>
+        <div class="location">in <a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_sendAuthenticatedRequest"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a> at line 148</div>
         <code>            public            string
-    <strong>sendAuthenticatedRequest</strong>(<a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a> $uri, array $bodyParams, string $method = &#039;POST&#039;, array $extraHeaders = array())</code>
+    <strong>sendAuthenticatedRequest</strong>(<abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr> $uri, array $bodyParams, string $method = &#039;POST&#039;, array $extraHeaders = array())</code>
     </h3>
     <div class="details">
         <p>Sends an authenticated request to the given endpoint using stored token.</p>
@@ -312,7 +312,7 @@
 
                     <table>
                     <tr>
-                <td><a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a></td>
+                <td><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></td>
                 <td>$uri</td>
                 <td></td>
             </tr>
@@ -358,7 +358,7 @@
     </div>
 
                 <h3 id="method_refreshAccessToken">
-        <div class="location">in <a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_refreshAccessToken"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a> at line 168</div>
+        <div class="location">in <a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_refreshAccessToken"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a> at line 181</div>
         <code>            public            <a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a>
     <strong>refreshAccessToken</strong>(<a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a> $token)</code>
     </h3>
@@ -401,7 +401,7 @@
     </div>
 
                 <h3 id="method_isValidScope">
-        <div class="location">in <a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_isValidScope"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a> at line 198</div>
+        <div class="location">in <a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_isValidScope"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a> at line 211</div>
         <code>            public            bool
     <strong>isValidScope</strong>(<abbr title="OAuth\OAuth2\Service\$scope">$scope</abbr> $scope)</code>
     </h3>
@@ -436,7 +436,7 @@
 
                 <h3 id="method_getAuthorizationEndpoint">
         <div class="location">at line 47</div>
-        <code>            public            <a href="../../../OAuth/Common/Http/Uri.html"><abbr title="OAuth\Common\Http\Uri">Uri</abbr></a>|<a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a>
+        <code>            public            <a href="../../../OAuth/Common/Http/Uri/UriInterface.html"><abbr title="OAuth\Common\Http\Uri\UriInterface">UriInterface</abbr></a>
     <strong>getAuthorizationEndpoint</strong>()</code>
     </h3>
     <div class="details">
@@ -448,7 +448,7 @@
 
                     <table>
         <tr>
-            <td><a href="../../../OAuth/Common/Http/Uri.html"><abbr title="OAuth\Common\Http\Uri">Uri</abbr></a>|<a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a></td>
+            <td><a href="../../../OAuth/Common/Http/Uri/UriInterface.html"><abbr title="OAuth\Common\Http\Uri\UriInterface">UriInterface</abbr></a></td>
             <td></td>
         </tr>
     </table>
@@ -460,7 +460,7 @@
 
                 <h3 id="method_getAccessTokenEndpoint">
         <div class="location">at line 55</div>
-        <code>            public            <a href="../../../OAuth/Common/Http/Uri.html"><abbr title="OAuth\Common\Http\Uri">Uri</abbr></a>|<a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a>
+        <code>            public            <a href="../../../OAuth/Common/Http/Uri/UriInterface.html"><abbr title="OAuth\Common\Http\Uri\UriInterface">UriInterface</abbr></a>
     <strong>getAccessTokenEndpoint</strong>()</code>
     </h3>
     <div class="details">
@@ -472,7 +472,7 @@
 
                     <table>
         <tr>
-            <td><a href="../../../OAuth/Common/Http/Uri.html"><abbr title="OAuth\Common\Http\Uri">Uri</abbr></a>|<a href="../../../OAuth/Common/Http/UriInterface.html"><abbr title="OAuth\Common\Http\UriInterface">UriInterface</abbr></a></td>
+            <td><a href="../../../OAuth/Common/Http/Uri/UriInterface.html"><abbr title="OAuth\Common\Http\Uri\UriInterface">UriInterface</abbr></a></td>
             <td></td>
         </tr>
     </table>

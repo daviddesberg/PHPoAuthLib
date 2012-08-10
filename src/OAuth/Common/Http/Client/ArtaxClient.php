@@ -10,7 +10,7 @@
 
 namespace OAuth\Common\Http\Client;
 use OAuth\Common\Http\Exception\TokenResponseException;
-
+use OAuth\Common\Http\Uri\UriInterface;
 use Artax\Http\StdRequest;
 use Artax\Http\Client;
 

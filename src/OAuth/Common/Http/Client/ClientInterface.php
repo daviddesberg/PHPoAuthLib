@@ -9,6 +9,7 @@
  */
 
 namespace OAuth\Common\Http\Client;
+use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\Common\Http\Exception\TokenResponseException;
 
 /**

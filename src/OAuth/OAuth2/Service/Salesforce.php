@@ -37,7 +37,7 @@ class Salesforce extends AbstractService
 	const SCOPE_FULL = 'full';
 	const SCOPE_ID = 'id';
 	const SCOPE_REFRESH_TOKEN = 'refresh_token';
-	const SCOPE_VISUALFORCE = 'visualforce';
+	const SCOPE_VISUAL_FORCE = 'visualforce';
 	const SCOPE_WEB = 'web';
 
 

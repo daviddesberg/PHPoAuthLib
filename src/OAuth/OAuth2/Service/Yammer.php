@@ -42,7 +42,6 @@ class Yammer extends AbstractService
      */
     public function getAccessTokenEndpoint()
     {
-        //https://www.yammer.com/oauth2/access_token.json
         return new Uri('https://www.yammer.com/oauth2/access_token.json');
     }
 

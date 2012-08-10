@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Lusitanian <alusitanian@gmail.com>
+ * @author David Desberg <david@thedesbergs.com>
  * Released under the MIT license.
  */
 

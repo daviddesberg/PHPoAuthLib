@@ -7,7 +7,7 @@
  * @category   OAuth
  * @package    OAuth2
  * @subpackage Service
- * @author     Lusitanian <alusitanian@gmail.com>
+ * @author     David Desberg <david@thedesbergs.com>
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -16,7 +16,7 @@ namespace OAuth\OAuth2\Service;
 
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
-use OAuth\Common\Http\Uri;
+use OAuth\Common\Http\Uri\Uri;
 
 /**
  * OAuth2 service implementation for Salesforce.
@@ -24,7 +24,7 @@ use OAuth\Common\Http\Uri;
  * @category   OAuth
  * @package    OAuth2
  * @subpackage Service
- * @author     Lusitanian <alusitanian@gmail.com>
+ * @author     David Desberg <david@thedesbergs.com>
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
 class Salesforce extends AbstractService
@@ -42,7 +42,7 @@ class Salesforce extends AbstractService
 
 
     /**
-     * @return \OAuth\Common\Http\Uri|\OAuth\Common\Http\UriInterface
+     * @return \OAuth\Common\Http\Uri\UriInterface
      */
     public function getAuthorizationEndpoint()
     {
@@ -50,7 +50,7 @@ class Salesforce extends AbstractService
     }
 
     /**
-     * @return \OAuth\Common\Http\Uri|\OAuth\Common\Http\UriInterface
+     * @return \OAuth\Common\Http\Uri\UriInterface
      */
     public function getAccessTokenEndpoint()
     {

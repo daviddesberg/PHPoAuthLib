@@ -1,7 +1,15 @@
 <?php
 /**
- * @author Lusitanian <alusitanian@gmail.com>
- * Released under the MIT license.
+ * Abstract OAuth2 Service.
+ *
+ * PHP version 5.4
+ *
+ * @category   OAuth
+ * @package    OAuth2
+ * @subpackage Service
+ * @author     David Desberg <david@thedesbergs.com>
+ * @copyright  Copyright (c) 2012 The authors
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
 namespace OAuth\OAuth2\Service;
@@ -18,7 +26,12 @@ use OAuth\Common\Token\Exception\ExpiredTokenException;
 use OAuth\Common\Service\ServiceInterface;
 
 /**
- * AbstractService class for OAuth 2, implements basic methods in compliance with that protocol
+ * AbstractService class for OAuth 2.
+ * Implements basic methods in compliance with that protocol
+ * @category   OAuth
+ * @package    OAuth2
+ * @subpackage Service
+ * @author     David Desberg <david@thedesbergs.com>
  */
 abstract class AbstractService implements ServiceInterface
 {

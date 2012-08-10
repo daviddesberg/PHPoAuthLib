@@ -1,5 +1,14 @@
 <?php
-use OAuth\Common\Http\Uri;
+/**
+ * @category   OAuth
+ * @package    Tests
+ * @author     David Desberg <david@thedesbergs.com>
+ * @author     Pieter Hordijk <info@pieterhordijk.com>
+ * @copyright  Copyright (c) 2012 The authors
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
+ */
+
+use OAuth\Common\Http\Uri\Uri;
 
 class UriTest extends PHPUnit_Framework_TestCase
 {

@@ -12,7 +12,7 @@
 use OAuth\OAuth2\Service\SoundCloud;
 use OAuth\Common\Storage\Memory;
 use OAuth\Common\Consumer\Credentials;
-use OAuth\Common\Http\Uri;
+use OAuth\Common\Http\Uri\Uri;
 
 /**
  * Bootstrap the example

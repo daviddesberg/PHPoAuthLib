@@ -7,7 +7,7 @@
  * @category   OAuth
  * @package    OAuth2
  * @subpackage Service
- * @author     Lusitanian <alusitanian@gmail.com>
+ * @author     David Desberg <david@thedesbergs.com>
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
@@ -15,7 +15,7 @@ namespace OAuth\OAuth2\Service;
 
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
-use OAuth\Common\Http\Uri;
+use OAuth\Common\Http\Uri\Uri;
 
 /**
  * OAuth2 service implementation for Yammer. Note that Yammer doesn't use any scopes.
@@ -25,12 +25,12 @@ use OAuth\Common\Http\Uri;
  * @category   OAuth
  * @package    OAuth2
  * @subpackage Service
- * @author     Lusitanian <alusitanian@gmail.com>
+ * @author     David Desberg <david@thedesbergs.com>
  */
 class Yammer extends AbstractService
 {
     /**
-     * @return \OAuth\Common\Http\Uri|\OAuth\Common\Http\UriInterface
+     * @return \OAuth\Common\Http\Uri\UriInterface
      */
     public function getAuthorizationEndpoint()
     {
@@ -38,7 +38,7 @@ class Yammer extends AbstractService
     }
 
     /**
-     * @return \OAuth\Common\Http\Uri|\OAuth\Common\Http\UriInterface
+     * @return \OAuth\Common\Http\Uri\UriInterface
      */
     public function getAccessTokenEndpoint()
     {

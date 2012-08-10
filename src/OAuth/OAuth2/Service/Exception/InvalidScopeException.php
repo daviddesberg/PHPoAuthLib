@@ -3,7 +3,7 @@
  * @author Lusitanian <alusitanian@gmail.com>
  * Released under the MIT license.
  */
-namespace OAuth\Common\Service\Exception;
+namespace OAuth\OAuth2\Service\Exception;
 use OAuth\Common\Exception\Exception;
 
 /**

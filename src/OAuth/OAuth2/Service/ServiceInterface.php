@@ -4,7 +4,7 @@
  * Released under the MIT license.
  */
 
-namespace OAuth\Oauth2\Service;
+namespace OAuth\OAuth2\Service;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Token\TokenInterface;

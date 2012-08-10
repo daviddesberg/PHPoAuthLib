@@ -19,11 +19,10 @@ use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Http\Uri\UriInterface;
-use OAuth\Common\Service\Exception\InvalidScopeException;
-use OAuth\Common\Service\Exception\MissingRefreshTokenException;
+use OAuth\OAuth2\Service\Exception\InvalidScopeException;
+use OAuth\OAuth2\Service\Exception\MissingRefreshTokenException;
 use OAuth\Common\Token\TokenInterface;
 use OAuth\Common\Token\Exception\ExpiredTokenException;
-use OAuth\Common\Service\ServiceInterface;
 
 /**
  * AbstractService class for OAuth 2.

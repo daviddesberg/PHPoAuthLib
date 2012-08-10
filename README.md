@@ -23,6 +23,7 @@ Included service implementations
    - BitLy
    - Yammer
    - SoundCloud
+   - Foursquare
  - more to come!
 
 Examples

@@ -14,7 +14,7 @@ use OAuth\Common\Http\Uri\Uri;
 class HttpClientsTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var object|\OAuth\Common\Http\ClientInterface[]
+     * @var object|\OAuth\Common\Http\Client\ClientInterface[]
      */
     protected $clients;
 
@@ -43,7 +43,7 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
             $this->assertEquals('extraheadertest', $data['headers']['Testingheader']);
         };
 
-        //$this->__doTestRetrieveResponse($testUri, [], [ 'Testingheader' => 'extraheadertest'], 'GET', $headerCb);
+        $this->__doTestRetrieveResponse($testUri, [], [ 'Testingheader' => 'extraheadertest'], 'GET', $headerCb);
     }
     /**
      * Tests that we get an exception for a >= 400 status code
@@ -54,8 +54,8 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
         $testUri = new Uri('http://httpbin.org/delete');
         foreach($this->clients as $client)
         {
-            //$this->setExpectedException('OAuth\Common\Http\Exception\TokenResponseException');
-            //$client->retrieveResponse($testUri, ['blah' => 'blih'] );
+            $this->setExpectedException('OAuth\Common\Http\Exception\TokenResponseException');
+            $client->retrieveResponse($testUri, ['blah' => 'blih'] );
         }
 
     }
@@ -73,7 +73,7 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
             $this->assertEquals( '', $data['data'] );
         };
 
-        //$this->__doTestRetrieveResponse($testUri, [], [], 'DELETE', $deleteTestCb );
+        $this->__doTestRetrieveResponse($testUri, [], [], 'DELETE', $deleteTestCb );
     }
 
     /**
@@ -90,7 +90,7 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
             $this->assertEquals( 'testKey=testValue', $data['data'] );
         };
 
-        //$this->__doTestRetrieveResponse($testUri, ['testKey' => 'testValue'], [], 'PUT', $putTestCb );
+        $this->__doTestRetrieveResponse($testUri, ['testKey' => 'testValue'], [], 'PUT', $putTestCb );
     }
 
     /**
@@ -110,7 +110,7 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
             $this->assertEquals( 'testValue', $data['form']['testKey'] );
         };
 
-        //$this->__doTestRetrieveResponse($testUri, ['testKey' => 'testValue'], [], 'POST', $postTestCb );
+        $this->__doTestRetrieveResponse($testUri, ['testKey' => 'testValue'], [], 'POST', $postTestCb );
     }
 
     /**
@@ -127,20 +127,20 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
             $this->assertEquals( 'testValue', $data['args']['testKey'] );
         };
 
-        //$this->__doTestRetrieveResponse($testUri, [], [], 'GET', $getTestCb);
+        $this->__doTestRetrieveResponse($testUri, [], [], 'GET', $getTestCb);
 
     }
 
     /**
      * Test on all HTTP clients.
      *
-     * @param OAuth\Common\Http\UriInterface $uri
+     * @param OAuth\Common\Http\Uri\UriInterface $uri
      * @param array $param
      * @param array $header
      * @param $method
      * @param $responseCallback
      */
-    protected function __doTestRetrieveResponse(\OAuth\Common\Http\UriInterface $uri, array $param, array $header, $method, callable $responseCallback)
+    protected function __doTestRetrieveResponse(\OAuth\Common\Http\Uri\UriInterface $uri, array $param, array $header, $method, callable $responseCallback)
     {
         foreach($this->clients as $client)
         {

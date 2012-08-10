@@ -141,7 +141,7 @@ class UriFactory
      * not made through the HTTPS protocol. As a result, we filter the
      * value to a bool.
      *
-     * @param array $_server A superglobal $_SERVER array
+     * @param array $_server A super-global $_SERVER array
      *
      * @return string Returns http or https depending on the URI scheme
      */

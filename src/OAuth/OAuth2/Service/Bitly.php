@@ -94,7 +94,7 @@ class Bitly extends AbstractService
         $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $bodyParams, $this->getExtraOAuthHeaders());
 
         // we can scream what we want that we want bitly to return a json encoded string (format=json), but the
-        // bastard doesn't seem to like screaming, hence we need to manually parse the result
+        // WOAH WATCH YOUR LANGUAGE ;) service doesn't seem to like screaming, hence we need to manually parse the result
         $parsedResult = [];
         parse_str($responseBody, $parsedResult);
 

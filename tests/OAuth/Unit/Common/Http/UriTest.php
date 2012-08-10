@@ -8,14 +8,32 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-use OAuth\Common\Http\Uri\Uri;
+use OAuth\Common\Http\Uri\UriFactory;
 
 class UriTest extends PHPUnit_Framework_TestCase
 {
-    public function testAllUriComponents()
+    /**
+     * @var UriFactory
+     */
+    protected $uriFactory;
+
+    public function setUp()
+    {
+        $this->uriFactory = new UriFactory();
+    }
+
+    public function tearDown()
+    {
+        unset($this->uriFactory);
+    }
+
+    /**
+     * Test that the Uri's parts get parsed correctly when constructued using an absolute uri.
+     */
+    public function testFromAbsolute()
     {
         $absoluteUri = 'https://joe:bob@example.com:6912/relative/path?user=jon&password=secret#div';
-        $uri = new Uri($absoluteUri);
+        $uri = $this->uriFactory->createFromAbsolute($absoluteUri);
         $this->assertEquals( $absoluteUri, $uri->getAbsoluteUri() );
         $this->assertEquals( 6912, $uri->getPort() );
         $this->assertEquals( 'example.com', $uri->getHost() );
@@ -26,10 +44,13 @@ class UriTest extends PHPUnit_Framework_TestCase
         $this->assertEquals( 'joe:********', $uri->getUserInfo() );
     }
 
+    /**
+     * Test the creation of a Uri from parts.
+     */
     public function testFromParts()
     {
         $absoluteUri = 'https://joe:bob@example.com:6912/relative/path?user=jon&password=secret#div';
-        $uri = Uri::fromParts('https', 'joe:bob', 'example.com', 6912, '/relative/path', 'user=jon&password=secret', 'div');
+        $uri = $this->uriFactory->createFromParts('https', 'joe:bob', 'example.com', 6912, '/relative/path', 'user=jon&password=secret', 'div');
         $this->assertEquals( $absoluteUri, $uri->getAbsoluteUri() );
         $this->assertEquals( 6912, $uri->getPort() );
         $this->assertEquals( 'example.com', $uri->getHost() );
@@ -40,10 +61,13 @@ class UriTest extends PHPUnit_Framework_TestCase
         $this->assertEquals( 'joe:********', $uri->getUserInfo() );
     }
 
+    /**
+     * Test the mutability of the Uri class.
+     */
     public function testMutability()
     {
         $absoluteUri = 'https://joe:bob@example.com:6912/relative/path?user=jon&password=secret#div';
-        $uri = new Uri($absoluteUri);
+        $uri = $this->uriFactory->createFromAbsolute($absoluteUri);
 
         $uri->setPort(443);
         $this->assertEquals( str_replace(':6912', '', $absoluteUri ), $uri->getAbsoluteUri() );
@@ -53,5 +77,28 @@ class UriTest extends PHPUnit_Framework_TestCase
 
         $uri->setHost('github.com');
         $this->assertEquals( str_replace('example.com', 'github.com', $absoluteUri ), $uri->getAbsoluteUri() );
+    }
+
+    /**
+     * Test the creation of a Uri from a super-global array.
+     */
+    public function testSuperGlobals()
+    {
+        $serverArray =
+        [
+            'REDIRECT_URL' => '/some/relative/path',
+            'HTTPS' => false,
+            'HTTP_HOST' => 'example.com',
+            'QUERY_STRING' => 'test=param'
+        ];
+
+        $uri = $this->uriFactory->createFromSuperGlobalArray($serverArray);
+
+        $this->assertEquals( $uri->getAbsoluteUri(), 'http://example.com/some/relative/path?test=param' );
+        $this->assertEquals( $uri->getHost(), 'example.com' );
+        $this->assertEquals( $uri->getPort(), 80 );
+        $this->assertEquals( $uri->getScheme(), 'http' );
+        $this->assertEquals( $uri->getPath(), '/some/relative/path' );
+        $this->assertEquals( $uri->getFragment(), '' );
     }
 }

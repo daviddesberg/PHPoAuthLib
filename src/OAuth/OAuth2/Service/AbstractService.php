@@ -17,8 +17,8 @@ namespace OAuth\OAuth2\Service;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Exception\TokenResponseException;
-use OAuth\Common\Http\ClientInterface;
-use OAuth\Common\Http\UriInterface;
+use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\Common\Service\Exception\InvalidScopeException;
 use OAuth\Common\Service\Exception\MissingRefreshTokenException;
 use OAuth\Common\Token\TokenInterface;
@@ -51,13 +51,13 @@ abstract class AbstractService implements ServiceInterface
     protected $scopes;
 
     /**
-     * @var \OAuth\Common\Http\ClientInterface
+     * @var \OAuth\Common\Http\Client\ClientInterface
      */
     protected $httpClient;
 
     /**
      * @param \OAuth\Common\Consumer\Credentials $credentials
-     * @param \OAuth\Common\Http\ClientInterface $httpClient
+     * @param \OAuth\Common\Http\Client\ClientInterface $httpClient
      * @param \OAuth\Common\Storage\TokenStorageInterface $storage
      * @param array $scopes
      * @throws InvalidScopeException

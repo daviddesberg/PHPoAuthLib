@@ -12,7 +12,6 @@ use InvalidArgumentException;
  */
 class Uri implements UriInterface
 {
-
     /**
      * @var string
      */

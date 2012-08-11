@@ -28,7 +28,7 @@ interface ServiceInterface
      * @param \OAuth\Common\Consumer\Credentials $credentials
      * @param \OAuth\Common\Http\ClientInterface $httpClient
      * @param \OAuth\Common\Storage\TokenStorageInterface $storage
-     * @param array $scopes
+     * @param \OAuth\OAuth1\Signature\Signature $signature
      * @abstract
      */
     public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, Signature $signature);
@@ -46,17 +46,19 @@ interface ServiceInterface
      * Retrieves and stores/returns the OAuth2 access token after a successful authorization.
      *
      * @abstract
-     * @param string $code The access code from the callback.
+     * @param string $token The request token from the callback.
+     * @param string $verifier
+     * @param string $tokenSecret
      * @return TokenInterface $token
      * @throws InvalidTokenResponseException
      */
-    public function requestAccessToken($code);
+    public function requestAccessToken($token, $verifier, $tokenSecret);
 
     /**
      * @abstract
      * @return UriInterface
      */
-    public function getRequestEndpoint();
+    public function getRequestTokenEndpoint();
 
     /**
      * Returns the url to redirect to for authorization purposes.

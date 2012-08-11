@@ -64,18 +64,10 @@ abstract class AbstractService implements ServiceInterface
      */
     public function requestRequestToken()
     {
-        $headerParameters = $this->getAuthorizationHeaderInfo();
-        $headerParameters['oauth_signature'] = $this->signature->getSignature($this->getRequestTokenEndpoint(), null, $headerParameters);
+        $authorizationHeader = ['Authorization' => $this->buildAuthorizationHeader()];
+        $headers = array_merge($authorizationHeader, $this->getExtraOAuthHeaders());
 
-        $authorizationHeader = 'OAuth ';
-        $delimiter = '';
-        foreach($headerParameters as $key => $value) {
-            $authorizationHeader .= $delimiter . rawurlencode($key) . '="' . rawurlencode($value) . '"';
-
-            $delimiter = ', ';
-        }
-
-        $responseBody = $this->httpClient->retrieveResponse($this->getRequestTokenEndpoint(), [], ['Authorization' => $authorizationHeader]);
+        $responseBody = $this->httpClient->retrieveResponse($this->getRequestTokenEndpoint(), [], $headers);
 
         $token = $this->parseRequestTokenResponse( $responseBody );
         $this->storage->storeAccessToken( $token );
@@ -115,22 +107,18 @@ abstract class AbstractService implements ServiceInterface
     {
         $this->signature->setTokenSecret($tokenSecret);
 
-        $headerParameters = $this->getAuthorizationHeaderInfo($token);
-        $headerParameters['oauth_signature'] = $this->signature->getSignature($this->getRequestTokenEndpoint(), null, $headerParameters);
+        $extraAuthenticationHeaders = [
+            'oauth_token' => $token,
+        ];
 
-        $authorizationHeader = 'OAuth ';
-        $delimiter = '';
-        foreach($headerParameters as $key => $value) {
-            $authorizationHeader .= $delimiter . rawurlencode($key) . '="' . rawurlencode($value) . '"';
-
-            $delimiter = ', ';
-        }
+        $authorizationHeader = ['Authorization' => $this->buildAuthorizationHeader($extraAuthenticationHeaders)];
+        $headers = array_merge($authorizationHeader, $this->getExtraOAuthHeaders());
 
         $bodyParams = [
             'oauth_verifier' => $verifier,
         ];
 
-        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $bodyParams, ['Authorization' => $authorizationHeader]);
+        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $bodyParams, $headers);
 
         $token = $this->parseAccessTokenResponse( $responseBody );
         $this->storage->storeAccessToken( $token );
@@ -151,13 +139,6 @@ abstract class AbstractService implements ServiceInterface
     public function sendAuthenticatedRequest(UriInterface $uri, array $bodyParams, $method = 'POST', $extraHeaders = [])
     {
         $token = $this->storage->retrieveAccessToken();
-
-        if( ( $token->getEndOfLife() !== TokenInterface::EOL_NEVER_EXPIRES ) &&
-            ( $token->getEndOfLife() !== TokenInterface::EOL_UNKNOWN ) &&
-            ( time() > $token->getEndOfLife() ) ) {
-
-            throw new ExpiredTokenException('Token expired on ' . date('m/d/Y', $token->getEndOfLife()) . ' at ' . date('h:i:s A', $token->getEndOfLife()) );
-        }
 
         // add the token where it may be needed
         if( static::AUTHORIZATION_METHOD_HEADER_OAUTH === $this->getAuthorizationMethod() ) {
@@ -223,12 +204,34 @@ abstract class AbstractService implements ServiceInterface
     }
 
     /**
+     * Builds the authorization header.
+     *
+     * @param array $extraParameters
+     * @return string
+     */
+    protected function buildAuthorizationHeader(array $extraParameters = [])
+    {
+        $parameters = $this->getBasicAuthorizationHeaderInfo();
+        $parameters = array_merge($parameters, $extraParameters);
+        $parameters['oauth_signature'] = $this->signature->getSignature($this->getRequestTokenEndpoint(), null, $parameters);
+
+        $authorizationHeader = 'OAuth ';
+        $delimiter = '';
+        foreach($parameters as $key => $value) {
+            $authorizationHeader .= $delimiter . rawurlencode($key) . '="' . rawurlencode($value) . '"';
+
+            $delimiter = ', ';
+        }
+
+        return $authorizationHeader;
+    }
+
+    /**
      * Builds the authorization header array.
      *
-     * @param string $token
      * @return array
      */
-    protected function getAuthorizationHeaderInfo($token = null)
+    protected function getBasicAuthorizationHeaderInfo()
     {
         $headerParameters = [
             'oauth_callback'            => $this->credentials->getCallbackUrl(),
@@ -238,10 +241,6 @@ abstract class AbstractService implements ServiceInterface
             'oauth_timestamp'           => (new \DateTime())->format('U'),
             'oauth_version'             => '1.0',
         ];
-
-        if ($token !== null) {
-            $headerParameters['oauth_token'] = $token;
-        }
 
         return $headerParameters;
     }

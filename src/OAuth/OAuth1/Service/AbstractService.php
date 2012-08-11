@@ -11,8 +11,6 @@ use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Http\Uri\UriInterface;
-use OAuth\Common\Service\Exception\InvalidScopeException;
-use OAuth\Common\Service\Exception\MissingRefreshTokenException;
 use OAuth\Common\Token\TokenInterface;
 use OAuth\Common\Token\Exception\ExpiredTokenException;
 use OAuth\OAuth1\Signature\Signature;
@@ -47,7 +45,6 @@ abstract class AbstractService implements ServiceInterface
      * @param \OAuth\Common\Http\Client\ClientInterface $httpClient
      * @param \OAuth\Common\Storage\TokenStorageInterface $storage
      * @param \OAuth\OAuth1\Signature\Signature $signature
-     * @throws InvalidScopeException
      */
     public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, Signature $signature)
     {
@@ -174,37 +171,6 @@ abstract class AbstractService implements ServiceInterface
         $extraHeaders = array_merge( $extraHeaders, $this->getExtraApiHeaders() );
 
         return $this->httpClient->retrieveResponse($uri, $bodyParams, $extraHeaders, $method);
-    }
-
-    /**
-     * Refreshes an OAuth1 access token.
-     *
-     * @param \OAuth\Common\Token\TokenInterface $token
-     * @return \OAuth\Common\Token\TokenInterface $token
-     * @throws \OAuth\Common\Service\Exception\MissingRefreshTokenException
-     */
-    public function refreshAccessToken(TokenInterface $token)
-    {
-        $refreshToken = $token->getRefreshToken();
-
-        if ( empty( $refreshToken ) ) {
-            throw new MissingRefreshTokenException();
-        }
-
-        $parameters =
-        [
-            'grant_type' => 'refresh_token',
-            'type' => 'web_server',
-            'client_id' => $this->credentials->getConsumerId(),
-            'client_secret' => $this->credentials->getConsumerSecret(),
-            'refresh_token' => $refreshToken,
-        ];
-
-        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $parameters, $this->getExtraOAuthHeaders());
-        $token = $this->parseAccessTokenResponse( $responseBody );
-        $this->storage->storeAccessToken( $token );
-
-        return $token;
     }
 
     /**

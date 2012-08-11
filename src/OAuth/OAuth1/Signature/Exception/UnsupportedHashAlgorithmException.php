@@ -1,20 +1,19 @@
 <?php
 /**
- * OAuth1 Token Interface
- *
  * PHP version 5.4
  *
  * @author     David Desberg <david@thedesbergs.com>
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
+namespace OAuth\OAuth1\Signature\Exception;
 
-namespace OAuth\OAuth1\Token;
-use OAuth\Common\Token\TokenInterface as BaseTokenInterface;
+use OAuth\Common\Exception\Exception;
 
 /**
- * OAuth1 specific token interface
+ * Thrown when an unsupported hash mechanism is requested in signature class.
  */
-interface TokenInterface extends BaseTokenInterface
+class UnsupportedHashAlgorithmException extends Exception
 {
+
 }

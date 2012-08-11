@@ -4,7 +4,6 @@
  *
  * PHP version 5.4
  *
- * @author     Lusitanian <alusitanian@gmail.com>
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -13,6 +12,7 @@ namespace OAuth\OAuth1\Signature;
 
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\OAuth1\Signature\Exception\UnsupportedHashAlgorithmException;
 
 class Signature implements SignatureInterface
 {
@@ -56,15 +56,15 @@ class Signature implements SignatureInterface
     }
 
     /**
-     * @param \OAuth\Common\Http\UriInterface $uri
+     * @param \OAuth\Common\Http\Uri\UriInterface $uri
      * @param mixed $requestBody
-     * @param array $authorizationHeader
+     * @param array $extraHeaders
      * @param string $method
      * @return string
      */
     public function getSignature(UriInterface $uri, $requestBody = null, array $extraHeaders = [], $method = 'POST')
     {
-        parse_str($uri->getQuery(), $querystringData);
+        parse_str($uri->getQuery(), $queryStringData);
         parse_str($requestBody, $bodyData);
 
         $signatureData = [];
@@ -72,7 +72,7 @@ class Signature implements SignatureInterface
             $signatureData[$key] = $value;
         }
 
-        $signatureData = array_merge($signatureData, $querystringData, $bodyData);
+        $signatureData = array_merge($signatureData, $queryStringData, $bodyData);
 
         foreach($signatureData as $key => $value) {
             $signatureData[rawurlencode($key)] = rawurlencode($value);
@@ -120,7 +120,7 @@ class Signature implements SignatureInterface
     /**
      * @param string $data
      * @return string
-     * @throws \Exception
+     * @throws UnsupportedHashAlgorithmException
      */
     protected function hash($data)
     {
@@ -129,7 +129,7 @@ class Signature implements SignatureInterface
                 return hash_hmac('sha1', $data, $this->getSigningKey(), true);
 
             default:
-                throw new \Exception('Unsupported hashing algorithm (' . $this->algorithm . ') used.');
+                throw new UnsupportedHashAlgorithmException('Unsupported hashing algorithm (' . $this->algorithm . ') used.');
         }
     }
 }

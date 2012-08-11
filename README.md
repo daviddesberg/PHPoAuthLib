@@ -12,10 +12,12 @@ Features
 
 Service support
 ----------------
-The library currently works with any oAuth 2.0 compliant service. oAuth 1.x support is in the works.
+The library supports both oAuth 1.x and oAuth 2.0 compliant services. A list of currently implemented services can be found below. More services will be implemented soon.
 
 Included service implementations
 ------------------
+ - OAuth1
+   - Twitter
  - OAuth2
    - Google
    - Microsoft

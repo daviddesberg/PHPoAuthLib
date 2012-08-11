@@ -1,6 +1,6 @@
 <?php
 /**
- * Example of retrieving an authentication token of the Google service
+ * Example of retrieving an authentication token of the Twitter service
  *
  * PHP version 5.4
  *

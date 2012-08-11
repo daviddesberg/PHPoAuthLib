@@ -12,7 +12,7 @@
 namespace OAuth\OAuth1\Signature;
 
 use OAuth\Common\Consumer\Credentials;
-use OAuth\Common\Http\UriInterface;
+use OAuth\Common\Http\Uri\UriInterface;
 
 interface SignatureInterface
 {
@@ -35,7 +35,7 @@ interface SignatureInterface
     public function setTokenSecret($token);
 
     /**
-     * @param \OAuth\Common\Http\UriInterface $uri
+     * @param \OAuth\Common\Http\Uri\UriInterface $uri
      * @param mixed $requestBody
      * @param array $authorizationHeader
      * @param string $method

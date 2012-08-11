@@ -12,7 +12,7 @@
 namespace OAuth\OAuth1\Signature;
 
 use OAuth\Common\Consumer\Credentials;
-use OAuth\Common\Http\UriInterface;
+use OAuth\Common\Http\Uri\UriInterface;
 
 class Signature implements SignatureInterface
 {

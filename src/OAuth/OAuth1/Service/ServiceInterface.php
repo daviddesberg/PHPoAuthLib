@@ -8,8 +8,8 @@ namespace OAuth\OAuth1\Service;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Token\TokenInterface;
-use OAuth\Common\Http\ClientInterface;
-use OAuth\Common\Http\UriInterface;
+use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\OAuth1\Signature\Signature;
 
 /**
@@ -26,7 +26,7 @@ interface ServiceInterface
 
     /**
      * @param \OAuth\Common\Consumer\Credentials $credentials
-     * @param \OAuth\Common\Http\ClientInterface $httpClient
+     * @param \OAuth\Common\Http\Client\ClientInterface $httpClient
      * @param \OAuth\Common\Storage\TokenStorageInterface $storage
      * @param \OAuth\OAuth1\Signature\Signature $signature
      * @abstract

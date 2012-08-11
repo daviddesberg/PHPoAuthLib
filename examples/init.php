@@ -42,6 +42,10 @@ $servicesCredentials = [
         'key'       => '',
         'secret'    => '',
     ],
+    'twitter' => [
+        'key'       => '',
+        'secret'    => '',
+    ],
 ];
 
 /**

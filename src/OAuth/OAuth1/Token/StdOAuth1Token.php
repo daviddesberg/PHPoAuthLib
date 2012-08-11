@@ -13,4 +13,45 @@ use OAuth\Common\Token\AbstractToken;
  */
 class StdOAuth1Token extends AbstractToken implements TokenInterface
 {
+    /**
+     * @var string
+     */
+    protected $requestToken;
+
+    /**
+     * @var string
+     */
+    protected $requestTokenSecret;
+
+    /**
+     * @param string $requestToken
+     */
+    public function setRequestToken($requestToken)
+    {
+        $this->requestToken = $requestToken;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRequestToken()
+    {
+        return $this->requestToken;
+    }
+
+    /**
+     * @param string $requestTokenSecret
+     */
+    public function setRequestTokenSecret($requestTokenSecret)
+    {
+        $this->requestTokenSecret = $requestTokenSecret;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRequestTokenSecret()
+    {
+        return $this->requestTokenSecret;
+    }
 }

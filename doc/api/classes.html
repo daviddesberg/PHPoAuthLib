@@ -48,7 +48,7 @@
             </tr>
                     <tr>
                 <td>
-                                        <a href="OAuth/Common/Http/ArtaxClient.html" target="main"><abbr title="OAuth\Common\Http\ArtaxClient">OAuth\Common\Http\ArtaxClient</abbr></a>
+                                        <a href="OAuth/Common/Http/Client/ArtaxClient.html" target="main"><abbr title="OAuth\Common\Http\Client\ArtaxClient">OAuth\Common\Http\Client\ArtaxClient</abbr></a>
                                     </td>
                 <td>
                     Client interface for the Artax HTTP Client
@@ -56,7 +56,7 @@
             </tr>
                     <tr>
                 <td>
-                    <em>                    <a href="OAuth/Common/Http/ClientInterface.html" target="main"><abbr title="OAuth\Common\Http\ClientInterface">OAuth\Common\Http\ClientInterface</abbr></a>
+                    <em>                    <a href="OAuth/Common/Http/Client/ClientInterface.html" target="main"><abbr title="OAuth\Common\Http\Client\ClientInterface">OAuth\Common\Http\Client\ClientInterface</abbr></a>
                     </em>                </td>
                 <td>
                     Any HTTP clients to be used with the library should implement this interface.
@@ -72,7 +72,7 @@
             </tr>
                     <tr>
                 <td>
-                                        <a href="OAuth/Common/Http/Uri.html" target="main"><abbr title="OAuth\Common\Http\Uri">OAuth\Common\Http\Uri</abbr></a>
+                                        <a href="OAuth/Common/Http/Uri/Uri.html" target="main"><abbr title="OAuth\Common\Http\Uri\Uri">OAuth\Common\Http\Uri\Uri</abbr></a>
                                     </td>
                 <td>
                     Standards-compliant URI class.
@@ -80,15 +80,15 @@
             </tr>
                     <tr>
                 <td>
-                                        <a href="OAuth/Common/Http/UriGenerator.html" target="main"><abbr title="OAuth\Common\Http\UriGenerator">OAuth\Common\Http\UriGenerator</abbr></a>
+                                        <a href="OAuth/Common/Http/Uri/UriFactory.html" target="main"><abbr title="OAuth\Common\Http\Uri\UriFactory">OAuth\Common\Http\Uri\UriFactory</abbr></a>
                                     </td>
                 <td>
-                    Generates a URI based on certain params.
+                    Factory class for uniform resource indicators
                 </td>
             </tr>
                     <tr>
                 <td>
-                    <em>                    <a href="OAuth/Common/Http/UriInterface.html" target="main"><abbr title="OAuth\Common\Http\UriInterface">OAuth\Common\Http\UriInterface</abbr></a>
+                    <em>                    <a href="OAuth/Common/Http/Uri/UriInterface.html" target="main"><abbr title="OAuth\Common\Http\Uri\UriInterface">OAuth\Common\Http\Uri\UriInterface</abbr></a>
                     </em>                </td>
                 <td>
                     URI interface.
@@ -96,34 +96,10 @@
             </tr>
                     <tr>
                 <td>
-                                        <a href="OAuth/Common/Service/Exception/InvalidScopeException.html" target="main"><abbr title="OAuth\Common\Service\Exception\InvalidScopeException">OAuth\Common\Service\Exception\InvalidScopeException</abbr></a>
-                                    </td>
-                <td>
-                    Exception thrown when a scope provided to a service is invalid.
-                </td>
-            </tr>
-                    <tr>
-                <td>
-                                        <a href="OAuth/Common/Service/Exception/MissingRefreshTokenException.html" target="main"><abbr title="OAuth\Common\Service\Exception\MissingRefreshTokenException">OAuth\Common\Service\Exception\MissingRefreshTokenException</abbr></a>
-                                    </td>
-                <td>
-                    Exception thrown when service is requested to refresh the access token but no refresh token can be found.
-                </td>
-            </tr>
-                    <tr>
-                <td>
-                    <em>                    <a href="OAuth/Common/Service/ServiceInterface.html" target="main"><abbr title="OAuth\Common\Service\ServiceInterface">OAuth\Common\Service\ServiceInterface</abbr></a>
-                    </em>                </td>
-                <td>
-                    Defines the common methods across any OAuth service, be it version 1 or 2.
-                </td>
-            </tr>
-                    <tr>
-                <td>
                                         <a href="OAuth/Common/Storage/Exception/StorageException.html" target="main"><abbr title="OAuth\Common\Storage\Exception\StorageException">OAuth\Common\Storage\Exception\StorageException</abbr></a>
                                     </td>
                 <td>
-                    
+                    Generic storage exception.
                 </td>
             </tr>
                     <tr>
@@ -131,7 +107,7 @@
                                         <a href="OAuth/Common/Storage/Exception/TokenNotFoundException.html" target="main"><abbr title="OAuth\Common\Storage\Exception\TokenNotFoundException">OAuth\Common\Storage\Exception\TokenNotFoundException</abbr></a>
                                     </td>
                 <td>
-                    
+                    Exception thrown when a token is not found in storage.
                 </td>
             </tr>
                     <tr>
@@ -219,7 +195,7 @@
                                         <a href="OAuth/OAuth2/Service/AbstractService.html" target="main"><abbr title="OAuth\OAuth2\Service\AbstractService">OAuth\OAuth2\Service\AbstractService</abbr></a>
                                     </td>
                 <td>
-                    AbstractService class for OAuth 2, implements basic methods in compliance with that protocol
+                    AbstractService class for OAuth 2.
                 </td>
             </tr>
                     <tr>
@@ -228,6 +204,30 @@
                                     </td>
                 <td>
                     OAuth2 service implementation for Bitly.
+                </td>
+            </tr>
+                    <tr>
+                <td>
+                                        <a href="OAuth/OAuth2/Service/Exception/InvalidScopeException.html" target="main"><abbr title="OAuth\OAuth2\Service\Exception\InvalidScopeException">OAuth\OAuth2\Service\Exception\InvalidScopeException</abbr></a>
+                                    </td>
+                <td>
+                    Exception thrown when a scope provided to a service is invalid.
+                </td>
+            </tr>
+                    <tr>
+                <td>
+                                        <a href="OAuth/OAuth2/Service/Exception/MissingRefreshTokenException.html" target="main"><abbr title="OAuth\OAuth2\Service\Exception\MissingRefreshTokenException">OAuth\OAuth2\Service\Exception\MissingRefreshTokenException</abbr></a>
+                                    </td>
+                <td>
+                    Exception thrown when service is requested to refresh the access token but no refresh token can be found.
+                </td>
+            </tr>
+                    <tr>
+                <td>
+                                        <a href="OAuth/OAuth2/Service/Foursquare.html" target="main"><abbr title="OAuth\OAuth2\Service\Foursquare">OAuth\OAuth2\Service\Foursquare</abbr></a>
+                                    </td>
+                <td>
+                    OAuth2 service implementation for Foursquare.
                 </td>
             </tr>
                     <tr>
@@ -260,6 +260,14 @@
                                     </td>
                 <td>
                     OAuth2 service implementation for Salesforce.
+                </td>
+            </tr>
+                    <tr>
+                <td>
+                    <em>                    <a href="OAuth/OAuth2/Service/ServiceInterface.html" target="main"><abbr title="OAuth\OAuth2\Service\ServiceInterface">OAuth\OAuth2\Service\ServiceInterface</abbr></a>
+                    </em>                </td>
+                <td>
+                    Defines the common methods across OAuth 2 services.
                 </td>
             </tr>
                     <tr>

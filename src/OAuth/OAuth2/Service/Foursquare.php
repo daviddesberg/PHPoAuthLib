@@ -16,7 +16,7 @@ namespace OAuth\OAuth2\Service;
 
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
-use OAuth\Common\Http\Uri;
+use OAuth\Common\Http\Uri\Uri;
 
 /**
  * OAuth2 service implementation for Foursquare.
@@ -30,7 +30,7 @@ use OAuth\Common\Http\Uri;
 class Foursquare extends AbstractService
 {
     /**
-     * @return \OAuth\Common\Http\Uri|\OAuth\Common\Http\UriInterface
+     * @return \OAuth\Common\Http\Uri\UriInterface
      */
     public function getAuthorizationEndpoint()
     {
@@ -38,7 +38,7 @@ class Foursquare extends AbstractService
     }
 
     /**
-     * @return \OAuth\Common\Http\Uri|\OAuth\Common\Http\UriInterface
+     * @return \OAuth\Common\Http\Uri\UriInterface
      */
     public function getAccessTokenEndpoint()
     {

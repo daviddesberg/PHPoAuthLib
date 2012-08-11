@@ -1,4 +1,12 @@
 <?php
+/**
+ * @category   OAuth
+ * @package    Tests
+ * @author     David Desberg <david@thedesbergs.com>
+ * @copyright  Copyright (c) 2012 The authors
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
+ */
+
 use OAuth\Common\Storage\Memory;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 

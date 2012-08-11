@@ -1,9 +1,14 @@
 <?php
 /**
- * @author Daniel Lowery
- * @author Lusitanian <alusitanian@gmail.com>
+ * @category   OAuth
+ * @package    Common
+ * @subpackage Http
+ * @author     Daniel Lowery
+ * @author     David Desberg <david@thedesbergs.com>
+ * @copyright  Copyright (c) 2012 The authors
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
-namespace OAuth\Common\Http;
+namespace OAuth\Common\Http\Uri;
 
 use InvalidArgumentException;
 
@@ -61,33 +66,6 @@ class Uri implements UriInterface
         if( null !== $uri ) {
             $this->parseUri($uri);
         }
-    }
-
-    /**
-     * Factory method to build a URI from parts
-     *
-     * @static
-     * @param $scheme
-     * @param $userInfo
-     * @param $host
-     * @param $port
-     * @param $path
-     * @param $query
-     * @param $fragment
-     * @return Uri
-     */
-    public static function fromParts($scheme, $userInfo, $host, $port, $path = '', $query = '', $fragment = '')
-    {
-        $uri = new static();
-        $uri->setScheme($scheme);
-        $uri->setUserInfo($userInfo);
-        $uri->setHost($host);
-        $uri->setPort($port);
-        $uri->setPath($path);
-        $uri->setQuery($query);
-        $uri->setFragment($fragment);
-
-        return $uri;
     }
 
     /**

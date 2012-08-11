@@ -1,24 +1,29 @@
 <?php
 /**
- * @author Daniel Lowery
+ * @category   OAuth
+ * @package    Common
+ * @subpackage Http
+ * @author     Daniel Lowery
+ * @author     David Desberg <david@thedesbergs.com>
+ * @copyright  Copyright (c) 2012 The authors
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
-namespace OAuth\Common\Http;
+namespace OAuth\Common\Http\Uri;
 
 use RuntimeException;
 
 /**
- * Generates a URI based on certain params.
+ * Factory class for uniform resource indicators
  */
-class UriGenerator
+class UriFactory
 {
-
     /**
-     * Generates a StdUri from a superglobal $_SERVER array
-     *
+     * Factory method to build a URI from a super-global $_SERVER array.
      * @param array $_server
-     * @return Uri
+     * @return UriInterface
      */
-    public function make(array $_server, $includeQueryString = true) {
+    public function createFromSuperGlobalArray(array $_server)
+    {
         if ($uri = $this->attemptProxyStyleParse($_server)) {
             return $uri;
         }
@@ -27,30 +32,57 @@ class UriGenerator
         $host = $this->detectHost($_server);
         $port = $this->detectPort($_server);
         $path = $this->detectPath($_server);
-        if( $includeQueryString ) {
-            $query = $this->detectQuery($_server);
-        } else {
-            $query = false;
-        }
+        $query = $this->detectQuery($_server);
 
-        $uri = "$scheme://$host";
-        $uri.= ($port != 80) ? ":$port" : '';
-        $uri.= $path;
-        $uri.= $query ? "?$query" : '';
+        return $this->createFromParts($scheme, '', $host, $port, $path, $query);
+    }
 
-        return new Uri($uri);
+    /**
+     * @param string $absoluteUri
+     * @return UriInterface
+     */
+    public function createFromAbsolute($absoluteUri)
+    {
+        return new Uri($absoluteUri);
+    }
+
+    /**
+     * Factory method to build a URI from parts
+     *
+     * @param string $scheme
+     * @param string $userInfo
+     * @param string $host
+     * @param string $port
+     * @param string $path
+     * @param string $query
+     * @param string $fragment
+     * @return UriInterface
+     */
+    public function createFromParts($scheme, $userInfo, $host, $port, $path = '', $query = '', $fragment = '')
+    {
+        $uri = new Uri();
+        $uri->setScheme($scheme);
+        $uri->setUserInfo($userInfo);
+        $uri->setHost($host);
+        $uri->setPort($port);
+        $uri->setPath($path);
+        $uri->setQuery($query);
+        $uri->setFragment($fragment);
+
+        return $uri;
     }
 
     /**
      * @param array $_server
-     * @return StdUri
+     * @return UriInterface|null
      */
-    private function attemptProxyStyleParse($_server) {
+    private function attemptProxyStyleParse($_server)
+    {
         // If the raw HTTP request message arrives with a proxy-style absolute URI in the
         // initial request line, the absolute URI is stored in $_SERVER['REQUEST_URI'] and
         // we only need to parse that.
         if (isset($_server['REQUEST_URI']) && parse_url($_server['REQUEST_URI'], PHP_URL_SCHEME)) {
-            return new StdUri($_server['REQUEST_URI']);
+            return new Uri($_server['REQUEST_URI']);
         }
 
         return null;
@@ -109,7 +141,7 @@ class UriGenerator
      * not made through the HTTPS protocol. As a result, we filter the
      * value to a bool.
      *
-     * @param array $_server A superglobal $_SERVER array
+     * @param array $_server A super-global $_SERVER array
      *
      * @return string Returns http or https depending on the URI scheme
      */

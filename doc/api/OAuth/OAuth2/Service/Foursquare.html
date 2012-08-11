@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>OAuth\OAuth2\Service\Foursquare | PHPoAuthLib API</title>
+                    <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../../classes.html">Classes</a></li>
+                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">PHPoAuthLib API</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../../OAuth/OAuth2/Service.html">OAuth\OAuth2\Service</a>\Foursquare</h1>
+    </div>
+        <div class="content">
+                <p>class    <strong>Foursquare</strong>        extends <a href="../../../OAuth/OAuth2/Service/AbstractService.html"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a></p>
+
+            <div class="description">
+            <p>OAuth2 service implementation for Foursquare.</p>
+            <p></p>
+        </div>
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(<a href="../../../OAuth/Common/Consumer/Credentials.html"><abbr title="OAuth\Common\Consumer\Credentials">Credentials</abbr></a> $credentials, <a href="../../../OAuth/Common/Http/Client/ClientInterface.html"><abbr title="OAuth\Common\Http\Client\ClientInterface">ClientInterface</abbr></a> $httpClient, <a href="../../../OAuth/Common/Storage/TokenStorageInterface.html"><abbr title="OAuth\Common\Storage\TokenStorageInterface">TokenStorageInterface</abbr></a> $storage, array $scopes = array())
+                    <p></p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../OAuth/OAuth2/Service/AbstractService.html#method___construct"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getAuthorizationUri">getAuthorizationUri</a>(array $additionalParameters = array())
+                    <p>Returns the url to redirect to for authorization purposes.</p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_getAuthorizationUri"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_requestAccessToken">requestAccessToken</a>(string $code)
+                    <p>Retrieves and stores the OAuth2 access token after a successful authorization.</p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_requestAccessToken"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_sendAuthenticatedRequest">sendAuthenticatedRequest</a>(<a href="../../../OAuth/Common/Http/Uri/UriInterface.html"><abbr title="OAuth\Common\Http\Uri\UriInterface">UriInterface</abbr></a> $uri, array $bodyParams, string $method = &#039;POST&#039;, array $extraHeaders = array())
+                    <p>Sends an authenticated request to the given endpoint using stored token.</p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_sendAuthenticatedRequest"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_refreshAccessToken">refreshAccessToken</a>(<a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a> $token)
+                    <p>Refreshes an OAuth2 access token.</p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_refreshAccessToken"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    bool
+                </td>
+                <td class="last">
+                    <a href="#method_isValidScope">isValidScope</a>(<abbr title="OAuth\OAuth2\Service\$scope">$scope</abbr> $scope)
+                    <p>Return whether or not the passed scope value is valid.</p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_isValidScope"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../OAuth/Common/Http/Uri/UriInterface.html"><abbr title="OAuth\Common\Http\Uri\UriInterface">UriInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_getAuthorizationEndpoint">getAuthorizationEndpoint</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../OAuth/Common/Http/Uri/UriInterface.html"><abbr title="OAuth\Common\Http\Uri\UriInterface">UriInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_getAccessTokenEndpoint">getAccessTokenEndpoint</a>()
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">in <a href="../../../OAuth/OAuth2/Service/AbstractService.html#method___construct"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a> at line 64</div>
+        <code>            public            
+    <strong>__construct</strong>(<a href="../../../OAuth/Common/Consumer/Credentials.html"><abbr title="OAuth\Common\Consumer\Credentials">Credentials</abbr></a> $credentials, <a href="../../../OAuth/Common/Http/Client/ClientInterface.html"><abbr title="OAuth\Common\Http\Client\ClientInterface">ClientInterface</abbr></a> $httpClient, <a href="../../../OAuth/Common/Storage/TokenStorageInterface.html"><abbr title="OAuth\Common\Storage\TokenStorageInterface">TokenStorageInterface</abbr></a> $storage, array $scopes = array())</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../OAuth/Common/Consumer/Credentials.html"><abbr title="OAuth\Common\Consumer\Credentials">Credentials</abbr></a></td>
+                <td>$credentials</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../../OAuth/Common/Http/Client/ClientInterface.html"><abbr title="OAuth\Common\Http\Client\ClientInterface">ClientInterface</abbr></a></td>
+                <td>$httpClient</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../../OAuth/Common/Storage/TokenStorageInterface.html"><abbr title="OAuth\Common\Storage\TokenStorageInterface">TokenStorageInterface</abbr></a></td>
+                <td>$storage</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$scopes</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="InvalidScopeException">InvalidScopeException</abbr></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getAuthorizationUri">
+        <div class="location">in <a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_getAuthorizationUri"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a> at line 87</div>
+        <code>            public            string
+    <strong>getAuthorizationUri</strong>(array $additionalParameters = array())</code>
+    </h3>
+    <div class="details">
+        <p>Returns the url to redirect to for authorization purposes.</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>array</td>
+                <td>$additionalParameters</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_requestAccessToken">
+        <div class="location">in <a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_requestAccessToken"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a> at line 118</div>
+        <code>            public            <a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a>
+    <strong>requestAccessToken</strong>(string $code)</code>
+    </h3>
+    <div class="details">
+        <p>Retrieves and stores the OAuth2 access token after a successful authorization.</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$code</td>
+                <td>The access code from the callback.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a></td>
+            <td>$token</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="TokenResponseException">TokenResponseException</abbr></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_sendAuthenticatedRequest">
+        <div class="location">in <a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_sendAuthenticatedRequest"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a> at line 147</div>
+        <code>            public            string
+    <strong>sendAuthenticatedRequest</strong>(<a href="../../../OAuth/Common/Http/Uri/UriInterface.html"><abbr title="OAuth\Common\Http\Uri\UriInterface">UriInterface</abbr></a> $uri, array $bodyParams, string $method = &#039;POST&#039;, array $extraHeaders = array())</code>
+    </h3>
+    <div class="details">
+        <p>Sends an authenticated request to the given endpoint using stored token.</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../OAuth/Common/Http/Uri/UriInterface.html"><abbr title="OAuth\Common\Http\Uri\UriInterface">UriInterface</abbr></a></td>
+                <td>$uri</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$bodyParams</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$method</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$extraHeaders</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../OAuth/Common/Token/Exception/ExpiredTokenException.html"><abbr title="OAuth\Common\Token\Exception\ExpiredTokenException">ExpiredTokenException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_refreshAccessToken">
+        <div class="location">in <a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_refreshAccessToken"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a> at line 180</div>
+        <code>            public            <a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a>
+    <strong>refreshAccessToken</strong>(<a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a> $token)</code>
+    </h3>
+    <div class="details">
+        <p>Refreshes an OAuth2 access token.</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a></td>
+                <td>$token</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a></td>
+            <td>$token</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="OAuth\Common\Service\Exception\MissingRefreshTokenException">MissingRefreshTokenException</abbr></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_isValidScope">
+        <div class="location">in <a href="../../../OAuth/OAuth2/Service/AbstractService.html#method_isValidScope"><abbr title="OAuth\OAuth2\Service\AbstractService">AbstractService</abbr></a> at line 210</div>
+        <code>            public            bool
+    <strong>isValidScope</strong>(<abbr title="OAuth\OAuth2\Service\$scope">$scope</abbr> $scope)</code>
+    </h3>
+    <div class="details">
+        <p>Return whether or not the passed scope value is valid.</p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="OAuth\OAuth2\Service\$scope">$scope</abbr></td>
+                <td>$scope</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getAuthorizationEndpoint">
+        <div class="location">at line 35</div>
+        <code>            public            <a href="../../../OAuth/Common/Http/Uri/UriInterface.html"><abbr title="OAuth\Common\Http\Uri\UriInterface">UriInterface</abbr></a>
+    <strong>getAuthorizationEndpoint</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../OAuth/Common/Http/Uri/UriInterface.html"><abbr title="OAuth\Common\Http\Uri\UriInterface">UriInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getAccessTokenEndpoint">
+        <div class="location">at line 43</div>
+        <code>            public            <a href="../../../OAuth/Common/Http/Uri/UriInterface.html"><abbr title="OAuth\Common\Http\Uri\UriInterface">UriInterface</abbr></a>
+    <strong>getAccessTokenEndpoint</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../OAuth/Common/Http/Uri/UriInterface.html"><abbr title="OAuth\Common\Http\Uri\UriInterface">UriInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

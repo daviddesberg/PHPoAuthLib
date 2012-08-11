@@ -1,7 +1,15 @@
 <?php
 /**
- * @author Lusitanian <alusitanian@gmail.com>
- * Released under the MIT license.
+ * Abstract OAuth2 Service.
+ *
+ * PHP version 5.4
+ *
+ * @category   OAuth
+ * @package    OAuth2
+ * @subpackage Service
+ * @author     David Desberg <david@thedesbergs.com>
+ * @copyright  Copyright (c) 2012 The authors
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
 namespace OAuth\OAuth2\Service;
@@ -9,15 +17,20 @@ namespace OAuth\OAuth2\Service;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Exception\TokenResponseException;
-use OAuth\Common\Http\ClientInterface;
-use OAuth\Common\Http\UriInterface;
-use OAuth\Oauth2\Service\Exception\InvalidScopeException;
-use OAuth\Oauth2\Service\Exception\MissingRefreshTokenException;
+use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\OAuth2\Service\Exception\InvalidScopeException;
+use OAuth\OAuth2\Service\Exception\MissingRefreshTokenException;
 use OAuth\Common\Token\TokenInterface;
 use OAuth\Common\Token\Exception\ExpiredTokenException;
 
 /**
- * AbstractService class for OAuth 2, implements basic methods in compliance with that protocol
+ * AbstractService class for OAuth 2.
+ * Implements basic methods in compliance with that protocol
+ * @category   OAuth
+ * @package    OAuth2
+ * @subpackage Service
+ * @author     David Desberg <david@thedesbergs.com>
  */
 abstract class AbstractService implements ServiceInterface
 {
@@ -37,13 +50,13 @@ abstract class AbstractService implements ServiceInterface
     protected $scopes;
 
     /**
-     * @var \OAuth\Common\Http\ClientInterface
+     * @var \OAuth\Common\Http\Client\ClientInterface
      */
     protected $httpClient;
 
     /**
      * @param \OAuth\Common\Consumer\Credentials $credentials
-     * @param \OAuth\Common\Http\ClientInterface $httpClient
+     * @param \OAuth\Common\Http\Client\ClientInterface $httpClient
      * @param \OAuth\Common\Storage\TokenStorageInterface $storage
      * @param array $scopes
      * @throws InvalidScopeException

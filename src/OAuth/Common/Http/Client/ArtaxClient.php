@@ -1,12 +1,16 @@
 <?php
 /**
- * @author Lusitanian <alusitanian@gmail.com>
- * Released under the MIT license.
+ * @category   OAuth
+ * @package    Common
+ * @subpackage Http
+ * @author     David Desberg <david@thedesbergs.com>
+ * @copyright  Copyright (c) 2012 The authors
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-namespace OAuth\Common\Http;
+namespace OAuth\Common\Http\Client;
 use OAuth\Common\Http\Exception\TokenResponseException;
-
+use OAuth\Common\Http\Uri\UriInterface;
 use Artax\Http\StdRequest;
 use Artax\Http\Client;
 

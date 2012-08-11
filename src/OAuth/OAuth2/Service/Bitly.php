@@ -8,7 +8,7 @@
  * @category   OAuth
  * @package    OAuth2
  * @subpackage Service
- * @author     Lusitanian <alusitanian@gmail.com>
+ * @author     David Desberg <david@thedesbergs.com>
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -17,7 +17,7 @@ namespace OAuth\OAuth2\Service;
 
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
-use OAuth\Common\Http\Uri;
+use OAuth\Common\Http\Uri\Uri;
 
 /**
  * OAuth2 service implementation for Bitly. Note that bitly for some reason uses two different domains for the
@@ -26,13 +26,13 @@ use OAuth\Common\Http\Uri;
  * @category   OAuth
  * @package    OAuth2
  * @subpackage Service
- * @author     Lusitanian <alusitanian@gmail.com>
+ * @author     David Desberg <david@thedesbergs.com>
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
 class Bitly extends AbstractService
 {
     /**
-     * @return \OAuth\Common\Http\Uri|\OAuth\Common\Http\UriInterface
+     * @return \OAuth\Common\Http\Uri\UriInterface
      */
     public function getAuthorizationEndpoint()
     {
@@ -40,7 +40,7 @@ class Bitly extends AbstractService
     }
 
     /**
-     * @return \OAuth\Common\Http\Uri|\OAuth\Common\Http\UriInterface
+     * @return \OAuth\Common\Http\Uri\UriInterface
      */
     public function getAccessTokenEndpoint()
     {
@@ -94,7 +94,7 @@ class Bitly extends AbstractService
         $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $bodyParams, $this->getExtraOAuthHeaders());
 
         // we can scream what we want that we want bitly to return a json encoded string (format=json), but the
-        // bastard doesn't seem to like screaming, hence we need to manually parse the result
+        // WOAH WATCH YOUR LANGUAGE ;) service doesn't seem to like screaming, hence we need to manually parse the result
         $parsedResult = [];
         parse_str($responseBody, $parsedResult);
 

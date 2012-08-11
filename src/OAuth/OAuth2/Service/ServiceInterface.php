@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Lusitanian <alusitanian@gmail.com>
+ * @author David Desberg <david@thedesbergs.com>
  * Released under the MIT license.
  */
 
@@ -8,8 +8,8 @@ namespace OAuth\OAuth2\Service;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Token\TokenInterface;
-use OAuth\Common\Http\ClientInterface;
-use OAuth\Common\Http\UriInterface;
+use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\Common\Http\Uri\UriInterface;
 
 /**
  * Defines the common methods across OAuth 2 services.
@@ -25,7 +25,7 @@ interface ServiceInterface
 
     /**
      * @param \OAuth\Common\Consumer\Credentials $credentials
-     * @param \OAuth\Common\Http\ClientInterface $httpClient
+     * @param \OAuth\Common\Http\Client\ClientInterface $httpClient
      * @param \OAuth\Common\Storage\TokenStorageInterface $storage
      * @param array $scopes
      * @abstract

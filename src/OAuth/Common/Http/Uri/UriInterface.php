@@ -8,11 +8,12 @@
  * @package    Common
  * @subpackage Http
  * @author     Pieter Hordijk <info@pieterhordijk.com>
+ * @author     David Desberg <david@thedesbergs.com>
  * @author     Daniel Lowery
  * @copyright  Copyright (c) 2012 Pieter Hordijk
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
-namespace OAuth\Common\Http;
+namespace OAuth\Common\Http\Uri;
 
 /**
  * URI interface. All classes which build URI's should implement this interface
@@ -21,6 +22,7 @@ namespace OAuth\Common\Http;
  * @package    Common
  * @subpackage Http
  * @author     Pieter Hordijk <info@pieterhordijk.com>
+ * @author     David Desberg <david@thedesbergs.com>
  * @author     Daniel Lowery
  */
 interface UriInterface

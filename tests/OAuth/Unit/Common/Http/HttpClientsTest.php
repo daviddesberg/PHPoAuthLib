@@ -1,12 +1,20 @@
 <?php
-use OAuth\Common\Http\ArtaxClient;
+/**
+ * @category   OAuth
+ * @package    Tests
+ * @author     David Desberg <david@thedesbergs.com>
+ * @copyright  Copyright (c) 2012 The authors
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
+ */
 
-use OAuth\Common\Http\Uri;
+use OAuth\Common\Http\Client\ArtaxClient;
+
+use OAuth\Common\Http\Uri\Uri;
 
 class HttpClientsTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var object|\OAuth\Common\Http\ClientInterface[]
+     * @var object|\OAuth\Common\Http\Client\ClientInterface[]
      */
     protected $clients;
 
@@ -126,13 +134,13 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
     /**
      * Test on all HTTP clients.
      *
-     * @param OAuth\Common\Http\UriInterface $uri
+     * @param OAuth\Common\Http\Uri\UriInterface $uri
      * @param array $param
      * @param array $header
      * @param $method
      * @param $responseCallback
      */
-    protected function __doTestRetrieveResponse(\OAuth\Common\Http\UriInterface $uri, array $param, array $header, $method, callable $responseCallback)
+    protected function __doTestRetrieveResponse(\OAuth\Common\Http\Uri\UriInterface $uri, array $param, array $header, $method, callable $responseCallback)
     {
         foreach($this->clients as $client)
         {

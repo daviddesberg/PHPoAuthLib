@@ -54,5 +54,5 @@ $servicesCredentials = [
  */
 $httpClientProvider = function()
 {
-    return new OAuth\Common\Http\ArtaxClient();
+    return new OAuth\Common\Http\Client\ArtaxClient();
 };

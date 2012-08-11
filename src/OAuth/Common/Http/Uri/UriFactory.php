@@ -15,7 +15,7 @@ use RuntimeException;
 /**
  * Factory class for uniform resource indicators
  */
-class UriFactory
+class UriFactory implements UriFactoryInterface
 {
     /**
      * Factory method to build a URI from a super-global $_SERVER array.

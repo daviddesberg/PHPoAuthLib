@@ -239,7 +239,7 @@ abstract class AbstractService implements ServiceInterface
             'oauth_nonce'               => $this->generateNonce(),
             'oauth_signature_method'    => $this->getSignatureMethod(),
             'oauth_timestamp'           => (new \DateTime())->format('U'),
-            'oauth_version'             => '1.0',
+            'oauth_version'             => $this->getVersion(),
         ];
 
         return $headerParameters;
@@ -270,5 +270,15 @@ abstract class AbstractService implements ServiceInterface
     protected function getSignatureMethod()
     {
         return 'HMAC-SHA1';
+    }
+
+    /**
+     * This returns the version used in the authorization header of the requests
+     *
+     * @return string
+     */
+    protected function getVersion()
+    {
+        return '1.0';
     }
 }

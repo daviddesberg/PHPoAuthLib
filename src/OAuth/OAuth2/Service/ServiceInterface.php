@@ -1,8 +1,20 @@
 <?php
 /**
+ * OAuth 2 service interface.
+ *
+ * PHP Version 5.4
+ *
+ *
  * @author David Desberg <david@thedesbergs.com>
- * Released under the MIT license.
+ *
+ * @category   OAuth
+ * @package    OAuth2
+ * @subpackage Service
+ * @author     David Desberg <david@thedesbergs.com>
+ * @copyright  Copyright (c) 2012 The authors
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
+
 
 namespace OAuth\OAuth2\Service;
 use OAuth\Common\Consumer\Credentials;

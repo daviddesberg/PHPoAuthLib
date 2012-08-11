@@ -4,7 +4,6 @@
  *
  * PHP version 5.4
  *
- * @author     Lusitanian <alusitanian@gmail.com>
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License

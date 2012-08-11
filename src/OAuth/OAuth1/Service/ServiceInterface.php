@@ -1,8 +1,17 @@
 <?php
 /**
- * @author Lusitanian <alusitanian@gmail.com>
- * Released under the MIT license.
+ * OAuth1 service interface.
+ *
+ * PHP Version 5.4
+ *
+ * @category   OAuth
+ * @package    OAuth1
+ * @subpackage Service
+ * @author     David Desberg <david@thedesbergs.com>
+ * @copyright  Copyright (c) 2012 The authors
+ * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
+
 
 namespace OAuth\OAuth1\Service;
 use OAuth\Common\Consumer\Credentials;

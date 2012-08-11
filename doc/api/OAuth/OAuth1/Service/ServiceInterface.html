@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="robots" content="index, follow, all" />
-        <title>OAuth\OAuth2\Service\ServiceInterface | PHPoAuthLib API</title>
+        <title>OAuth\OAuth1\Service\ServiceInterface | PHPoAuthLib API</title>
                     <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
                             </head>
         <body id="class">
@@ -19,13 +19,13 @@
         <div id="title">PHPoAuthLib API</div>
 
             <div class="type">Interface</div>
-    <h1><a href="../../../OAuth/OAuth2/Service.html">OAuth\OAuth2\Service</a>\ServiceInterface</h1>
+    <h1><a href="../../../OAuth/OAuth1/Service.html">OAuth\OAuth1\Service</a>\ServiceInterface</h1>
     </div>
         <div class="content">
                 <p>interface    <strong>ServiceInterface</strong></p>
 
             <div class="description">
-            <p>Defines the common methods across OAuth 2 services.</p>
+            <p>Defines the common methods across OAuth 1 services.</p>
             <p></p>
         </div>
     
@@ -65,8 +65,18 @@
                     
                 </td>
                 <td class="last">
-                    <a href="#method___construct">__construct</a>(<a href="../../../OAuth/Common/Consumer/Credentials.html"><abbr title="OAuth\Common\Consumer\Credentials">Credentials</abbr></a> $credentials, <a href="../../../OAuth/Common/Http/Client/ClientInterface.html"><abbr title="OAuth\Common\Http\Client\ClientInterface">ClientInterface</abbr></a> $httpClient, <a href="../../../OAuth/Common/Storage/TokenStorageInterface.html"><abbr title="OAuth\Common\Storage\TokenStorageInterface">TokenStorageInterface</abbr></a> $storage, array $scopes = array())
+                    <a href="#method___construct">__construct</a>(<a href="../../../OAuth/Common/Consumer/Credentials.html"><abbr title="OAuth\Common\Consumer\Credentials">Credentials</abbr></a> $credentials, <a href="../../../OAuth/Common/Http/Client/ClientInterface.html"><abbr title="OAuth\Common\Http\Client\ClientInterface">ClientInterface</abbr></a> $httpClient, <a href="../../../OAuth/Common/Storage/TokenStorageInterface.html"><abbr title="OAuth\Common\Storage\TokenStorageInterface">TokenStorageInterface</abbr></a> $storage, <a href="../../../OAuth/OAuth1/Signature/Signature.html"><abbr title="OAuth\OAuth1\Signature\Signature">Signature</abbr></a> $signature)
                     <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_requestRequestToken">requestRequestToken</a>()
+                    <p>Retrieves and stores/returns the OAuth1 request token.</p>
                 </td>
                 <td></td>
             </tr>
@@ -75,8 +85,18 @@
                     <a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a>
                 </td>
                 <td class="last">
-                    <a href="#method_requestAccessToken">requestAccessToken</a>($code)
+                    <a href="#method_requestAccessToken">requestAccessToken</a>($token, $verifier, $tokenSecret)
                     <p>Retrieves and stores/returns the OAuth2 access token after a successful authorization.</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_getRequestTokenEndpoint">getRequestTokenEndpoint</a>()
+                    <p></p>
                 </td>
                 <td></td>
             </tr>
@@ -126,9 +146,9 @@
         <h2>Details</h2>
 
                         <h3 id="method___construct">
-        <div class="location">at line 45</div>
+        <div class="location">at line 43</div>
         <code>            public            
-    <strong>__construct</strong>(<a href="../../../OAuth/Common/Consumer/Credentials.html"><abbr title="OAuth\Common\Consumer\Credentials">Credentials</abbr></a> $credentials, <a href="../../../OAuth/Common/Http/Client/ClientInterface.html"><abbr title="OAuth\Common\Http\Client\ClientInterface">ClientInterface</abbr></a> $httpClient, <a href="../../../OAuth/Common/Storage/TokenStorageInterface.html"><abbr title="OAuth\Common\Storage\TokenStorageInterface">TokenStorageInterface</abbr></a> $storage, array $scopes = array())</code>
+    <strong>__construct</strong>(<a href="../../../OAuth/Common/Consumer/Credentials.html"><abbr title="OAuth\Common\Consumer\Credentials">Credentials</abbr></a> $credentials, <a href="../../../OAuth/Common/Http/Client/ClientInterface.html"><abbr title="OAuth\Common\Http\Client\ClientInterface">ClientInterface</abbr></a> $httpClient, <a href="../../../OAuth/Common/Storage/TokenStorageInterface.html"><abbr title="OAuth\Common\Storage\TokenStorageInterface">TokenStorageInterface</abbr></a> $storage, <a href="../../../OAuth/OAuth1/Signature/Signature.html"><abbr title="OAuth\OAuth1\Signature\Signature">Signature</abbr></a> $signature)</code>
     </h3>
     <div class="details">
         <p></p>
@@ -153,8 +173,8 @@
                 <td></td>
             </tr>
                     <tr>
-                <td>array</td>
-                <td>$scopes</td>
+                <td><a href="../../../OAuth/OAuth1/Signature/Signature.html"><abbr title="OAuth\OAuth1\Signature\Signature">Signature</abbr></a></td>
+                <td>$signature</td>
                 <td></td>
             </tr>
             </table>
@@ -165,10 +185,34 @@
                     </div>
     </div>
 
+                <h3 id="method_requestRequestToken">
+        <div class="location">at line 52</div>
+        <code>            public            
+    <strong>requestRequestToken</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Retrieves and stores/returns the OAuth1 request token.</p>
+        <p></p>
+        <div class="tags">
+            
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="InvalidTokenResponseException">InvalidTokenResponseException</abbr></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
                 <h3 id="method_requestAccessToken">
-        <div class="location">at line 55</div>
+        <div class="location">at line 64</div>
         <code>            public            <a href="../../../OAuth/Common/Token/TokenInterface.html"><abbr title="OAuth\Common\Token\TokenInterface">TokenInterface</abbr></a>
-    <strong>requestAccessToken</strong>($code)</code>
+    <strong>requestAccessToken</strong>($token, $verifier, $tokenSecret)</code>
     </h3>
     <div class="details">
         <p>Retrieves and stores/returns the OAuth2 access token after a successful authorization.</p>
@@ -179,7 +223,17 @@
                     <table>
                     <tr>
                 <td></td>
-                <td>$code</td>
+                <td>$token</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$verifier</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$tokenSecret</td>
                 <td></td>
             </tr>
             </table>
@@ -208,8 +262,23 @@
                     </div>
     </div>
 
+                <h3 id="method_getRequestTokenEndpoint">
+        <div class="location">at line 70</div>
+        <code>            public            
+    <strong>getRequestTokenEndpoint</strong>()</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
                 <h3 id="method_getAuthorizationUri">
-        <div class="location">at line 64</div>
+        <div class="location">at line 79</div>
         <code>            public            <a href="../../../OAuth/Common/Http/Uri/UriInterface.html"><abbr title="OAuth\Common\Http\Uri\UriInterface">UriInterface</abbr></a>
     <strong>getAuthorizationUri</strong>(array $additionalParameters = array())</code>
     </h3>
@@ -243,7 +312,7 @@
     </div>
 
                 <h3 id="method_getAuthorizationEndpoint">
-        <div class="location">at line 70</div>
+        <div class="location">at line 85</div>
         <code>            public            
     <strong>getAuthorizationEndpoint</strong>()</code>
     </h3>
@@ -258,7 +327,7 @@
     </div>
 
                 <h3 id="method_getAccessTokenEndpoint">
-        <div class="location">at line 76</div>
+        <div class="location">at line 91</div>
         <code>            public            
     <strong>getAccessTokenEndpoint</strong>()</code>
     </h3>
@@ -273,7 +342,7 @@
     </div>
 
                 <h3 id="method_sendAuthenticatedRequest">
-        <div class="location">at line 89</div>
+        <div class="location">at line 104</div>
         <code>            public            string
     <strong>sendAuthenticatedRequest</strong>(<a href="../../../OAuth/Common/Http/Uri/UriInterface.html"><abbr title="OAuth\Common\Http\Uri\UriInterface">UriInterface</abbr></a> $uri, array $bodyParams, $method = &#039;POST&#039;, $extraHeaders = array())</code>
     </h3>

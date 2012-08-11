@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>OAuth\OAuth1\Signature\SignatureInterface | PHPoAuthLib API</title>
+                    <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../../classes.html">Classes</a></li>
+                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">PHPoAuthLib API</div>
+
+            <div class="type">Interface</div>
+    <h1><a href="../../../OAuth/OAuth1/Signature.html">OAuth\OAuth1\Signature</a>\SignatureInterface</h1>
+    </div>
+        <div class="content">
+                <p>interface    <strong>SignatureInterface</strong></p>
+
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(<a href="../../../OAuth/Common/Consumer/Credentials.html"><abbr title="OAuth\Common\Consumer\Credentials">Credentials</abbr></a> $credentials)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setHashingAlgorithm">setHashingAlgorithm</a>(string $algorithm)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setTokenSecret">setTokenSecret</a>(string $token)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_getSignature">getSignature</a>(<a href="../../../OAuth/Common/Http/Uri/UriInterface.html"><abbr title="OAuth\Common\Http\Uri\UriInterface">UriInterface</abbr></a> $uri, mixed $requestBody = null, array $authorizationHeader = array(), string $method = &#039;POST&#039;)
+                    <p></p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">at line 22</div>
+        <code>            public            
+    <strong>__construct</strong>(<a href="../../../OAuth/Common/Consumer/Credentials.html"><abbr title="OAuth\Common\Consumer\Credentials">Credentials</abbr></a> $credentials)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../OAuth/Common/Consumer/Credentials.html"><abbr title="OAuth\Common\Consumer\Credentials">Credentials</abbr></a></td>
+                <td>$credentials</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setHashingAlgorithm">
+        <div class="location">at line 28</div>
+        <code>            public            
+    <strong>setHashingAlgorithm</strong>(string $algorithm)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$algorithm</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setTokenSecret">
+        <div class="location">at line 34</div>
+        <code>            public            
+    <strong>setTokenSecret</strong>(string $token)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$token</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getSignature">
+        <div class="location">at line 43</div>
+        <code>            public            
+    <strong>getSignature</strong>(<a href="../../../OAuth/Common/Http/Uri/UriInterface.html"><abbr title="OAuth\Common\Http\Uri\UriInterface">UriInterface</abbr></a> $uri, mixed $requestBody = null, array $authorizationHeader = array(), string $method = &#039;POST&#039;)</code>
+    </h3>
+    <div class="details">
+        <p></p>
+        <p></p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../OAuth/Common/Http/Uri/UriInterface.html"><abbr title="OAuth\Common\Http\Uri\UriInterface">UriInterface</abbr></a></td>
+                <td>$uri</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>mixed</td>
+                <td>$requestBody</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$authorizationHeader</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$method</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

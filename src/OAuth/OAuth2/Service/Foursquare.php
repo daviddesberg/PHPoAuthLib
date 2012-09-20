@@ -64,7 +64,7 @@ class Foursquare extends AbstractService
 
 
         $token->setAccessToken( $data['access_token'] );
-        // Github tokens evidently never expire...
+        // Foursquare tokens evidently never expire...
         $token->setEndOfLife(StdOAuth2Token::EOL_NEVER_EXPIRES);
         unset( $data['access_token'] );
         $token->setExtraParams( $data );

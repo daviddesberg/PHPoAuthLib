@@ -1,0 +1,25 @@
+{
+    "name": "lusitanian/oauth",
+    "description": "PHP 5.4+ oAuth 2 Library",
+    "keywords": ["oauth"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "David Desberg",
+            "email": "alusitanian@gmail.com"
+        },
+        {
+            "name": "Pieter Hordijk",
+            "email": "info@pieterhordijk.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "suggest": {
+        "rdlowrey/artax": "Implementation of OAuth\\Common\\Http\\ClientInterface"
+    },
+    "autoload": {
+        "psr-0": { "OAuth": "src" }
+    }
+}

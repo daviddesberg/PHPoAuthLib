@@ -4,7 +4,7 @@
  *
  * PHP version 5.4
  *
- * @author     Lusitanian <alusitanian@gmail.com>
+ * @author     David Desberg <david@daviddesberg.com>
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -50,9 +50,9 @@ $servicesCredentials = [
 
 /**
  * @var callable This will return an instance of the preferred HTTP client used for requests to services
- * @return \OAuth\Common\Http\ArtaxClient
+ * @return \OAuth\Common\Http\Client\StreamClient
  */
 $httpClientProvider = function()
 {
-    return new OAuth\Common\Http\Client\ArtaxClient();
+    return new OAuth\Common\Http\Client\StreamClient();
 };

@@ -8,7 +8,7 @@
  * @category   OAuth
  * @package    OAuth2
  * @subpackage Service
- * @author     David Desberg <david@thedesbergs.com>
+ * @author     David Desberg <david@daviddesberg.com>
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -26,7 +26,7 @@ use OAuth\Common\Http\Uri\Uri;
  * @category   OAuth
  * @package    OAuth2
  * @subpackage Service
- * @author     David Desberg <david@thedesbergs.com>
+ * @author     David Desberg <david@daviddesberg.com>
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  */
 class Bitly extends AbstractService

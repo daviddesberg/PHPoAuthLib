@@ -7,7 +7,7 @@
  * @category   OAuth
  * @package    Common
  * @subpackage Consumer
- * @author     David Desberg <david@thedesbergs.com>
+ * @author     David Desberg <david@daviddesberg.com>
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
@@ -19,7 +19,7 @@ namespace OAuth\Common\Consumer;
  * @category   OAuth
  * @package    OAuth2
  * @subpackage Consumer
- * @author     David Desberg <david@thedesbergs.com>
+ * @author     David Desberg <david@daviddesberg.com>
  */
 class Credentials
 {

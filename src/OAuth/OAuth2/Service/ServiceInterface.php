@@ -5,12 +5,12 @@
  * PHP Version 5.4
  *
  *
- * @author David Desberg <david@thedesbergs.com>
+ * @author David Desberg <david@daviddesberg.com>
  *
  * @category   OAuth
  * @package    OAuth2
  * @subpackage Service
- * @author     David Desberg <david@thedesbergs.com>
+ * @author     David Desberg <david@daviddesberg.com>
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */

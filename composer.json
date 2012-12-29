@@ -16,9 +16,6 @@
     "require": {
         "php": ">=5.4.0"
     },
-    "suggest": {
-        "rdlowrey/artax": "Implementation of OAuth\\Common\\Http\\ClientInterface"
-    },
     "autoload": {
         "psr-0": { "OAuth": "src" }
     }

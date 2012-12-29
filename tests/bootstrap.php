@@ -6,7 +6,7 @@
  *
  * @category   OAuth
  * @author     Pieter Hordijk <info@pieterhordijk.com>
- * @author     Lusitanian
+ * @author     David Desberg  <david@daviddesberg.com>
  * @copyright  Copyright (c) PHPoAuthLib Team
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
@@ -14,7 +14,6 @@
 namespace test;
 use OAuth\Common\AutoLoader;
 require_once __DIR__ . '/../src/OAuth/Common/AutoLoader.php';
-require_once __DIR__ . '/../Artax/Artax.php';
 
 $autoloader = new AutoLoader('OAuth', dirname(__DIR__) . '/src');
 $autoloader->register();

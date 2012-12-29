@@ -16,6 +16,3 @@ require_once __DIR__ . '/Common/AutoLoader.php';
 $autoloader = new \OAuth\Common\AutoLoader(__NAMESPACE__, dirname(__DIR__));
 
 $autoloader->register();
-
-//-- Remove if you don't want a dependency on Artax, but you'll need to use a different HTTP client :)
-require_once __DIR__ . '/../../Artax/Artax.php';

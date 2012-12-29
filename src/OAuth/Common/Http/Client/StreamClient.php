@@ -3,7 +3,7 @@
  * @category   OAuth
  * @package    Common
  * @subpackage Http
- * @author     David Desberg <david@thedesbergs.com>
+ * @author     David Desberg <david@daviddesberg.com>
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
@@ -11,14 +11,25 @@
 namespace OAuth\Common\Http\Client;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\UriInterface;
-use Artax\Http\StdRequest;
-use Artax\Http\Client;
 
 /**
- * Client interface for the Artax HTTP Client
+ * Client interface for streams/file_get_contents
  */
-class ArtaxClient implements ClientInterface
+class StreamClient implements ClientInterface
 {
+    private $maxRedirects;
+    private $timeout;
+
+    /**
+     * @param int $maxRedirects Maximum redirects for client
+     * @param int $timeout Request timeout time for client in seconds
+     */
+    public function __construct($maxRedirects = 5, $timeout = 15)
+    {
+        $this->maxRedirects = $maxRedirects;
+        $this->timeout = $timeout;
+    }
+
     /**
      * Any implementing HTTP providers should send a request to the provided endpoint with the parameters.
      * They should return, in string form, the response body and throw an exception on error.
@@ -41,6 +52,7 @@ class ArtaxClient implements ClientInterface
             function(&$val, &$key)
             {
                 $key = ucfirst( strtolower($key) );
+                $val = ucfirst( strtolower($key) ) . ': ' . $val;
             }
         );
 
@@ -50,25 +62,37 @@ class ArtaxClient implements ClientInterface
         }
 
         if( !isset($extraHeaders['Content-type'] ) && $method === 'POST' & is_array($requestBody) ) {
-            $extraHeaders['Content-type'] = 'application/x-www-form-urlencoded';
+            $extraHeaders['Content-type'] = 'Content-type: application/x-www-form-urlencoded';
         }
 
         if( is_array($requestBody) ) {
             $requestBody = http_build_query($requestBody);
         }
 
-        // Build and send the HTTP request
-        $request = new StdRequest( $endpoint->getAbsoluteUri(), $method, $extraHeaders, $requestBody );
-        $client = new Client();
+        $context = $this->generateStreamContext($requestBody, $extraHeaders, $method);
 
-        // Retrieve the response
-        $response = $client->request($request);
-        if( $response->getStatusCode() >= 400 ) {
-            throw new TokenResponseException( $response->getStatusCode() . ': ' . $response->getStatusDescription() );
+        $level = error_reporting(0);
+        $response = file_get_contents($endpoint->getAbsoluteUri(), 0, $context);
+        error_reporting($level);
+        if( false === $response ) {
+            throw new TokenResponseException( error_get_last()['message'] );
         }
 
-        // Return the body per the interface spec
-        return $response->getBody();
+        return $response;
     }
 
+    private function generateStreamContext($body, $headers, $method)
+    {
+        return stream_context_create([
+            'http' => [
+                'method'           => $method,
+                'header'           => implode("\r\n", $headers),
+                'content'          => $body,
+                'protocol_version' => '1.1',
+
+                'max_redirects'    => $this->maxRedirects,
+                'timeout'          => $this->timeout,
+            ],
+        ]);
+    }
 }

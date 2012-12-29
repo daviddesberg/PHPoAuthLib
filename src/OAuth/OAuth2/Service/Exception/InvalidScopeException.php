@@ -1,6 +1,6 @@
 <?php
 /**
- * @author David Desberg <david@thedesbergs.com>
+ * @author David Desberg <david@daviddesberg.com>
  * Released under the MIT license.
  */
 namespace OAuth\OAuth2\Service\Exception;

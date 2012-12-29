@@ -2,14 +2,13 @@
 /**
  * @category   OAuth
  * @package    Tests
- * @author     David Desberg <david@thedesbergs.com>
+ * @author     David Desberg <david@daviddesberg.com>
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-use OAuth\Common\Http\Client\ArtaxClient;
-
 use OAuth\Common\Http\Uri\Uri;
+use OAuth\Common\Http\Client;
 
 class HttpClientsTest extends PHPUnit_Framework_TestCase
 {
@@ -20,7 +19,7 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->clients[] = new ArtaxClient();
+        $this->clients[] = new Client\StreamClient(5, 3);
     }
 
     public function tearDown()
@@ -87,10 +86,10 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
         {
             // verify the put response
             $data = json_decode($response, true);
-            $this->assertEquals( 'testKey=testValue', $data['data'] );
+            $this->assertEquals( json_encode( ['testKey' => 'testValue' ] ), $data['data'] );
         };
 
-        $this->__doTestRetrieveResponse($testUri, ['testKey' => 'testValue'], [], 'PUT', $putTestCb );
+        $this->__doTestRetrieveResponse($testUri, json_encode( ['testKey' => 'testValue' ] ), [ 'Content-type' => 'application/json' ], 'PUT', $putTestCb );
     }
 
     /**
@@ -140,7 +139,7 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
      * @param $method
      * @param $responseCallback
      */
-    protected function __doTestRetrieveResponse(\OAuth\Common\Http\Uri\UriInterface $uri, array $param, array $header, $method, callable $responseCallback)
+    protected function __doTestRetrieveResponse(\OAuth\Common\Http\Uri\UriInterface $uri, $param, array $header, $method, callable $responseCallback)
     {
         foreach($this->clients as $client)
         {

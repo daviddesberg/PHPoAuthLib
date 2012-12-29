@@ -8,7 +8,7 @@
  * @package    Common
  * @subpackage Http
  * @author     Pieter Hordijk <info@pieterhordijk.com>
- * @author     David Desberg <david@thedesbergs.com>
+ * @author     David Desberg <david@daviddesberg.com>
  * @author     Daniel Lowery
  * @copyright  Copyright (c) 2012 Pieter Hordijk
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
@@ -22,7 +22,7 @@ namespace OAuth\Common\Http\Uri;
  * @package    Common
  * @subpackage Http
  * @author     Pieter Hordijk <info@pieterhordijk.com>
- * @author     David Desberg <david@thedesbergs.com>
+ * @author     David Desberg <david@daviddesberg.com>
  * @author     Daniel Lowery
  */
 interface UriInterface

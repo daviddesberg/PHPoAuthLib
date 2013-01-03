@@ -42,6 +42,11 @@ class UriTest extends PHPUnit_Framework_TestCase
         $this->assertEquals( 'joe:bob', $uri->getRawUserInfo() );
         $this->assertEquals( 'div', $uri->getFragment() );
         $this->assertEquals( 'joe:********', $uri->getUserInfo() );
+        $this->assertEquals( 'joe:********@example.com:6912', $uri->getAuthority() );
+        $this->assertEquals( 'joe:bob@example.com:6912', $uri->getRawAuthority() );
+
+        $this->assertEquals( 'https://joe:********@example.com:6912/relative/path?user=jon&password=secret#div', ( string ) $uri );
+        $this->assertEquals( '/relative/path', $uri->getRelativeUri() );
     }
 
     /**
@@ -59,6 +64,8 @@ class UriTest extends PHPUnit_Framework_TestCase
         $this->assertEquals( 'joe:bob', $uri->getRawUserInfo() );
         $this->assertEquals( 'div', $uri->getFragment() );
         $this->assertEquals( 'joe:********', $uri->getUserInfo() );
+        $this->assertEquals( 'joe:********@example.com:6912', $uri->getAuthority() );
+        $this->assertEquals( 'joe:bob@example.com:6912', $uri->getRawAuthority() );
     }
 
     /**
@@ -77,6 +84,12 @@ class UriTest extends PHPUnit_Framework_TestCase
 
         $uri->setHost('github.com');
         $this->assertEquals( str_replace('example.com', 'github.com', $absoluteUri ), $uri->getAbsoluteUri() );
+    }
+
+    public function testExceptionOnBadUri()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+        $this->uriFactory->createFromAbsolute('sajifodasiojfoisja390bafj#($)');
     }
 
     /**

@@ -113,6 +113,20 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Expect exception when we try to send a GET request with a body
+     */
+    public function testInvalidGet()
+    {
+        $testUri =  new Uri('http://site.net');
+
+        foreach($this->clients as $client)
+        {
+            $this->setExpectedException('InvalidArgumentException');
+            $client->retrieveResponse($testUri, ['blah' => 'blih'], [], 'GET' );
+        }
+    }
+
+    /**
      * Tests the GET method
      */
     public function testGet()

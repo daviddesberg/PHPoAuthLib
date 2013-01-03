@@ -57,7 +57,7 @@ class StreamClient implements ClientInterface
         );
 
 
-        if( $method === 'GET' && !empty($body) ) {
+        if( $method === 'GET' && !empty($requestBody) ) {
             throw new \InvalidArgumentException('No body expected for "GET" request.');
         }
 

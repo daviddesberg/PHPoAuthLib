@@ -73,7 +73,8 @@ class Uri implements UriInterface
      * @throws \InvalidArgumentException
      */
     protected function parseUri($uri) {
-        if (!$uriParts = @parse_url($uri)) {
+        if( false === ( $uriParts = parse_url($uri) ) ) {
+            // congratulations if you've managed to get parse_url to fail, it seems to always return some semblance of a parsed url no matter what
             throw new InvalidArgumentException(
                 "Invalid URI: $uri"
             );

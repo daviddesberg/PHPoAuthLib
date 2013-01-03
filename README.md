@@ -7,7 +7,7 @@ Features
 - PSR-0 compliant for easy interoperability
 - Fully extensible in every facet.
    - You can implement any service with any custom requirements by extending the protocol version's `AbstractService` implementation.
-   - You can use any HTTP client you desire, just create a class utilizing it which implements `OAuth\Common\Http\ClientInterface` (an implementation for the HTTP client from [Artax](https://github.com/rdlowrey/Artax/) is included)
+   - You can use any HTTP client you desire, just create a class utilizing it which implements `OAuth\Common\Http\ClientInterface` (a stream-based implementation is included)
    - You can use any storage mechanism for tokens. By default, session, in-memory and Redis.io (requires PHPRedis) storage mechanisms are included. Implement additional mechanisms by implementing `OAuth\Common\Token\TokenStorageInterface`. 
 
 Service support

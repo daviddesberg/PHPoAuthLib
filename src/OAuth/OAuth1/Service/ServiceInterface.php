@@ -20,6 +20,7 @@ use OAuth\Common\Token\TokenInterface;
 use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\OAuth1\Signature\Signature;
+use OAuth\Common\Http\Exception\TokenResponseException;
 
 /**
  * Defines the common methods across OAuth 1 services.
@@ -40,7 +41,7 @@ interface ServiceInterface
      *
      * @abstract
      * @return TokenInterface $token
-     * @throws InvalidTokenResponseException
+     * @throws TokenResponseException
      */
     public function requestRequestToken();
 
@@ -52,7 +53,7 @@ interface ServiceInterface
      * @param string $verifier
      * @param string $tokenSecret
      * @return TokenInterface $token
-     * @throws InvalidTokenResponseException
+     * @throws TokenResponseException
      */
     public function requestAccessToken($token, $verifier, $tokenSecret);
 

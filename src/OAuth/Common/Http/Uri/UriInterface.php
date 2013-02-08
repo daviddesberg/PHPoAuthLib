@@ -164,4 +164,9 @@ interface UriInterface
      */
     function getRelativeUri();
 
+    /**
+     * @return bool
+     */
+    function hasExplicitTrailingHostSlash();
+
 }

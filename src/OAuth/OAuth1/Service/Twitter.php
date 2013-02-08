@@ -95,7 +95,8 @@ class Twitter extends AbstractService
 
         $token->setRequestToken( $data['oauth_token'] );
         $token->setRequestTokenSecret( $data['oauth_token_secret'] );
-        $token->setAccessToken( $token->getRequestToken() );
+        $token->setAccessToken( $data['oauth_token'] );
+        $token->setAccessTokenSecret( $data['oauth_token_secret'] );
 
         $token->setEndOfLife(StdOAuth1Token::EOL_NEVER_EXPIRES);
         unset( $data['oauth_token'], $data['oauth_token_secret'] );

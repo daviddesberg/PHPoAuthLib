@@ -371,4 +371,12 @@ class Uri implements UriInterface
     public function setHost($host) {
         $this->host = $host;
     }
+
+    /**
+     * @return bool
+     */
+    public function hasExplicitTrailingHostSlash()
+    {
+        return $this->explicitTrailingHostSlash;
+    }
 }

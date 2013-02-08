@@ -57,35 +57,36 @@ class Signature implements SignatureInterface
 
     /**
      * @param \OAuth\Common\Http\Uri\UriInterface $uri
-     * @param mixed $requestBody
-     * @param array $extraHeaders
+     * @param array $params
      * @param string $method
      * @return string
      */
-    public function getSignature(UriInterface $uri, $requestBody = null, array $extraHeaders = [], $method = 'POST')
+    public function getSignature(UriInterface $uri, array $params, $method = 'POST')
     {
         parse_str($uri->getQuery(), $queryStringData);
-        parse_str($requestBody, $bodyData);
 
-        $signatureData = [];
-        foreach($extraHeaders as $key => $value) {
-            $signatureData[$key] = $value;
-        }
-
-        $signatureData = array_merge($signatureData, $queryStringData, $bodyData);
-
-        foreach($signatureData as $key => $value) {
+        foreach(array_merge($queryStringData, $params) as $key => $value) {
             $signatureData[rawurlencode($key)] = rawurlencode($value);
         }
 
         ksort($signatureData);
 
+        // determine base uri
+        $baseUri = $uri->getScheme() . '://' . $uri->getRawAuthority();
+
+        if ('/' == $uri->getPath()) {
+             $baseUri.= $uri->hasExplicitTrailingHostSlash() ? '/' : '';
+        } else {
+            $baseUri .= $uri->getPath();
+        }
+
         $baseString = strtoupper($method) . '&';
-        $baseString.= rawurlencode($uri->getAbsoluteUri()) . '&';
+        $baseString.= rawurlencode($baseUri) . '&';
         $baseString.= rawurlencode($this->buildSignatureDataString($signatureData));
 
         return base64_encode($this->hash($baseString));
     }
+
 
     /**
      * @param array $signatureData

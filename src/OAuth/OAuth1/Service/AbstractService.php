@@ -11,7 +11,7 @@ use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Http\Uri\UriInterface;
-use OAuth\Common\Token\TokenInterface;
+use OAuth\OAuth1\Token\TokenInterface;
 use OAuth\Common\Token\Exception\ExpiredTokenException;
 use OAuth\OAuth1\Signature\Signature;
 use OAuth\OAuth1\Token\StdOAuth1Token;
@@ -102,7 +102,7 @@ abstract class AbstractService implements ServiceInterface
      * @param string $verifier
      * @param string $tokenSecret
      * @return TokenInterface $token
-     * @throws InvalidTokenResponseException
+     * @throws TokenResponseException
      */
     public function requestAccessToken($token, $verifier, $tokenSecret)
     {
@@ -169,24 +169,6 @@ abstract class AbstractService implements ServiceInterface
     }
 
     /**
-     * Parses the request token response and returns a TokenInterface.
-     *
-     * @abstract
-     * @return \OAuth\Common\Token\TokenInterface
-     * @param string $responseBody
-     */
-    abstract protected function parseRequestTokenResponse($responseBody);
-
-    /**
-     * Parses the access token response and returns a TokenInterface.
-     *
-     * @abstract
-     * @return \OAuth\Common\Token\TokenInterface
-     * @param string $responseBody
-     */
-    abstract protected function parseAccessTokenResponse($responseBody);
-
-    /**
      * Builds the authorization header for getting an access or request token.
      *
      * @param array $extraParameters
@@ -196,7 +178,7 @@ abstract class AbstractService implements ServiceInterface
     {
         $parameters = $this->getBasicAuthorizationHeaderInfo();
         $parameters = array_merge($parameters, $extraParameters);
-        $parameters['oauth_signature'] = $this->signature->getSignature($this->getRequestTokenEndpoint(), null, $parameters);
+        $parameters['oauth_signature'] = $this->signature->getSignature($this->getRequestTokenEndpoint(), $parameters, 'POST');
 
         $authorizationHeader = 'OAuth ';
         $delimiter = '';
@@ -210,29 +192,26 @@ abstract class AbstractService implements ServiceInterface
     }
 
     /**
-     * Builds the authorization header for an authenticated request
+     * Builds the authorization header for an authenticated API request
      * @param string $method
      * @param UriInterface $uri the uri the request is headed
-     * @param \OAuth\Common\Token\TokenInterface $token
+     * @param \OAuth\OAuth1\Token\TokenInterface $token
      * @param $bodyParams array
      * @return string
      */
     protected function buildAuthorizationHeaderForAPIRequest($method, UriInterface $uri, TokenInterface $token, $bodyParams)
     {
-        $this->signature->setTokenSecret($token->getRequestTokenSecret());
+        $this->signature->setTokenSecret($token->getAccessTokenSecret());
         $parameters = $this->getBasicAuthorizationHeaderInfo();
         if( isset($parameters['oauth_callback'] ) ){
             unset($parameters['oauth_callback']);
         }
-        $parameters = array_merge($parameters, [ 'oauth_token' => $token->getAccessToken() ] );
 
-        ksort($parameters);
-        $parameters['oauth_signature'] = $this->signature->getSignature($uri, null, array_merge($parameters, $bodyParams), $method);
+        $parameters = array_merge($parameters, [ 'oauth_token' => $token->getAccessToken() ] );
+        $parameters['oauth_signature'] = $this->signature->getSignature($uri, array_merge($parameters, $bodyParams), $method);
 
         $authorizationHeader = 'OAuth ';
         $delimiter = '';
-
-        ksort($parameters);
 
         foreach($parameters as $key => $value) {
             $authorizationHeader .= $delimiter . rawurlencode($key) . '="' . rawurlencode($value) . '"';
@@ -297,4 +276,23 @@ abstract class AbstractService implements ServiceInterface
     {
         return '1.0';
     }
+
+
+    /**
+     * Parses the request token response and returns a TokenInterface.
+     *
+     * @abstract
+     * @return \OAuth\OAuth1\Token\TokenInterface
+     * @param string $responseBody
+     */
+    abstract protected function parseRequestTokenResponse($responseBody);
+
+    /**
+     * Parses the access token response and returns a TokenInterface.
+     *
+     * @abstract
+     * @return \OAuth\OAuth1\Token\TokenInterface
+     * @param string $responseBody
+     */
+    abstract protected function parseAccessTokenResponse($responseBody);
 }

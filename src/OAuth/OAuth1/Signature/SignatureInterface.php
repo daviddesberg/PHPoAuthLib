@@ -35,10 +35,9 @@ interface SignatureInterface
 
     /**
      * @param \OAuth\Common\Http\Uri\UriInterface $uri
-     * @param mixed $requestBody
-     * @param array $authorizationHeader
+     * @param array $params
      * @param string $method
      * @abstract
      */
-    public function getSignature(UriInterface $uri, $requestBody = null, array $authorizationHeader = [], $method = 'POST');
+    public function getSignature(UriInterface $uri, array $params, $method = 'POST');
 }

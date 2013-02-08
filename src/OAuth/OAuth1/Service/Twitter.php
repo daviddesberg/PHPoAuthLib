@@ -42,7 +42,9 @@ class Twitter extends AbstractService
      */
     public function getAuthorizationEndpoint()
     {
-        return new Uri('https://api.twitter.com/oauth/authorize');
+        // @todo if the app will post tweets, authorize must be used instead.
+        // figure something out re: that but it's late and i don't want to now
+        return new Uri('https://api.twitter.com/oauth/authenticate');
     }
 
     /**
@@ -100,15 +102,5 @@ class Twitter extends AbstractService
         $token->setExtraParams( $data );
 
         return $token;
-    }
-
-    /**
-     * Used to configure response type -- we want JSON from github, default is query string format
-     *
-     * @return array
-     */
-    protected function getExtraOAuthHeaders()
-    {
-        return ['Accept' => 'application/json'];
     }
 }

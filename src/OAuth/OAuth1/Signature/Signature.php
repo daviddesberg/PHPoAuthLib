@@ -109,9 +109,9 @@ class Signature implements SignatureInterface
      */
     protected function getSigningKey()
     {
-        $signingKey = $this->credentials->getConsumerSecret() . '&';
+        $signingKey = rawurlencode($this->credentials->getConsumerSecret()) . '&';
         if ($this->tokenSecret !== null) {
-            $signingKey .= $this->tokenSecret;
+            $signingKey .= rawurlencode($this->tokenSecret);
         }
 
         return $signingKey;

@@ -28,7 +28,7 @@ $storage = new Session();
 $credentials = new Credentials(
     $servicesCredentials['twitter']['key'],
     $servicesCredentials['twitter']['secret'],
-    $currentUri->getAbsoluteUri()
+    'http://localhost:8080/twitter.php'
 );
 
 // setup the signature for the requests
@@ -39,20 +39,14 @@ $twitterService = new Twitter($credentials, $httpClientProvider(), $storage, $si
 
 if( !empty( $_GET['oauth_token'] ) ) {
     $token = $storage->retrieveAccessToken();
-    
     // This was a callback request from twitter, get the token
-    $token = $twitterService->requestAccessToken( $_GET['oauth_token'], $_GET['oauth_verifier'], $token->getRequestTokenSecret() );
-    // Send a request with it
-    $result = json_decode( $twitterService->sendAuthenticatedRequest( new Uri('https://api.twitter.com/1/users/suggestions.json'), [], 'GET' ), true );
+    $twitterService->requestAccessToken( $_GET['oauth_token'], $_GET['oauth_verifier'], $token->getRequestTokenSecret() );
 
-    // Show some of the resultant data
-    echo 'Suggestions made to you: ';
-    $delimiter = '';
-    foreach($result as $item) {
-        echo $delimiter . $item['name'];
+    // Send a request now that we have access token
+    $result = json_decode( $twitterService->sendAuthenticatedRequest( new OAuth\Common\Http\Uri\Uri('https://api.twitter.com/1.1/account/verify_credentials.json'), [], 'GET' ), true );
 
-        $delimiter = ', ';
-    }
+    echo 'result: <pre>' . print_r($result, true) . '</pre>';
+
 } elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
     // extra request needed for oauth1 to request a request token :-)
     $token = $twitterService->requestRequestToken();

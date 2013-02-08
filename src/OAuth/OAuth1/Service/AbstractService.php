@@ -14,6 +14,7 @@ use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\Common\Token\TokenInterface;
 use OAuth\Common\Token\Exception\ExpiredTokenException;
 use OAuth\OAuth1\Signature\Signature;
+use OAuth\OAuth1\Token\StdOAuth1Token;
 
 /**
  * AbstractService class for OAuth 1, implements basic methods in compliance with that protocol
@@ -64,7 +65,7 @@ abstract class AbstractService implements ServiceInterface
      */
     public function requestRequestToken()
     {
-        $authorizationHeader = ['Authorization' => $this->buildAuthorizationHeader()];
+        $authorizationHeader = ['Authorization' => $this->buildAuthorizationHeaderForTokenRequest() ];
         $headers = array_merge($authorizationHeader, $this->getExtraOAuthHeaders());
 
         $responseBody = $this->httpClient->retrieveResponse($this->getRequestTokenEndpoint(), [], $headers);
@@ -111,7 +112,7 @@ abstract class AbstractService implements ServiceInterface
             'oauth_token' => $token,
         ];
 
-        $authorizationHeader = ['Authorization' => $this->buildAuthorizationHeader($extraAuthenticationHeaders)];
+        $authorizationHeader = ['Authorization' => $this->buildAuthorizationHeaderForTokenRequest($extraAuthenticationHeaders)];
         $headers = array_merge($authorizationHeader, $this->getExtraOAuthHeaders());
 
         $bodyParams = [
@@ -138,9 +139,10 @@ abstract class AbstractService implements ServiceInterface
      */
     public function sendAuthenticatedRequest(UriInterface $uri, array $bodyParams, $method = 'POST', $extraHeaders = [])
     {
+        /** @var $token \OAuth\OAuth1\Token\StdOAuth1Token */
         $token = $this->storage->retrieveAccessToken();
         $extraHeaders = array_merge( $extraHeaders, $this->getExtraApiHeaders() );
-        $authorizationHeader = ['Authorization' => $this->buildAuthorizationHeader(['oauth_token' => $token->getAccessToken()]) ];
+        $authorizationHeader = ['Authorization' => $this->buildAuthorizationHeaderForAPIRequest($method, $uri, $token, $bodyParams) ];
         $headers = array_merge($authorizationHeader, $extraHeaders);
 
         return $this->httpClient->retrieveResponse($uri, $bodyParams, $headers, $method);
@@ -185,12 +187,12 @@ abstract class AbstractService implements ServiceInterface
     abstract protected function parseAccessTokenResponse($responseBody);
 
     /**
-     * Builds the authorization header.
+     * Builds the authorization header for getting an access or request token.
      *
      * @param array $extraParameters
      * @return string
      */
-    protected function buildAuthorizationHeader(array $extraParameters = [])
+    protected function buildAuthorizationHeaderForTokenRequest(array $extraParameters = [])
     {
         $parameters = $this->getBasicAuthorizationHeaderInfo();
         $parameters = array_merge($parameters, $extraParameters);
@@ -201,6 +203,39 @@ abstract class AbstractService implements ServiceInterface
         foreach($parameters as $key => $value) {
             $authorizationHeader .= $delimiter . rawurlencode($key) . '="' . rawurlencode($value) . '"';
 
+            $delimiter = ', ';
+        }
+
+        return $authorizationHeader;
+    }
+
+    /**
+     * Builds the authorization header for an authenticated request
+     * @param string $method
+     * @param UriInterface $uri the uri the request is headed
+     * @param \OAuth\Common\Token\TokenInterface $token
+     * @param $bodyParams array
+     * @return string
+     */
+    protected function buildAuthorizationHeaderForAPIRequest($method, UriInterface $uri, TokenInterface $token, $bodyParams)
+    {
+        $this->signature->setTokenSecret($token->getRequestTokenSecret());
+        $parameters = $this->getBasicAuthorizationHeaderInfo();
+        if( isset($parameters['oauth_callback'] ) ){
+            unset($parameters['oauth_callback']);
+        }
+        $parameters = array_merge($parameters, [ 'oauth_token' => $token->getAccessToken() ] );
+
+        ksort($parameters);
+        $parameters['oauth_signature'] = $this->signature->getSignature($uri, null, array_merge($parameters, $bodyParams), $method);
+
+        $authorizationHeader = 'OAuth ';
+        $delimiter = '';
+
+        ksort($parameters);
+
+        foreach($parameters as $key => $value) {
+            $authorizationHeader .= $delimiter . rawurlencode($key) . '="' . rawurlencode($value) . '"';
             $delimiter = ', ';
         }
 

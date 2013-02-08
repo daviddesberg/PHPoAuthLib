@@ -61,9 +61,12 @@ class StreamClient implements ClientInterface
             throw new \InvalidArgumentException('No body expected for "GET" request.');
         }
 
-        if( !isset($extraHeaders['Content-type'] ) && $method === 'POST' & is_array($requestBody) ) {
+        if( !isset($extraHeaders['Content-type'] ) && $method === 'POST' && is_array($requestBody) ) {
             $extraHeaders['Content-type'] = 'Content-type: application/x-www-form-urlencoded';
         }
+
+        $extraHeaders['Host'] = 'Host: '.$endpoint->getHost();
+        $extraHeaders['Connection'] = 'Connection: close';
 
         if( is_array($requestBody) ) {
             $requestBody = http_build_query($requestBody);
@@ -86,7 +89,7 @@ class StreamClient implements ClientInterface
         return stream_context_create([
             'http' => [
                 'method'           => $method,
-                'header'           => implode("\r\n", $headers),
+                'header'           => implode("\r\n", $headers)."\r\n\r\n",
                 'content'          => $body,
                 'protocol_version' => '1.1',
 

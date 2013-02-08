@@ -140,18 +140,11 @@ abstract class AbstractService implements ServiceInterface
     {
         $token = $this->storage->retrieveAccessToken();
 
-        // add the token where it may be needed
-        if( static::AUTHORIZATION_METHOD_HEADER_OAUTH === $this->getAuthorizationMethod() ) {
-            $extraHeaders = array_merge( ['Authorization' => 'OAuth ' . $token->getAccessToken() ], $extraHeaders );
-        } elseif( static::AUTHORIZATION_METHOD_QUERY_STRING === $this->getAuthorizationMethod() ) {
-            $uri->addToQuery( 'access_token', $token->getAccessToken() );
-        } elseif( static::AUTHORIZATION_METHOD_HEADER_BEARER === $this->getAuthorizationMethod() ) {
-            $extraHeaders = array_merge( ['Authorization' => 'Bearer ' . $token->getAccessToken() ], $extraHeaders );
-        }
-
         $extraHeaders = array_merge( $extraHeaders, $this->getExtraApiHeaders() );
+        $authorizationHeader = ['Authorization' => $this->buildAuthorizationHeader(['oauth_token' => $token->getAccessToken()]) ];
+        $headers = array_merge($authorizationHeader, $extraHeaders);
 
-        return $this->httpClient->retrieveResponse($uri, $bodyParams, $extraHeaders, $method);
+        return $this->httpClient->retrieveResponse($uri, $bodyParams, $headers, $method);
     }
 
     /**
@@ -191,17 +184,6 @@ abstract class AbstractService implements ServiceInterface
      * @param string $responseBody
      */
     abstract protected function parseAccessTokenResponse($responseBody);
-
-    /**
-     * Returns a class constant from ServiceInterface defining the authorization method used for the API
-     * Header is the sane default.
-     *
-     * @return int
-     */
-    protected function getAuthorizationMethod()
-    {
-        return static::AUTHORIZATION_METHOD_HEADER_OAUTH;
-    }
 
     /**
      * Builds the authorization header.

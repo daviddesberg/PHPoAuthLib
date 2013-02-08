@@ -110,12 +110,4 @@ class Twitter extends AbstractService
     {
         return ['Accept' => 'application/json'];
     }
-
-    /**
-     * @return int
-     */
-    protected function getAuthorizationMethod()
-    {
-        return static::AUTHORIZATION_METHOD_QUERY_STRING;
-    }
 }

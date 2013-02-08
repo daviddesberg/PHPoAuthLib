@@ -27,13 +27,6 @@ use OAuth\OAuth1\Signature\Signature;
 interface ServiceInterface
 {
     /**
-     * Authorization methods for various services
-     */
-    const AUTHORIZATION_METHOD_HEADER_OAUTH = 0;
-    const AUTHORIZATION_METHOD_HEADER_BEARER = 1;
-    const AUTHORIZATION_METHOD_QUERY_STRING = 2;
-
-    /**
      * @param \OAuth\Common\Consumer\Credentials $credentials
      * @param \OAuth\Common\Http\Client\ClientInterface $httpClient
      * @param \OAuth\Common\Storage\TokenStorageInterface $storage

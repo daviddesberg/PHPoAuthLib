@@ -139,7 +139,6 @@ abstract class AbstractService implements ServiceInterface
     public function sendAuthenticatedRequest(UriInterface $uri, array $bodyParams, $method = 'POST', $extraHeaders = [])
     {
         $token = $this->storage->retrieveAccessToken();
-
         $extraHeaders = array_merge( $extraHeaders, $this->getExtraApiHeaders() );
         $authorizationHeader = ['Authorization' => $this->buildAuthorizationHeader(['oauth_token' => $token->getAccessToken()]) ];
         $headers = array_merge($authorizationHeader, $extraHeaders);

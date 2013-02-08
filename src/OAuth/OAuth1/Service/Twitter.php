@@ -9,7 +9,7 @@
  * @subpackage Service
  * @author     David Desberg <david@daviddesberg.com>
  * @author     Pieter Hordijk <info@pieterhordijk.com>
- * @copyright  Copyright (c) 2012 The authors
+ * @copyright  Copyright (c) 2013 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 namespace OAuth\OAuth1\Service;
@@ -93,6 +93,7 @@ class Twitter extends AbstractService
 
         $token->setRequestToken( $data['oauth_token'] );
         $token->setRequestTokenSecret( $data['oauth_token_secret'] );
+        $token->setAccessToken( $token->getRequestToken() );
 
         $token->setEndOfLife(StdOAuth1Token::EOL_NEVER_EXPIRES);
         unset( $data['oauth_token'], $data['oauth_token_secret'] );

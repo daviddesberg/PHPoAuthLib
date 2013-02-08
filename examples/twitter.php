@@ -34,15 +34,14 @@ $credentials = new Credentials(
 // setup the signature for the requests
 $signature = new Signature($credentials);
 
-// Instantiate the google service using the credentials, http client and storage mechanism for the token
+// Instantiate the twitter service using the credentials, http client and storage mechanism for the token
 $twitterService = new Twitter($credentials, $httpClientProvider(), $storage, $signature);
 
 if( !empty( $_GET['oauth_token'] ) ) {
     $token = $storage->retrieveAccessToken();
-
-    // This was a callback request from google, get the token
+    
+    // This was a callback request from twitter, get the token
     $token = $twitterService->requestAccessToken( $_GET['oauth_token'], $_GET['oauth_verifier'], $token->getRequestTokenSecret() );
-
     // Send a request with it
     $result = json_decode( $twitterService->sendAuthenticatedRequest( new Uri('https://api.twitter.com/1/users/suggestions.json'), [], 'GET' ), true );
 

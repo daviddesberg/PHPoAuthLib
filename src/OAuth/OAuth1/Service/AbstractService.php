@@ -11,24 +11,21 @@ use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\OAuth1\Signature\SignatureInterface;
 use OAuth\OAuth1\Token\TokenInterface;
-use OAuth\Common\Token\Exception\ExpiredTokenException;
-use OAuth\OAuth1\Signature\Signature;
 use OAuth\OAuth1\Token\StdOAuth1Token;
+use OAuth\Common\Http\Uri\Uri;
+use OAuth\Common\Exception\Exception;
 
 /**
  * AbstractService class for OAuth 1, implements basic methods in compliance with that protocol
  */
 abstract class AbstractService implements ServiceInterface
 {
-    /**
-     * @var \OAuth\Common\Consumer\Credentials
-     */
+    /** @var \OAuth\Common\Consumer\Credentials */
     protected $credentials;
 
-    /**
-     * @var \OAuth\Common\Storage\TokenStorageInterface
-     */
+    /** @var \OAuth\Common\Storage\TokenStorageInterface */
     protected $storage;
 
     /**
@@ -36,23 +33,26 @@ abstract class AbstractService implements ServiceInterface
      */
     protected $httpClient;
 
-    /**
-     * @var \OAuth\OAuth1\Signature\Signature
-     */
+    /** @var \OAuth\OAuth1\Signature\SignatureInterface */
     protected $signature;
+
+    /** @var \OAuth\Common\Http\Uri\UriInterface|null */
+    protected $baseApiUri;
 
     /**
      * @param \OAuth\Common\Consumer\Credentials $credentials
      * @param \OAuth\Common\Http\Client\ClientInterface $httpClient
      * @param \OAuth\Common\Storage\TokenStorageInterface $storage
-     * @param \OAuth\OAuth1\Signature\Signature $signature
+     * @param \OAuth\OAuth1\Signature\SignatureInterface $signature
+     * @param UriInterface|null $baseApiUri
      */
-    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, Signature $signature)
+    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, SignatureInterface $signature, UriInterface $baseApiUri = null)
     {
         $this->credentials  = $credentials;
         $this->httpClient   = $httpClient;
         $this->storage      = $storage;
         $this->signature    = $signature;
+        $this->baseApiUri   = $baseApiUri;
 
         $this->signature->setHashingAlgorithm($this->getSignatureMethod());
     }
@@ -128,25 +128,51 @@ abstract class AbstractService implements ServiceInterface
     }
 
     /**
-     * Sends an authenticated request to the given endpoint using stored token.
-     *
-     * @param UriInterface $uri
-     * @param array $bodyParams
-     * @param string $method
-     * @param array $extraHeaders
+     * Sends an authenticated API request to the path provided.
+     * If the path provided is not an absolute URI, the base API Uri (must be passed into constructor) will be used.
+     * @param $path string|UriInterface
+     * @param string $method HTTP method
+     * @param array $body Request body if applicable (key/value pairs)
+     * @param array $extraHeaders Extra headers if applicable. These will override service-specific any defaults.
      * @return string
-     * @throws \OAuth\Common\Token\Exception\ExpiredTokenException
+     * @throws Exception
      */
-    public function sendAuthenticatedRequest(UriInterface $uri, array $bodyParams, $method = 'POST', $extraHeaders = [])
+    public function request($path, $method = 'GET', array $body = [], array $extraHeaders = [])
     {
+        if( $path instanceof UriInterface ) {
+            $uri = $path;
+        } elseif( 0 === strpos('http://', $path) || 0 === strpos('https://', $path)  ) {
+            // @todo uncouple this.
+            $uri = new Uri($path);
+        } else {
+            if( null === $this->baseApiUri ) {
+                throw new Exception('An absolute URI must be passed to ServiceInterface::request as no baseApiUri is set.');
+            }
+
+            $uri = clone $this->baseApiUri;
+            if( false !== strpos($path, '?') ) {
+                $parts = explode('?', $uri, 2);
+                $path = $parts[0];
+                $query = $parts[1];
+                $uri->setQuery($query);
+            }
+
+            if( $path[0] === '/' ) {
+                $path = substr($path, 1);
+            }
+
+            $uri->setPath($uri->getPath() . $path);
+        }
+
         /** @var $token \OAuth\OAuth1\Token\StdOAuth1Token */
         $token = $this->storage->retrieveAccessToken();
-        $extraHeaders = array_merge( $extraHeaders, $this->getExtraApiHeaders() );
-        $authorizationHeader = ['Authorization' => $this->buildAuthorizationHeaderForAPIRequest($method, $uri, $token, $bodyParams) ];
+        $extraHeaders = array_merge( $this->getExtraApiHeaders(), $extraHeaders );
+        $authorizationHeader = ['Authorization' => $this->buildAuthorizationHeaderForAPIRequest($method, $uri, $token, $body) ];
         $headers = array_merge($authorizationHeader, $extraHeaders);
 
-        return $this->httpClient->retrieveResponse($uri, $bodyParams, $headers, $method);
+        return $this->httpClient->retrieveResponse($uri, $body, $headers, $method);
     }
+
 
     /**
      * Return any additional headers always needed for this service implementation's OAuth calls.

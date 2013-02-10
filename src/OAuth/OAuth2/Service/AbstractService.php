@@ -15,6 +15,8 @@
 namespace OAuth\OAuth2\Service;
 
 use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Exception\Exception;
+use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Client\ClientInterface;
@@ -34,34 +36,30 @@ use OAuth\Common\Token\Exception\ExpiredTokenException;
  */
 abstract class AbstractService implements ServiceInterface
 {
-    /**
-     * @var \OAuth\Common\Consumer\Credentials
-     */
+    /** @var \OAuth\Common\Consumer\Credentials */
     protected $credentials;
 
-    /**
-     * @var \OAuth\Common\Storage\TokenStorageInterface
-     */
+    /** @var \OAuth\Common\Storage\TokenStorageInterface */
     protected $storage;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $scopes;
 
-    /**
-     * @var \OAuth\Common\Http\Client\ClientInterface
-     */
+    /** @var \OAuth\Common\Http\Client\ClientInterface */
     protected $httpClient;
+
+    /** @var \OAuth\Common\Http\Uri\UriInterface|null */
+    protected $baseApiUri;
 
     /**
      * @param \OAuth\Common\Consumer\Credentials $credentials
      * @param \OAuth\Common\Http\Client\ClientInterface $httpClient
      * @param \OAuth\Common\Storage\TokenStorageInterface $storage
      * @param array $scopes
+     * @param UriInterface|null $baseApiUri
      * @throws InvalidScopeException
      */
-    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = [])
+    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = [], UriInterface $baseApiUri = null)
     {
         $this->credentials = $credentials;
         $this->httpClient = $httpClient;
@@ -75,6 +73,8 @@ abstract class AbstractService implements ServiceInterface
         }
 
         $this->scopes = $scopes;
+
+        $this->baseApiUri = $baseApiUri;
 
     }
 
@@ -135,17 +135,43 @@ abstract class AbstractService implements ServiceInterface
     }
 
     /**
-     * Sends an authenticated request to the given endpoint using stored token.
-     *
-     * @param UriInterface $uri
-     * @param array $bodyParams
-     * @param string $method
-     * @param array $extraHeaders
+     * Sends an authenticated API request to the path provided.
+     * If the path provided is not an absolute URI, the base API Uri (must be passed into constructor) will be used.
+     * @param $path string|UriInterface
+     * @param string $method HTTP method
+     * @param array $body Request body if applicable (key/value pairs)
+     * @param array $extraHeaders Extra headers if applicable. These will override service-specific any defaults.
      * @return string
-     * @throws \OAuth\Common\Token\Exception\ExpiredTokenException
+     * @throws ExpiredTokenException
+     * @throws Exception
      */
-    public function sendAuthenticatedRequest(UriInterface $uri, array $bodyParams, $method = 'POST', $extraHeaders = [])
+    public function request($path, $method = 'GET', array $body = [], array $extraHeaders = [])
     {
+        if( $path instanceof UriInterface ) {
+            $uri = $path;
+        } elseif( 0 === strpos('http://', $path) || 0 === strpos('https://', $path)  ) {
+            // @todo uncouple this.
+            $uri = new Uri($path);
+        } else {
+            if( null === $this->baseApiUri ) {
+                throw new Exception('An absolute URI must be passed to ServiceInterface::request as no baseApiUri is set.');
+            }
+
+            $uri = clone $this->baseApiUri;
+            if( false !== strpos($path, '?') ) {
+                $parts = explode('?', $uri, 2);
+                $path = $parts[0];
+                $query = $parts[1];
+                $uri->setQuery($query);
+            }
+
+            if( $path[0] === '/' ) {
+                $path = substr($path, 1);
+            }
+
+            $uri->setPath($uri->getPath() . $path);
+        }
+
         $token = $this->storage->retrieveAccessToken();
 
         if( ( $token->getEndOfLife() !== TokenInterface::EOL_NEVER_EXPIRES ) &&
@@ -165,9 +191,10 @@ abstract class AbstractService implements ServiceInterface
         }
 
 
-        $extraHeaders = array_merge( $extraHeaders, $this->getExtraApiHeaders() );
+        $extraHeaders = array_merge( $this->getExtraApiHeaders(), $extraHeaders );
 
-        return $this->httpClient->retrieveResponse($uri, $bodyParams, $extraHeaders, $method);
+        return $this->httpClient->retrieveResponse($uri, $body, $extraHeaders, $method);
+
     }
 
     /**

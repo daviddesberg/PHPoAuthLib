@@ -1,6 +1,6 @@
 <?php
 /**
- * OAuth2 service implementation for Google.
+ * OAuth2 service implementation for Microsoft.
  *
  * PHP version 5.4
  *
@@ -16,6 +16,10 @@ namespace OAuth\OAuth2\Service;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
+use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\Common\Http\Uri\UriInterface;
 
 /**
  * OAuth2 service implementation for Microsoft.
@@ -50,6 +54,14 @@ class Microsoft extends AbstractService
     const SCOPE_WORK_PROFILE = 'wl.work_profile';
     const SCOPE_APPLICATIONS = 'wl.applications';
     const SCOPE_APPLICATIONS_CREATE = 'wl.applications_create';
+
+    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = [], UriInterface $baseApiUri = null)
+    {
+        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
+        if( null === $baseApiUri ) {
+            $this->baseApiUri = new Uri('https://apis.live.net/v5.0/');
+        }
+    }
 
     /**
      * @return \OAuth\Common\Http\Uri\UriInterface

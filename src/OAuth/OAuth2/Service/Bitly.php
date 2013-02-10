@@ -18,6 +18,10 @@ namespace OAuth\OAuth2\Service;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
+use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\Common\Http\Uri\UriInterface;
 
 /**
  * OAuth2 service implementation for Bitly. Note that bitly for some reason uses two different domains for the
@@ -31,6 +35,14 @@ use OAuth\Common\Http\Uri\Uri;
  */
 class Bitly extends AbstractService
 {
+    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = [], UriInterface $baseApiUri = null)
+    {
+        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
+        if( null === $baseApiUri ) {
+            $this->baseApiUri = new Uri('https://api-ssl.bitly.com/v3/');
+        }
+    }
+
     /**
      * @return \OAuth\Common\Http\Uri\UriInterface
      */
@@ -78,7 +90,7 @@ class Bitly extends AbstractService
      * Retrieves and stores the OAuth2 access token after a successful authorization.
      *
      * @param string $code The access code from the callback.
-     * @return TokenInterface $token
+     * @return \OAuth\OAuth2\Token\TokenInterface $token
      * @throws TokenResponseException
      */
     public function requestAccessToken($code)

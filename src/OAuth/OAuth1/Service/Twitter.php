@@ -14,9 +14,14 @@
  */
 namespace OAuth\OAuth1\Service;
 
+use OAuth\OAuth1\Signature\SignatureInterface;
 use OAuth\OAuth1\Token\StdOAuth1Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
+use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\Common\Http\Client\ClientInterface;
 
 /**
  * OAuth2 service implementation for Twitter.
@@ -29,6 +34,14 @@ use OAuth\Common\Http\Uri\Uri;
  */
 class Twitter extends AbstractService
 {
+    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, SignatureInterface $signature, UriInterface $baseApiUri = null)
+    {
+        parent::__construct($credentials, $httpClient, $storage, $signature, $baseApiUri);
+        if( null === $baseApiUri ) {
+            $this->baseApiUri = new Uri('https://api.twitter.com/1.1/');
+        }
+    }
+
     /**
      * @return \OAuth\Common\Http\Uri\UriInterface
      */

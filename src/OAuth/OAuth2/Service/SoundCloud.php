@@ -17,7 +17,10 @@ namespace OAuth\OAuth2\Service;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-
+use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\Common\Http\Uri\UriInterface;
 /**
  * OAuth2 service implementation for SoundCloud.
  *
@@ -29,6 +32,14 @@ use OAuth\Common\Http\Uri\Uri;
  */
 class SoundCloud extends AbstractService
 {
+    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = [], UriInterface $baseApiUri = null)
+    {
+        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
+        if( null === $baseApiUri ) {
+            $this->baseApiUri = new Uri('https://api.soundcloud.com/');
+        }
+    }
+
     /**
      * @return \OAuth\Common\Http\Uri\UriInterface
      */

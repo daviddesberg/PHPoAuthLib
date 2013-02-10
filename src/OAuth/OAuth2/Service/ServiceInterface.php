@@ -21,12 +21,13 @@ use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Token\TokenInterface;
 use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\Common\Http\Exception\TokenResponseException;
+use OAuth\Common\Service\ServiceInterface as BaseServiceInterface;
 use OAuth\Common\Http\Uri\UriInterface;
-
 /**
  * Defines the common methods across OAuth 2 services.
  */
-interface ServiceInterface
+interface ServiceInterface extends BaseServiceInterface
 {
     /**
      * Authorization methods for various services
@@ -40,9 +41,10 @@ interface ServiceInterface
      * @param \OAuth\Common\Http\Client\ClientInterface $httpClient
      * @param \OAuth\Common\Storage\TokenStorageInterface $storage
      * @param array $scopes
+     * @param UriInterface|null $baseApiUri
      * @abstract
      */
-    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = []);
+    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = [], UriInterface $baseApiUri = null);
 
     /**
      * Retrieves and stores/returns the OAuth2 access token after a successful authorization.
@@ -50,41 +52,7 @@ interface ServiceInterface
      * @abstract
      * @param string $code The access code from the callback.
      * @return TokenInterface $token
-     * @throws InvalidTokenResponseException
+     * @throws TokenResponseException
      */
     public function requestAccessToken($code);
-
-    /**
-     * Returns the url to redirect to for authorization purposes.
-     *
-     * @abstract
-     * @param array $additionalParameters
-     * @return UriInterface
-     */
-    public function getAuthorizationUri( array $additionalParameters = [] );
-
-    /**
-     * @abstract
-     * @return UriInterface
-     */
-    public function getAuthorizationEndpoint();
-
-    /**
-     * @abstract
-     * @return UriInterface
-     */
-    public function getAccessTokenEndpoint();
-
-    /**
-     * Sends an authenticated request to the given endpoint using stored token.
-     *
-     * @abstract
-     * @param UriInterface $uri
-     * @param array $bodyParams
-     * @param string $method
-     * @param array $extraHeaders
-     * @return string
-     * @throws \OAuth\Common\Token\Exception\ExpiredTokenException
-     */
-    public function sendAuthenticatedRequest(UriInterface $uri, array $bodyParams, $method = 'POST', $extraHeaders = []);
 }

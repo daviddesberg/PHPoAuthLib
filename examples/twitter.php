@@ -43,7 +43,7 @@ if( !empty( $_GET['oauth_token'] ) ) {
     $twitterService->requestAccessToken( $_GET['oauth_token'], $_GET['oauth_verifier'], $token->getRequestTokenSecret() );
 
     // Send a request now that we have access token
-    $result = json_decode( $twitterService->sendAuthenticatedRequest( new OAuth\Common\Http\Uri\Uri('https://api.twitter.com/1.1/account/verify_credentials.json'), [], 'GET' ), true );
+    $result = json_decode( $twitterService->request( 'account/verify_credentials.json') );
 
     echo 'result: <pre>' . print_r($result, true) . '</pre>';
 

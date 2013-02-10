@@ -48,9 +48,9 @@ To handle the callback and obtain the token:
 <?php
 $token = $googleService->requestAccessToken( $_GET['code'] ); // note that the token will also be passed to the `TokenStorageInterface` passed to the service
 // get userinfo
-$result = json_decode( $googleService->sendAuthenticatedRequest( new Uri('https://www.googleapis.com/oauth2/v1/userinfo'), [], 'GET' ), true );
+$result = json_decode( $googleService->request( 'https://www.googleapis.com/oauth2/v1/userinfo', [], 'GET' ), true );
 ```
 
-API Docs
----------
-View the API docs [here](http://lusitanian.github.com/PHPoAuthLib/doc/api/).
+Tests
+------
+To run the tests, you must install dependencies with `composer install --dev`

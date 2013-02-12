@@ -21,5 +21,10 @@
     },
     "autoload": {
         "psr-0": { "OAuth": "src" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
     }
 }

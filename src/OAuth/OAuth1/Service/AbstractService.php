@@ -11,7 +11,7 @@ use OAuth\OAuth1\Token\TokenInterface;
 use OAuth\OAuth1\Token\StdOAuth1Token;
 use OAuth\Common\Service\AbstractService as BaseAbstractService;
 
-abstract class AbstractService extends BaseAbstractService
+abstract class AbstractService extends BaseAbstractService implements ServiceInterface
 {
     /** @var \OAuth\Common\Consumer\Credentials */
     protected $credentials;

@@ -13,7 +13,7 @@ use OAuth\OAuth2\Service\Exception\MissingRefreshTokenException;
 use OAuth\Common\Token\TokenInterface;
 use OAuth\Common\Token\Exception\ExpiredTokenException;
 
-abstract class AbstractService extends BaseAbstractService
+abstract class AbstractService extends BaseAbstractService implements ServiceInterface
 {
     /** @var \OAuth\Common\Consumer\Credentials */
     protected $credentials;

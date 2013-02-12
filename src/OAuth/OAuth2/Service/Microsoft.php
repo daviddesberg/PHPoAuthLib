@@ -1,16 +1,4 @@
 <?php
-/**
- * OAuth2 service implementation for Microsoft.
- *
- * PHP version 5.4
- *
- * @category   OAuth
- * @package    OAuth2
- * @subpackage Service
- * @author     David Desberg <david@daviddesberg.com>
- * @copyright  Copyright (c) 2012 The authors
- * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
- */
 namespace OAuth\OAuth2\Service;
 
 use OAuth\OAuth2\Token\StdOAuth2Token;
@@ -21,14 +9,6 @@ use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 
-/**
- * OAuth2 service implementation for Microsoft.
- *
- * @category   OAuth
- * @package    OAuth2
- * @subpackage Service
- * @author     David Desberg <david@daviddesberg.com>
- */
 class Microsoft extends AbstractService
 {
     const SCOPE_BASIC = 'wl.basic';

@@ -1,24 +1,9 @@
 <?php
-/**
- * PSR-0 Autoloader
- *
- * PHP version 5.4
- *
- * @category   OAuth
- * @package    Common
- * @author     Pieter Hordijk <info@pieterhordijk.com>
- * @copyright  Copyright (c) 2012 Pieter Hordijk
- * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
- * @version    0.0.1
- */
 namespace OAuth\Common;
 
 /**
  * PSR-0 Autoloader
- *
- * @category   OAuth
- * @package    Common
- * @author     Pieter Hordijk <info@pieterhordijk.com>
+ * @author ieter Hordijk <info@pieterhordijk.com>
  */
 class AutoLoader
 {

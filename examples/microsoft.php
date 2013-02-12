@@ -30,7 +30,8 @@ $credentials = new Credentials(
 );
 
 // Instantiate the google service using the credentials, http client and storage mechanism for the token
-$microsoft = new Microsoft($credentials, $httpClientProvider(), $storage, [ Microsoft::SCOPE_BASIC ]);
+/** @var $microsoft Microsoft */
+$microsoft = $serviceFactory->createService('microsoft', $credentials, $storage, [ 'basic' ]);
 
 if( !empty( $_GET['code'] ) ) {
     // This was a callback request from google, get the token

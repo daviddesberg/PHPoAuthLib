@@ -1,13 +1,4 @@
 <?php
-/**
- * Builds a signature to sign OAuth1 requests
- *
- * PHP version 5.4
- *
- * @author     Pieter Hordijk <info@pieterhordijk.com>
- * @copyright  Copyright (c) 2012 The authors
- * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
- */
 namespace OAuth\OAuth1\Signature;
 
 use OAuth\Common\Consumer\Credentials;

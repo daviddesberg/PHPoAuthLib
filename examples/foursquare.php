@@ -29,9 +29,9 @@ $credentials = new Credentials(
     $currentUri->getAbsoluteUri()
 );
 
-// Instantiate the google service using the credentials, http client and storage mechanism for the token
-$foursquareService = new Foursquare($credentials, $httpClientProvider(), $storage, []);
-
+// Instantiate the foursquare service using the credentials, http client and storage mechanism for the token
+/** @var $foursquareService Foursquare */
+$foursquareService = $serviceFactory->createService('foursquare', $credentials, $storage);
 if( !empty( $_GET['code'] ) ) {
     // This was a callback request from google, get the token
     $foursquareService->requestAccessToken( $_GET['code'] );

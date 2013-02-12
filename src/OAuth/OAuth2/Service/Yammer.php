@@ -1,16 +1,4 @@
 <?php
-/**
- * OAuth2 service implementation for Yammer.
- *
- * PHP version 5.4
- *
- * @category   OAuth
- * @package    OAuth2
- * @subpackage Service
- * @author     David Desberg <david@daviddesberg.com>
- * @copyright  Copyright (c) 2012 The authors
- * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
- */
 namespace OAuth\OAuth2\Service;
 
 use OAuth\OAuth2\Token\StdOAuth2Token;
@@ -21,16 +9,6 @@ use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 
-/**
- * OAuth2 service implementation for Yammer. Note that Yammer doesn't use any scopes.
- * Instead they prefer the traditional approach: give the application to every single damn detail about this user and complete control
- * over their account with one click of the button and with no warnings...................
- *
- * @category   OAuth
- * @package    OAuth2
- * @subpackage Service
- * @author     David Desberg <david@daviddesberg.com>
- */
 class Yammer extends AbstractService
 {
     public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = [], UriInterface $baseApiUri = null)

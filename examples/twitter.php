@@ -28,14 +28,12 @@ $storage = new Session();
 $credentials = new Credentials(
     $servicesCredentials['twitter']['key'],
     $servicesCredentials['twitter']['secret'],
-    'http://localhost:8080/twitter.php'
+    $currentUri->getAbsoluteUri()
 );
 
-// setup the signature for the requests
-$signature = new Signature($credentials);
-
 // Instantiate the twitter service using the credentials, http client and storage mechanism for the token
-$twitterService = new Twitter($credentials, $httpClientProvider(), $storage, $signature);
+/** @var $twitterService Twitter */
+$twitterService = $serviceFactory->createService('twitter', $credentials, $storage);
 
 if( !empty( $_GET['oauth_token'] ) ) {
     $token = $storage->retrieveAccessToken();

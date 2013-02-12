@@ -1,5 +1,4 @@
 <?php
-
 namespace OAuth\Common\Storage;
 
 use OAuth\Common\Token\TokenInterface;

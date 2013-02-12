@@ -34,22 +34,8 @@ Examples of basic usage are located in the examples/ directory.
 
 Usage
 ------
-Authorizing a user with any service is very concise:
+For usage with complete auth flow, please see the examples. More in-depth documentation will come with release 1.0.
 
-```php
-<?php
-$storage = new OAuth\Common\Storage\Memory();
-$credentials = new Credentials(GOOGLE_CLIENT, GOOGLE_SECRET, get_own_url() );
-$googleService = new Google(new OAuth\Common\Consumer\Credentials('yourClient', 'yourSecret', 'yourCallBackUrl'), new OAuth\Common\Http\StreamClient(), new OAuth\Common\Storage\Null(), [ Google::SCOPE_EMAIL, Google::SCOPE_PROFILE ]);
-header('Location: ' . $googleService->getAuthorizationUri());
-```
-To handle the callback and obtain the token:
-```php
-<?php
-$token = $googleService->requestAccessToken( $_GET['code'] ); // note that the token will also be passed to the `TokenStorageInterface` passed to the service
-// get userinfo
-$result = json_decode( $googleService->request( 'https://www.googleapis.com/oauth2/v1/userinfo', [], 'GET' ), true );
-```
 
 Tests
 ------

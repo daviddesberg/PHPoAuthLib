@@ -1,9 +1,4 @@
 <?php
-/**
- * @author David Desberg <david@daviddesberg.com>
- * Released under the MIT license.
- */
-
 namespace OAuth\OAuth1\Service;
 
 use OAuth\Common\Consumer\Credentials;
@@ -14,13 +9,9 @@ use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\OAuth1\Signature\SignatureInterface;
 use OAuth\OAuth1\Token\TokenInterface;
 use OAuth\OAuth1\Token\StdOAuth1Token;
-use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Exception\Exception;
+use OAuth\Common\Service\AbstractService as BaseAbstractService;
 
-/**
- * AbstractService class for OAuth 1, implements basic methods in compliance with that protocol
- */
-abstract class AbstractService implements ServiceInterface
+abstract class AbstractService extends BaseAbstractService
 {
     /** @var \OAuth\Common\Consumer\Credentials */
     protected $credentials;
@@ -135,33 +126,10 @@ abstract class AbstractService implements ServiceInterface
      * @param array $body Request body if applicable (key/value pairs)
      * @param array $extraHeaders Extra headers if applicable. These will override service-specific any defaults.
      * @return string
-     * @throws Exception
      */
     public function request($path, $method = 'GET', array $body = [], array $extraHeaders = [])
     {
-        if( $path instanceof UriInterface ) {
-            $uri = $path;
-        } elseif( 0 === strpos('http://', $path) || 0 === strpos('https://', $path)  ) {
-            $uri = new Uri($path);
-        } else {
-            if( null === $this->baseApiUri ) {
-                throw new Exception('An absolute URI must be passed to ServiceInterface::request as no baseApiUri is set.');
-            }
-
-            $uri = clone $this->baseApiUri;
-            if( false !== strpos($path, '?') ) {
-                $parts = explode('?', $uri, 2);
-                $path = $parts[0];
-                $query = $parts[1];
-                $uri->setQuery($query);
-            }
-
-            if( $path[0] === '/' ) {
-                $path = substr($path, 1);
-            }
-
-            $uri->setPath($uri->getPath() . $path);
-        }
+        $uri = $this->determineRequestUriFromPath($path, $this->baseApiUri);
 
         /** @var $token \OAuth\OAuth1\Token\StdOAuth1Token */
         $token = $this->storage->retrieveAccessToken();

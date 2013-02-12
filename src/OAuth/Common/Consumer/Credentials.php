@@ -1,25 +1,8 @@
 <?php
-/**
- * Container for OAuth credentials.
- *
- * PHP version 5.4
- *
- * @category   OAuth
- * @package    Common
- * @subpackage Consumer
- * @author     David Desberg <david@daviddesberg.com>
- * @copyright  Copyright (c) 2012 The authors
- * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
- */
-
 namespace OAuth\Common\Consumer;
 
 /**
- * Container class for the credentials of an OAuth service.
- * @category   OAuth
- * @package    OAuth2
- * @subpackage Consumer
- * @author     David Desberg <david@daviddesberg.com>
+ * Value object for the credentials of an OAuth service.
  */
 class Credentials
 {

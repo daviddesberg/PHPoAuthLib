@@ -1,22 +1,9 @@
 <?php
-/**
- * Abstract OAuth2 Service.
- *
- * PHP version 5.4
- *
- * @category   OAuth
- * @package    OAuth2
- * @subpackage Service
- * @author     David Desberg <david@daviddesberg.com>
- * @copyright  Copyright (c) 2012 The authors
- * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
- */
-
 namespace OAuth\OAuth2\Service;
 
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Exception\Exception;
-use OAuth\Common\Http\Uri\Uri;
+use OAuth\Common\Service\AbstractService as BaseAbstractService;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Client\ClientInterface;
@@ -26,15 +13,7 @@ use OAuth\OAuth2\Service\Exception\MissingRefreshTokenException;
 use OAuth\Common\Token\TokenInterface;
 use OAuth\Common\Token\Exception\ExpiredTokenException;
 
-/**
- * AbstractService class for OAuth 2.
- * Implements basic methods in compliance with that protocol
- * @category   OAuth
- * @package    OAuth2
- * @subpackage Service
- * @author     David Desberg <david@daviddesberg.com>
- */
-abstract class AbstractService implements ServiceInterface
+abstract class AbstractService extends BaseAbstractService
 {
     /** @var \OAuth\Common\Consumer\Credentials */
     protected $credentials;
@@ -147,30 +126,7 @@ abstract class AbstractService implements ServiceInterface
      */
     public function request($path, $method = 'GET', array $body = [], array $extraHeaders = [])
     {
-        if( $path instanceof UriInterface ) {
-            $uri = $path;
-        } elseif( 0 === strpos('http://', $path) || 0 === strpos('https://', $path)  ) {
-            $uri = new Uri($path);
-        } else {
-            if( null === $this->baseApiUri ) {
-                throw new Exception('An absolute URI must be passed to ServiceInterface::request as no baseApiUri is set.');
-            }
-
-            $uri = clone $this->baseApiUri;
-            if( false !== strpos($path, '?') ) {
-                $parts = explode('?', $uri, 2);
-                $path = $parts[0];
-                $query = $parts[1];
-                $uri->setQuery($query);
-            }
-
-            if( $path[0] === '/' ) {
-                $path = substr($path, 1);
-            }
-
-            $uri->setPath($uri->getPath() . $path);
-        }
-
+        $uri = $this->determineRequestUriFromPath($path, $this->baseApiUri);
         $token = $this->storage->retrieveAccessToken();
 
         if( ( $token->getEndOfLife() !== TokenInterface::EOL_NEVER_EXPIRES ) &&

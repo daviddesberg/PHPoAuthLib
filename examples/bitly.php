@@ -30,7 +30,8 @@ $credentials = new Credentials(
 );
 
 // Instantiate the google service using the credentials, http client and storage mechanism for the token
-$bitlyService = new Bitly($credentials, $httpClientProvider(), $storage, []);
+/** @var $bitlyService Bitly */
+$bitlyService = $serviceFactory->createService('bitly', $credentials, $storage);
 
 if( !empty( $_GET['code'] ) ) {
     // This was a callback request from bitly, get the token

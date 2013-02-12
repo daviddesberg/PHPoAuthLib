@@ -1,9 +1,4 @@
 <?php
-/**
- * @author David Desberg <david@daviddesberg.com>
- * Released under the MIT license.
- */
-
 namespace OAuth\Common\Exception;
 
 /**

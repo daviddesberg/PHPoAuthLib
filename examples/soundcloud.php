@@ -12,7 +12,6 @@
 use OAuth\OAuth2\Service\SoundCloud;
 use OAuth\Common\Storage\Memory;
 use OAuth\Common\Consumer\Credentials;
-use OAuth\Common\Http\Uri\Uri;
 
 /**
  * Bootstrap the example
@@ -30,7 +29,8 @@ $credentials = new Credentials(
 );
 
 // Instantiate the SoundCloud service using the credentials, http client and storage mechanism for the token
-$soundcloudService = new SoundCloud($credentials, $httpClientProvider(), $storage, [ ]);
+/** @var $soundcloudService SoundCloud */
+$soundcloudService = $serviceFactory->createService('soundCloud', $credentials, $storage);
 
 if( !empty( $_GET['code'] ) ) {
     // This was a callback request from SoundCloud, get the token

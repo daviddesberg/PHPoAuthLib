@@ -1,18 +1,6 @@
 <?php
-/**
- * Common service interface.
- *
- * PHP Version 5.4
- *
- * @category   OAuth
- * @package    Common
- * @subpackage Service
- * @author     David Desberg <david@daviddesberg.com>
- * @copyright  Copyright (c) 2013 The authors
- * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
- */
-
 namespace OAuth\Common\Service;
+
 use OAuth\Common\Http\Uri\UriInterface;
 
 /**
@@ -23,6 +11,7 @@ interface ServiceInterface
     /**
      * Sends an authenticated API request to the path provided.
      * If the path provided is not an absolute URI, the base API Uri (service-specific) will be used.
+     *
      * @abstract
      * @param $path string|UriInterface
      * @param string $method HTTP method
@@ -42,12 +31,16 @@ interface ServiceInterface
     public function getAuthorizationUri( array $additionalParameters = [] );
 
     /**
+     * Returns the authorization API endpoint.
+     *
      * @abstract
      * @return UriInterface
      */
     public function getAuthorizationEndpoint();
 
     /**
+     * Returns the access token API endpoint.
+     *
      * @abstract
      * @return UriInterface
      */

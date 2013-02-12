@@ -1,17 +1,4 @@
 <?php
-/**
- * OAuth2 service implementation for Twitter.
- *
- * PHP version 5.4
- *
- * @category   OAuth
- * @package    OAuth1
- * @subpackage Service
- * @author     David Desberg <david@daviddesberg.com>
- * @author     Pieter Hordijk <info@pieterhordijk.com>
- * @copyright  Copyright (c) 2013 The authors
- * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
- */
 namespace OAuth\OAuth1\Service;
 
 use OAuth\OAuth1\Signature\SignatureInterface;
@@ -23,15 +10,6 @@ use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Client\ClientInterface;
 
-/**
- * OAuth2 service implementation for Twitter.
- *
- * @category   OAuth
- * @package    OAuth1
- * @subpackage Service
- * @author     David Desberg <david@daviddesberg.com>
- * @author     Pieter Hordijk <info@pieterhordijk.com>
- */
 class Twitter extends AbstractService
 {
     public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, SignatureInterface $signature, UriInterface $baseApiUri = null)

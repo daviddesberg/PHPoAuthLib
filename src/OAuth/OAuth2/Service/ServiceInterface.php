@@ -1,22 +1,6 @@
 <?php
-/**
- * OAuth 2 service interface.
- *
- * PHP Version 5.4
- *
- *
- * @author David Desberg <david@daviddesberg.com>
- *
- * @category   OAuth
- * @package    OAuth2
- * @subpackage Service
- * @author     David Desberg <david@daviddesberg.com>
- * @copyright  Copyright (c) 2012 The authors
- * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
- */
-
-
 namespace OAuth\OAuth2\Service;
+
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Token\TokenInterface;
@@ -24,6 +8,7 @@ use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Service\ServiceInterface as BaseServiceInterface;
 use OAuth\Common\Http\Uri\UriInterface;
+
 /**
  * Defines the common methods across OAuth 2 services.
  */

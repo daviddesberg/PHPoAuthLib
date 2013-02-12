@@ -48,11 +48,5 @@ $servicesCredentials = [
     ],
 ];
 
-/**
- * @var callable This will return an instance of the preferred HTTP client used for requests to services
- * @return \OAuth\Common\Http\Client\StreamClient
- */
-$httpClientProvider = function()
-{
-    return new OAuth\Common\Http\Client\StreamClient();
-};
+/** @var $serviceFactory \OAuth\ServiceFactory An OAuth service factory. */
+$serviceFactory = new \OAuth\ServiceFactory();

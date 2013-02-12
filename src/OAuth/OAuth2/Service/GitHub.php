@@ -1,17 +1,4 @@
 <?php
-/**
- * OAuth2 service implementation for GitHub.
- *
- * PHP version 5.4
- *
- * @category   OAuth
- * @package    OAuth2
- * @subpackage Service
- * @author     David Desberg <david@daviddesberg.com>
- * @author     Pieter Hordijk <info@pieterhordijk.com>
- * @copyright  Copyright (c) 2012 The authors
- * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
- */
 namespace OAuth\OAuth2\Service;
 
 use OAuth\OAuth2\Token\StdOAuth2Token;
@@ -22,15 +9,6 @@ use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 
-/**
- * OAuth2 service implementation for GitHub.
- *
- * @category   OAuth
- * @package    OAuth2
- * @subpackage Service
- * @author     David Desberg <david@daviddesberg.com>
- * @author     Pieter Hordijk <info@pieterhordijk.com>
- */
 class GitHub extends AbstractService
 {
     /**

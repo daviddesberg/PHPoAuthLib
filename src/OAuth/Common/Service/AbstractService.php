@@ -23,7 +23,7 @@ abstract class AbstractService implements ServiceInterface
 
             $uri = clone $baseApiUri;
             if( false !== strpos($path, '?') ) {
-                $parts = explode('?', $uri, 2);
+                $parts = explode('?', $path, 2);
                 $path = $parts[0];
                 $query = $parts[1];
                 $uri->setQuery($query);

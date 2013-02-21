@@ -14,7 +14,7 @@ abstract class AbstractService implements ServiceInterface
     {
         if( $path instanceof UriInterface ) {
             $uri = $path;
-        } elseif( 0 === strpos('http://', $path) || 0 === strpos('https://', $path)  ) {
+        } elseif( 0 === strpos($path, 'http://') || 0 === strpos($path, 'http://')  ) {
             $uri = new Uri($path);
         } else {
             if( null === $baseApiUri ) {

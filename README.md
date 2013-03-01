@@ -36,6 +36,9 @@ Usage
 ------
 For usage with complete auth flow, please see the examples. More in-depth documentation will come with release 1.0.
 
+Framework Integration
+---------------------
+* Lithium: Sébastien Charrier has written [an adapter](https://github.com/scharrier/li3_socialauth) for the library.
 
 Tests
 ------

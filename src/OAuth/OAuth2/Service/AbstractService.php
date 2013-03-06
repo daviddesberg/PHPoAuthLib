@@ -149,7 +149,14 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $extraHeaders = array_merge( $this->getExtraApiHeaders(), $extraHeaders );
 
         return $this->httpClient->retrieveResponse($uri, $body, $extraHeaders, $method);
-
+    }
+    
+    /**
+    * Accessor to the storage adapter to be able to retrieve tokens
+    * 
+    */
+    public function getStorage() {
+        return $this->storage;
     }
 
     /**

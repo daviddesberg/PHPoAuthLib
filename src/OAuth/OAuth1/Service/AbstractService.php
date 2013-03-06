@@ -139,6 +139,14 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
 
         return $this->httpClient->retrieveResponse($uri, $body, $headers, $method);
     }
+    
+    /**
+    * Accessor to the storage adapter to be able to retrieve tokens
+    * 
+    */
+    public function getStorage() {
+        return $this->storage;
+    }
 
 
     /**

@@ -48,6 +48,14 @@ class Session implements TokenStorageInterface
         $_SESSION[$this->sessionVariableName] = $token;
     }
 
+    /**
+    * @return bool
+    */
+    public function hasAccessToken()
+    {
+        return isset( $_SESSION[$this->sessionVariableName] );
+    }
+
     public function  __destruct()
     {
         session_write_close();

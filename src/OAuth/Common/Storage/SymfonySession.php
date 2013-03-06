@@ -29,4 +29,12 @@ class SymfonySession implements TokenStorageInterface
     {
         $this->session->set($this->sessionVariableName, $token);
     }
+
+    /**
+    * @return bool
+    */
+    public function hasAccessToken()
+    {
+        return $this->session->has($this->sessionVariableName);
+    }
 }

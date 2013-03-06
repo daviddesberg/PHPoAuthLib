@@ -34,4 +34,12 @@ class Memory implements TokenStorageInterface
     {
         $this->token = $token;
     }
+
+    /**
+    * @return bool
+    */
+    public function hasAccessToken()
+    {
+        return $this->token instanceOf TokenInterface;
+    }
 }

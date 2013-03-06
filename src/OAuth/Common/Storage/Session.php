@@ -20,7 +20,7 @@ class Session implements TokenStorageInterface
      */
     public function __construct($startSession = true, $sessionVariableName = 'lusitanian_oauth_token')
     {
-        if( $startSession && session_status() == PHP_SESSION_NONE) {
+        if( $startSession && session_status() === PHP_SESSION_NONE) {
             session_start();
         }
 

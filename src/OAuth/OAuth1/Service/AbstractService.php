@@ -13,17 +13,7 @@ use OAuth\Common\Service\AbstractService as BaseAbstractService;
 
 abstract class AbstractService extends BaseAbstractService implements ServiceInterface
 {
-    /** @var \OAuth\Common\Consumer\Credentials */
-    protected $credentials;
-
-    /** @var \OAuth\Common\Storage\TokenStorageInterface */
-    protected $storage;
-
-    /**
-     * @var \OAuth\Common\Http\Client\ClientInterface
-     */
-    protected $httpClient;
-
+    
     /** @var \OAuth\OAuth1\Signature\SignatureInterface */
     protected $signature;
 
@@ -39,9 +29,8 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, SignatureInterface $signature, UriInterface $baseApiUri = null)
     {
-        $this->credentials  = $credentials;
-        $this->httpClient   = $httpClient;
-        $this->storage      = $storage;
+        parent::__construct($credentials, $httpClient, $storage);
+                                    
         $this->signature    = $signature;
         $this->baseApiUri   = $baseApiUri;
 
@@ -139,16 +128,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
 
         return $this->httpClient->retrieveResponse($uri, $body, $headers, $method);
     }
-    
-    /**
-    * Accessor to the storage adapter to be able to retrieve tokens
-    * 
-    */
-    public function getStorage() {
-        return $this->storage;
-    }
-
-
+         
     /**
      * Return any additional headers always needed for this service implementation's OAuth calls.
      *

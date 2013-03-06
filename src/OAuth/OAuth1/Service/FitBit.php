@@ -33,8 +33,6 @@ class FitBit extends AbstractService
      */
     public function getAuthorizationEndpoint()
     {
-        // @todo if the app will post tweets, authorize must be used instead.
-        // figure something out re: that but it's late and i don't want to now
         return new Uri('https://www.fitbit.com/oauth/authorize');
     }
 

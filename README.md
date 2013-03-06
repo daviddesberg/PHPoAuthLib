@@ -18,6 +18,7 @@ Included service implementations
 ------------------
  - OAuth1
    - Twitter
+   - FitBit
  - OAuth2
    - Google
    - Microsoft

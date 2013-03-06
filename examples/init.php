@@ -46,6 +46,10 @@ $servicesCredentials = [
         'key'       => '',
         'secret'    => '',
     ],
+    'fitbit' => [
+        'key'       => '',
+        'secret'    => '',
+    ],
 ];
 
 /** @var $serviceFactory \OAuth\ServiceFactory An OAuth service factory. */

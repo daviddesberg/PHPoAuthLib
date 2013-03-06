@@ -28,7 +28,6 @@ class ServiceFactory
         }
 
         $this->httpClient = new static::$httpClientMap[$httpClientType];
-
     }
 
     /**

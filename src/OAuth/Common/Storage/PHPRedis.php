@@ -20,6 +20,8 @@ class PHPRedis implements TokenStorageInterface
      * @var object|\Redis
      */
     protected $redis;
+    
+    protected $cachedToken;
 
     /**
      * @param \Redis $redis An instantiated and connected redis client
@@ -37,12 +39,17 @@ class PHPRedis implements TokenStorageInterface
      */
     public function retrieveAccessToken()
     {
+        if( $this->cachedToken ) { 
+            return $this->cachedToken;
+        }
+        
         $val = $this->redis->get( $this->key );
         if( false === $val ) {
             throw new TokenNotFoundException('Token not found in redis');
         }
 
-        return unserialize( $val );
+        $this->cachedToken = unserialize( $val );
+        return $this->cachedToken;
     }
 
     /**
@@ -53,6 +60,7 @@ class PHPRedis implements TokenStorageInterface
     {
         // let redis exceptions bubble up
         if( $this->redis->set($this->key, serialize($token)) ) {
+            $this->cachedToken = $token;
             return;
         }
 
@@ -64,11 +72,12 @@ class PHPRedis implements TokenStorageInterface
     */
     public function hasAccessToken()
     {
-        try { 
-            $this->retrieveAccessToken();
+        if( $this->cachedToken ) { 
             return true;
-        } catch(TokenNotFoundException $e) {
-            return false;
         }
+        
+        $val = $this->redis->get( $this->key );
+        
+        return $val !== false;
     }
 }

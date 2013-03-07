@@ -58,4 +58,12 @@ class PHPRedis implements TokenStorageInterface
 
         throw new StorageException('Unable to store token');
     }
+
+    /**
+    * @return bool
+    */
+    public function hasAccessToken()
+    {
+        return $this->token instanceOf TokenInterface;
+    }
 }

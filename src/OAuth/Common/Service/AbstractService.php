@@ -1,15 +1,39 @@
 <?php
 namespace OAuth\Common\Service;
 
+use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\Common\Exception\Exception;
+use OAuth\Common\Storage\TokenStorageInterface;
 
 /**
  * Abstract OAuth service, version-agnostic
  */
 abstract class AbstractService implements ServiceInterface
 {
+    /** @var \OAuth\Common\Consumer\Credentials */
+    protected $credentials;
+    
+    /** @var \OAuth\Common\Http\Client\ClientInterface */
+    protected $httpClient;
+    
+    /** @var \OAuth\Common\Storage\TokenStorageInterface */
+    protected $storage;
+    
+    /**
+     * @param \OAuth\Common\Consumer\Credentials $credentials
+     * @param \OAuth\Common\Http\Client\ClientInterface $httpClient
+     * @param \OAuth\Common\Storage\TokenStorageInterface $storage
+     */
+    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage)
+    {
+        $this->credentials = $credentials;
+        $this->httpClient   = $httpClient;
+        $this->storage = $storage;
+    }
+    
     protected function determineRequestUriFromPath($path, UriInterface $baseApiUri = null)
     {
         if( $path instanceof UriInterface ) {
@@ -37,5 +61,13 @@ abstract class AbstractService implements ServiceInterface
         }
 
         return $uri;
+    }
+      
+    /**
+    * Accessor to the storage adapter to be able to retrieve tokens
+    * 
+    */
+    public function getStorage() {
+        return $this->storage;
     }
 }

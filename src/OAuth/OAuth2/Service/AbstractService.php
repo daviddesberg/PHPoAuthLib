@@ -15,17 +15,8 @@ use OAuth\Common\Token\Exception\ExpiredTokenException;
 
 abstract class AbstractService extends BaseAbstractService implements ServiceInterface
 {
-    /** @var \OAuth\Common\Consumer\Credentials */
-    protected $credentials;
-
-    /** @var \OAuth\Common\Storage\TokenStorageInterface */
-    protected $storage;
-
     /** @var array */
     protected $scopes;
-
-    /** @var \OAuth\Common\Http\Client\ClientInterface */
-    protected $httpClient;
 
     /** @var \OAuth\Common\Http\Uri\UriInterface|null */
     protected $baseApiUri;
@@ -40,10 +31,8 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = [], UriInterface $baseApiUri = null)
     {
-        $this->credentials = $credentials;
-        $this->httpClient = $httpClient;
-        $this->storage = $storage;
-
+        parent::__construct($credentials, $httpClient, $storage);
+            
         foreach($scopes as $scope)
         {
             if( !$this->isValidScope($scope) ) {
@@ -54,7 +43,6 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $this->scopes = $scopes;
 
         $this->baseApiUri = $baseApiUri;
-
     }
 
     /**

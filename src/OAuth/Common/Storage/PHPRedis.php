@@ -64,6 +64,11 @@ class PHPRedis implements TokenStorageInterface
     */
     public function hasAccessToken()
     {
-        return $this->token instanceOf TokenInterface;
+        try { 
+            $this->retrieveAccessToken();
+            return true;
+        } catch(TokenNotFoundException $e) {
+            return false;
+        }
     }
 }

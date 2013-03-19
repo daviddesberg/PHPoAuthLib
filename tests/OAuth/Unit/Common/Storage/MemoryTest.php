@@ -36,4 +36,22 @@ class MemoryTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException('OAuth\Common\Storage\Exception\TokenNotFoundException');
         $nonExistentToken = $memory->retrieveAccessToken();
     }
+
+    /**
+    * Check that we can delete tokens that are in memory
+    *
+    */
+    public function testStorageClears()
+    {
+        // create sample token
+        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, ['extra' => 'param'] );
+        $memory = new Memory();
+        $memory->storeAccessToken( $token );
+        $this->assertNotNull($memory->retrieveAccessToken());
+
+        $memory->clearToken();
+        $this->assertNull($memory->retrieveAccessToken());
+
+        unset($memory);
+    }
 }

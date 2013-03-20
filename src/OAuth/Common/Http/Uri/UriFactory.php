@@ -106,7 +106,13 @@ class UriFactory implements UriFactoryInterface
      * @return string
      */
     private function detectHost(array $_server) {
-        return isset($_server['HTTP_HOST']) ? $_server['HTTP_HOST'] : '';
+        $host = isset($_server['HTTP_HOST']) ? $_server['HTTP_HOST'] : '';
+
+        if (strstr($host, ':')) {
+            $host = parse_url($host, PHP_URL_HOST);
+        }
+
+        return $host;
     }
 
     /**

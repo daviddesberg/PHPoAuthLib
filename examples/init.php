@@ -18,6 +18,10 @@ $servicesCredentials = [
         'key'       => '',
         'secret'    => '',
     ],
+    'facebook' => [
+        'key'       => '',
+        'secret'    => '',
+    ],
     'github' => [
         'key'       => '',
         'secret'    => '',

@@ -15,7 +15,7 @@ class Facebook extends AbstractService
     {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
         if( null === $baseApiUri ) {
-            $this->baseApiUri = new Uri('https://graph.facebook.com/oauth/');
+            $this->baseApiUri = new Uri('https://graph.facebook.com/');
         }
     }
 

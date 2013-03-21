@@ -39,7 +39,7 @@ if( !empty( $_GET['code'] ) ) {
     $token = $facebookService->requestAccessToken( $_GET['code'] );
 
     // Send a request with it
-    $result = json_decode( $facebookService->request( 'https://graph.facebook.com/me' ), true );
+    $result = json_decode( $facebookService->request( '/me' ), true );
 
     // Show some of the resultant data
     echo 'Your unique facebook user id is: ' . $result['id'] . ' and your name is ' . $result['name'];

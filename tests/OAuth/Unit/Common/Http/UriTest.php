@@ -114,4 +114,29 @@ class UriTest extends PHPUnit_Framework_TestCase
         $this->assertEquals( $uri->getPath(), '/some/relative/path' );
         $this->assertEquals( $uri->getFragment(), '' );
     }
+
+
+    /**
+     * Test the creation of a Uri from a super-global array.
+     */
+    public function testSuperGlobalsWithNonStandardPort()
+    {
+        $serverArray =
+        [
+            'REDIRECT_URL' => '/some/relative/path',
+            'HTTPS' => false,
+            'HTTP_HOST' => 'example.com:7000',
+            'SERVER_PORT' => 7000,
+            'QUERY_STRING' => 'test=param'
+        ];
+
+        $uri = $this->uriFactory->createFromSuperGlobalArray($serverArray);
+
+        $this->assertEquals( $uri->getAbsoluteUri(), 'http://example.com:7000/some/relative/path?test=param' );
+        $this->assertEquals( $uri->getHost(), 'example.com' );
+        $this->assertEquals( $uri->getPort(), 7000 );
+        $this->assertEquals( $uri->getScheme(), 'http' );
+        $this->assertEquals( $uri->getPath(), '/some/relative/path' );
+        $this->assertEquals( $uri->getFragment(), '' );
+    }
 }

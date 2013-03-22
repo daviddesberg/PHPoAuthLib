@@ -15,7 +15,7 @@ class Facebook extends AbstractService
     {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
         if( null === $baseApiUri ) {
-            $this->baseApiUri = new Uri('https://graph.facebook.com/oauth/');
+            $this->baseApiUri = new Uri('https://graph.facebook.com/');
         }
     }
 
@@ -55,6 +55,11 @@ class Facebook extends AbstractService
 
         $token->setAccessToken( $data['access_token'] );
         $token->setLifeTime( $data['expires'] );
+
+        if( isset($data['refresh_token'] ) ) {
+            $token->setRefreshToken( $data['refresh_token'] );
+            unset($data['refresh_token']);
+        }
 
         unset( $data['access_token'] );
         unset( $data['expires'] );

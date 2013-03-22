@@ -42,4 +42,12 @@ class Memory implements TokenStorageInterface
     {
         return $this->token instanceOf TokenInterface;
     }
+
+    /**
+    * Delete the users token. Aka, log out.
+    */
+    public function clearToken()
+    {
+        $this->token = null;
+    }
 }

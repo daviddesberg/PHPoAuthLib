@@ -37,4 +37,17 @@ class SymfonySessionTest extends PHPUnit_Framework_TestCase
 
         $nonExistentToken = $storage->retrieveAccessToken();
     }
+
+    public function testStorageClears()
+    {
+        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, ['extra' => 'param']);
+
+        $session = new Session(new MockArraySessionStorage());
+        $storage = new SymfonySession($session);
+        $storage->storeAccessToken($token);
+        $this->assertNotNull($storage->retrieveAccessToken());
+
+        $storage->clearToken();
+        $this->assertNull($storage->retrieveAccessToken());
+    }
 }

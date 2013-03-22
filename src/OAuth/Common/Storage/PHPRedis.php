@@ -23,6 +23,8 @@ class PHPRedis implements TokenStorageInterface
     
     protected $cachedToken;
 
+    protected $cachedToken;
+
     /**
      * @param \Redis $redis An instantiated and connected redis client
      * @param string $key The key to store the token under in redis.
@@ -72,12 +74,21 @@ class PHPRedis implements TokenStorageInterface
     */
     public function hasAccessToken()
     {
-        if( $this->cachedToken ) { 
+        if( $this->cachedToken ) {
             return true;
         }
-        
+
         $val = $this->redis->get( $this->key );
-        
+
         return $val !== false;
+    }
+
+    /**
+    * Delete the users token. Aka, log out.
+    */
+    public function clearToken()
+    {
+        $this->cachedToken = null;
+        $this->redis->delete($this->key);
     }
 }

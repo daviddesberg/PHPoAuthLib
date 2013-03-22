@@ -37,4 +37,12 @@ class SymfonySession implements TokenStorageInterface
     {
         return $this->session->has($this->sessionVariableName);
     }
+
+    /**
+    * Delete the users token. Aka, log out.
+    */
+    public function clearToken()
+    {
+        $this->session->remove($this->sessionVariableName);
+    }
 }

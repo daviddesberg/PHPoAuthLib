@@ -55,7 +55,12 @@ class Session implements TokenStorageInterface
     {
         return isset( $_SESSION[$this->sessionVariableName] );
     }
-
+    
+    public function clearToken()
+    {
+        unset($_SESSION[$this->sessionVariableName]);
+    }
+    
     public function  __destruct()
     {
         session_write_close();

@@ -38,7 +38,7 @@ class ServiceFactory
      * @return ServiceInterface
      * @throws Common\Exception\Exception
      */
-    public function createService($serviceName, Common\Consumer\Credentials $credentials, Common\Storage\TokenStorageInterface $storage, $scopes = [])
+    public function createService($serviceName, Common\Consumer\Credentials $credentials, Common\Storage\TokenStorageInterface $storage, $scopes = array())
     {
         $serviceName = ucfirst($serviceName);
         $v2ClassName = "\\OAuth\\OAuth2\\Service\\$serviceName";

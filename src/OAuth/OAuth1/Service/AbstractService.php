@@ -13,7 +13,7 @@ use OAuth\Common\Service\AbstractService as BaseAbstractService;
 
 abstract class AbstractService extends BaseAbstractService implements ServiceInterface
 {
-    
+
     /** @var \OAuth\OAuth1\Signature\SignatureInterface */
     protected $signature;
 
@@ -30,7 +30,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, SignatureInterface $signature, UriInterface $baseApiUri = null)
     {
         parent::__construct($credentials, $httpClient, $storage);
-                                    
+
         $this->signature    = $signature;
         $this->baseApiUri   = $baseApiUri;
 
@@ -45,7 +45,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     public function requestRequestToken()
     {
-        $authorizationHeader = ['Authorization' => $this->buildAuthorizationHeaderForTokenRequest() ];
+        $authorizationHeader = array('Authorization' => $this->buildAuthorizationHeaderForTokenRequest());
         $headers = array_merge($authorizationHeader, $this->getExtraOAuthHeaders());
 
         $responseBody = $this->httpClient->retrieveResponse($this->getRequestTokenEndpoint(), array(), $headers);
@@ -88,16 +88,16 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     {
         $this->signature->setTokenSecret($tokenSecret);
 
-        $extraAuthenticationHeaders = [
+        $extraAuthenticationHeaders = array(
             'oauth_token' => $token,
-        ];
+        );
 
-        $authorizationHeader = ['Authorization' => $this->buildAuthorizationHeaderForTokenRequest($extraAuthenticationHeaders)];
+        $authorizationHeader = array('Authorization' => $this->buildAuthorizationHeaderForTokenRequest($extraAuthenticationHeaders));
         $headers = array_merge($authorizationHeader, $this->getExtraOAuthHeaders());
 
-        $bodyParams = [
+        $bodyParams = array(
             'oauth_verifier' => $verifier,
-        ];
+        );
 
         $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $bodyParams, $headers);
 
@@ -123,12 +123,12 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         /** @var $token \OAuth\OAuth1\Token\StdOAuth1Token */
         $token = $this->storage->retrieveAccessToken();
         $extraHeaders = array_merge( $this->getExtraApiHeaders(), $extraHeaders );
-        $authorizationHeader = ['Authorization' => $this->buildAuthorizationHeaderForAPIRequest($method, $uri, $token, $body) ];
+        $authorizationHeader = array('Authorization' => $this->buildAuthorizationHeaderForAPIRequest($method, $uri, $token, $body));
         $headers = array_merge($authorizationHeader, $extraHeaders);
 
         return $this->httpClient->retrieveResponse($uri, $body, $headers, $method);
     }
-         
+
     /**
      * Return any additional headers always needed for this service implementation's OAuth calls.
      *
@@ -188,7 +188,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
             unset($parameters['oauth_callback']);
         }
 
-        $parameters = array_merge($parameters, [ 'oauth_token' => $token->getAccessToken() ] );
+        $parameters = array_merge($parameters, array('oauth_token' => $token->getAccessToken()) );
         $parameters['oauth_signature'] = $this->signature->getSignature($uri, array_merge($parameters, $bodyParams), $method);
 
         $authorizationHeader = 'OAuth ';
@@ -209,14 +209,14 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     protected function getBasicAuthorizationHeaderInfo()
     {
-        $headerParameters = [
-            'oauth_callback'            => $this->credentials->getCallbackUrl(),
-            'oauth_consumer_key'        => $this->credentials->getConsumerId(),
-            'oauth_nonce'               => $this->generateNonce(),
-            'oauth_signature_method'    => $this->getSignatureMethod(),
-            'oauth_timestamp'           => (new \DateTime())->format('U'),
-            'oauth_version'             => $this->getVersion(),
-        ];
+        $headerParameters = array(
+            'oauth_callback'         => $this->credentials->getCallbackUrl(),
+            'oauth_consumer_key'     => $this->credentials->getConsumerId(),
+            'oauth_nonce'            => $this->generateNonce(),
+            'oauth_signature_method' => $this->getSignatureMethod(),
+            'oauth_timestamp'        => (new \DateTime())->format('U'),
+            'oauth_version'          => $this->getVersion(),
+        );
 
         return $headerParameters;
     }

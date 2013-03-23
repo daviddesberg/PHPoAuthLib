@@ -1,6 +1,6 @@
 PHPoAuthLib Readme
 ======
-PHPoAuthLib provides oAuth support in PHP 5.4+ and is very easy to integrate with any project which requires an oAuth client. 
+PHPoAuthLib provides oAuth support in PHP 5.3+ and is very easy to integrate with any project which requires an oAuth client. 
 
 Features
 --------

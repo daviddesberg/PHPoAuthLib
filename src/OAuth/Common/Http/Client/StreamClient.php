@@ -34,7 +34,7 @@ class StreamClient implements ClientInterface
      * @throws TokenResponseException
      * @throws \InvalidArgumentException
      */
-    public function retrieveResponse(UriInterface $endpoint, $requestBody, array $extraHeaders = [], $method = 'POST')
+    public function retrieveResponse(UriInterface $endpoint, $requestBody, array $extraHeaders = array(), $method = 'POST')
     {
         // Normalize method name
         $method = strtoupper($method);
@@ -70,7 +70,8 @@ class StreamClient implements ClientInterface
         $response = file_get_contents($endpoint->getAbsoluteUri(), 0, $context);
         error_reporting($level);
         if( false === $response ) {
-            throw new TokenResponseException( error_get_last()['message'] );
+            $lastEror = error_get_last();
+            throw new TokenResponseException( $lastEror['message'] );
         }
 
         return $response;
@@ -78,8 +79,8 @@ class StreamClient implements ClientInterface
 
     private function generateStreamContext($body, $headers, $method)
     {
-        return stream_context_create([
-            'http' => [
+        return stream_context_create(array(
+            'http' => array(
                 'method'           => $method,
                 'header'           => implode("\r\n", $headers)."\r\n\r\n",
                 'content'          => $body,
@@ -87,7 +88,7 @@ class StreamClient implements ClientInterface
 
                 'max_redirects'    => $this->maxRedirects,
                 'timeout'          => $this->timeout,
-            ],
-        ]);
+            ),
+        ));
     }
 }

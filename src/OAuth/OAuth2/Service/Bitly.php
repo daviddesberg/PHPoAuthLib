@@ -11,7 +11,7 @@ use OAuth\Common\Http\Uri\UriInterface;
 
 class Bitly extends AbstractService
 {
-    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = [], UriInterface $baseApiUri = null)
+    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
     {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
         if( null === $baseApiUri ) {
@@ -83,7 +83,7 @@ class Bitly extends AbstractService
 
         // we can scream what we want that we want bitly to return a json encoded string (format=json), but the
         // WOAH WATCH YOUR LANGUAGE ;) service doesn't seem to like screaming, hence we need to manually parse the result
-        $parsedResult = [];
+        $parsedResult = array();
         parse_str($responseBody, $parsedResult);
 
         $token = $this->parseAccessTokenResponse( json_encode($parsedResult) );

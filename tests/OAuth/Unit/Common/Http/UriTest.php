@@ -97,13 +97,12 @@ class UriTest extends PHPUnit_Framework_TestCase
      */
     public function testSuperGlobals()
     {
-        $serverArray =
-        [
+        $serverArray = array(
             'REDIRECT_URL' => '/some/relative/path',
-            'HTTPS' => false,
-            'HTTP_HOST' => 'example.com',
+            'HTTPS'        => false,
+            'HTTP_HOST'    => 'example.com',
             'QUERY_STRING' => 'test=param'
-        ];
+        );
 
         $uri = $this->uriFactory->createFromSuperGlobalArray($serverArray);
 
@@ -121,14 +120,13 @@ class UriTest extends PHPUnit_Framework_TestCase
      */
     public function testSuperGlobalsWithNonStandardPort()
     {
-        $serverArray =
-        [
+        $serverArray = array(
             'REDIRECT_URL' => '/some/relative/path',
-            'HTTPS' => false,
-            'HTTP_HOST' => 'example.com:7000',
-            'SERVER_PORT' => 7000,
+            'HTTPS'        => false,
+            'HTTP_HOST'    => 'example.com:7000',
+            'SERVER_PORT'  => 7000,
             'QUERY_STRING' => 'test=param'
-        ];
+        );
 
         $uri = $this->uriFactory->createFromSuperGlobalArray($serverArray);
 

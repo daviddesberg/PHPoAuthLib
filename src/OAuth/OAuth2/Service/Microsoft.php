@@ -35,7 +35,7 @@ class Microsoft extends AbstractService
     const SCOPE_APPLICATIONS = 'wl.applications';
     const SCOPE_APPLICATIONS_CREATE = 'wl.applications_create';
 
-    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = [], UriInterface $baseApiUri = null)
+    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
     {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
         if( null === $baseApiUri ) {

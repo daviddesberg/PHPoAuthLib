@@ -36,13 +36,15 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
     public function testHeaders()
     {
         $testUri = new Uri('http://httpbin.org/get');
-        $headerCb = function($response)
+
+        $me = $this;
+        $headerCb = function($response) use ($me)
         {
             $data = json_decode($response, true);
-            $this->assertEquals('extraheadertest', $data['headers']['Testingheader']);
+            $me->assertEquals('extraheadertest', $data['headers']['Testingheader']);
         };
 
-        $this->__doTestRetrieveResponse($testUri, [], [ 'Testingheader' => 'extraheadertest'], 'GET', $headerCb);
+        $this->__doTestRetrieveResponse($testUri, array(), array('Testingheader' => 'extraheadertest'), 'GET', $headerCb);
     }
     /**
      * Tests that we get an exception for a >= 400 status code
@@ -54,7 +56,7 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
         foreach($this->clients as $client)
         {
             $this->setExpectedException('OAuth\Common\Http\Exception\TokenResponseException');
-            $client->retrieveResponse($testUri, ['blah' => 'blih'] );
+            $client->retrieveResponse($testUri, array('blah' => 'blih') );
         }
 
     }
@@ -66,13 +68,14 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
     {
         $testUri = new Uri('http://httpbin.org/delete');
 
-        $deleteTestCb = function($response)
+        $me = $this;
+        $deleteTestCb = function($response) use ($me)
         {
             $data = json_decode($response, true);
-            $this->assertEquals( '', $data['data'] );
+            $me->assertEquals( '', $data['data'] );
         };
 
-        $this->__doTestRetrieveResponse($testUri, [], [], 'DELETE', $deleteTestCb );
+        $this->__doTestRetrieveResponse($testUri, array(), array(), 'DELETE', $deleteTestCb );
     }
 
     /**
@@ -82,14 +85,15 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
     {
         $testUri = new Uri('http://httpbin.org/put');
 
-        $putTestCb = function($response)
+        $me = $this;
+        $putTestCb = function($response) use ($me)
         {
             // verify the put response
             $data = json_decode($response, true);
-            $this->assertEquals( json_encode( ['testKey' => 'testValue' ] ), $data['data'] );
+            $me->assertEquals( json_encode( array('testKey' => 'testValue') ), $data['data'] );
         };
 
-        $this->__doTestRetrieveResponse($testUri, json_encode( ['testKey' => 'testValue' ] ), [ 'Content-type' => 'application/json' ], 'PUT', $putTestCb );
+        $this->__doTestRetrieveResponse($testUri, json_encode( array('testKey' => 'testValue') ), array('Content-type' => 'application/json'), 'PUT', $putTestCb );
     }
 
     /**
@@ -100,16 +104,17 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
         // http test server
         $testUri = new Uri('http://httpbin.org/post');
 
-        $postTestCb = function($response)
+        $me = $this;
+        $postTestCb = function($response) use ($me)
         {
             // verify the post response
             $data = json_decode($response, true);
             // note that we check this because the retrieveResponse wrapper function automatically adds a content-type
             // if there isn't one and it
-            $this->assertEquals( 'testValue', $data['form']['testKey'] );
+            $me->assertEquals( 'testValue', $data['form']['testKey'] );
         };
 
-        $this->__doTestRetrieveResponse($testUri, ['testKey' => 'testValue'], [], 'POST', $postTestCb );
+        $this->__doTestRetrieveResponse($testUri, array('testKey' => 'testValue'), array(), 'POST', $postTestCb );
     }
 
     /**
@@ -122,7 +127,7 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
         foreach($this->clients as $client)
         {
             $this->setExpectedException('InvalidArgumentException');
-            $client->retrieveResponse($testUri, ['blah' => 'blih'], [], 'GET' );
+            $client->retrieveResponse($testUri, array('blah' => 'blih'), array(), 'GET' );
         }
     }
 
@@ -134,13 +139,14 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
         // test uri
         $testUri = new Uri('http://httpbin.org/get?testKey=testValue');
 
-        $getTestCb = function($response)
+        $me = $this;
+        $getTestCb = function($response) use ($me)
         {
             $data = json_decode($response, true);
-            $this->assertEquals( 'testValue', $data['args']['testKey'] );
+            $me->assertEquals( 'testValue', $data['args']['testKey'] );
         };
 
-        $this->__doTestRetrieveResponse($testUri, [], [], 'GET', $getTestCb);
+        $this->__doTestRetrieveResponse($testUri, array(), array(), 'GET', $getTestCb);
 
     }
 
@@ -153,7 +159,7 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
      * @param $method
      * @param $responseCallback
      */
-    protected function __doTestRetrieveResponse(\OAuth\Common\Http\Uri\UriInterface $uri, $param, array $header, $method, callable $responseCallback)
+    protected function __doTestRetrieveResponse(\OAuth\Common\Http\Uri\UriInterface $uri, $param, array $header, $method, $responseCallback)
     {
         foreach($this->clients as $client)
         {

@@ -18,11 +18,12 @@ class MemoryTest extends PHPUnit_Framework_TestCase
     public function testStoresInMemory()
     {
         // create sample token
-        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, ['extra' => 'param'] );
+        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param') );
         $memory = new Memory();
         $memory->storeAccessToken( $token );
 
-        $this->assertEquals( 'param', $memory->retrieveAccessToken()->getExtraParams()['extra'] );
+        $extraParams = $memory->retrieveAccessToken()->getExtraParams();
+        $this->assertEquals( 'param', $extraParams['extra'] );
         $this->assertEquals( 'access', $memory->retrieveAccessToken()->getAccessToken() );
         unset($memory);
     }
@@ -44,7 +45,7 @@ class MemoryTest extends PHPUnit_Framework_TestCase
     public function testStorageClears()
     {
         // create sample token
-        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, ['extra' => 'param'] );
+        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param') );
         $memory = new Memory();
         $memory->storeAccessToken( $token );
         $this->assertNotNull($memory->retrieveAccessToken());

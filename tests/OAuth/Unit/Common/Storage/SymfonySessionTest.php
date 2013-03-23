@@ -16,13 +16,14 @@ class SymfonySessionTest extends PHPUnit_Framework_TestCase
 {
     public function testStoresInMemory()
     {
-        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, ['extra' => 'param']);
+        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param'));
 
         $session = new Session(new MockArraySessionStorage());
         $storage = new SymfonySession($session);
         $storage->storeAccessToken($token);
 
-        $this->assertEquals('param', $storage->retrieveAccessToken()->getExtraParams()['extra']);
+        $extraParams = $storage->retrieveAccessToken()->getExtraParams();
+        $this->assertEquals('param', $extraParams['extra']);
         $this->assertEquals('access', $storage->retrieveAccessToken()->getAccessToken());
     }
 
@@ -40,7 +41,7 @@ class SymfonySessionTest extends PHPUnit_Framework_TestCase
 
     public function testStorageClears()
     {
-        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, ['extra' => 'param']);
+        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param'));
 
         $session = new Session(new MockArraySessionStorage());
         $storage = new SymfonySession($session);

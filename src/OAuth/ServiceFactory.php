@@ -14,9 +14,9 @@ use OAuth\Common\Service\ServiceInterface;
 
 class ServiceFactory
 {
-    protected static $httpClientMap = [
+    protected static $httpClientMap = array(
         'stream' => '\\OAuth\\Common\\Http\\Client\\StreamClient',
-    ];
+    );
 
     /** @var \OAuth\Common\Http\Client\ClientInterface */
     private $httpClient;

@@ -48,7 +48,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $authorizationHeader = ['Authorization' => $this->buildAuthorizationHeaderForTokenRequest() ];
         $headers = array_merge($authorizationHeader, $this->getExtraOAuthHeaders());
 
-        $responseBody = $this->httpClient->retrieveResponse($this->getRequestTokenEndpoint(), [], $headers);
+        $responseBody = $this->httpClient->retrieveResponse($this->getRequestTokenEndpoint(), array(), $headers);
 
         $token = $this->parseRequestTokenResponse( $responseBody );
         $this->storage->storeAccessToken( $token );
@@ -62,7 +62,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * @param array $additionalParameters
      * @return string
      */
-    public function getAuthorizationUri( array $additionalParameters = [] )
+    public function getAuthorizationUri( array $additionalParameters = array() )
     {
         // Build the url
         $url = clone $this->getAuthorizationEndpoint();
@@ -116,7 +116,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * @param array $extraHeaders Extra headers if applicable. These will override service-specific any defaults.
      * @return string
      */
-    public function request($path, $method = 'GET', array $body = [], array $extraHeaders = [])
+    public function request($path, $method = 'GET', array $body = array(), array $extraHeaders = array())
     {
         $uri = $this->determineRequestUriFromPath($path, $this->baseApiUri);
 
@@ -136,7 +136,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     protected function getExtraOAuthHeaders()
     {
-        return [];
+        return array();
     }
 
     /**
@@ -146,7 +146,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     protected function getExtraApiHeaders()
     {
-        return [];
+        return array();
     }
 
     /**
@@ -155,7 +155,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * @param array $extraParameters
      * @return string
      */
-    protected function buildAuthorizationHeaderForTokenRequest(array $extraParameters = [])
+    protected function buildAuthorizationHeaderForTokenRequest(array $extraParameters = array())
     {
         $parameters = $this->getBasicAuthorizationHeaderInfo();
         $parameters = array_merge($parameters, $extraParameters);

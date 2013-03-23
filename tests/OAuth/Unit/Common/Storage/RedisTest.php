@@ -29,11 +29,12 @@ class RedisTest extends PHPUnit_Framework_TestCase
         $redis->connect(static::REDIS_HOST, static::REDIS_PORT);
 
         // create sample token
-        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, ['extra' => 'param'] );
+        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param') );
         $redisStorage = new PHPRedis($redis, 'test_user_token');
         $redisStorage->storeAccessToken( $token );
 
-        $this->assertEquals( 'param', $redisStorage->retrieveAccessToken()->getExtraParams()['extra'] );
+        $extraParams = $redisStorage->retrieveAccessToken()->getExtraParams();
+        $this->assertEquals( 'param', $extraParams['extra'] );
         $this->assertEquals( 'access', $redisStorage->retrieveAccessToken()->getAccessToken() );
         unset($redisStorage);
     }
@@ -52,7 +53,7 @@ class RedisTest extends PHPUnit_Framework_TestCase
         $redis->connect(static::REDIS_HOST, static::REDIS_PORT);
 
         // create sample token
-        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, ['extra' => 'param'] );
+        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param') );
         $redisStorage = new PHPRedis($redis, 'test_user_token');
         $redisStorage->storeAccessToken( $token );
         $this->assertNotNull($redisStorage->retrieveAccessToken());

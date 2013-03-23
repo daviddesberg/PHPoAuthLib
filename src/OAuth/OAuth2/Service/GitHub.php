@@ -20,7 +20,7 @@ class GitHub extends AbstractService
     const SCOPE_DELETE_REPO = 'delete_repo';
     const SCOPE_GIST = 'gist';
 
-    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = [], UriInterface $baseApiUri = null)
+    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
     {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
         if( null === $baseApiUri ) {

@@ -9,11 +9,11 @@
         processIsolation            = "false"
         stopOnFailure               = "false"
         syntaxCheck                 = "false"
-        bootstrap                   = "bootstrap.php" >
+        bootstrap                   = "tests/bootstrap.php" >
 
     <testsuites>
         <testsuite name="PHPoAuthLib Unit Test Suite">
-            <directory>OAuth/Unit/*</directory>
+            <directory>tests/OAuth/Unit/*</directory>
         </testsuite>
         <testsuite name="PHPoAuthLib Functional Test Suite">
             <directory>OAuth/Functional/*</directory>

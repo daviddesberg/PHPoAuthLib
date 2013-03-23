@@ -47,7 +47,7 @@ class ServiceFactory
         // if an oauth2 version exists, prefer it
         if( class_exists($v2ClassName) ) {
             // resolve scopes
-            $resolvedScopes = [];
+            $resolvedScopes = array();
             $reflClass = new \ReflectionClass($v2ClassName);
             $constants = $reflClass->getConstants();
 

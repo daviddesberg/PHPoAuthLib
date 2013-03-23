@@ -29,7 +29,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * @param UriInterface|null $baseApiUri
      * @throws InvalidScopeException
      */
-    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = [], UriInterface $baseApiUri = null)
+    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
     {
         parent::__construct($credentials, $httpClient, $storage);
             
@@ -51,7 +51,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * @param array $additionalParameters
      * @return string
      */
-    public function getAuthorizationUri( array $additionalParameters = [] )
+    public function getAuthorizationUri( array $additionalParameters = array() )
     {
         $parameters = array_merge($additionalParameters,
             [
@@ -112,7 +112,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * @throws ExpiredTokenException
      * @throws Exception
      */
-    public function request($path, $method = 'GET', array $body = [], array $extraHeaders = [])
+    public function request($path, $method = 'GET', array $body = array(), array $extraHeaders = array())
     {
         $uri = $this->determineRequestUriFromPath($path, $this->baseApiUri);
         $token = $this->storage->retrieveAccessToken();
@@ -197,7 +197,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     protected function getExtraOAuthHeaders()
     {
-        return [];
+        return array();
     }
 
     /**
@@ -207,7 +207,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     protected function getExtraApiHeaders()
     {
-        return [];
+        return array();
     }
 
     /**

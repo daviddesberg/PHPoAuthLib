@@ -19,7 +19,7 @@ interface ServiceInterface
      * @param array $extraHeaders Extra headers if applicable. These will override service-specific any defaults.
      * @return string
      */
-    public function request($path, $method = 'GET', array $body = [], array $extraHeaders = []);
+    public function request($path, $method = 'GET', array $body = array(), array $extraHeaders = array());
 
     /**
      * Returns the url to redirect to for authorization purposes.
@@ -28,7 +28,7 @@ interface ServiceInterface
      * @param array $additionalParameters
      * @return UriInterface
      */
-    public function getAuthorizationUri( array $additionalParameters = [] );
+    public function getAuthorizationUri( array $additionalParameters = array() );
 
     /**
      * Returns the authorization API endpoint.

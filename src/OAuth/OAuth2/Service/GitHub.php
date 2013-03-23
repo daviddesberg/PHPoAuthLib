@@ -78,7 +78,7 @@ class GitHub extends AbstractService
      */
     protected function getExtraOAuthHeaders()
     {
-        return ['Accept' => 'application/json'];
+        return array('Accept' => 'application/json');
     }
 
     /**
@@ -88,7 +88,7 @@ class GitHub extends AbstractService
      */
     protected function getExtraApiHeaders()
     {
-        return ['Accept' => 'application/vnd.github.beta+json'];
+        return array('Accept' => 'application/vnd.github.beta+json');
     }
 
     /**

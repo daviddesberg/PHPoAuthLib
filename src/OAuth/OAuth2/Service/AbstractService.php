@@ -32,7 +32,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
     {
         parent::__construct($credentials, $httpClient, $storage);
-            
+
         foreach($scopes as $scope)
         {
             if( !$this->isValidScope($scope) ) {
@@ -53,14 +53,12 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     public function getAuthorizationUri( array $additionalParameters = array() )
     {
-        $parameters = array_merge($additionalParameters,
-            [
-                'type' => 'web_server',
-                'client_id' => $this->credentials->getConsumerId(),
-                'redirect_uri' => $this->credentials->getCallbackUrl(),
-                'response_type' => 'code',
-            ]
-        );
+        $parameters = array_merge($additionalParameters, array(
+            'type'          => 'web_server',
+            'client_id'     => $this->credentials->getConsumerId(),
+            'redirect_uri'  => $this->credentials->getCallbackUrl(),
+            'response_type' => 'code',
+        ));
 
         $parameters['scope'] = implode(' ', $this->scopes);
 
@@ -84,15 +82,13 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     public function requestAccessToken($code)
     {
-        $bodyParams =
-        [
+        $bodyParams = array(
             'code' => $code,
             'client_id' => $this->credentials->getConsumerId(),
             'client_secret' => $this->credentials->getConsumerSecret(),
             'redirect_uri' => $this->credentials->getCallbackUrl(),
             'grant_type' => 'authorization_code',
-
-        ];
+        );
 
         $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $bodyParams, $this->getExtraOAuthHeaders());
         $token = $this->parseAccessTokenResponse( $responseBody );
@@ -126,11 +122,11 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
 
         // add the token where it may be needed
         if( static::AUTHORIZATION_METHOD_HEADER_OAUTH === $this->getAuthorizationMethod() ) {
-            $extraHeaders = array_merge( ['Authorization' => 'OAuth ' . $token->getAccessToken() ], $extraHeaders );
+            $extraHeaders = array_merge( array('Authorization' => 'OAuth ' . $token->getAccessToken()), $extraHeaders );
         } elseif( static::AUTHORIZATION_METHOD_QUERY_STRING === $this->getAuthorizationMethod() ) {
             $uri->addToQuery( 'access_token', $token->getAccessToken() );
         } elseif( static::AUTHORIZATION_METHOD_HEADER_BEARER === $this->getAuthorizationMethod() ) {
-            $extraHeaders = array_merge( ['Authorization' => 'Bearer ' . $token->getAccessToken() ], $extraHeaders );
+            $extraHeaders = array_merge( array('Authorization' => 'Bearer ' . $token->getAccessToken()), $extraHeaders );
         }
 
 
@@ -138,10 +134,10 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
 
         return $this->httpClient->retrieveResponse($uri, $body, $extraHeaders, $method);
     }
-    
+
     /**
     * Accessor to the storage adapter to be able to retrieve tokens
-    * 
+    *
     */
     public function getStorage() {
         return $this->storage;
@@ -162,14 +158,13 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
             throw new MissingRefreshTokenException();
         }
 
-        $parameters =
-        [
-            'grant_type' => 'refresh_token',
-            'type' => 'web_server',
-            'client_id' => $this->credentials->getConsumerId(),
+        $parameters = array(
+            'grant_type'    => 'refresh_token',
+            'type'          => 'web_server',
+            'client_id'     => $this->credentials->getConsumerId(),
             'client_secret' => $this->credentials->getConsumerSecret(),
             'refresh_token' => $refreshToken,
-        ];
+        );
 
         $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $parameters, $this->getExtraOAuthHeaders());
         $token = $this->parseAccessTokenResponse( $responseBody );

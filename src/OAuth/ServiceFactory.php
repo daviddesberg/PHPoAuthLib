@@ -14,9 +14,9 @@ use OAuth\Common\Service\ServiceInterface;
 
 class ServiceFactory
 {
-    protected static $httpClientMap = [
+    protected static $httpClientMap = array(
         'stream' => '\\OAuth\\Common\\Http\\Client\\StreamClient',
-    ];
+    );
 
     /** @var \OAuth\Common\Http\Client\ClientInterface */
     private $httpClient;
@@ -38,7 +38,7 @@ class ServiceFactory
      * @return ServiceInterface
      * @throws Common\Exception\Exception
      */
-    public function createService($serviceName, Common\Consumer\Credentials $credentials, Common\Storage\TokenStorageInterface $storage, $scopes = [])
+    public function createService($serviceName, Common\Consumer\Credentials $credentials, Common\Storage\TokenStorageInterface $storage, $scopes = array())
     {
         $serviceName = ucfirst($serviceName);
         $v2ClassName = "\\OAuth\\OAuth2\\Service\\$serviceName";
@@ -47,7 +47,7 @@ class ServiceFactory
         // if an oauth2 version exists, prefer it
         if( class_exists($v2ClassName) ) {
             // resolve scopes
-            $resolvedScopes = [];
+            $resolvedScopes = array();
             $reflClass = new \ReflectionClass($v2ClassName);
             $constants = $reflClass->getConstants();
 

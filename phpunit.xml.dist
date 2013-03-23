@@ -16,7 +16,7 @@
             <directory>tests/OAuth/Unit/*</directory>
         </testsuite>
         <testsuite name="PHPoAuthLib Functional Test Suite">
-            <directory>OAuth/Functional/*</directory>
+            <directory>tests/OAuth/Functional/*</directory>
         </testsuite>
     </testsuites>
 

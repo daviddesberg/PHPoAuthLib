@@ -71,13 +71,13 @@ class Bitly extends AbstractService
      */
     public function requestAccessToken($code)
     {
-        $bodyParams = [
-            'code' => $code,
-            'client_id' => $this->credentials->getConsumerId(),
+        $bodyParams = array(
+            'code'          => $code,
+            'client_id'     => $this->credentials->getConsumerId(),
             'client_secret' => $this->credentials->getConsumerSecret(),
-            'redirect_uri' => $this->credentials->getCallbackUrl(),
-            'grant_type' => 'authorization_code',
-        ];
+            'redirect_uri'  => $this->credentials->getCallbackUrl(),
+            'grant_type'    => 'authorization_code',
+        );
 
         $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $bodyParams, $this->getExtraOAuthHeaders());
 

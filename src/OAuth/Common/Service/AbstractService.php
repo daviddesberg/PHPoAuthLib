@@ -15,13 +15,13 @@ abstract class AbstractService implements ServiceInterface
 {
     /** @var \OAuth\Common\Consumer\Credentials */
     protected $credentials;
-    
+
     /** @var \OAuth\Common\Http\Client\ClientInterface */
     protected $httpClient;
-    
+
     /** @var \OAuth\Common\Storage\TokenStorageInterface */
     protected $storage;
-    
+
     /**
      * @param \OAuth\Common\Consumer\Credentials $credentials
      * @param \OAuth\Common\Http\Client\ClientInterface $httpClient
@@ -33,7 +33,7 @@ abstract class AbstractService implements ServiceInterface
         $this->httpClient   = $httpClient;
         $this->storage = $storage;
     }
-    
+
     protected function determineRequestUriFromPath($path, UriInterface $baseApiUri = null)
     {
         if( $path instanceof UriInterface ) {
@@ -62,10 +62,10 @@ abstract class AbstractService implements ServiceInterface
 
         return $uri;
     }
-      
+
     /**
     * Accessor to the storage adapter to be able to retrieve tokens
-    * 
+    *
     */
     public function getStorage() {
         return $this->storage;

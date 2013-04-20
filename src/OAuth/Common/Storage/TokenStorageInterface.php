@@ -22,7 +22,7 @@ interface TokenStorageInterface
      * @return bool
      */
     public function hasAccessToken();
-    
+
     /**
     * Delete the users token. Aka, log out.
     */

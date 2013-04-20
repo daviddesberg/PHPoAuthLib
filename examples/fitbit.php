@@ -37,9 +37,9 @@ $fitbitService = $serviceFactory->createService('FitBit', $credentials, $storage
 if( !empty( $_GET['oauth_token'] ) ) {
     $token = $storage->retrieveAccessToken();
     // This was a callback request from fitbit, get the token
-    $fitbitService->requestAccessToken( 
-        $_GET['oauth_token'], 
-        $_GET['oauth_verifier'], 
+    $fitbitService->requestAccessToken(
+        $_GET['oauth_token'],
+        $_GET['oauth_verifier'],
         $token->getRequestTokenSecret() );
 
     // Send a request now that we have access token

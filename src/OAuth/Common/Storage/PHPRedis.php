@@ -20,7 +20,7 @@ class PHPRedis implements TokenStorageInterface
      * @var object|\Redis
      */
     protected $redis;
-    
+
     protected $cachedToken;
 
     protected $cachedToken;
@@ -41,10 +41,10 @@ class PHPRedis implements TokenStorageInterface
      */
     public function retrieveAccessToken()
     {
-        if( $this->cachedToken ) { 
+        if( $this->cachedToken ) {
             return $this->cachedToken;
         }
-        
+
         $val = $this->redis->get( $this->key );
         if( false === $val ) {
             throw new TokenNotFoundException('Token not found in redis');

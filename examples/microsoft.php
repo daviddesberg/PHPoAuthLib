@@ -29,9 +29,9 @@ $credentials = new Credentials(
     $currentUri->getAbsoluteUri()
 );
 
-// Instantiate the google service using the credentials, http client and storage mechanism for the token
+// Instantiate the Microsoft service using the credentials, http client and storage mechanism for the token
 /** @var $microsoft Microsoft */
-$microsoft = $serviceFactory->createService('microsoft', $credentials, $storage, [ 'basic' ]);
+$microsoft = $serviceFactory->createService('microsoft', $credentials, $storage, array('basic'));
 
 if( !empty( $_GET['code'] ) ) {
     // This was a callback request from google, get the token

@@ -29,9 +29,9 @@ $credentials = new Credentials(
     $currentUri->getAbsoluteUri()
 );
 
-// Instantiate the google service using the credentials, http client and storage mechanism for the token
+// Instantiate the GitHub service using the credentials, http client and storage mechanism for the token
 /** @var $gitHub GitHub */
-$gitHub = $serviceFactory->createService('GitHub', $credentials, $storage, [ 'user' ] );
+$gitHub = $serviceFactory->createService('GitHub', $credentials, $storage, array('user'));
 
 if( !empty( $_GET['code'] ) ) {
     // This was a callback request from google, get the token

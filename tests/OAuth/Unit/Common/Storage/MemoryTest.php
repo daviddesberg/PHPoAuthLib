@@ -40,7 +40,6 @@ class MemoryTest extends PHPUnit_Framework_TestCase
 
     /**
     * Check that we can delete tokens that are in memory
-    *
     */
     public function testStorageClears()
     {
@@ -51,7 +50,9 @@ class MemoryTest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($memory->retrieveAccessToken());
 
         $memory->clearToken();
-        $this->assertNull($memory->retrieveAccessToken());
+
+        $this->setExpectedException('OAuth\Common\Storage\Exception\TokenNotFoundException');
+        $memory->retrieveAccessToken();
 
         unset($memory);
     }

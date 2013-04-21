@@ -49,6 +49,8 @@ class SymfonySessionTest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($storage->retrieveAccessToken());
 
         $storage->clearToken();
-        $this->assertNull($storage->retrieveAccessToken());
+
+        $this->setExpectedException('OAuth\Common\Storage\Exception\TokenNotFoundException');
+        $storage->retrieveAccessToken();
     }
 }

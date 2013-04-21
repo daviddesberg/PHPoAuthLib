@@ -59,7 +59,9 @@ class RedisTest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($redisStorage->retrieveAccessToken());
 
         $redisStorage->clearToken();
-        $this->assertNull($redisStorage->retrieveAccessToken());
+
+        $this->setExpectedException('OAuth\Common\Storage\Exception\TokenNotFoundException');
+        $redisStorage->retrieveAccessToken();
         unset($redisStorage);
     }
 }

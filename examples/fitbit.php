@@ -30,7 +30,7 @@ $credentials = new Credentials(
     $currentUri->getAbsoluteUri()
 );
 
-// Instantiate the fitbit service using the credentials, http client and storage mechanism for the token
+// Instantiate the FitBit service using the credentials, http client and storage mechanism for the token
 /** @var $fitbitService FitBit */
 $fitbitService = $serviceFactory->createService('FitBit', $credentials, $storage);
 

@@ -30,9 +30,9 @@ $credentials = new Credentials(
     $currentUri->getAbsoluteUri()
 );
 
-// Instantiate the facebook service using the credentials, http client and storage mechanism for the token
+// Instantiate the Facebook service using the credentials, http client and storage mechanism for the token
 /** @var $facebookService Facebook */
-$facebookService = $serviceFactory->createService('facebook', $credentials, $storage, [] );
+$facebookService = $serviceFactory->createService('facebook', $credentials, $storage, array());
 
 if( !empty( $_GET['code'] ) ) {
     // This was a callback request from google, get the token

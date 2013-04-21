@@ -29,7 +29,7 @@ $credentials = new Credentials(
     $currentUri->getAbsoluteUri()
 );
 
-// Instantiate the foursquare service using the credentials, http client and storage mechanism for the token
+// Instantiate the Foursquare service using the credentials, http client and storage mechanism for the token
 /** @var $foursquareService Foursquare */
 $foursquareService = $serviceFactory->createService('foursquare', $credentials, $storage);
 if( !empty( $_GET['code'] ) ) {

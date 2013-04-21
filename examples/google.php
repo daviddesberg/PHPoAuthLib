@@ -29,7 +29,7 @@ $credentials = new Credentials(
     $currentUri->getAbsoluteUri()
 );
 
-// Instantiate the google service using the credentials, http client and storage mechanism for the token
+// Instantiate the Google service using the credentials, http client and storage mechanism for the token
 /** @var $googleService Google */
 $googleService = $serviceFactory->createService('google', $credentials, $storage, ['userinfo_email', 'userinfo_profile'] );
 

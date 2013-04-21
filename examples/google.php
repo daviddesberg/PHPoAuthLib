@@ -31,7 +31,7 @@ $credentials = new Credentials(
 
 // Instantiate the Google service using the credentials, http client and storage mechanism for the token
 /** @var $googleService Google */
-$googleService = $serviceFactory->createService('google', $credentials, $storage, ['userinfo_email', 'userinfo_profile'] );
+$googleService = $serviceFactory->createService('google', $credentials, $storage, array('userinfo_email', 'userinfo_profile'));
 
 if( !empty( $_GET['code'] ) ) {
     // This was a callback request from google, get the token

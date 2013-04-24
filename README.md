@@ -24,6 +24,7 @@ Included service implementations
  - OAuth2
    - Google
    - Microsoft
+   - Facebook
    - GitHub
    - BitLy
    - Yammer

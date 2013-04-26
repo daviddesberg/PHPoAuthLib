@@ -54,6 +54,10 @@ $servicesCredentials = [
         'key'       => '',
         'secret'    => '',
     ],
+    'instagram' => [
+        'key'       => '',
+        'secret'    => '',
+    ],
 ];
 
 /** @var $serviceFactory \OAuth\ServiceFactory An OAuth service factory. */

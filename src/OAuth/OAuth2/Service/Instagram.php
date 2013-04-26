@@ -9,7 +9,7 @@ use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 
-class Foursquare extends AbstractService
+class Instagram extends AbstractService
 {
     /**
      * Defined scopes

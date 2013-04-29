@@ -30,6 +30,7 @@ Included service implementations
    - Yammer
    - SoundCloud
    - Foursquare
+   - Instagram
  - more to come!
 
 Examples

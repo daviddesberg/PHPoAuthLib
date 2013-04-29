@@ -1,6 +1,6 @@
 <?php
 /**
- * Example of retrieving an authentication token of the Foursquare service
+ * Example of retrieving an authentication token of the Instagram service
  *
  * PHP version 5.4
  *
@@ -30,23 +30,25 @@ $credentials = new Credentials(
     $currentUri->getAbsoluteUri()
 );
 
+$scopes = array('basic', 'comments', 'relationships', 'likes');
+
 // Instantiate the Instagram service using the credentials, http client and storage mechanism for the token
 /** @var $instagramService Instagram */
-$instagramService = $serviceFactory->createService('instagram', $credentials, $storage);
+$instagramService = $serviceFactory->createService('instagram', $credentials, $storage, $scopes);
 if( !empty( $_GET['code'] ) ) {
-    // This was a callback request from google, get the token
+    // This was a callback request from Instagram, get the token
     $instagramService->requestAccessToken( $_GET['code'] );
 
     // Send a request with it
     $result = json_decode( $instagramService->request( 'users/self' ), true );
 
     // Show some of the resultant data
-    echo 'Your unique instagram user id is: ' . $result['response']['user']['id'] . ' and your name is ' . $result['response']['user']['firstName'] . $result['response']['user']['lastName'];
+    echo 'Your unique instagram user id is: ' . $result['data']['id'] . ' and your name is ' . $result['data']['full_name'];
 
 } elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
     $url = $instagramService->getAuthorizationUri();
     header('Location: ' . $url);
 } else {
     $url = $currentUri->getRelativeUri() . '?go=go';
-    echo "<a href='$url'>Login with Foursquare!</a>";
+    echo "<a href='$url'>Login with Instagram!</a>";
 }

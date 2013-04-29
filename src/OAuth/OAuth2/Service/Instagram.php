@@ -45,6 +45,17 @@ class Instagram extends AbstractService
     }
 
     /**
+     * Returns a class constant from ServiceInterface defining the authorization method used for the API
+     * Header is the sane default.
+     *
+     * @return int
+     */
+    protected function getAuthorizationMethod()
+    {
+        return static::AUTHORIZATION_METHOD_QUERY_STRING;
+    }
+
+    /**
      * @param string $responseBody
      * @return \OAuth\Common\Token\TokenInterface|\OAuth\OAuth2\Token\StdOAuth2Token
      * @throws \OAuth\Common\Http\Exception\TokenResponseException

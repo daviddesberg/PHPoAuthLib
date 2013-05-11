@@ -21,8 +21,9 @@ class PHPRedis implements TokenStorageInterface
      */
     protected $redis;
 
-    protected $cachedToken;
-
+    /**
+     * @var object|TokenInterface
+     */
     protected $cachedToken;
 
     /**

@@ -83,11 +83,11 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     public function requestAccessToken($code)
     {
         $bodyParams = array(
-            'code' => $code,
-            'client_id' => $this->credentials->getConsumerId(),
+            'code'          => $code,
+            'client_id'     => $this->credentials->getConsumerId(),
             'client_secret' => $this->credentials->getConsumerSecret(),
-            'redirect_uri' => $this->credentials->getCallbackUrl(),
-            'grant_type' => 'authorization_code',
+            'redirect_uri'  => $this->credentials->getCallbackUrl(),
+            'grant_type'    => 'authorization_code',
         );
 
         $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $bodyParams, $this->getExtraOAuthHeaders());
@@ -100,6 +100,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     /**
      * Sends an authenticated API request to the path provided.
      * If the path provided is not an absolute URI, the base API Uri (must be passed into constructor) will be used.
+     *
      * @param $path string|UriInterface
      * @param string $method HTTP method
      * @param array $body Request body if applicable (key/value pairs)
@@ -125,10 +126,11 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
             $extraHeaders = array_merge( array('Authorization' => 'OAuth ' . $token->getAccessToken()), $extraHeaders );
         } elseif( static::AUTHORIZATION_METHOD_QUERY_STRING === $this->getAuthorizationMethod() ) {
             $uri->addToQuery( 'access_token', $token->getAccessToken() );
+        } elseif( static::AUTHORIZATION_METHOD_QUERY_STRING_V2 === $this->getAuthorizationMethod() ) {
+            $uri->addToQuery( 'oauth2_access_token', $token->getAccessToken() );
         } elseif( static::AUTHORIZATION_METHOD_HEADER_BEARER === $this->getAuthorizationMethod() ) {
             $extraHeaders = array_merge( array('Authorization' => 'Bearer ' . $token->getAccessToken()), $extraHeaders );
         }
-
 
         $extraHeaders = array_merge( $this->getExtraApiHeaders(), $extraHeaders );
 
@@ -138,8 +140,10 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     /**
     * Accessor to the storage adapter to be able to retrieve tokens
     *
+    * @return OAuth\Common\Storage\TokenStorageInterface
     */
-    public function getStorage() {
+    public function getStorage()
+    {
         return $this->storage;
     }
 

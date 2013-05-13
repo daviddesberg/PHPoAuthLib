@@ -62,6 +62,10 @@ $servicesCredentials = [
         'key'       => '',
         'secret'    => '',
     ],
+    'box' => [
+        'key'       => '',
+        'secret'    => '',
+    ],
 ];
 
 /** @var $serviceFactory \OAuth\ServiceFactory An OAuth service factory. */

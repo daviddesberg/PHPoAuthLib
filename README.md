@@ -31,7 +31,7 @@ Included service implementations
    - SoundCloud
    - Foursquare
    - Instagram
-   - Linkedin
+   - LinkedIn
    - Box
  - more to come!
 

@@ -32,6 +32,7 @@ Included service implementations
    - Foursquare
    - Instagram
    - Linkedin
+   - Box
  - more to come!
 
 Examples

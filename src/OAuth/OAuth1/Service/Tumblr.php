@@ -43,7 +43,7 @@ class Tumblr extends AbstractService
      */
     public function getAccessTokenEndpoint()
     {
-        return new Uri('http://www.tumblr.com/oauth/access_token');
+        return new Uri('https://www.tumblr.com/oauth/access_token');
     }
 
     /**

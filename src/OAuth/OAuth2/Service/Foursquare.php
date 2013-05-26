@@ -24,7 +24,7 @@ class Foursquare extends AbstractService
      */
     public function getAuthorizationEndpoint()
     {
-        return new Uri('https://foursquare.com/oauth2/authorize');
+        return new Uri('https://foursquare.com/oauth2/authenticate');
     }
 
     /**

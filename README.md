@@ -33,6 +33,7 @@ Included service implementations
    - Instagram
    - LinkedIn
    - Box
+   - Tumblr
  - more to come!
 
 Examples

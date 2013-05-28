@@ -66,7 +66,7 @@ class Signature implements SignatureInterface
         $baseUri = $uri->getScheme() . '://' . $uri->getRawAuthority();
 
         if ('/' == $uri->getPath()) {
-             $baseUri.= $uri->hasExplicitTrailingHostSlash() ? '/' : '';
+            $baseUri.= $uri->hasExplicitTrailingHostSlash() ? '/' : '';
         } else {
             $baseUri .= $uri->getPath();
         }

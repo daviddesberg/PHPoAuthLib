@@ -66,6 +66,10 @@ $servicesCredentials = [
         'key'       => '',
         'secret'    => '',
     ],
+    'tumblr' => [
+        'key'       => '',
+        'secret'    => '',
+    ],
 ];
 
 /** @var $serviceFactory \OAuth\ServiceFactory An OAuth service factory. */

@@ -8,7 +8,6 @@ use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Uri\UriInterface;
-use OAuth\Common\Token\TokenInterface;
 
 class Vkontakte extends AbstractService
 {

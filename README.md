@@ -34,6 +34,7 @@ Included service implementations
    - LinkedIn
    - Box
    - Tumblr
+   - Vkontakte
  - more to come!
 
 Examples

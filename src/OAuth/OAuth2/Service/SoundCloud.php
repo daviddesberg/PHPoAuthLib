@@ -52,7 +52,11 @@ class SoundCloud extends AbstractService
 
         $token = new StdOAuth2Token();
         $token->setAccessToken( $data['access_token'] );
-        $token->setLifetime( $data['expires_in'] );
+        
+        if( isset( $data['expires_in'] ) ) {
+            $token->setLifetime( $data['expires_in'] );
+            unset( $data['expires_in'] );
+        }
 
         if( isset($data['refresh_token'] ) ) {
             $token->setRefreshToken( $data['refresh_token'] );
@@ -60,7 +64,6 @@ class SoundCloud extends AbstractService
         }
 
         unset( $data['access_token'] );
-        unset( $data['expires_in'] );
 
         $token->setExtraParams( $data );
 

@@ -60,7 +60,9 @@ class StreamClient implements ClientInterface
         $extraHeaders['Host'] = 'Host: '.$endpoint->getHost();
         $extraHeaders['Connection'] = 'Connection: close';
 
-        if( is_array($requestBody) ) {
+        if ( isset($extraHeaders['Content-type']) and $extraHeaders['Content-type'] == 'Content-type: application/json') {
+            $requestBody = json_encode($requestBody);
+        }else if( is_array($requestBody) ) {
             $requestBody = http_build_query($requestBody);
         }
 

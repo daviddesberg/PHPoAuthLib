@@ -97,17 +97,17 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         );
 
         $authorizationHeader = array(
-            'Authorization' => 
+            'Authorization' =>
                 $this->buildAuthorizationHeaderForAPIRequest(
-                    'POST', 
-                    $this->getAccessTokenEndpoint(), 
-                    $this->storage->retrieveAccessToken(), 
+                    'POST',
+                    $this->getAccessTokenEndpoint(),
+                    $this->storage->retrieveAccessToken(),
                     $bodyParams
             )
         );
-        
+
         $headers = array_merge($authorizationHeader, $this->getExtraOAuthHeaders());
-        
+
         $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $bodyParams, $headers);
 
         $token = $this->parseAccessTokenResponse( $responseBody );
@@ -218,12 +218,13 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     protected function getBasicAuthorizationHeaderInfo()
     {
+        $dateTime = new \DateTime();
         $headerParameters = array(
             'oauth_callback'         => $this->credentials->getCallbackUrl(),
             'oauth_consumer_key'     => $this->credentials->getConsumerId(),
             'oauth_nonce'            => $this->generateNonce(),
             'oauth_signature_method' => $this->getSignatureMethod(),
-            'oauth_timestamp'        => (new \DateTime())->format('U'),
+            'oauth_timestamp'        => $dateTime->format('U'),
             'oauth_version'          => $this->getVersion(),
         );
 

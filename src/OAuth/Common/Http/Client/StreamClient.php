@@ -66,9 +66,8 @@ class StreamClient implements ClientInterface
 
         $context = $this->generateStreamContext($requestBody, $extraHeaders, $method);
 
-        $level = error_reporting(0);
         $response = file_get_contents($endpoint->getAbsoluteUri(), 0, $context);
-        error_reporting($level);
+        
         if( false === $response ) {
             $lastEror = error_get_last();
             throw new TokenResponseException( $lastEror['message'] );
@@ -88,6 +87,7 @@ class StreamClient implements ClientInterface
 
                 'max_redirects'    => $this->maxRedirects,
                 'timeout'          => $this->timeout,
+                'ignore_errors'    => true,
             ),
         ));
     }

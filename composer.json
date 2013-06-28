@@ -1,6 +1,6 @@
 {
     "name": "lusitanian/oauth",
-    "description": "PHP 5.4+ oAuth 1/2 Library",
+    "description": "PHP 5.3+ oAuth 1/2 Library",
     "keywords": ["oauth", "authentication", "authorization", "security"],
     "license": "MIT",
     "authors": [

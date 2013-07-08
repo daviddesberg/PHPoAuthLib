@@ -61,7 +61,7 @@ class StreamClient implements ClientInterface
         $extraHeaders['Connection'] = 'Connection: close';
 
         if( is_array($requestBody) ) {
-            $requestBody = http_build_query($requestBody);
+            $requestBody = http_build_query($requestBody, null, '&');
         }
 
         $context = $this->generateStreamContext($requestBody, $extraHeaders, $method);

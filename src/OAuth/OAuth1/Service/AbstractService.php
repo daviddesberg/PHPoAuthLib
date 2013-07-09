@@ -50,8 +50,8 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
 
         $responseBody = $this->httpClient->retrieveResponse($this->getRequestTokenEndpoint(), array(), $headers);
 
-        $token = $this->parseRequestTokenResponse( $responseBody );
-        $this->storage->storeAccessToken( $token );
+        $token = $this->parseRequestTokenResponse($responseBody);
+        $this->storage->storeAccessToken($this->service(), $token);
 
         return $token;
     }
@@ -101,7 +101,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
                 $this->buildAuthorizationHeaderForAPIRequest(
                     'POST',
                     $this->getAccessTokenEndpoint(),
-                    $this->storage->retrieveAccessToken(),
+                    $this->storage->retrieveAccessToken($this->service()),
                     $bodyParams
             )
         );
@@ -110,8 +110,8 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
 
         $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $bodyParams, $headers);
 
-        $token = $this->parseAccessTokenResponse( $responseBody );
-        $this->storage->storeAccessToken( $token );
+        $token = $this->parseAccessTokenResponse($responseBody);
+        $this->storage->storeAccessToken($this->service(), $token);
 
         return $token;
     }
@@ -130,7 +130,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $uri = $this->determineRequestUriFromPath($path, $this->baseApiUri);
 
         /** @var $token \OAuth\OAuth1\Token\StdOAuth1Token */
-        $token = $this->storage->retrieveAccessToken();
+        $token = $this->storage->retrieveAccessToken($this->service());
         $extraHeaders = array_merge( $this->getExtraApiHeaders(), $extraHeaders );
         $authorizationHeader = array('Authorization' => $this->buildAuthorizationHeaderForAPIRequest($method, $uri, $token, $body));
         $headers = array_merge($authorizationHeader, $extraHeaders);

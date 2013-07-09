@@ -11,7 +11,7 @@
  */
 use OAuth\OAuth1\Signature\Signature;
 use OAuth\OAuth1\Service\Tumblr;
-use OAuth\Common\Storage\Session;
+use OAuth\Common\Storage\Memory;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Http\Uri\Uri;
 
@@ -36,7 +36,6 @@ $credentials = new Credentials(
 $tumblrService = $serviceFactory->createService('tumblr', $credentials, $storage);
 
 if( !empty( $_GET['oauth_token'] ) ) {
-    $token = $storage->retrieveAccessToken();
     // This was a callback request from tumblr, get the token
     $tumblrService->requestAccessToken( $_GET['oauth_token'], $_GET['oauth_verifier'], $token->getRequestTokenSecret() );
 

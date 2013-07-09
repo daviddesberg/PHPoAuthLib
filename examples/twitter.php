@@ -22,7 +22,7 @@ require_once __DIR__ . '/bootstrap.php';
 
 // We need to use a persistent storage to save the token, because oauth1 requires the token secret received before'
 // the redirect (request token request) in the access token request.
-$storage = new Session();
+$storage = new Memory();
 
 // Setup the credentials for the requests
 $credentials = new Credentials(
@@ -36,7 +36,7 @@ $credentials = new Credentials(
 $twitterService = $serviceFactory->createService('twitter', $credentials, $storage);
 
 if( !empty( $_GET['oauth_token'] ) ) {
-    $token = $storage->retrieveAccessToken();
+    $token = $storage->retrieveAccessToken('Twitter');
     // This was a callback request from twitter, get the token
     $twitterService->requestAccessToken( $_GET['oauth_token'], $_GET['oauth_verifier'], $token->getRequestTokenSecret() );
 

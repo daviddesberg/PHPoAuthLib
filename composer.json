@@ -21,7 +21,10 @@
         "predis/predis": "0.8.*@dev"
     },
     "autoload": {
-        "psr-0": { "OAuth": "src", "OAuth\\Unit": "tests" }
+        "psr-0": { 
+            "OAuth": "src", 
+            "OAuth\\Unit": "tests" 
+        }
     },
     "extra": {
         "branch-alias": {

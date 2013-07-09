@@ -20,8 +20,6 @@ abstract class StorageTest extends \PHPUnit_Framework_TestCase
      */
     public function testStorage()
     {
-        if (get_class($this) == 'StorageTest') return false;
-
         // variables
         $service_1 = 'Facebook';
         $service_2 = 'Foursquare';
@@ -39,7 +37,7 @@ abstract class StorageTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('access_2', $this->storage->retrieveAccessToken($service_2)->getAccessToken() );
 
         // delete
-        $this->storage->clearTokens();
+        $this->storage->clearToken();
     }
 
     /**
@@ -47,13 +45,11 @@ abstract class StorageTest extends \PHPUnit_Framework_TestCase
      */
     public function testException()
     {
-        if (get_class($this) == 'StorageTest') return false;
-
         // variable:
         $service = 'Facebook';
 
         // make sure nothing is set.
-        $this->storage->clearTokens();
+        $this->storage->clearToken();
 
         // test
         $this->setExpectedException('OAuth\Common\Storage\Exception\TokenNotFoundException');
@@ -65,8 +61,6 @@ abstract class StorageTest extends \PHPUnit_Framework_TestCase
      */
     public function testStorageClears()
     {
-        if (get_class($this) == 'StorageTest') return false;
-
         // service
         $service = 'Facebook';
 
@@ -79,7 +73,7 @@ abstract class StorageTest extends \PHPUnit_Framework_TestCase
         // perform not-null test
         $this->assertNotNull($this->storage->retrieveAccessToken($service));
 
-        $this->storage->clearTokens();
+        $this->storage->clearToken();
 
         $this->setExpectedException('OAuth\Common\Storage\Exception\TokenNotFoundException');
         $this->storage->retrieveAccessToken($service);

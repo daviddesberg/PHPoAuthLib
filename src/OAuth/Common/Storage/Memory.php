@@ -56,7 +56,7 @@ class Memory implements TokenStorageInterface
     /**
     * Delete the users token. Aka, log out.
     */
-    public function clearTokens()
+    public function clearToken()
     {
         $this->tokens = array();
 

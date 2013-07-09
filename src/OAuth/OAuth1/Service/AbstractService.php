@@ -75,7 +75,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     }
 
     /**
-     * Retrieves and stores/returns the OAuth2 access token after a successful authorization.
+     * Retrieves and stores/returns the OAuth1 access token after a successful authorization.
      *
      * @abstract
      * @param string $token The request token from the callback.

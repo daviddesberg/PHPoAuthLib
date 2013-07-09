@@ -5,13 +5,13 @@ use OAuth\Common\Token\TokenInterface;
 use OAuth\Common\Storage\Exception\TokenNotFoundException;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class SymfonySession extends Session
+class SymfonySession implements TokenStorageInterface
 {
     private $session;
+    private $sessionVariableName;
 
     public function __construct(SessionInterface $session, $startSession = true, $sessionVariableName = 'lusitanian_oauth_token')
     {
-        // no need for "parent::construct" here!
         $this->session = $session;
         $this->sessionVariableName = $sessionVariableName;
     }
@@ -74,7 +74,7 @@ class SymfonySession extends Session
     /**
     * Delete the users tokens. Aka, log out.
     */
-    public function clearTokens()
+    public function clearToken()
     {
         $this->session->remove($this->sessionVariableName);
 

@@ -26,5 +26,5 @@ interface TokenStorageInterface
     /**
     * Delete the users token. Aka, log out.
     */
-    public function clearTokens();
+    public function clearToken();
 }

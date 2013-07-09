@@ -89,7 +89,7 @@ class Redis implements TokenStorageInterface
     /**
     * Delete the users token. Aka, log out.
     */
-    public function clearTokens()
+    public function clearToken()
     {
         // memory
         $this->cachedTokens = array();

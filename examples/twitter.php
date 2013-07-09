@@ -22,7 +22,7 @@ require_once __DIR__ . '/bootstrap.php';
 
 // We need to use a persistent storage to save the token, because oauth1 requires the token secret received before'
 // the redirect (request token request) in the access token request.
-$storage = new Memory();
+$storage = new Session();
 
 // Setup the credentials for the requests
 $credentials = new Credentials(

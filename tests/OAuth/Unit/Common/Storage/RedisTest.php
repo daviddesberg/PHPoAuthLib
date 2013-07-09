@@ -31,7 +31,7 @@ class RedisTest extends StorageTest
     public function tearDown()
     {
         // delete
-        $this->storage->clearTokens();
+        $this->storage->clearToken();
 
         // close connection
         $this->storage->getRedis()->quit();

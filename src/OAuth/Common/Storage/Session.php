@@ -71,7 +71,7 @@ class Session implements TokenStorageInterface
                isset( $_SESSION[$this->sessionVariableName][$service] );
     }
 
-    public function clearTokens()
+    public function clearToken()
     {
         unset($_SESSION[$this->sessionVariableName]);
 

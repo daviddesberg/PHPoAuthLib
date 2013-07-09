@@ -85,7 +85,7 @@ class StreamClient implements ClientInterface
                 'header'           => implode("\r\n", $headers)."\r\n\r\n",
                 'content'          => $body,
                 'protocol_version' => '1.1',
-
+                'user_agent'       => 'Lusitanian OAuth Client',
                 'max_redirects'    => $this->maxRedirects,
                 'timeout'          => $this->timeout,
             ),

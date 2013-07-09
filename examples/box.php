@@ -11,7 +11,7 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 use OAuth\OAuth2\Service\Box;
-use OAuth\Common\StoraSession;
+use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Http\Uri\Uri;
 

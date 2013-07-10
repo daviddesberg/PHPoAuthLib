@@ -14,6 +14,9 @@ use OAuth\Common\Service\AbstractService as BaseAbstractService;
 abstract class AbstractService extends BaseAbstractService implements ServiceInterface
 {
 
+    /** @const OAUTH_VERSION */
+    const OAUTH_VERSION = 1;
+
     /** @var \OAuth\OAuth1\Signature\SignatureInterface */
     protected $signature;
 

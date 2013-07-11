@@ -37,7 +37,6 @@ abstract class AbstractToken implements TokenInterface
         $this->accessToken = $accessToken;
         $this->refreshToken = $refreshToken;
         $this->setLifetime($lifetime);
-
         $this->extraParams = $extraParams;
     }
 

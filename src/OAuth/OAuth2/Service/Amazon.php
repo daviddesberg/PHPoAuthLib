@@ -57,7 +57,7 @@ class Amazon extends AbstractService
      */
     protected function getAuthorizationMethod()
     {
-        return static::AUTHORIZATION_METHOD_QUERY_STRING_V2;
+        return static::AUTHORIZATION_METHOD_HEADER_BEARER;
     }
 
     /**
@@ -71,6 +71,8 @@ class Amazon extends AbstractService
 
         if( null === $data || !is_array($data) ) {
             throw new TokenResponseException('Unable to parse response.');
+        } elseif( isset($data['error_description'] ) ) {
+            throw new TokenResponseException('Error in retrieving token: "' . $data['error_description'] . '"');
         } elseif( isset($data['error'] ) ) {
             throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
         }

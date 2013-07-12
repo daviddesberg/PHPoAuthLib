@@ -19,7 +19,7 @@ class Paypal extends AbstractService
 {
     /**
      * Defined scopes
-     * @link https://developer.paypal.com/webapps/developer/docs/integration/direct/log-in-with-paypal/detailed/
+     * @link https://developer.paypal.com/webapps/developer/docs/integration/direct/log-in-with-paypal/detailed/#attributes
      */
 
 	const SCOPE_OPENID           = 'openid';
@@ -28,6 +28,7 @@ class Paypal extends AbstractService
 	const SCOPE_EMAIL            = 'email';
 	const SCOPE_ADDRESS          = 'address';
 	const SCOPE_PHONE            = 'phone';
+	const SCOPE_EXPRESSCHECKOUT  = 'https://uri.paypal.com/services/expresscheckout';
 
     public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
     {
@@ -61,7 +62,7 @@ class Paypal extends AbstractService
      */
     protected function getAuthorizationMethod()
     {
-        return static::AUTHORIZATION_METHOD_QUERY_STRING_V2;
+        return static::AUTHORIZATION_METHOD_HEADER_BEARER;
     }
 
     /**
@@ -75,8 +76,10 @@ class Paypal extends AbstractService
 
         if( null === $data || !is_array($data) ) {
             throw new TokenResponseException('Unable to parse response.');
-        } elseif( isset($data['error'] ) ) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+        } elseif( isset($data['message'] ) ) {
+            throw new TokenResponseException('Error in retrieving token: "' . $data['message'] . '"');
+        } elseif( isset($data['name'] ) ) {
+            throw new TokenResponseException('Error in retrieving token: "' . $data['name'] . '"');
         }
 
         $token = new StdOAuth2Token();

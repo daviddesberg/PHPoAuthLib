@@ -19,7 +19,7 @@ class Paypal extends AbstractService
 {
     /**
      * Defined scopes
-     * @link https://developer.paypal.com/webapps/developer/docs/integration/direct/log-in-with-paypal/detailed/
+     * @link https://developer.paypal.com/webapps/developer/docs/integration/direct/log-in-with-paypal/detailed/#attributes
      */
 
 	const SCOPE_OPENID           = 'openid';
@@ -28,6 +28,7 @@ class Paypal extends AbstractService
 	const SCOPE_EMAIL            = 'email';
 	const SCOPE_ADDRESS          = 'address';
 	const SCOPE_PHONE            = 'phone';
+	const SCOPE_EXPRESSCHECKOUT  = 'https://uri.paypal.com/services/expresscheckout';
 
     public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
     {

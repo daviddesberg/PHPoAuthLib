@@ -67,11 +67,13 @@ class StreamClient implements ClientInterface
         $context = $this->generateStreamContext($requestBody, $extraHeaders, $method);
 
         $level = error_reporting(0);
-        $response = file_get_contents($endpoint->getAbsoluteUri(), 0, $context);
+        $response = file_get_contents($endpoint->getAbsoluteUri(), false, $context);
         error_reporting($level);
         if( false === $response ) {
-            $lastEror = error_get_last();
-            throw new TokenResponseException( $lastEror['message'] );
+            $lastError = error_get_last();
+            if (is_null($lastError))
+                throw new TokenResponseException( 'Failed to request resource.' );
+            throw new TokenResponseException( $lastError['message'] );
         }
 
         return $response;
@@ -82,12 +84,12 @@ class StreamClient implements ClientInterface
         return stream_context_create(array(
             'http' => array(
                 'method'           => $method,
-                'header'           => implode("\r\n", $headers)."\r\n\r\n",
+                'header'           => array_values($headers),
                 'content'          => $body,
                 'protocol_version' => '1.1',
                 'user_agent'       => 'Lusitanian OAuth Client',
                 'max_redirects'    => $this->maxRedirects,
-                'timeout'          => $this->timeout,
+                'timeout'          => $this->timeout
             ),
         ));
     }

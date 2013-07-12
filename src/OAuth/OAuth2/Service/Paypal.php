@@ -75,8 +75,10 @@ class Paypal extends AbstractService
 
         if( null === $data || !is_array($data) ) {
             throw new TokenResponseException('Unable to parse response.');
-        } elseif( isset($data['error'] ) ) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+        } elseif( isset($data['message'] ) ) {
+            throw new TokenResponseException('Error in retrieving token: "' . $data['message'] . '"');
+        } elseif( isset($data['name'] ) ) {
+            throw new TokenResponseException('Error in retrieving token: "' . $data['name'] . '"');
         }
 
         $token = new StdOAuth2Token();

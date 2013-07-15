@@ -70,4 +70,14 @@ abstract class AbstractService implements ServiceInterface
     public function getStorage() {
         return $this->storage;
     }
+
+    /**
+     * @return string
+     */
+    protected function service() 
+    {
+        // get class name without backslashes
+        $classname = get_class($this);
+        return preg_replace('/^.*\\\\/', '', $classname);
+    }
 }

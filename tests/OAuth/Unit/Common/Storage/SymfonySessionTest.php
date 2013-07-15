@@ -8,49 +8,25 @@
  */
 
 use OAuth\Common\Storage\SymfonySession;
-use OAuth\OAuth2\Token\StdOAuth2Token;
+use OAuth\Unit\Common\Storage\StorageTest;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
-class SymfonySessionTest extends PHPUnit_Framework_TestCase
+class SymfonySessionTest extends StorageTest
 {
-    public function testStoresInMemory()
+
+    public function setUp()
     {
-        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param'));
-
+        // set it
         $session = new Session(new MockArraySessionStorage());
-        $storage = new SymfonySession($session);
-        $storage->storeAccessToken($token);
-
-        $extraParams = $storage->retrieveAccessToken()->getExtraParams();
-        $this->assertEquals('param', $extraParams['extra']);
-        $this->assertEquals('access', $storage->retrieveAccessToken()->getAccessToken());
+        $this->storage = new SymfonySession($session);
     }
 
-    /**
-     * @test
-     * @expectedException OAuth\Common\Storage\Exception\TokenNotFoundException
-     */
-    public function retrievingNonExistentTokenShouldThrowException()
+    public function tearDown()
     {
-        $session = new Session(new MockArraySessionStorage());
-        $storage = new SymfonySession($session);
-
-        $nonExistentToken = $storage->retrieveAccessToken();
+        // delete
+        $this->storage->getSession()->clear();
+        unset($this->storage);
     }
 
-    public function testStorageClears()
-    {
-        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param'));
-
-        $session = new Session(new MockArraySessionStorage());
-        $storage = new SymfonySession($session);
-        $storage->storeAccessToken($token);
-        $this->assertNotNull($storage->retrieveAccessToken());
-
-        $storage->clearToken();
-
-        $this->setExpectedException('OAuth\Common\Storage\Exception\TokenNotFoundException');
-        $storage->retrieveAccessToken();
-    }
 }

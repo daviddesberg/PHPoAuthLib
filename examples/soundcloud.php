@@ -10,7 +10,7 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 use OAuth\OAuth2\Service\SoundCloud;
-use OAuth\Common\Storage\Memory;
+use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
 
 /**
@@ -18,8 +18,8 @@ use OAuth\Common\Consumer\Credentials;
  */
 require_once __DIR__ . '/bootstrap.php';
 
-// In-memory storage
-$storage = new Memory();
+// Session storage
+$storage = new Session();
 
 // Setup the credentials for the requests
 $credentials = new Credentials(

@@ -36,7 +36,7 @@ $credentials = new Credentials(
 $twitterService = $serviceFactory->createService('twitter', $credentials, $storage);
 
 if( !empty( $_GET['oauth_token'] ) ) {
-    $token = $storage->retrieveAccessToken();
+    $token = $storage->retrieveAccessToken('Twitter');
     // This was a callback request from twitter, get the token
     $twitterService->requestAccessToken( $_GET['oauth_token'], $_GET['oauth_verifier'], $token->getRequestTokenSecret() );
 

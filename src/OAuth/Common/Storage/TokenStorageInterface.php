@@ -11,17 +11,17 @@ interface TokenStorageInterface
     /**
      * @return \OAuth\Common\Token\TokenInterface
      */
-    public function retrieveAccessToken();
+    public function retrieveAccessToken($service);
 
     /**
      * @param \OAuth\Common\Token\TokenInterface $token
      */
-    public function storeAccessToken(TokenInterface $token);
+    public function storeAccessToken($service, TokenInterface $token);
 
     /**
      * @return bool
      */
-    public function hasAccessToken();
+    public function hasAccessToken($service);
 
     /**
     * Delete the users token. Aka, log out.

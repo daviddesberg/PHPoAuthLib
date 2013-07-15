@@ -12,16 +12,22 @@ class Memory implements TokenStorageInterface
     /**
      * @var object|TokenInterface
      */
-    protected $token;
+    protected $tokens;
+
+    public function __construct() 
+    {
+        $this->tokens = array();
+    }
 
     /**
      * @return \OAuth\Common\Token\TokenInterface
      * @throws TokenNotFoundException
      */
-    public function retrieveAccessToken()
+    public function retrieveAccessToken($service)
     {
-        if( $this->token instanceOf TokenInterface ) {
-            return $this->token;
+        if ($this->hasAccessToken($service)) 
+        {
+            return $this->tokens[$service];
         }
 
         throw new TokenNotFoundException('Token not stored');
@@ -30,17 +36,21 @@ class Memory implements TokenStorageInterface
     /**
      * @param \OAuth\Common\Token\TokenInterface $token
      */
-    public function storeAccessToken(TokenInterface $token)
+    public function storeAccessToken($service, TokenInterface $token)
     {
-        $this->token = $token;
+        $this->tokens[$service] = $token;
+
+        // allow chaining
+        return $this;
     }
 
     /**
     * @return bool
     */
-    public function hasAccessToken()
+    public function hasAccessToken($service)
     {
-        return $this->token instanceOf TokenInterface;
+        return isset($this->tokens[$service]) &&
+               $this->tokens[$service] instanceOf TokenInterface;
     }
 
     /**
@@ -48,6 +58,9 @@ class Memory implements TokenStorageInterface
     */
     public function clearToken()
     {
-        $this->token = null;
+        $this->tokens = array();
+
+        // allow chaining
+        return $this;
     }
 }

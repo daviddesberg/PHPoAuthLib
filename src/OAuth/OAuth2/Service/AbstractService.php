@@ -96,7 +96,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
 
         $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $bodyParams, $this->getExtraOAuthHeaders());
         $token = $this->parseAccessTokenResponse( $responseBody );
-        $this->storage->storeAccessToken( $token );
+        $this->storage->storeAccessToken($this->service(), $token );
 
         return $token;
     }
@@ -116,7 +116,9 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     public function request($path, $method = 'GET', array $body = array(), array $extraHeaders = array())
     {
         $uri = $this->determineRequestUriFromPath($path, $this->baseApiUri);
-        $token = $this->storage->retrieveAccessToken();
+        $token = $this->storage->retrieveAccessToken($this->service());
+
+        var_dump($token); exit;
 
         if( ( $token->getEndOfLife() !== TokenInterface::EOL_NEVER_EXPIRES ) &&
             ( $token->getEndOfLife() !== TokenInterface::EOL_UNKNOWN ) &&
@@ -175,8 +177,8 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         );
 
         $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $parameters, $this->getExtraOAuthHeaders());
-        $token = $this->parseAccessTokenResponse( $responseBody );
-        $this->storage->storeAccessToken( $token );
+        $token = $this->parseAccessTokenResponse($responseBody);
+        $this->storage->storeAccessToken($this->service(), $token);
 
         return $token;
     }

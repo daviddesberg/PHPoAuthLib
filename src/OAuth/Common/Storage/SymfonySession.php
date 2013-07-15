@@ -16,33 +16,77 @@ class SymfonySession implements TokenStorageInterface
         $this->sessionVariableName = $sessionVariableName;
     }
 
-    public function retrieveAccessToken()
+    /**
+     * @return \OAuth\Common\Token\TokenInterface
+     * @throws TokenNotFoundException
+     */
+    public function retrieveAccessToken($service)
     {
-        if ($this->session->has($this->sessionVariableName)) {
-            return $this->session->get($this->sessionVariableName);
+        if ($this->hasAccessToken($service)) {
+            // get from session
+            $tokens = $this->session->get($this->sessionVariableName);
+
+            // one item
+            return $tokens[$service];
         }
 
         throw new TokenNotFoundException('Token not found in session, are you sure you stored it?');
     }
 
-    public function storeAccessToken(TokenInterface $token)
+    public function storeAccessToken($service, TokenInterface $token)
     {
-        $this->session->set($this->sessionVariableName, $token);
+        // get previously saved tokens
+        $tokens = $this->session->get($this->sessionVariableName);
+
+        if (is_array($tokens)) 
+        {
+            // add to array
+            $tokens[$service] = $token;
+        }
+        else
+        {
+            // new array
+            $tokens = array(
+                $service => $token,
+            );
+        }
+
+        // save
+        $this->session->set($this->sessionVariableName, $tokens);
+
+        // allow chaining
+        return $this;
     }
 
     /**
     * @return bool
     */
-    public function hasAccessToken()
+    public function hasAccessToken($service)
     {
-        return $this->session->has($this->sessionVariableName);
+        // get from session
+        $tokens = $this->session->get($this->sessionVariableName);
+
+        return is_array($tokens) &&
+               isset($tokens[$service]) &&
+               $tokens[$service] instanceof TokenInterface;
     }
 
     /**
-    * Delete the users token. Aka, log out.
+    * Delete the users tokens. Aka, log out.
     */
     public function clearToken()
     {
         $this->session->remove($this->sessionVariableName);
+
+        // allow chaining
+        return $this;
+    }
+
+    /**
+     * @return Session
+     */
+    public function getSession()
+    {
+        return $this->session;
     }
 }

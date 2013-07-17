@@ -118,7 +118,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $uri = $this->determineRequestUriFromPath($path, $this->baseApiUri);
         $token = $this->storage->retrieveAccessToken($this->service());
 
-        var_dump($token); exit;
+        //var_dump($token); exit;
 
         if( ( $token->getEndOfLife() !== TokenInterface::EOL_NEVER_EXPIRES ) &&
             ( $token->getEndOfLife() !== TokenInterface::EOL_UNKNOWN ) &&

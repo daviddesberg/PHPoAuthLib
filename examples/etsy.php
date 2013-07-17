@@ -5,9 +5,8 @@
  *
  * PHP version 5.4
  *
- * @author     David Desberg <david@daviddesberg.com>
- * @author     Pieter Hordijk <info@pieterhordijk.com>
- * @copyright  Copyright (c) 2012 The authors
+ * @author     Iñaki Abete <inakiabt+github@gmail.com>
+ * @copyright  Copyright (c) 2013 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 use OAuth\OAuth1\Signature\Signature;

@@ -67,7 +67,7 @@ class Session implements TokenStorageInterface
     */
     public function hasAccessToken($service)
     {
-        return isset($_SESSION[$this->sessionVariableName][$service]);
+        return isset($_SESSION[$this->sessionVariableName], $_SESSION[$this->sessionVariableName][$service]);
     }
 
     public function clearToken()

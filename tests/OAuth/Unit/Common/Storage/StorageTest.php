@@ -20,40 +20,36 @@ abstract class StorageTest extends \PHPUnit_Framework_TestCase
      */
     public function testStorage()
     {
-        // variables
+        // arrange
         $service_1 = 'Facebook';
         $service_2 = 'Foursquare';
 
-        // create sample token
         $token_1 = new StdOAuth2Token('access_1', 'refresh_1', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param') );
         $token_2 = new StdOAuth2Token('access_2', 'refresh_2', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param') );
         
+        // act
         $this->storage->storeAccessToken($service_1, $token_1);
         $this->storage->storeAccessToken($service_2, $token_2);
 
+        // assert
         $extraParams = $this->storage->retrieveAccessToken($service_1)->getExtraParams();
-        $this->assertEquals('param', $extraParams['extra'] );
-        $this->assertEquals('access_1', $this->storage->retrieveAccessToken($service_1)->getAccessToken() );
-        $this->assertEquals('access_2', $this->storage->retrieveAccessToken($service_2)->getAccessToken() );
-
-        // delete
-        $this->storage->clearToken();
+        $this->assertEquals('param', $extraParams['extra']);
+        $this->assertEquals($token_1, $this->storage->retrieveAccessToken($service_1));
+        $this->assertEquals($token_2, $this->storage->retrieveAccessToken($service_2));
     }
 
     /**
-     * Verifies proper behavior upon attempting to retrieve a nonexistent token.
+     * Test hasAccessToken.
      */
-    public function testException()
+    public function testHasAccessToken()
     {
-        // variable:
+        // arrange
         $service = 'Facebook';
-
-        // make sure nothing is set.
         $this->storage->clearToken();
-
-        // test
-        $this->setExpectedException('OAuth\Common\Storage\Exception\TokenNotFoundException');
-        $nonExistentToken = $this->storage->retrieveAccessToken($service);
+        
+        // act
+        // assert
+        $this->assertFalse($this->storage->hasAccessToken($service));
     }
 
     /**
@@ -61,20 +57,15 @@ abstract class StorageTest extends \PHPUnit_Framework_TestCase
      */
     public function testStorageClears()
     {
-        // service
+        // arrange
         $service = 'Facebook';
-
-        // create sample token
         $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param') );
         
-        // save first
+        // act
         $this->storage->storeAccessToken($service, $token);
-
-        // perform not-null test
-        $this->assertNotNull($this->storage->retrieveAccessToken($service));
-
         $this->storage->clearToken();
 
+        // assert
         $this->setExpectedException('OAuth\Common\Storage\Exception\TokenNotFoundException');
         $this->storage->retrieveAccessToken($service);
     }

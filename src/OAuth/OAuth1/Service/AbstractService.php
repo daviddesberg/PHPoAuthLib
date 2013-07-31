@@ -87,8 +87,12 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * @return TokenInterface $token
      * @throws TokenResponseException
      */
-    public function requestAccessToken($token, $verifier, $tokenSecret)
+    public function requestAccessToken($token, $verifier, $tokenSecret = null)
     {
+        if($tokenSecret === null) {
+            $storedRequestToken = $this->storage->retrieveAccessToken($this->service());
+            $tokenSecret = $storedRequestToken->getRequestTokenSecret();
+        }
         $this->signature->setTokenSecret($tokenSecret);
 
         $extraAuthenticationHeaders = array(

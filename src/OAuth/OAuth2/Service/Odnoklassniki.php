@@ -66,4 +66,9 @@ class Odnoklassniki extends AbstractService
 	
         return $token;
     }
+
+	protected function getAuthorizationMethod()
+	{
+		return static::AUTHORIZATION_METHOD_QUERY_STRING;
+	}
 }

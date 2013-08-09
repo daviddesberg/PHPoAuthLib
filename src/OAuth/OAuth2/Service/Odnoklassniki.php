@@ -18,7 +18,7 @@ class Odnoklassniki extends AbstractService
     {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
         if( null === $baseApiUri ) {
-            $this->baseApiUri = new Uri('http://api.odnoklassniki.ru/fb.do');
+            $this->baseApiUri = new Uri('http://api.odnoklassniki.ru/api/');
         }
     }
     

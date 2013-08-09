@@ -49,6 +49,7 @@ For usage with complete auth flow, please see the examples. More in-depth docume
 Framework Integration
 ---------------------
 * Lithium: Sébastien Charrier has written [an adapter](https://github.com/scharrier/li3_socialauth) for the library.
+* Laravel: Hannes Van De Vreken has written [an adapter](https://github.com/hannesvdvreken/laravel-oauth) for the library.
 
 Tests
 ------

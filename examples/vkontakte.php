@@ -55,5 +55,5 @@ if( !empty( $_GET['code'] ) ) {
     header('Location: ' . $url);
 } else {
     $url = $currentUri->getRelativeUri() . '?go=go';
-    echo "<a href='$url'>Login with Facebook!</a>";
+    echo "<a href='$url'>Login with Vkontakte!</a>";
 }

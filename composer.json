@@ -1,5 +1,5 @@
 {
-    "name": "terion/oauth",
+    "name": "lusitanian/oauth",
     "description": "PHP 5.3+ oAuth 1/2 Library",
     "keywords": ["oauth", "authentication", "authorization", "security"],
     "license": "MIT",
@@ -21,7 +21,7 @@
         "predis/predis": "0.8.*@dev"
     },
     "replace": {
-        "lusitanian/oauth": "*"  
+        "lusitanian/oauth": "*"
     },
     "autoload": {
         "psr-0": { 

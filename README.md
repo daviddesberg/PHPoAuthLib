@@ -35,6 +35,7 @@ Included service implementations
    - Box
    - Tumblr
    - Vkontakte
+   - Odnoklassniki
  - more to come!
 
 Examples

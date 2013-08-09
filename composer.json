@@ -1,6 +1,6 @@
 {
-    "name": "lusitanian/oauth",
-    "description": "PHP 5.3+ oAuth 1/2 Library",
+    "name": "oblogic7/oauth",
+    "description": "PHP 5.3+ oAuth 1/2 Library. Forked from lusitanian/oauth.  Includes BitBucket service.",
     "keywords": ["oauth", "authentication", "authorization", "security"],
     "license": "MIT",
     "authors": [

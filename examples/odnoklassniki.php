@@ -37,17 +37,19 @@ $appKey = 'MYAPPLICATIONKEY';
 /** @var $facebookService Facebook */
 $odnoklassnikiService = $serviceFactory->createService('odnoklassniki', $credentials, $storage, array());
 
+// IMPORTANT!
+$odnoklassnikiService->setApplicationKey($appKey);
+
 if( !empty( $_GET['code'] ) ) {
     // This was a callback request from google, get the token
     $token = $odnoklassnikiService->requestAccessToken( $_GET['code'] );
 
+	// You can get user id immediately
 	$extraParams = $token->getExtraParams();
 	$uid = $extraParams['user_id'];
 
     // Send a request with it
-	$req = $odnoklassnikiService->request("/users/getCurrentUser", 'GET', array(
-			'application_key' => $appKey
-		));
+	$req = $odnoklassnikiService->request("/users/getCurrentUser");
 	$result = json_decode($req, true);
 
     // Show some of the resultant data

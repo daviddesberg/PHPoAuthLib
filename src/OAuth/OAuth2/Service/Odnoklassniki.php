@@ -132,7 +132,8 @@ class Odnoklassniki extends AbstractService
 		if ( strpos($path, '?') ) {
 			$query = explode('?', $path);
 			$query = end($query);
-			parse_str($query, $body);
+			parse_str($query, $queryParams);
+			$body += $queryParams;
 		}
 
 		if( ( $token->getEndOfLife() !== TokenInterface::EOL_NEVER_EXPIRES ) &&

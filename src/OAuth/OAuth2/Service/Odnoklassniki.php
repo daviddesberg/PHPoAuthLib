@@ -130,7 +130,8 @@ class Odnoklassniki extends AbstractService
 		}
 
 		if ( strpos($path, '?') ) {
-			$query = end(explode('?', $path));
+			$query = explode('?', $path);
+			$query = end($query);
 			parse_str($query, $body);
 		}
 

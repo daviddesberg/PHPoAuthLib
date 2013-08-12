@@ -48,7 +48,14 @@ if( !empty( $_GET['code'] ) ) {
 	$extraParams = $token->getExtraParams();
 	$uid = $extraParams['user_id'];
 
-    // Send a request with it
+	/*
+	 * Send a request with it
+	 *
+	 * If you use additional params, they could be passed in query string, e.g:
+	 * $odnoklassnikiService->request("/users/getCurrentUser?fields=uid,name,pic_2")
+	 * Or in body array, e.g.:
+	 * $odnoklassnikiService->request("/users/getCurrentUser", 'GET', array('fields'=>'uid,name,pic_2'))
+	 */
 	$req = $odnoklassnikiService->request("/users/getCurrentUser");
 	$result = json_decode($req, true);
 

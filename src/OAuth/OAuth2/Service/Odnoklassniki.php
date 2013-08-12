@@ -14,6 +14,9 @@ use OAuth\Common\Token\Exception\MissingApplicationKeyException;
 
 class Odnoklassniki extends AbstractService
 {
+
+	protected $applicationKey;
+
     public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
     {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
@@ -37,6 +40,24 @@ class Odnoklassniki extends AbstractService
     {
         return new Uri('http://api.odnoklassniki.ru/oauth/token.do');
     }
+
+	/**
+	 * @param string $appKey
+	 * @return $this
+	 */
+	public function setApplicationKey($appKey)
+	{
+		$this->applicationKey = $appKey;
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getApplicationKey()
+	{
+		return $this->applicationKey;
+	}
 
     /**
      * @param string $responseBody
@@ -64,6 +85,10 @@ class Odnoklassniki extends AbstractService
         }
 
         unset( $data['access_token'] );
+
+	    if ( $this->applicationKey ) {
+		    $data['application_key'] = $this->applicationKey;
+	    }
         //unset( $data['expires_in'] );
         $token->setExtraParams( $data );
 	
@@ -82,15 +107,31 @@ class Odnoklassniki extends AbstractService
 	 * @param array $extraHeaders Extra headers if applicable. These will override service-specific any defaults.
 	 * @return string
 	 * @throws ExpiredTokenException
+	 * @throws MissingApplicationKeyException
 	 * @throws Exception
 	 */
 	public function request($path, $method = 'GET', array $body = array(), array $extraHeaders = array())
 	{
 		$uri = $this->determineRequestUriFromPath($path, $this->baseApiUri);
 		$token = $this->storage->retrieveAccessToken($this->service());
+		$extraParams = $token->getExtraParams();
+		$storedAppKey = isset($extraParams['application_key']) ? $extraParams['application_key'] : null;
 
 		if ( empty($body['application_key']) ) {
-			throw new MissingApplicationKeyException('Application key not found');
+			if ( $this->applicationKey ) {
+				$body['application_key'] = $this->applicationKey;
+			}
+			elseif ( $storedAppKey ) {
+				$body['application_key'] = $storedAppKey;
+			}
+			else {
+				throw new MissingApplicationKeyException('Application key not found');
+			}
+		}
+
+		if ( strpos($path, '?') ) {
+			$query = end(explode('?', $path));
+			parse_str($query, $body);
 		}
 
 		if( ( $token->getEndOfLife() !== TokenInterface::EOL_NEVER_EXPIRES ) &&

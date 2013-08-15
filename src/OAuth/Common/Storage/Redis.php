@@ -53,7 +53,7 @@ class Redis implements TokenStorageInterface
             return $this->cachedTokens[$service];
         }
 
-        $val = $this->hget($this->key, $service);
+        $val = $this->redis->hget($this->key, $service);
 
         return $this->cachedTokens[$service] = unserialize($val);
     }
@@ -78,7 +78,7 @@ class Redis implements TokenStorageInterface
     public function hasAccessToken($service)
     {
         if (isset($this->cachedTokens[$service]) &&
-            $this->cachedTokens[$service] instanceof TokenInterface) 
+            $this->cachedTokens[$service] instanceof TokenInterface)
         {
             return true;
         }
@@ -87,9 +87,21 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-    * Delete the users token. Aka, log out.
-    */
-    public function clearToken()
+     * Delete the user's token. Aka, log out.
+     */
+    public function clearToken($service)
+    {
+        $this->redis->hdel($this->getKey(), $service);
+
+        // allow chaining
+        return $this;
+    }
+
+    /**
+     * Delete *ALL* user tokens. Use with care. Most of the time you will likely
+     * want to use clearToken() instead.
+     */
+    public function clearAllTokens()
     {
         // memory
         $this->cachedTokens = array();

@@ -91,7 +91,8 @@ class Redis implements TokenStorageInterface
      */
     public function clearToken($service)
     {
-        $this->redis->hdel($this->getKey(), $service);
+        $this->redis->hdel($this->key, $service);
+        unset($this->cachedTokens[$service]);
 
         // allow chaining
         return $this;

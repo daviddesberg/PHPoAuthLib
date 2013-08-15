@@ -25,6 +25,7 @@ class Session implements TokenStorageInterface
         }
 
         $this->sessionVariableName = $sessionVariableName;
+        $_SESSION[$sessionVariableName] = array();
     }
 
     /**

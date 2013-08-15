@@ -14,6 +14,8 @@ class SymfonySession implements TokenStorageInterface
     {
         $this->session = $session;
         $this->sessionVariableName = $sessionVariableName;
+
+        $this->session->set($sessionVariableName, array());
     }
 
     /**

@@ -58,7 +58,9 @@ class Memory implements TokenStorageInterface
      */
     public function clearToken($service)
     {
-        unset($this->tokens[$service]);
+        if (array_key_exists($service, $this->tokens)) {
+            unset($this->tokens[$service]);
+        }
 
         // allow chaining
         return $this;

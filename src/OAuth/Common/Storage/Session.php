@@ -75,7 +75,9 @@ class Session implements TokenStorageInterface
      */
     public function clearToken($service)
     {
-        unset($_SESSION[$this->sessionVariableName][$service]);
+        if (array_key_exists($service, $_SESSION[$this->sessionVariableName])) {
+            unset($_SESSION[$this->sessionVariableName][$service]);
+        }
 
         // allow chaining
         return $this;

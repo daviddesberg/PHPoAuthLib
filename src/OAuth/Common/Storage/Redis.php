@@ -53,7 +53,7 @@ class Redis implements TokenStorageInterface
             return $this->cachedTokens[$service];
         }
 
-        $val = $this->hget($this->key, $service);
+        $val = $this->redis->hget($this->key, $service);
 
         return $this->cachedTokens[$service] = unserialize($val);
     }
@@ -78,7 +78,7 @@ class Redis implements TokenStorageInterface
     public function hasAccessToken($service)
     {
         if (isset($this->cachedTokens[$service]) &&
-            $this->cachedTokens[$service] instanceof TokenInterface) 
+            $this->cachedTokens[$service] instanceof TokenInterface)
         {
             return true;
         }

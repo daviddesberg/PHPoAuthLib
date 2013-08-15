@@ -14,7 +14,7 @@ class Memory implements TokenStorageInterface
      */
     protected $tokens;
 
-    public function __construct() 
+    public function __construct()
     {
         $this->tokens = array();
     }
@@ -25,7 +25,7 @@ class Memory implements TokenStorageInterface
      */
     public function retrieveAccessToken($service)
     {
-        if ($this->hasAccessToken($service)) 
+        if ($this->hasAccessToken($service))
         {
             return $this->tokens[$service];
         }
@@ -54,9 +54,21 @@ class Memory implements TokenStorageInterface
     }
 
     /**
-    * Delete the users token. Aka, log out.
-    */
-    public function clearToken()
+     * Delete the users token. Aka, log out.
+     */
+    public function clearToken($service)
+    {
+        unset($this->tokens[$service]);
+
+        // allow chaining
+        return $this;
+    }
+
+    /**
+     * Delete *ALL* user tokens. Use with care. Most of the time you will likely
+     * want to use clearToken() instead.
+     */
+    public function clearAllTokens()
     {
         $this->tokens = array();
 

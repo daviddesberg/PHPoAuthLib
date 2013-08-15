@@ -17,13 +17,16 @@
         "php": ">=5.3.0"
     },
     "require-dev": {
-        "symfony/http-foundation": "~2.1",
-        "predis/predis": "0.8.*@dev"
+        "phpunit/phpunit": "3.7.*"
+    },
+    "suggest": {
+        "symfony/http-foundation": "Allows using the Symfony Session storage backend.",
+        "predis/predis": "Allows using the Redis storage backend."
     },
     "autoload": {
-        "psr-0": { 
-            "OAuth": "src", 
-            "OAuth\\Unit": "tests" 
+        "psr-0": {
+            "OAuth": "src",
+            "OAuth\\Unit": "tests"
         }
     },
     "extra": {

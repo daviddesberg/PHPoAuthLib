@@ -87,9 +87,21 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-    * Delete the users token. Aka, log out.
-    */
-    public function clearToken()
+     * Delete the user's token. Aka, log out.
+     */
+    public function clearToken($service)
+    {
+        $this->redis->hdel($this->getKey(), $service);
+
+        // allow chaining
+        return $this;
+    }
+
+    /**
+     * Delete *ALL* user tokens. Use with care. Most of the time you will likely
+     * want to use clearToken() instead.
+     */
+    public function clearAllTokens()
     {
         // memory
         $this->cachedTokens = array();

@@ -14,6 +14,8 @@ class SymfonySession implements TokenStorageInterface
     {
         $this->session = $session;
         $this->sessionVariableName = $sessionVariableName;
+
+        $this->session->set($sessionVariableName, array());
     }
 
     /**
@@ -38,7 +40,7 @@ class SymfonySession implements TokenStorageInterface
         // get previously saved tokens
         $tokens = $this->session->get($this->sessionVariableName);
 
-        if (is_array($tokens)) 
+        if (is_array($tokens))
         {
             // add to array
             $tokens[$service] = $token;
@@ -72,9 +74,29 @@ class SymfonySession implements TokenStorageInterface
     }
 
     /**
-    * Delete the users tokens. Aka, log out.
-    */
-    public function clearToken()
+     * Delete the user's token. Aka, log out.
+     */
+    public function clearToken($service)
+    {
+        // get previously saved tokens
+        $tokens = $this->session->get($this->sessionVariableName);
+
+        if (array_key_exists($service, $tokens)) {
+            unset($tokens[$service]);
+        }
+
+        // Replace the stored tokens array
+        $this->session->set($this->sessionVariableName, $tokens);
+
+        // allow chaining
+        return $this;
+    }
+
+    /**
+     * Delete *ALL* user tokens. Use with care. Most of the time you will likely
+     * want to use clearToken() instead.
+     */
+    public function clearAllTokens()
     {
         $this->session->remove($this->sessionVariableName);
 

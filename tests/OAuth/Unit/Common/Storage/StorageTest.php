@@ -26,7 +26,7 @@ abstract class StorageTest extends \PHPUnit_Framework_TestCase
 
         $token_1 = new StdOAuth2Token('access_1', 'refresh_1', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param') );
         $token_2 = new StdOAuth2Token('access_2', 'refresh_2', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param') );
-        
+
         // act
         $this->storage->storeAccessToken($service_1, $token_1);
         $this->storage->storeAccessToken($service_2, $token_2);
@@ -45,8 +45,8 @@ abstract class StorageTest extends \PHPUnit_Framework_TestCase
     {
         // arrange
         $service = 'Facebook';
-        $this->storage->clearToken();
-        
+        $this->storage->clearToken($service);
+
         // act
         // assert
         $this->assertFalse($this->storage->hasAccessToken($service));
@@ -60,10 +60,10 @@ abstract class StorageTest extends \PHPUnit_Framework_TestCase
         // arrange
         $service = 'Facebook';
         $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param') );
-        
+
         // act
         $this->storage->storeAccessToken($service, $token);
-        $this->storage->clearToken();
+        $this->storage->clearToken($service);
 
         // assert
         $this->setExpectedException('OAuth\Common\Storage\Exception\TokenNotFoundException');

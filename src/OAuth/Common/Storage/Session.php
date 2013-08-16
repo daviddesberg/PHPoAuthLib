@@ -25,6 +25,7 @@ class Session implements TokenStorageInterface
         }
 
         $this->sessionVariableName = $sessionVariableName;
+        $_SESSION[$sessionVariableName] = array();
     }
 
     /**
@@ -33,7 +34,7 @@ class Session implements TokenStorageInterface
      */
     public function retrieveAccessToken($service)
     {
-        if ($this->hasAccessToken($service)) 
+        if ($this->hasAccessToken($service))
         {
             return $_SESSION[$this->sessionVariableName][$service];
         }
@@ -57,7 +58,7 @@ class Session implements TokenStorageInterface
                 $service => $token,
             );
         }
-        
+
         // allow chaining
         return $this;
     }
@@ -70,7 +71,24 @@ class Session implements TokenStorageInterface
         return isset($_SESSION[$this->sessionVariableName], $_SESSION[$this->sessionVariableName][$service]);
     }
 
-    public function clearToken()
+    /**
+     * Delete the user's token. Aka, log out.
+     */
+    public function clearToken($service)
+    {
+        if (array_key_exists($service, $_SESSION[$this->sessionVariableName])) {
+            unset($_SESSION[$this->sessionVariableName][$service]);
+        }
+
+        // allow chaining
+        return $this;
+    }
+
+    /**
+     * Delete *ALL* user tokens. Use with care. Most of the time you will likely
+     * want to use clearToken() instead.
+     */
+    public function clearAllTokens()
     {
         unset($_SESSION[$this->sessionVariableName]);
 

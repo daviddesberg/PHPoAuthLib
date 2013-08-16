@@ -49,7 +49,7 @@ if( !empty( $_GET['oauth_token'] ) ) {
     // extra request needed for oauth1 to request a request token :-)
     $token = $twitterService->requestRequestToken();
 
-    $url = $twitterService->getAuthorizationUri(['oauth_token' => $token->getRequestToken()]);
+    $url = $twitterService->getAuthorizationUri(array('oauth_token' => $token->getRequestToken()));
     header('Location: ' . $url);
 } else {
     $url = $currentUri->getRelativeUri() . '?go=go';

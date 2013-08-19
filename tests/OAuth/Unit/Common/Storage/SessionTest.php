@@ -9,11 +9,11 @@
 
 use OAuth\Common\Storage\Session;
 use OAuth\Unit\Common\Storage\StorageTest;
+use OAuth\OAuth2\Token\StdOAuth2Token;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 class SessionTest extends StorageTest
 {
-
     public function setUp()
     {
         // set it
@@ -26,4 +26,22 @@ class SessionTest extends StorageTest
         // empty
     }
 
+    /**
+     * Check that the token survives the constructor
+     */
+    public function testStorageSurvivesConstructor()
+    {
+        $service = 'Facebook';
+        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param'));
+
+        // act
+        $this->storage->storeAccessToken($service, $token);
+        $this->storage = null;
+        $this->storage = new Session(false);
+
+        // assert
+        $extraParams = $this->storage->retrieveAccessToken($service)->getExtraParams();
+        $this->assertEquals('param', $extraParams['extra']);
+        $this->assertEquals($token, $this->storage->retrieveAccessToken($service));
+    }
 }

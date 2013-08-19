@@ -48,7 +48,7 @@ For usage with complete auth flow, please see the examples. More in-depth docume
 Framework Integration
 ---------------------
 * Lithium: Sébastien Charrier has written [an adapter](https://github.com/scharrier/li3_socialauth) for the library.
-
+* Wrapper for Laravel 4 [https://github.com/artdarek/oauth-4-laravel](https://github.com/artdarek/oauth-4-laravel)
 Tests
 ------
 To run the tests, you must install dependencies with `composer install --dev`

@@ -44,6 +44,7 @@ Included service implementations
 --------------------------------
 - OAuth1
     - Twitter
+    - Tumblr
     - FitBit
 - OAuth2
     - Google
@@ -57,7 +58,6 @@ Included service implementations
     - Instagram
     - LinkedIn
     - Box
-    - Tumblr
     - Vkontakte
 - more to come!
 

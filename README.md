@@ -1,41 +1,65 @@
-PHPoAuthLib Readme
-======
+PHPoAuthLib
+===========
 PHPoAuthLib provides oAuth support in PHP 5.3+ and is very easy to integrate with any project which requires an oAuth client.
 
 [![Build Status](https://travis-ci.org/Lusitanian/PHPoAuthLib.png?branch=master)](https://travis-ci.org/Lusitanian/PHPoAuthLib)
+[![Latest Stable Version](https://poser.pugx.org/lusitanian/oauth/v/stable.png)](https://packagist.org/packages/lusitanian/oauth)
+[![Total Downloads](https://poser.pugx.org/lusitanian/oauth/downloads.png)](https://packagist.org/packages/lusitanian/oauth)
+
+Installation
+------------
+This library can be found on [Packagist](https://packagist.org/packages/lusitanian/oauth).
+The recommended way to install this is through [composer](http://getcomposer.org).
+
+Edit your `composer.json` and add:
+
+```json
+{
+    "require": {
+        "lusitanian/oauth": "~0.1"
+    }
+}
+```
+
+And install dependencies:
+
+```bash
+$ curl -sS https://getcomposer.org/installer | php
+$ php composer.phar install
+```
 
 Features
 --------
 - PSR-0 compliant for easy interoperability
 - Fully extensible in every facet.
-   - You can implement any service with any custom requirements by extending the protocol version's `AbstractService` implementation.
-   - You can use any HTTP client you desire, just create a class utilizing it which implements `OAuth\Common\Http\ClientInterface` (a stream-based implementation is included)
-   - You can use any storage mechanism for tokens. By default, session, in-memory and Redis.io (requires PHPRedis) storage mechanisms are included. Implement additional mechanisms by implementing `OAuth\Common\Token\TokenStorageInterface`.
+    - You can implement any service with any custom requirements by extending the protocol version's `AbstractService` implementation.
+    - You can use any HTTP client you desire, just create a class utilizing it which implements `OAuth\Common\Http\ClientInterface` (a stream-based implementation is included)
+    - You can use any storage mechanism for tokens. By default, session, in-memory and Redis.io (requires PHPRedis) storage mechanisms are included. Implement additional mechanisms by implementing `OAuth\Common\Token\TokenStorageInterface`.
 
 Service support
-----------------
+---------------
 The library supports both oAuth 1.x and oAuth 2.0 compliant services. A list of currently implemented services can be found below. More services will be implemented soon.
 
 Included service implementations
-------------------
- - OAuth1
-   - Twitter
-   - FitBit
- - OAuth2
-   - Google
-   - Microsoft
-   - Facebook
-   - GitHub
-   - BitLy
-   - Yammer
-   - SoundCloud
-   - Foursquare
-   - Instagram
-   - LinkedIn
-   - Box
-   - Tumblr
-   - Vkontakte
- - more to come!
+--------------------------------
+- OAuth1
+    - Twitter
+    - FitBit
+- OAuth2
+    - Google
+    - Microsoft
+    - Facebook
+    - GitHub
+    - BitLy
+    - Yammer
+    - SoundCloud
+    - Foursquare
+    - Instagram
+    - LinkedIn
+    - Box
+    - Tumblr
+    - Vkontakte
+- more to come!
 
 Examples
 --------

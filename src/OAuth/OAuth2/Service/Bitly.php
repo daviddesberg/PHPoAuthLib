@@ -87,7 +87,7 @@ class Bitly extends AbstractService
         parse_str($responseBody, $parsedResult);
 
         $token = $this->parseAccessTokenResponse( json_encode($parsedResult) );
-        $this->storage->storeAccessToken( $token );
+        $this->storage->storeAccessToken( $this->service(), $token );
 
         return $token;
     }

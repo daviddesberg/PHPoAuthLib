@@ -22,7 +22,7 @@ class Dropbox extends AbstractService
     {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
         if( null === $baseApiUri ) {
-            $this->baseApiUri = new Uri('https://api.dropbox.com/1');
+            $this->baseApiUri = new Uri('https://api.dropbox.com/1/');
         }
     }
 

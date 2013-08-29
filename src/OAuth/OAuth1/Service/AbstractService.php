@@ -132,7 +132,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * @param array $extraHeaders Extra headers if applicable. These will override service-specific any defaults.
      * @return string
      */
-    public function request($path, $method = 'GET', array $body = array(), array $extraHeaders = array())
+    public function request($path, $method = 'GET', $body = null, array $extraHeaders = array())
     {
         $uri = $this->determineRequestUriFromPath($path, $this->baseApiUri);
 

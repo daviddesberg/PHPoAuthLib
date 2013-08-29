@@ -74,7 +74,7 @@ abstract class AbstractService implements ServiceInterface
     /**
      * @return string
      */
-    protected function service() 
+    public function service() 
     {
         // get class name without backslashes
         $classname = get_class($this);

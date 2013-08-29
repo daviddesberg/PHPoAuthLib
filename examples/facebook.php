@@ -35,7 +35,7 @@ $credentials = new Credentials(
 $facebookService = $serviceFactory->createService('facebook', $credentials, $storage, array());
 
 if( !empty( $_GET['code'] ) ) {
-    // This was a callback request from google, get the token
+    // This was a callback request from facebook, get the token
     $token = $facebookService->requestAccessToken( $_GET['code'] );
 
     // Send a request with it

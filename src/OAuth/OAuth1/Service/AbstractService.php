@@ -89,7 +89,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     public function requestAccessToken($token, $verifier, $tokenSecret = null)
     {
-        if($tokenSecret === null) {
+        if(is_null($tokenSecret)) {
             $storedRequestToken = $this->storage->retrieveAccessToken($this->service());
             $tokenSecret = $storedRequestToken->getRequestTokenSecret();
         }

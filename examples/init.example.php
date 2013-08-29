@@ -74,6 +74,18 @@ $servicesCredentials = [
         'key'       => '',
         'secret'    => '',
     ],
+    'amazon' => [
+    	'key'		=> '',
+    	'secret'	=> '',
+    ],
+    'paypal' => [
+    	'key'		=> '',
+    	'secret'	=> '',
+    ],
+    'dropbox' => [
+    	'key'		=> '',
+    	'secret'	=> '',
+    ],
 ];
 
 /** @var $serviceFactory \OAuth\ServiceFactory An OAuth service factory. */

@@ -193,10 +193,10 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * @param string $method
      * @param UriInterface $uri the uri the request is headed
      * @param \OAuth\OAuth1\Token\TokenInterface $token
-     * @param $bodyParams array
+     * @param $bodyParams Request body if applicable (key/value pairs)
      * @return string
      */
-    protected function buildAuthorizationHeaderForAPIRequest($method, UriInterface $uri, TokenInterface $token, $bodyParams)
+    protected function buildAuthorizationHeaderForAPIRequest($method, UriInterface $uri, TokenInterface $token, $bodyParams = null)
     {
         $this->signature->setTokenSecret($token->getAccessTokenSecret());
         $parameters = $this->getBasicAuthorizationHeaderInfo();
@@ -205,7 +205,10 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         }
 
         $parameters = array_merge($parameters, array('oauth_token' => $token->getAccessToken()) );
-        $parameters['oauth_signature'] = $this->signature->getSignature($uri, array_merge($parameters, $bodyParams), $method);
+
+        $mergedParams = (is_array($bodyParams)) ? array_merge($parameters, $bodyParams) : $parameters;
+
+        $parameters['oauth_signature'] = $this->signature->getSignature($uri, $mergedParams, $method);
 
         $authorizationHeader = 'OAuth ';
         $delimiter = '';

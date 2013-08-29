@@ -11,6 +11,8 @@ use OAuth\Common\Http\Uri\UriInterface;
 
 class Foursquare extends AbstractService
 {
+	private $apiVersionDate = '20130829';
+
     public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
     {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
@@ -61,4 +63,12 @@ class Foursquare extends AbstractService
 
         return $token;
     }
+
+    public function request($path, $method = 'GET', array $body = array(), array $extraHeaders = array()){
+    	$uri = new Uri($this->baseApiUri . $path);
+    	$uri->addToQuery('v', $this->apiVersionDate);
+
+    	return parent::request($uri, $method = 'GET', $body, $extraHeaders);
+    }
+
 }

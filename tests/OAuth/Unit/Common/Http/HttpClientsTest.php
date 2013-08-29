@@ -19,7 +19,14 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->clients[] = new Client\StreamClient(5, 3);
+        $streamClient = new Client\StreamClient();
+        $streamClient->setTimeout(3);
+
+        $curlClient = new Client\CurlClient();
+        $curlClient->setTimeout(3);
+
+        $this->clients[] = $streamClient;
+        $this->clients[] = $curlClient;
     }
 
     public function tearDown()

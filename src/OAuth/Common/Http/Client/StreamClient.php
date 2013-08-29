@@ -7,21 +7,8 @@ use OAuth\Common\Http\Uri\UriInterface;
 /**
  * Client implementation for streams/file_get_contents
  */
-class StreamClient implements ClientInterface
+class StreamClient extends AbstractClient
 {
-    private $maxRedirects;
-    private $timeout;
-
-    /**
-     * @param int $maxRedirects Maximum redirects for client
-     * @param int $timeout Request timeout time for client in seconds
-     */
-    public function __construct($maxRedirects = 5, $timeout = 15)
-    {
-        $this->maxRedirects = $maxRedirects;
-        $this->timeout = $timeout;
-    }
-
     /**
      * Any implementing HTTP providers should send a request to the provided endpoint with the parameters.
      * They should return, in string form, the response body and throw an exception on error.
@@ -39,15 +26,7 @@ class StreamClient implements ClientInterface
         // Normalize method name
         $method = strtoupper($method);
 
-        // Normalize headers
-        array_walk( $extraHeaders,
-            function(&$val, &$key)
-            {
-                $key = ucfirst( strtolower($key) );
-                $val = ucfirst( strtolower($key) ) . ': ' . $val;
-            }
-        );
-
+        $this->normalizeHeaders($extraHeaders);
 
         if( $method === 'GET' && !empty($requestBody) ) {
             throw new \InvalidArgumentException('No body expected for "GET" request.');

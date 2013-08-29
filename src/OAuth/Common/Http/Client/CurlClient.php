@@ -73,6 +73,8 @@ class CurlClient extends AbstractClient
             }
 
             curl_setopt($ch, CURLOPT_POSTFIELDS, $requestBody);
+        } else {
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
         }
 
         if( $this->maxRedirects > 0 ) {

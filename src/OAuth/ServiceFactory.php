@@ -11,23 +11,21 @@
  */
 namespace OAuth;
 use OAuth\Common\Service\ServiceInterface;
+use OAuth\Common\Http\Client\ClientInterface;
 
 class ServiceFactory
 {
-    protected static $httpClientMap = array(
-        'stream' => '\\OAuth\\Common\\Http\\Client\\StreamClient',
-    );
-
-    /** @var \OAuth\Common\Http\Client\ClientInterface */
+    /** @var Common\Http\Client\ClientInterface */
     private $httpClient;
 
-    public function __construct($httpClientType = 'stream')
+    /**
+     * @param Common\Http\Client\ClientInterface $httpClient
+     * @return ServiceFactory
+     */
+    public function setHttpClient(ClientInterface $httpClient)
     {
-        if( !isset(static::$httpClientMap[$httpClientType] ) ) {
-            throw new Common\Exception\Exception('Invalid http client type passed to OAuth\\ServiceFactory::__construct');
-        }
-
-        $this->httpClient = new static::$httpClientMap[$httpClientType];
+        $this->httpClient = $httpClient;
+        return $this;
     }
 
     /**
@@ -40,6 +38,11 @@ class ServiceFactory
      */
     public function createService($serviceName, Common\Consumer\Credentials $credentials, Common\Storage\TokenStorageInterface $storage, $scopes = array())
     {
+        if( !$this->httpClient ) {
+            // for backwards compatibility.
+            $this->httpClient = new \OAuth\Common\Http\Client\StreamClient();
+        }
+
         $serviceName = ucfirst($serviceName);
         $v2ClassName = "\\OAuth\\OAuth2\\Service\\$serviceName";
         $v1ClassName = "\\OAuth\\OAuth1\\Service\\$serviceName";

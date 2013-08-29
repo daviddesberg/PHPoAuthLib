@@ -61,12 +61,17 @@ class CurlClient extends AbstractClient
 
         curl_setopt($ch, CURLOPT_URL, $endpoint->getAbsoluteUri());
 
-        if( $method === 'POST') {
+        if( $method === 'POST' || $method === 'PUT' ) {
             if( $requestBody && is_array($requestBody) ) {
                 $requestBody = http_build_query($requestBody, null, '&');
             }
 
-            curl_setopt($ch, CURLOPT_POST, true);
+            if( $method === 'PUT' ) {
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            } else {
+                curl_setopt($ch, CURLOPT_POST, true);
+            }
+
             curl_setopt($ch, CURLOPT_POSTFIELDS, $requestBody);
         }
 

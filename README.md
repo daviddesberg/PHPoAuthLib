@@ -59,6 +59,9 @@ Included service implementations
     - LinkedIn
     - Box
     - Vkontakte
+    - Amazon
+    - PayPal
+    - Dropbox
 - more to come!
 
 Examples

@@ -14,11 +14,6 @@ class SymfonySession implements TokenStorageInterface
     {
         $this->session = $session;
         $this->sessionVariableName = $sessionVariableName;
-
-        if (!$this->session->has($sessionVariableName))
-        {
-            $this->session->set($sessionVariableName, array());
-        }
     }
 
     /**
@@ -43,18 +38,11 @@ class SymfonySession implements TokenStorageInterface
         // get previously saved tokens
         $tokens = $this->session->get($this->sessionVariableName);
 
-        if (is_array($tokens))
-        {
-            // add to array
-            $tokens[$service] = $token;
+        if (!is_array($tokens)) {
+            $tokens = array();
         }
-        else
-        {
-            // new array
-            $tokens = array(
-                $service => $token,
-            );
-        }
+
+        $tokens[$service] = $token;
 
         // save
         $this->session->set($this->sessionVariableName, $tokens);
@@ -84,12 +72,12 @@ class SymfonySession implements TokenStorageInterface
         // get previously saved tokens
         $tokens = $this->session->get($this->sessionVariableName);
 
-        if (array_key_exists($service, $tokens)) {
+        if (is_array($tokens) && array_key_exists($service, $tokens)) {
             unset($tokens[$service]);
-        }
 
-        // Replace the stored tokens array
-        $this->session->set($this->sessionVariableName, $tokens);
+            // Replace the stored tokens array
+            $this->session->set($this->sessionVariableName, $tokens);
+        }
 
         // allow chaining
         return $this;

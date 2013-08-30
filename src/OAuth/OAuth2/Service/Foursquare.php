@@ -68,7 +68,7 @@ class Foursquare extends AbstractService
     	$uri = new Uri($this->baseApiUri . $path);
     	$uri->addToQuery('v', $this->apiVersionDate);
 
-    	return parent::request($uri, $method = 'GET', $body, $extraHeaders);
+    	return parent::request($uri, $method, $body, $extraHeaders);
     }
 
 }

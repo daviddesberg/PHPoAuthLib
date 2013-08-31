@@ -13,7 +13,6 @@
 use OAuth\OAuth2\Service\Instagram;
 use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
-use OAuth\Common\Http\Uri;
 
 /**
  * Bootstrap the example
@@ -36,7 +35,7 @@ $scopes = array('basic', 'comments', 'relationships', 'likes');
 /** @var $instagramService Instagram */
 $instagramService = $serviceFactory->createService('instagram', $credentials, $storage, $scopes);
 
-if( !empty( $_GET['code'] ) ) {
+if ( !empty( $_GET['code'] ) ) {
     // This was a callback request from Instagram, get the token
     $instagramService->requestAccessToken( $_GET['code'] );
 
@@ -46,7 +45,7 @@ if( !empty( $_GET['code'] ) ) {
     // Show some of the resultant data
     echo 'Your unique instagram user id is: ' . $result['data']['id'] . ' and your name is ' . $result['data']['full_name'];
 
-} elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
+} elseif ( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
     $url = $instagramService->getAuthorizationUri();
     header('Location: ' . $url);
 } else {

@@ -20,7 +20,7 @@ class Box extends AbstractService
     public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
     {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-        if( null === $baseApiUri ) {
+        if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://api.box.com/2.0/');
         }
     }
@@ -53,7 +53,7 @@ class Box extends AbstractService
     }
 
     /**
-     * @param string $responseBody
+     * @param  string                                                                $responseBody
      * @return \OAuth\Common\Token\TokenInterface|\OAuth\OAuth2\Token\StdOAuth2Token
      * @throws \OAuth\Common\Http\Exception\TokenResponseException
      */
@@ -61,9 +61,9 @@ class Box extends AbstractService
     {
         $data = json_decode( $responseBody, true );
 
-        if( null === $data || !is_array($data) ) {
+        if ( null === $data || !is_array($data) ) {
             throw new TokenResponseException('Unable to parse response.');
-        } elseif( isset($data['error'] ) ) {
+        } elseif ( isset($data['error'] ) ) {
             throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
         }
 
@@ -72,7 +72,7 @@ class Box extends AbstractService
         $token->setAccessToken( $data['access_token'] );
         $token->setLifeTime( $data['expires_in'] );
 
-        if( isset($data['refresh_token'] ) ) {
+        if ( isset($data['refresh_token'] ) ) {
             $token->setRefreshToken( $data['refresh_token'] );
             unset($data['refresh_token']);
         }

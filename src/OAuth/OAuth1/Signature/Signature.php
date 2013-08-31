@@ -47,16 +47,16 @@ class Signature implements SignatureInterface
     }
 
     /**
-     * @param \OAuth\Common\Http\Uri\UriInterface $uri
-     * @param array $params
-     * @param string $method
+     * @param  \OAuth\Common\Http\Uri\UriInterface $uri
+     * @param  array                               $params
+     * @param  string                              $method
      * @return string
      */
     public function getSignature(UriInterface $uri, array $params, $method = 'POST')
     {
         parse_str($uri->getQuery(), $queryStringData);
 
-        foreach(array_merge($queryStringData, $params) as $key => $value) {
+        foreach (array_merge($queryStringData, $params) as $key => $value) {
             $signatureData[rawurlencode($key)] = rawurlencode($value);
         }
 
@@ -78,16 +78,15 @@ class Signature implements SignatureInterface
         return base64_encode($this->hash($baseString));
     }
 
-
     /**
-     * @param array $signatureData
+     * @param  array  $signatureData
      * @return string
      */
     protected function buildSignatureDataString(array $signatureData)
     {
         $signatureString = '';
         $delimiter = '';
-        foreach($signatureData as $key => $value) {
+        foreach ($signatureData as $key => $value) {
             $signatureString .= $delimiter . $key . '=' . $value;
 
             $delimiter = '&';
@@ -110,13 +109,13 @@ class Signature implements SignatureInterface
     }
 
     /**
-     * @param string $data
+     * @param  string                            $data
      * @return string
      * @throws UnsupportedHashAlgorithmException
      */
     protected function hash($data)
     {
-        switch(strtoupper($this->algorithm)) {
+        switch (strtoupper($this->algorithm)) {
             case 'HMAC-SHA1':
                 return hash_hmac('sha1', $data, $this->getSigningKey(), true);
 

@@ -13,7 +13,6 @@
 use OAuth\OAuth2\Service\Box;
 use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
-use OAuth\Common\Http\Uri\Uri;
 
 /**
  * Bootstrap the example
@@ -34,7 +33,7 @@ $credentials = new Credentials(
 /** @var $boxService Box */
 $boxService = $serviceFactory->createService('box', $credentials, $storage);
 
-if( !empty( $_GET['code'] ) ) {
+if ( !empty( $_GET['code'] ) ) {
     // This was a callback request from box, get the token
     $token = $boxService->requestAccessToken( $_GET['code'] );
 
@@ -44,7 +43,7 @@ if( !empty( $_GET['code'] ) ) {
     // Show some of the resultant data
     echo 'Your Box name is ' . $result['name'] . ' and your email is ' . $result['login'];
 
-} elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
+} elseif ( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
     $url = $boxService->getAuthorizationUri(array('state' => 'blabla'));
     // var_dump($url);
     header('Location: ' . $url);

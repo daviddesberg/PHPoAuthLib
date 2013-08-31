@@ -26,20 +26,19 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     protected $baseApiUri;
 
     /**
-     * @param \OAuth\Common\Consumer\Credentials $credentials
-     * @param \OAuth\Common\Http\Client\ClientInterface $httpClient
-     * @param \OAuth\Common\Storage\TokenStorageInterface $storage
-     * @param array $scopes
-     * @param UriInterface|null $baseApiUri
+     * @param  \OAuth\Common\Consumer\Credentials          $credentials
+     * @param  \OAuth\Common\Http\Client\ClientInterface   $httpClient
+     * @param  \OAuth\Common\Storage\TokenStorageInterface $storage
+     * @param  array                                       $scopes
+     * @param  UriInterface|null                           $baseApiUri
      * @throws InvalidScopeException
      */
     public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
     {
         parent::__construct($credentials, $httpClient, $storage);
 
-        foreach($scopes as $scope)
-        {
-            if( !$this->isValidScope($scope) ) {
+        foreach ($scopes as $scope) {
+            if ( !$this->isValidScope($scope) ) {
                 throw new InvalidScopeException('Scope ' . $scope . ' is not valid for service ' . get_class($this) );
             }
         }
@@ -52,7 +51,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     /**
      * Returns the url to redirect to for authorization purposes.
      *
-     * @param array $additionalParameters
+     * @param  array  $additionalParameters
      * @return string
      */
     public function getAuthorizationUri( array $additionalParameters = array() )
@@ -68,20 +67,18 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
 
         // Build the url
         $url = clone $this->getAuthorizationEndpoint();
-        foreach($parameters as $key => $val)
-        {
+        foreach ($parameters as $key => $val) {
             $url->addToQuery($key, $val);
         }
 
         return $url;
     }
 
-
     /**
      * Retrieves and stores the OAuth2 access token after a successful authorization.
      *
-     * @param string $code The access code from the callback.
-     * @return TokenInterface $token
+     * @param  string                 $code The access code from the callback.
+     * @return TokenInterface         $token
      * @throws TokenResponseException
      */
     public function requestAccessToken($code)
@@ -106,9 +103,9 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * If the path provided is not an absolute URI, the base API Uri (must be passed into constructor) will be used.
      *
      * @param $path string|UriInterface
-     * @param string $method HTTP method
-     * @param array $body Request body if applicable.
-     * @param array $extraHeaders Extra headers if applicable. These will override service-specific any defaults.
+     * @param  string                $method       HTTP method
+     * @param  array                 $body         Request body if applicable.
+     * @param  array                 $extraHeaders Extra headers if applicable. These will override service-specific any defaults.
      * @return string
      * @throws ExpiredTokenException
      * @throws Exception
@@ -126,13 +123,13 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         }
 
         // add the token where it may be needed
-        if( static::AUTHORIZATION_METHOD_HEADER_OAUTH === $this->getAuthorizationMethod() ) {
+        if ( static::AUTHORIZATION_METHOD_HEADER_OAUTH === $this->getAuthorizationMethod() ) {
             $extraHeaders = array_merge( array('Authorization' => 'OAuth ' . $token->getAccessToken()), $extraHeaders );
-        } elseif( static::AUTHORIZATION_METHOD_QUERY_STRING === $this->getAuthorizationMethod() ) {
+        } elseif ( static::AUTHORIZATION_METHOD_QUERY_STRING === $this->getAuthorizationMethod() ) {
             $uri->addToQuery( 'access_token', $token->getAccessToken() );
-        } elseif( static::AUTHORIZATION_METHOD_QUERY_STRING_V2 === $this->getAuthorizationMethod() ) {
+        } elseif ( static::AUTHORIZATION_METHOD_QUERY_STRING_V2 === $this->getAuthorizationMethod() ) {
             $uri->addToQuery( 'oauth2_access_token', $token->getAccessToken() );
-        } elseif( static::AUTHORIZATION_METHOD_HEADER_BEARER === $this->getAuthorizationMethod() ) {
+        } elseif ( static::AUTHORIZATION_METHOD_HEADER_BEARER === $this->getAuthorizationMethod() ) {
             $extraHeaders = array_merge( array('Authorization' => 'Bearer ' . $token->getAccessToken()), $extraHeaders );
         }
 
@@ -154,8 +151,8 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     /**
      * Refreshes an OAuth2 access token.
      *
-     * @param \OAuth\Common\Token\TokenInterface $token
-     * @return \OAuth\Common\Token\TokenInterface $token
+     * @param  \OAuth\Common\Token\TokenInterface                           $token
+     * @return \OAuth\Common\Token\TokenInterface                           $token
      * @throws \OAuth\OAuth2\Service\Exception\MissingRefreshTokenException
      */
     public function refreshAccessToken(TokenInterface $token)
@@ -190,6 +187,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     public function isValidScope($scope)
     {
         $reflectionClass = new \ReflectionClass(get_class($this));
+
         return in_array( $scope, $reflectionClass->getConstants() );
     }
 
@@ -218,7 +216,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      *
      * @abstract
      * @return \OAuth\Common\Token\TokenInterface
-     * @param string $responseBody
+     * @param  string                             $responseBody
      */
     abstract protected function parseAccessTokenResponse($responseBody);
 

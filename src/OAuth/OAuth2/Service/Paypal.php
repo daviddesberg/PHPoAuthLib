@@ -22,18 +22,18 @@ class Paypal extends AbstractService
      * @link https://developer.paypal.com/webapps/developer/docs/integration/direct/log-in-with-paypal/detailed/#attributes
      */
 
-	const SCOPE_OPENID           = 'openid';
-	const SCOPE_PROFILE          = 'profile';
-	const SCOPE_PAYPALATTRIBUTES = 'https://uri.paypal.com/services/paypalattributes';
-	const SCOPE_EMAIL            = 'email';
-	const SCOPE_ADDRESS          = 'address';
-	const SCOPE_PHONE            = 'phone';
-	const SCOPE_EXPRESSCHECKOUT  = 'https://uri.paypal.com/services/expresscheckout';
+    const SCOPE_OPENID           = 'openid';
+    const SCOPE_PROFILE          = 'profile';
+    const SCOPE_PAYPALATTRIBUTES = 'https://uri.paypal.com/services/paypalattributes';
+    const SCOPE_EMAIL            = 'email';
+    const SCOPE_ADDRESS          = 'address';
+    const SCOPE_PHONE            = 'phone';
+    const SCOPE_EXPRESSCHECKOUT  = 'https://uri.paypal.com/services/expresscheckout';
 
     public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
     {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-        if( null === $baseApiUri ) {
+        if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://api.paypal.com/v1/');
         }
     }
@@ -66,7 +66,7 @@ class Paypal extends AbstractService
     }
 
     /**
-     * @param string $responseBody
+     * @param  string                                                                $responseBody
      * @return \OAuth\Common\Token\TokenInterface|\OAuth\OAuth2\Token\StdOAuth2Token
      * @throws \OAuth\Common\Http\Exception\TokenResponseException
      */
@@ -74,11 +74,11 @@ class Paypal extends AbstractService
     {
         $data = json_decode( $responseBody, true );
 
-        if( null === $data || !is_array($data) ) {
+        if ( null === $data || !is_array($data) ) {
             throw new TokenResponseException('Unable to parse response.');
-        } elseif( isset($data['message'] ) ) {
+        } elseif ( isset($data['message'] ) ) {
             throw new TokenResponseException('Error in retrieving token: "' . $data['message'] . '"');
-        } elseif( isset($data['name'] ) ) {
+        } elseif ( isset($data['name'] ) ) {
             throw new TokenResponseException('Error in retrieving token: "' . $data['name'] . '"');
         }
 
@@ -87,7 +87,7 @@ class Paypal extends AbstractService
         $token->setAccessToken( $data['access_token'] );
         $token->setLifeTime( $data['expires_in'] );
 
-        if( isset($data['refresh_token'] ) ) {
+        if ( isset($data['refresh_token'] ) ) {
             $token->setRefreshToken( $data['refresh_token'] );
             unset($data['refresh_token']);
         }

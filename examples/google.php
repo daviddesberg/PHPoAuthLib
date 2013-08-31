@@ -12,7 +12,6 @@
 use OAuth\OAuth2\Service\Google;
 use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
-use OAuth\Common\Http\Uri\Uri;
 
 /**
  * Bootstrap the example
@@ -33,7 +32,7 @@ $credentials = new Credentials(
 /** @var $googleService Google */
 $googleService = $serviceFactory->createService('google', $credentials, $storage, array('userinfo_email', 'userinfo_profile'));
 
-if( !empty( $_GET['code'] ) ) {
+if ( !empty( $_GET['code'] ) ) {
     // This was a callback request from google, get the token
     $googleService->requestAccessToken( $_GET['code'] );
 
@@ -43,7 +42,7 @@ if( !empty( $_GET['code'] ) ) {
     // Show some of the resultant data
     echo 'Your unique google user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
 
-} elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
+} elseif ( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
     $url = $googleService->getAuthorizationUri();
     header('Location: ' . $url);
 } else {

@@ -32,7 +32,7 @@ $credentials = new Credentials(
 /** @var $soundcloudService SoundCloud */
 $soundcloudService = $serviceFactory->createService('soundCloud', $credentials, $storage);
 
-if( !empty( $_GET['code'] ) ) {
+if ( !empty( $_GET['code'] ) ) {
     // This was a callback request from SoundCloud, get the token
     $soundcloudService->requestAccessToken( $_GET['code'] );
 
@@ -42,7 +42,7 @@ if( !empty( $_GET['code'] ) ) {
     // Show some of the resultant data
     echo 'Your unique user id is: ' . $result['id'] . ' and your name is ' . $result['username'];
 
-} elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
+} elseif ( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
     $url = $soundcloudService->getAuthorizationUri();
     header('Location: ' . $url);
 } else {

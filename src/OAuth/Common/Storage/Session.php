@@ -15,18 +15,17 @@ class Session implements TokenStorageInterface
     protected $sessionVariableName;
 
     /**
-     * @param bool $startSession Whether or not to start the session upon construction.
+     * @param bool   $startSession        Whether or not to start the session upon construction.
      * @param string $sessionVariableName the variable name to use within the _SESSION superglobal
      */
     public function __construct($startSession = true, $sessionVariableName = 'lusitanian_oauth_token')
     {
-        if( $startSession && !isset($_SESSION)) {
+        if ( $startSession && !isset($_SESSION)) {
             session_start();
         }
 
         $this->sessionVariableName = $sessionVariableName;
-        if (!isset($_SESSION[$sessionVariableName]))
-        {
+        if (!isset($_SESSION[$sessionVariableName])) {
             $_SESSION[$sessionVariableName] = array();
         }
     }
@@ -37,8 +36,7 @@ class Session implements TokenStorageInterface
      */
     public function retrieveAccessToken($service)
     {
-        if ($this->hasAccessToken($service))
-        {
+        if ($this->hasAccessToken($service)) {
             return $_SESSION[$this->sessionVariableName][$service];
         }
 
@@ -54,9 +52,7 @@ class Session implements TokenStorageInterface
             is_array($_SESSION[$this->sessionVariableName]))
         {
             $_SESSION[$this->sessionVariableName][$service] = $token;
-        }
-        else
-        {
+        } else {
             $_SESSION[$this->sessionVariableName] = array(
                 $service => $token,
             );

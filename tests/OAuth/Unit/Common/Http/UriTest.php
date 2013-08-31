@@ -45,7 +45,7 @@ class UriTest extends PHPUnit_Framework_TestCase
         $this->assertEquals( 'joe:********@example.com:6912', $uri->getAuthority() );
         $this->assertEquals( 'joe:bob@example.com:6912', $uri->getRawAuthority() );
 
-        $this->assertEquals( 'https://joe:********@example.com:6912/relative/path?user=jon&password=secret#div', ( string ) $uri );
+        $this->assertEquals( 'https://joe:********@example.com:6912/relative/path?user=jon&password=secret#div', (string) $uri );
         $this->assertEquals( '/relative/path', $uri->getRelativeUri() );
     }
 

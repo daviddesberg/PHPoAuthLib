@@ -11,7 +11,6 @@
 use OAuth\OAuth2\Service\Amazon;
 use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
-use OAuth\Common\Http\Uri\Uri;
 
 /**
  * Bootstrap the example
@@ -32,7 +31,7 @@ $credentials = new Credentials(
 /** @var $amazonService Amazon */
 $amazonService = $serviceFactory->createService('amazon', $credentials, $storage, array('profile'));
 
-if( !empty( $_GET['code'] ) ) {
+if ( !empty( $_GET['code'] ) ) {
     // This was a callback request from Amazon, get the token
     $token = $amazonService->requestAccessToken( $_GET['code'] );
 
@@ -42,7 +41,7 @@ if( !empty( $_GET['code'] ) ) {
     // Show some of the resultant data
     echo 'Your unique Amazon user id is: ' . $result['user_id'] . ' and your name is ' . $result['name'];
 
-} elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
+} elseif ( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
     $url = $amazonService->getAuthorizationUri();
     header('Location: ' . $url);
 } else {

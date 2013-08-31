@@ -12,7 +12,6 @@
 use OAuth\OAuth2\Service\Foursquare;
 use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
-use OAuth\Common\Http\Uri;
 
 /**
  * Bootstrap the example
@@ -32,7 +31,7 @@ $credentials = new Credentials(
 // Instantiate the Foursquare service using the credentials, http client and storage mechanism for the token
 /** @var $foursquareService Foursquare */
 $foursquareService = $serviceFactory->createService('foursquare', $credentials, $storage);
-if( !empty( $_GET['code'] ) ) {
+if ( !empty( $_GET['code'] ) ) {
     // This was a callback request from google, get the token
     $foursquareService->requestAccessToken( $_GET['code'] );
 
@@ -42,7 +41,7 @@ if( !empty( $_GET['code'] ) ) {
     // Show some of the resultant data
     echo 'Your unique foursquare user id is: ' . $result['response']['user']['id'] . ' and your name is ' . $result['response']['user']['firstName'] . $result['response']['user']['lastName'];
 
-} elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
+} elseif ( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
     $url = $foursquareService->getAuthorizationUri();
     header('Location: ' . $url);
 } else {

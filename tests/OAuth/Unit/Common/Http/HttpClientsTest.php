@@ -31,8 +31,7 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        foreach($this->clients as $client)
-        {
+        foreach ($this->clients as $client) {
             unset($client);
         }
     }
@@ -45,8 +44,7 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
         $testUri = new Uri('http://httpbin.org/get');
 
         $me = $this;
-        $headerCb = function($response) use ($me)
-        {
+        $headerCb = function($response) use ($me) {
             $data = json_decode($response, true);
             $me->assertEquals('extraheadertest', $data['headers']['Testingheader']);
         };
@@ -60,8 +58,7 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
     {
         // sending a post here should get us a 405 which should trigger an exception
         $testUri = new Uri('http://httpbin.org/delete');
-        foreach($this->clients as $client)
-        {
+        foreach ($this->clients as $client) {
             $this->setExpectedException('OAuth\Common\Http\Exception\TokenResponseException');
             $client->retrieveResponse($testUri, array('blah' => 'blih') );
         }
@@ -76,8 +73,7 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
         $testUri = new Uri('http://httpbin.org/delete');
 
         $me = $this;
-        $deleteTestCb = function($response) use ($me)
-        {
+        $deleteTestCb = function($response) use ($me) {
             $data = json_decode($response, true);
             $me->assertEquals( '', $data['data'] );
         };
@@ -93,8 +89,7 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
         $testUri = new Uri('http://httpbin.org/put');
 
         $me = $this;
-        $putTestCb = function($response) use ($me)
-        {
+        $putTestCb = function($response) use ($me) {
             // verify the put response
             $data = json_decode($response, true);
             $me->assertEquals( json_encode( array('testKey' => 'testValue') ), $data['data'] );
@@ -112,8 +107,7 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
         $testUri = new Uri('http://httpbin.org/post');
 
         $me = $this;
-        $postTestCb = function($response) use ($me)
-        {
+        $postTestCb = function($response) use ($me) {
             // verify the post response
             $data = json_decode($response, true);
             // note that we check this because the retrieveResponse wrapper function automatically adds a content-type
@@ -131,8 +125,7 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
     {
         $testUri =  new Uri('http://site.net');
 
-        foreach($this->clients as $client)
-        {
+        foreach ($this->clients as $client) {
             $this->setExpectedException('InvalidArgumentException');
             $client->retrieveResponse($testUri, array('blah' => 'blih'), array(), 'GET' );
         }
@@ -147,8 +140,7 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
         $testUri = new Uri('http://httpbin.org/get?testKey=testValue');
 
         $me = $this;
-        $getTestCb = function($response) use ($me)
-        {
+        $getTestCb = function($response) use ($me) {
             $data = json_decode($response, true);
             $me->assertEquals( 'testValue', $data['args']['testKey'] );
         };
@@ -161,15 +153,14 @@ class HttpClientsTest extends PHPUnit_Framework_TestCase
      * Test on all HTTP clients.
      *
      * @param OAuth\Common\Http\Uri\UriInterface $uri
-     * @param array $param
-     * @param array $header
+     * @param array                              $param
+     * @param array                              $header
      * @param $method
      * @param $responseCallback
      */
     protected function __doTestRetrieveResponse(\OAuth\Common\Http\Uri\UriInterface $uri, $param, array $header, $method, $responseCallback)
     {
-        foreach($this->clients as $client)
-        {
+        foreach ($this->clients as $client) {
             $response = $client->retrieveResponse($uri, $param, $header, $method);
             $responseCallback($response, $client);
         }

@@ -9,11 +9,9 @@
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
-use OAuth\OAuth1\Signature\Signature;
 use OAuth\OAuth1\Service\Tumblr;
 use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
-use OAuth\Common\Http\Uri\Uri;
 
 /**
  * Bootstrap the example
@@ -35,7 +33,7 @@ $credentials = new Credentials(
 /** @var $tumblrService Tumblr */
 $tumblrService = $serviceFactory->createService('tumblr', $credentials, $storage);
 
-if( !empty( $_GET['oauth_token'] ) ) {
+if ( !empty( $_GET['oauth_token'] ) ) {
 
     $token = $storage->retrieveAccessToken('Tumblr');
 
@@ -47,7 +45,7 @@ if( !empty( $_GET['oauth_token'] ) ) {
 
     echo 'result: <pre>' . print_r($result, true) . '</pre>';
 
-} elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
+} elseif ( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
     // extra request needed for oauth1 to request a request token :-)
     $token = $tumblrService->requestRequestToken();
 

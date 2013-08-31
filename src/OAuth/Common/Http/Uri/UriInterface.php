@@ -7,61 +7,61 @@ interface UriInterface
      * @abstract
      * @return string
      */
-    function getScheme();
+    public function getScheme();
 
     /**
      * @abstract
      * @param string $scheme
      */
-    function setScheme($scheme);
+    public function setScheme($scheme);
 
     /**
      * @abstract
      * @return string
      */
-    function getHost();
+    public function getHost();
 
     /**
      * @abstract
      * @param string $host
      */
-    function setHost($host);
+    public function setHost($host);
 
     /**
      * @abstract
      * @return int
      */
-    function getPort();
+    public function getPort();
 
     /**
      * @abstract
      * @param int $port
      */
-    function setPort($port);
+    public function setPort($port);
 
     /**
      * @abstract
      * @return string
      */
-    function getPath();
+    public function getPath();
 
     /**
      * @abstract
      * @param string $path
      */
-    function setPath($path);
+    public function setPath($path);
 
     /**
      * @abstract
      * @return string
      */
-    function getQuery();
+    public function getQuery();
 
     /**
      * @abstract
      * @param string $query
      */
-    function setQuery($query);
+    public function setQuery($query);
 
     /**
      * Adds a param to the query string.
@@ -70,13 +70,13 @@ interface UriInterface
      * @param string $var
      * @param string $val
      */
-    function addToQuery($var, $val);
+    public function addToQuery($var, $val);
 
     /**
      * @abstract
      * @return string
      */
-    function getFragment();
+    public function getFragment();
 
     /**
      * Should return URI user info, masking protected user info data according to rfc3986-3.2.1
@@ -84,13 +84,13 @@ interface UriInterface
      * @abstract
      * @return string
      */
-    function getUserInfo();
+    public function getUserInfo();
 
     /**
      * @abstract
      * @param string $userInfo
      */
-    function setUserInfo($userInfo);
+    public function setUserInfo($userInfo);
 
     /**
      * Should return the URI Authority, masking protected user info data according to rfc3986-3.2.1
@@ -98,7 +98,7 @@ interface UriInterface
      * @abstract
      * @return string
      */
-    function getAuthority();
+    public function getAuthority();
 
     /**
      * Should return the URI string, masking protected user info data according to rfc3986-3.2.1
@@ -106,7 +106,7 @@ interface UriInterface
      * @abstract
      * @return string the URI string with user protected info masked
      */
-    function __toString();
+    public function __toString();
 
     /**
      * Should return the URI Authority without masking protected user info data
@@ -114,7 +114,7 @@ interface UriInterface
      * @abstract
      * @return string
      */
-    function getRawAuthority();
+    public function getRawAuthority();
 
     /**
      * Should return the URI user info without masking protected user info data
@@ -122,7 +122,7 @@ interface UriInterface
      * @abstract
      * @return string
      */
-    function getRawUserInfo();
+    public function getRawUserInfo();
 
     /**
      * Build the full URI based on all the properties
@@ -130,7 +130,7 @@ interface UriInterface
      * @abstract
      * @return string The full URI without masking user info
      */
-    function getAbsoluteUri();
+    public function getAbsoluteUri();
 
     /**
      * Build the relative URI based on all the properties
@@ -138,11 +138,11 @@ interface UriInterface
      * @abstract
      * @return string The relative URI
      */
-    function getRelativeUri();
+    public function getRelativeUri();
 
     /**
      * @return bool
      */
-    function hasExplicitTrailingHostSlash();
+    public function hasExplicitTrailingHostSlash();
 
 }

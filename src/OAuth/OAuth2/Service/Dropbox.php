@@ -76,7 +76,7 @@ class Dropbox extends AbstractService
      */
     protected function getAuthorizationMethod()
     {
-        return static::AUTHORIZATION_METHOD_QUERY_STRING_V2;
+        return static::AUTHORIZATION_METHOD_QUERY_STRING;
     }
 
     /**

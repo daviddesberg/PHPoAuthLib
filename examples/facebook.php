@@ -13,7 +13,6 @@
 use OAuth\OAuth2\Service\Facebook;
 use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
-use OAuth\Common\Http\Uri\Uri;
 
 /**
  * Bootstrap the example
@@ -34,7 +33,7 @@ $credentials = new Credentials(
 /** @var $facebookService Facebook */
 $facebookService = $serviceFactory->createService('facebook', $credentials, $storage, array());
 
-if( !empty( $_GET['code'] ) ) {
+if ( !empty( $_GET['code'] ) ) {
     // This was a callback request from facebook, get the token
     $token = $facebookService->requestAccessToken( $_GET['code'] );
 
@@ -44,7 +43,7 @@ if( !empty( $_GET['code'] ) ) {
     // Show some of the resultant data
     echo 'Your unique facebook user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
 
-} elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
+} elseif ( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
     $url = $facebookService->getAuthorizationUri();
     header('Location: ' . $url);
 } else {

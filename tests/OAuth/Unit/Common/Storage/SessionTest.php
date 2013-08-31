@@ -10,7 +10,6 @@
 use OAuth\Common\Storage\Session;
 use OAuth\Unit\Common\Storage\StorageTest;
 use OAuth\OAuth2\Token\StdOAuth2Token;
-use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 class SessionTest extends StorageTest
 {

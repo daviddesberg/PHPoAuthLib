@@ -28,7 +28,7 @@ class Redis implements TokenStorageInterface
 
     /**
      * @param Predis $redis An instantiated and connected redis client
-     * @param string $key The key to store the token under in redis.
+     * @param string $key   The key to store the token under in redis.
      */
     public function __construct(Predis $redis, $key)
     {
@@ -43,13 +43,11 @@ class Redis implements TokenStorageInterface
      */
     public function retrieveAccessToken($service)
     {
-        if (!$this->hasAccessToken($service))
-        {
+        if (!$this->hasAccessToken($service)) {
             throw new TokenNotFoundException('Token not found in redis');
         }
 
-        if (isset($this->cachedTokens[$service]))
-        {
+        if (isset($this->cachedTokens[$service])) {
             return $this->cachedTokens[$service];
         }
 
@@ -59,7 +57,7 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * @param \OAuth\Common\Token\TokenInterface $token
+     * @param  \OAuth\Common\Token\TokenInterface $token
      * @throws StorageException
      */
     public function storeAccessToken($service, TokenInterface $token)
@@ -112,7 +110,7 @@ class Redis implements TokenStorageInterface
         $me = $this; // 5.3 compat
 
         // pipeline for performance
-        $this->redis->pipeline(function($pipe) use($keys, $me) {
+        $this->redis->pipeline(function($pipe) use ($keys, $me) {
 
             foreach ($keys as $k) {
 

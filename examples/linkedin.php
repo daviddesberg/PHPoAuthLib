@@ -13,7 +13,6 @@
 use OAuth\OAuth2\Service\Linkedin;
 use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
-use OAuth\Common\Http\Uri\Uri;
 
 /**
  * Bootstrap the example
@@ -34,7 +33,7 @@ $credentials = new Credentials(
 /** @var $linkedinService Linkedin */
 $linkedinService = $serviceFactory->createService('linkedin', $credentials, $storage, array('r_basicprofile'));
 
-if( !empty( $_GET['code'] ) ) {
+if ( !empty( $_GET['code'] ) ) {
     // This was a callback request from google, get the token
     $token = $linkedinService->requestAccessToken( $_GET['code'] );
 
@@ -44,7 +43,7 @@ if( !empty( $_GET['code'] ) ) {
     // Show some of the resultant data
     echo 'Your linkedin first name is ' . $result['firstName'] . ' and your last name is ' . $result['lastName'];
 
-} elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
+} elseif ( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
     // state is used to prevent CSRF, it's required
     $url = $linkedinService->getAuthorizationUri(array('state' => 'DCEEFWF45453sdffef424'));
     header('Location: ' . $url);

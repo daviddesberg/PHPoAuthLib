@@ -21,7 +21,6 @@ class Credentials implements CredentialsInterface
      */
     protected $callbackUrl;
 
-
     /**
      * @param string $consumerId
      * @param string $consumerSecret

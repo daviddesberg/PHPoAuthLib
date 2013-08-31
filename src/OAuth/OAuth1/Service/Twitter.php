@@ -15,7 +15,7 @@ class Twitter extends AbstractService
     public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, SignatureInterface $signature, UriInterface $baseApiUri = null)
     {
         parent::__construct($credentials, $httpClient, $storage, $signature, $baseApiUri);
-        if( null === $baseApiUri ) {
+        if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://api.twitter.com/1.1/');
         }
     }
@@ -50,7 +50,7 @@ class Twitter extends AbstractService
      * We need a separate request token parser only to verify the `oauth_callback_confirmed` parameter. For the actual
      * parsing we can just use the default access token parser.
      *
-     * @param string $responseBody
+     * @param  string                                                                $responseBody
      * @return \OAuth\Common\Token\TokenInterface|\OAuth\OAuth1\Token\StdOAuth1Token
      * @throws \OAuth\Common\Http\Exception\TokenResponseException
      */
@@ -58,7 +58,7 @@ class Twitter extends AbstractService
     {
         parse_str($responseBody, $data);
 
-        if( null === $data || !is_array($data) ) {
+        if ( null === $data || !is_array($data) ) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (!isset($data['oauth_callback_confirmed']) || $data['oauth_callback_confirmed'] != 'true') {
             throw new TokenResponseException('Error in retrieving token.');
@@ -68,7 +68,7 @@ class Twitter extends AbstractService
     }
 
     /**
-     * @param string $responseBody
+     * @param  string                                                                $responseBody
      * @return \OAuth\Common\Token\TokenInterface|\OAuth\OAuth1\Token\StdOAuth1Token
      * @throws \OAuth\Common\Http\Exception\TokenResponseException
      */
@@ -76,9 +76,9 @@ class Twitter extends AbstractService
     {
         parse_str($responseBody, $data);
 
-        if( null === $data || !is_array($data) ) {
+        if ( null === $data || !is_array($data) ) {
             throw new TokenResponseException('Unable to parse response.');
-        } elseif( isset($data['error'] ) ) {
+        } elseif ( isset($data['error'] ) ) {
             throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
         }
 

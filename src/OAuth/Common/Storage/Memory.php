@@ -25,8 +25,7 @@ class Memory implements TokenStorageInterface
      */
     public function retrieveAccessToken($service)
     {
-        if ($this->hasAccessToken($service))
-        {
+        if ($this->hasAccessToken($service)) {
             return $this->tokens[$service];
         }
 

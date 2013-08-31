@@ -11,12 +11,12 @@ use OAuth\Common\Http\Uri\UriInterface;
 
 class Foursquare extends AbstractService
 {
-	private $apiVersionDate = '20130829';
+    private $apiVersionDate = '20130829';
 
     public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
     {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-        if( null === $baseApiUri ) {
+        if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://api.foursquare.com/v2/');
         }
     }
@@ -38,7 +38,7 @@ class Foursquare extends AbstractService
     }
 
     /**
-     * @param string $responseBody
+     * @param  string                                                                $responseBody
      * @return \OAuth\Common\Token\TokenInterface|\OAuth\OAuth2\Token\StdOAuth2Token
      * @throws \OAuth\Common\Http\Exception\TokenResponseException
      */
@@ -46,14 +46,13 @@ class Foursquare extends AbstractService
     {
         $data = json_decode( $responseBody, true );
 
-        if( null === $data || !is_array($data) ) {
+        if ( null === $data || !is_array($data) ) {
             throw new TokenResponseException('Unable to parse response.');
-        } elseif( isset($data['error'] ) ) {
+        } elseif ( isset($data['error'] ) ) {
             throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
         }
 
         $token = new StdOAuth2Token();
-
 
         $token->setAccessToken( $data['access_token'] );
         // Foursquare tokens evidently never expire...
@@ -64,11 +63,12 @@ class Foursquare extends AbstractService
         return $token;
     }
 
-    public function request($path, $method = 'GET', $body = null, array $extraHeaders = array()){
-    	$uri = new Uri($this->baseApiUri . $path);
-    	$uri->addToQuery('v', $this->apiVersionDate);
+    public function request($path, $method = 'GET', $body = null, array $extraHeaders = array())
+    {
+        $uri = new Uri($this->baseApiUri . $path);
+        $uri->addToQuery('v', $this->apiVersionDate);
 
-    	return parent::request($uri, $method, $body, $extraHeaders);
+        return parent::request($uri, $method, $body, $extraHeaders);
     }
 
 }

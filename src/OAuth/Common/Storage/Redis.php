@@ -1,8 +1,8 @@
 <?php
+
 namespace OAuth\Common\Storage;
 
 use OAuth\Common\Token\TokenInterface;
-use OAuth\Common\Storage\Exception\StorageException;
 use OAuth\Common\Storage\Exception\TokenNotFoundException;
 use Predis\Client as Predis;
 
@@ -38,8 +38,7 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * @return \OAuth\Common\Token\TokenInterface
-     * @throws TokenNotFoundException
+     * {@inheritDoc}
      */
     public function retrieveAccessToken($service)
     {
@@ -57,8 +56,7 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * @param  \OAuth\Common\Token\TokenInterface $token
-     * @throws StorageException
+     * {@inheritDoc}
      */
     public function storeAccessToken($service, TokenInterface $token)
     {
@@ -71,13 +69,13 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-    * @return bool
-    */
+     * {@inheritDoc}
+     */
     public function hasAccessToken($service)
     {
-        if (isset($this->cachedTokens[$service]) &&
-            $this->cachedTokens[$service] instanceof TokenInterface)
-        {
+        if (isset($this->cachedTokens[$service])
+            && $this->cachedTokens[$service] instanceof TokenInterface
+        ) {
             return true;
         }
 
@@ -85,7 +83,7 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * Delete the user's token. Aka, log out.
+     * {@inheritDoc}
      */
     public function clearToken($service)
     {
@@ -97,8 +95,7 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * Delete *ALL* user tokens. Use with care. Most of the time you will likely
-     * want to use clearToken() instead.
+     * {@inheritDoc}
      */
     public function clearAllTokens()
     {
@@ -110,14 +107,10 @@ class Redis implements TokenStorageInterface
         $me = $this; // 5.3 compat
 
         // pipeline for performance
-        $this->redis->pipeline(function($pipe) use ($keys, $me) {
-
+        $this->redis->pipeline(function ($pipe) use ($keys, $me) {
             foreach ($keys as $k) {
-
                 $pipe->hdel($me->getKey(), $k);
-
             }
-
         });
 
         // allow chaining

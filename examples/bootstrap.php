@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Bootstrap the library
  */

@@ -1,13 +1,15 @@
 <?php
+
 /**
  * Example of retrieving an authentication token of the Dropbox service
  *
  * PHP version 5.4
  *
- * @author Flávio Heleno <flaviohbatista@gmail.com>
+ * @author     Flávio Heleno <flaviohbatista@gmail.com>
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
+
 use OAuth\OAuth2\Service\Dropbox;
 use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
@@ -31,17 +33,17 @@ $credentials = new Credentials(
 /** @var $dropboxService Dropbox */
 $dropboxService = $serviceFactory->createService('dropbox', $credentials, $storage, array());
 
-if ( !empty( $_GET['code'] ) ) {
+if (!empty($_GET['code'])) {
     // This was a callback request from Dropbox, get the token
-    $token = $dropboxService->requestAccessToken( $_GET['code'] );
+    $token = $dropboxService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = json_decode( $dropboxService->request( '/account/info' ), true );
+    $result = json_decode($dropboxService->request('/account/info'), true);
 
     // Show some of the resultant data
     echo 'Your unique Dropbox user id is: ' . $result['uid'] . ' and your name is ' . $result['display_name'];
 
-} elseif ( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
+} elseif (!empty($_GET['go']) && $_GET['go'] == 'go') {
     $url = $dropboxService->getAuthorizationUri();
     header('Location: ' . $url);
 } else {

@@ -1,4 +1,5 @@
 <?php
+
 namespace OAuth\OAuth2\Service;
 
 use OAuth\Common\Consumer\Credentials;
@@ -23,21 +24,21 @@ interface ServiceInterface extends BaseServiceInterface
     const AUTHORIZATION_METHOD_QUERY_STRING_V2 = 3;
 
     /**
-     * @param \OAuth\Common\Consumer\Credentials          $credentials
-     * @param \OAuth\Common\Http\Client\ClientInterface   $httpClient
-     * @param \OAuth\Common\Storage\TokenStorageInterface $storage
-     * @param array                                       $scopes
-     * @param UriInterface|null                           $baseApiUri
-     * @abstract
+     * @param Credentials           $credentials
+     * @param ClientInterface       $httpClient
+     * @param TokenStorageInterface $storage
+     * @param array                 $scopes
+     * @param UriInterface|null     $baseApiUri
      */
     public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null);
 
     /**
      * Retrieves and stores/returns the OAuth2 access token after a successful authorization.
      *
-     * @abstract
-     * @param  string                 $code The access code from the callback.
-     * @return TokenInterface         $token
+     * @param string $code The access code from the callback.
+     *
+     * @return TokenInterface $token
+     *
      * @throws TokenResponseException
      */
     public function requestAccessToken($code);

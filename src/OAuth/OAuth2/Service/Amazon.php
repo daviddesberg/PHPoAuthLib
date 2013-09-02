@@ -1,4 +1,5 @@
 <?php
+
 namespace OAuth\OAuth2\Service;
 
 use OAuth\OAuth2\Token\StdOAuth2Token;
@@ -21,20 +22,20 @@ class Amazon extends AbstractService
      * Defined scopes
      * @link https://images-na.ssl-images-amazon.com/images/G/01/lwa/dev/docs/website-developer-guide._TTH_.pdf
      */
-
-    const SCOPE_PROFILE          = 'profile';
-    const SCOPE_POSTAL_CODE            = 'postal_code';
+    const SCOPE_PROFILE     = 'profile';
+    const SCOPE_POSTAL_CODE = 'postal_code';
 
     public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
     {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
+
         if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://api.amazon.com/');
         }
     }
 
     /**
-     * @return \OAuth\Common\Http\Uri\UriInterface
+     * {@inheritdoc}
      */
     public function getAuthorizationEndpoint()
     {
@@ -42,7 +43,7 @@ class Amazon extends AbstractService
     }
 
     /**
-     * @return \OAuth\Common\Http\Uri\UriInterface
+     * {@inheritdoc}
      */
     public function getAccessTokenEndpoint()
     {
@@ -50,10 +51,7 @@ class Amazon extends AbstractService
     }
 
     /**
-     * Returns a class constant from ServiceInterface defining the authorization method used for the API
-     * Header is the sane default.
-     *
-     * @return int
+     * {@inheritdoc}
      */
     protected function getAuthorizationMethod()
     {
@@ -61,35 +59,33 @@ class Amazon extends AbstractService
     }
 
     /**
-     * @param  string                                                                $responseBody
-     * @return \OAuth\Common\Token\TokenInterface|\OAuth\OAuth2\Token\StdOAuth2Token
-     * @throws \OAuth\Common\Http\Exception\TokenResponseException
+     * {@inheritdoc}
      */
     protected function parseAccessTokenResponse($responseBody)
     {
-        $data = json_decode( $responseBody, true );
+        $data = json_decode($responseBody, true);
 
-        if ( null === $data || !is_array($data) ) {
+        if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
-        } elseif ( isset($data['error_description'] ) ) {
+        } elseif (isset($data['error_description'])) {
             throw new TokenResponseException('Error in retrieving token: "' . $data['error_description'] . '"');
-        } elseif ( isset($data['error'] ) ) {
+        } elseif (isset($data['error'])) {
             throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
         }
 
         $token = new StdOAuth2Token();
+        $token->setAccessToken($data['access_token']);
+        $token->setLifeTime($data['expires_in']);
 
-        $token->setAccessToken( $data['access_token'] );
-        $token->setLifeTime( $data['expires_in'] );
-
-        if ( isset($data['refresh_token'] ) ) {
-            $token->setRefreshToken( $data['refresh_token'] );
+        if (isset($data['refresh_token'])) {
+            $token->setRefreshToken($data['refresh_token']);
             unset($data['refresh_token']);
         }
 
-        unset( $data['access_token'] );
-        unset( $data['expires_in'] );
-        $token->setExtraParams( $data );
+        unset($data['access_token']);
+        unset($data['expires_in']);
+
+        $token->setExtraParams($data);
 
         return $token;
     }

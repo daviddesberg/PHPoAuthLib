@@ -14,11 +14,11 @@ class Vkontakte extends AbstractService
     public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
     {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-        if( null === $baseApiUri ) {
+        if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://api.vk.com/method/');
         }
     }
-    
+
     /**
      * @return \OAuth\Common\Http\Uri\UriInterface
      */
@@ -36,17 +36,17 @@ class Vkontakte extends AbstractService
     }
 
     /**
-     * @param string $responseBody
+     * @param  string                                                                $responseBody
      * @return \OAuth\Common\Token\TokenInterface|\OAuth\OAuth2\Token\StdOAuth2Token
      * @throws \OAuth\Common\Http\Exception\TokenResponseException
      */
     protected function parseAccessTokenResponse($responseBody)
     {
-	$data = json_decode($responseBody, true); 
+    $data = json_decode($responseBody, true);
 
-        if( null === $data || !is_array($data) ) {
+        if ( null === $data || !is_array($data) ) {
             throw new TokenResponseException('Unable to parse response.');
-        } elseif( isset($data['error'] ) ) {
+        } elseif ( isset($data['error'] ) ) {
             throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
         }
 
@@ -55,7 +55,7 @@ class Vkontakte extends AbstractService
         $token->setAccessToken( $data['access_token'] );
         $token->setLifeTime( $data['expires_in'] );
 
-        if( isset($data['refresh_token'] ) ) {
+        if ( isset($data['refresh_token'] ) ) {
             $token->setRefreshToken( $data['refresh_token'] );
             unset($data['refresh_token']);
         }
@@ -63,7 +63,7 @@ class Vkontakte extends AbstractService
         unset( $data['access_token'] );
         unset( $data['expires_in'] );
         $token->setExtraParams( $data );
-	
+
         return $token;
     }
 }

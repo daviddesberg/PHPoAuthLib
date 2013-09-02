@@ -9,20 +9,20 @@ use OAuth\Common\Token\TokenInterface;
 interface TokenStorageInterface
 {
     /**
-     * @param string $service
+     * @param  string                             $service
      * @return \OAuth\Common\Token\TokenInterface
      */
     public function retrieveAccessToken($service);
 
     /**
-     * @param string $service
-     * @param \OAuth\Common\Token\TokenInterface $token
+     * @param  string                             $service
+     * @param  \OAuth\Common\Token\TokenInterface $token
      * @return \OAuth\Common\Token\TokenInterface
      */
     public function storeAccessToken($service, TokenInterface $token);
 
     /**
-     * @param string $service
+     * @param  string $service
      * @return bool
      */
     public function hasAccessToken($service);
@@ -30,7 +30,7 @@ interface TokenStorageInterface
     /**
      * Delete the users token. Aka, log out.
      *
-     * @param string $service
+     * @param  string                $service
      * @return TokenStorageInterface
      */
     public function clearToken($service);

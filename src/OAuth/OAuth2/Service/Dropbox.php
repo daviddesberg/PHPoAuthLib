@@ -21,7 +21,7 @@ class Dropbox extends AbstractService
     public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
     {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-        if( null === $baseApiUri ) {
+        if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://api.dropbox.com/1/');
         }
     }
@@ -29,7 +29,7 @@ class Dropbox extends AbstractService
     /**
      * Returns the url to redirect to for authorization purposes.
      *
-     * @param array $additionalParameters
+     * @param  array  $additionalParameters
      * @return string
      */
     public function getAuthorizationUri( array $additionalParameters = array() )
@@ -44,8 +44,7 @@ class Dropbox extends AbstractService
 
         // Build the url
         $url = clone $this->getAuthorizationEndpoint();
-        foreach($parameters as $key => $val)
-        {
+        foreach ($parameters as $key => $val) {
             $url->addToQuery($key, $val);
         }
 
@@ -80,7 +79,7 @@ class Dropbox extends AbstractService
     }
 
     /**
-     * @param string $responseBody
+     * @param  string                                                                $responseBody
      * @return \OAuth\Common\Token\TokenInterface|\OAuth\OAuth2\Token\StdOAuth2Token
      * @throws \OAuth\Common\Http\Exception\TokenResponseException
      */
@@ -88,9 +87,9 @@ class Dropbox extends AbstractService
     {
         $data = json_decode( $responseBody, true );
 
-        if( null === $data || !is_array($data) ) {
+        if ( null === $data || !is_array($data) ) {
             throw new TokenResponseException('Unable to parse response.');
-        } elseif( isset($data['error'] ) ) {
+        } elseif ( isset($data['error'] ) ) {
             throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
         }
 
@@ -98,7 +97,7 @@ class Dropbox extends AbstractService
 
         $token->setAccessToken( $data['access_token'] );
 
-        if( isset($data['refresh_token'] ) ) {
+        if ( isset($data['refresh_token'] ) ) {
             $token->setRefreshToken( $data['refresh_token'] );
             unset($data['refresh_token']);
         }

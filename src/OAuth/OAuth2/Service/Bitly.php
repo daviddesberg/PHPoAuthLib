@@ -14,7 +14,7 @@ class Bitly extends AbstractService
     public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
     {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-        if( null === $baseApiUri ) {
+        if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://api-ssl.bitly.com/v3/');
         }
     }
@@ -36,7 +36,7 @@ class Bitly extends AbstractService
     }
 
     /**
-     * @param string $responseBody
+     * @param  string                                                                $responseBody
      * @return \OAuth\Common\Token\TokenInterface|\OAuth\OAuth2\Token\StdOAuth2Token
      * @throws \OAuth\Common\Http\Exception\TokenResponseException
      */
@@ -44,14 +44,13 @@ class Bitly extends AbstractService
     {
         $data = json_decode( $responseBody, true );
 
-        if( null === $data || !is_array($data) ) {
+        if ( null === $data || !is_array($data) ) {
             throw new TokenResponseException('Unable to parse response.');
-        } elseif( isset($data['error'] ) ) {
+        } elseif ( isset($data['error'] ) ) {
             throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
         }
 
         $token = new StdOAuth2Token();
-
 
         $token->setAccessToken( $data['access_token'] );
         // I'm invincible!!!
@@ -65,7 +64,7 @@ class Bitly extends AbstractService
     /**
      * Retrieves and stores the OAuth2 access token after a successful authorization.
      *
-     * @param string $code The access code from the callback.
+     * @param  string                             $code The access code from the callback.
      * @return \OAuth\OAuth2\Token\TokenInterface $token
      * @throws TokenResponseException
      */

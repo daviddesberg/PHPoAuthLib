@@ -12,7 +12,6 @@
 use OAuth\OAuth2\Service\Bitly;
 use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
-use OAuth\Common\Http\Uri\Uri;
 
 /**
  * Bootstrap the example
@@ -33,7 +32,7 @@ $credentials = new Credentials(
 /** @var $bitlyService Bitly */
 $bitlyService = $serviceFactory->createService('bitly', $credentials, $storage);
 
-if( !empty( $_GET['code'] ) ) {
+if ( !empty( $_GET['code'] ) ) {
     // This was a callback request from bitly, get the token
     $bitlyService->requestAccessToken( $_GET['code'] );
 
@@ -43,7 +42,7 @@ if( !empty( $_GET['code'] ) ) {
     // Show some of the resultant data
     echo 'Your unique user id is: ' . $result['data']['login'] . ' and your name is ' . $result['data']['display_name'];
 
-} elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
+} elseif ( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
     $url = $bitlyService->getAuthorizationUri();
     header('Location: ' . $url);
 } else {

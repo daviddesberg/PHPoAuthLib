@@ -21,7 +21,6 @@ class Credentials
      */
     protected $callbackUrl;
 
-
     /**
      * @param string $consumerId
      * @param string $consumerSecret

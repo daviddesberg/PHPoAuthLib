@@ -8,7 +8,6 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-use \OAuth\Common\Storage\Memory;
 use \OAuth\OAuth2\Token\StdOAuth2Token;
 
 abstract class StorageTest extends \PHPUnit_Framework_TestCase

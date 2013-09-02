@@ -75,16 +75,16 @@ $servicesCredentials = [
         'secret'    => '',
     ],
     'amazon' => [
-    	'key'		=> '',
-    	'secret'	=> '',
+        'key'		=> '',
+        'secret'	=> '',
     ],
     'paypal' => [
-    	'key'		=> '',
-    	'secret'	=> '',
+        'key'		=> '',
+        'secret'	=> '',
     ],
     'dropbox' => [
-    	'key'		=> '',
-    	'secret'	=> '',
+        'key'		=> '',
+        'secret'	=> '',
     ],
 ];
 

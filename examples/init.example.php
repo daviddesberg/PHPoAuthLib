@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file sets up the information needed to test the examples in different environments.
  *

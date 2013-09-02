@@ -1,4 +1,5 @@
 <?php
+
 namespace OAuth\Common\Http\Uri;
 
 use RuntimeException;
@@ -10,7 +11,9 @@ class UriFactory implements UriFactoryInterface
 {
     /**
      * Factory method to build a URI from a super-global $_SERVER array.
-     * @param  array        $_server
+     *
+     * @param array $_server
+     *
      * @return UriInterface
      */
     public function createFromSuperGlobalArray(array $_server)
@@ -29,7 +32,8 @@ class UriFactory implements UriFactoryInterface
     }
 
     /**
-     * @param  string       $absoluteUri
+     * @param string $absoluteUri
+     *
      * @return UriInterface
      */
     public function createFromAbsolute($absoluteUri)
@@ -40,13 +44,14 @@ class UriFactory implements UriFactoryInterface
     /**
      * Factory method to build a URI from parts
      *
-     * @param  string       $scheme
-     * @param  string       $userInfo
-     * @param  string       $host
-     * @param  string       $port
-     * @param  string       $path
-     * @param  string       $query
-     * @param  string       $fragment
+     * @param string $scheme
+     * @param string $userInfo
+     * @param string $host
+     * @param string $port
+     * @param string $path
+     * @param string $query
+     * @param string $fragment
+     *
      * @return UriInterface
      */
     public function createFromParts($scheme, $userInfo, $host, $port, $path = '', $query = '', $fragment = '')
@@ -64,7 +69,8 @@ class UriFactory implements UriFactoryInterface
     }
 
     /**
-     * @param  array             $_server
+     * @param array $_server
+     *
      * @return UriInterface|null
      */
     private function attemptProxyStyleParse($_server)
@@ -80,8 +86,10 @@ class UriFactory implements UriFactoryInterface
     }
 
     /**
-     * @param  array            $_server
+     * @param array $_server
+     *
      * @return string
+     *
      * @throws RuntimeException
      */
     private function detectPath($_server)
@@ -91,7 +99,7 @@ class UriFactory implements UriFactoryInterface
         } elseif (isset($_server['REDIRECT_URL'])) {
             $uri = $_server['REDIRECT_URL'];
         } else {
-            throw new RuntimeException("Could not detect URI path from superglobal");
+            throw new RuntimeException('Could not detect URI path from superglobal');
         }
 
         $queryStr = strpos($uri, '?');
@@ -103,7 +111,8 @@ class UriFactory implements UriFactoryInterface
     }
 
     /**
-     * @param  array  $_server
+     * @param array $_server
+     *
      * @return string
      */
     private function detectHost(array $_server)
@@ -118,7 +127,8 @@ class UriFactory implements UriFactoryInterface
     }
 
     /**
-     * @param  array  $_server
+     * @param array $_server
+     *
      * @return string
      */
     private function detectPort(array $_server)
@@ -127,7 +137,8 @@ class UriFactory implements UriFactoryInterface
     }
 
     /**
-     * @param  array  $_server
+     * @param array $_server
+     *
      * @return string
      */
     private function detectQuery(array $_server)
@@ -148,9 +159,7 @@ class UriFactory implements UriFactoryInterface
      */
     private function detectScheme(array $_server)
     {
-        if (isset($_server['HTTPS'])
-            && filter_var($_server['HTTPS'], FILTER_VALIDATE_BOOLEAN)
-        ) {
+        if (isset($_server['HTTPS']) && filter_var($_server['HTTPS'], FILTER_VALIDATE_BOOLEAN)) {
             return 'https';
         } else {
             return 'http';

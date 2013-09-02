@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Example of retrieving an authentication token of the Box service
  *
@@ -10,6 +11,7 @@
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
+
 use OAuth\OAuth2\Service\Box;
 use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
@@ -33,17 +35,17 @@ $credentials = new Credentials(
 /** @var $boxService Box */
 $boxService = $serviceFactory->createService('box', $credentials, $storage);
 
-if ( !empty( $_GET['code'] ) ) {
+if (!empty($_GET['code'])) {
     // This was a callback request from box, get the token
-    $token = $boxService->requestAccessToken( $_GET['code'] );
+    $token = $boxService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = json_decode( $boxService->request( '/users/me' ), true );
+    $result = json_decode($boxService->request('/users/me'), true);
 
     // Show some of the resultant data
     echo 'Your Box name is ' . $result['name'] . ' and your email is ' . $result['login'];
 
-} elseif ( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
+} elseif (!empty($_GET['go']) && $_GET['go'] == 'go') {
     $url = $boxService->getAuthorizationUri(array('state' => 'blabla'));
     // var_dump($url);
     header('Location: ' . $url);

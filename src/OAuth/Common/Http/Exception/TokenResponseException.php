@@ -1,4 +1,5 @@
 <?php
+
 namespace OAuth\Common\Http\Exception;
 
 use OAuth\Common\Exception\Exception;
@@ -8,5 +9,4 @@ use OAuth\Common\Exception\Exception;
  */
 class TokenResponseException extends Exception
 {
-
 }

@@ -1,8 +1,10 @@
 <?php
+
 namespace OAuth\Common;
 
 /**
  * PSR-0 Autoloader
+ *
  * @author ieter Hordijk <info@pieterhordijk.com>
  */
 class AutoLoader

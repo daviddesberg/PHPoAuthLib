@@ -1,4 +1,5 @@
 <?php
+
 namespace OAuth\Common\Http\Uri;
 
 use InvalidArgumentException;
@@ -12,30 +13,37 @@ class Uri implements UriInterface
      * @var string
      */
     private $scheme = 'http';
+
     /**
      * @var string
      */
     private $userInfo = '';
+
     /**
      * @var string
      */
     private $rawUserInfo = '';
+
     /**
      * @var string
      */
     private $host;
+
     /**
      * @var int
      */
     private $port = 80;
+
     /**
      * @var string
      */
     private $path = '/';
+
     /**
      * @var string
      */
     private $query = '';
+
     /**
      * @var string
      */
@@ -45,6 +53,7 @@ class Uri implements UriInterface
      * @var bool
      */
     private $explicitPortSpecified = false;
+
     /**
      * @var bool
      */
@@ -61,22 +70,19 @@ class Uri implements UriInterface
     }
 
     /**
-     * @param  string                    $uri
+     * @param string $uri
+     *
      * @throws \InvalidArgumentException
      */
     protected function parseUri($uri)
     {
-        if ( false === ( $uriParts = parse_url($uri) ) ) {
+        if (false === ($uriParts = parse_url($uri))) {
             // congratulations if you've managed to get parse_url to fail, it seems to always return some semblance of a parsed url no matter what
-            throw new InvalidArgumentException(
-                "Invalid URI: $uri"
-            );
+            throw new InvalidArgumentException("Invalid URI: $uri");
         }
 
         if (!isset($uriParts['scheme'])) {
-            throw new InvalidArgumentException(
-                'Invalid URI: http|https scheme required'
-            );
+            throw new InvalidArgumentException('Invalid URI: http|https scheme required');
         }
 
         $this->scheme = $uriParts['scheme'];
@@ -114,7 +120,8 @@ class Uri implements UriInterface
     }
 
     /**
-     * @param  string $rawUserInfo
+     * @param string $rawUserInfo
+     *
      * @return string
      */
     protected function protectUserInfo($rawUserInfo)
@@ -126,7 +133,7 @@ class Uri implements UriInterface
         // after the first colon (":") character found within a userinfo
         // subcomponent unless the data after the colon is the empty string
         // (indicating no password)"
-        if ($colonPos !== FALSE && strlen($rawUserInfo)-1 > $colonPos) {
+        if ($colonPos !== false && strlen($rawUserInfo)-1 > $colonPos) {
             return substr($rawUserInfo, 0, $colonPos) . ':********';
         } else {
             return $rawUserInfo;
@@ -302,7 +309,7 @@ class Uri implements UriInterface
      */
     public function setPath($path)
     {
-        if ( empty($path) ) {
+        if (empty($path)) {
             $this->path = '/';
             $this->explicitTrailingHostSlash = false;
         } else {
@@ -327,10 +334,10 @@ class Uri implements UriInterface
      */
     public function addToQuery($var, $val)
     {
-        if ( strlen($this->query) > 0 ) {
+        if (strlen($this->query) > 0) {
             $this->query .= '&';
         }
-        $this->query .= http_build_query( array($var => $val) );
+        $this->query .= http_build_query(array($var => $val));
     }
 
     /**
@@ -367,7 +374,7 @@ class Uri implements UriInterface
     {
         $this->port = intval($port);
 
-        if ( ( 'https' === $this->scheme && $this->port === 443 ) || ( 'http' === $this->scheme && $this->port === 80 ) ) {
+        if (('https' === $this->scheme && $this->port === 443) || ('http' === $this->scheme && $this->port === 80)) {
             $this->explicitPortSpecified = false;
         } else {
             $this->explicitPortSpecified = true;

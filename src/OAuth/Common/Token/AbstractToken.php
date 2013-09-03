@@ -1,4 +1,5 @@
 <?php
+
 namespace OAuth\Common\Token;
 
 /**
@@ -32,7 +33,7 @@ abstract class AbstractToken implements TokenInterface
      * @param int    $lifetime
      * @param array  $extraParams
      */
-    public function __construct($accessToken = null, $refreshToken = null, $lifetime = null, $extraParams = array() )
+    public function __construct($accessToken = null, $refreshToken = null, $lifetime = null, $extraParams = array())
     {
         $this->accessToken = $accessToken;
         $this->refreshToken = $refreshToken;
@@ -97,7 +98,7 @@ abstract class AbstractToken implements TokenInterface
     }
 
     /**
-     * @param $lifetime
+     * @param int $lifetime
      */
     public function setLifetime($lifetime)
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Example of retrieving an authentication token of the Facebook service
  *
@@ -10,6 +11,7 @@
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
+
 use OAuth\OAuth2\Service\Facebook;
 use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
@@ -33,17 +35,17 @@ $credentials = new Credentials(
 /** @var $facebookService Facebook */
 $facebookService = $serviceFactory->createService('facebook', $credentials, $storage, array());
 
-if ( !empty( $_GET['code'] ) ) {
+if (!empty($_GET['code'])) {
     // This was a callback request from facebook, get the token
-    $token = $facebookService->requestAccessToken( $_GET['code'] );
+    $token = $facebookService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = json_decode( $facebookService->request( '/me' ), true );
+    $result = json_decode($facebookService->request('/me'), true);
 
     // Show some of the resultant data
     echo 'Your unique facebook user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
 
-} elseif ( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
+} elseif (!empty($_GET['go']) && $_GET['go'] == 'go') {
     $url = $facebookService->getAuthorizationUri();
     header('Location: ' . $url);
 } else {

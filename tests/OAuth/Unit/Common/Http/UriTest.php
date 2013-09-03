@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @category   OAuth
  * @package    Tests
@@ -8,9 +9,11 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
+namespace OAuth\Unit\Common\Http;
+
 use OAuth\Common\Http\Uri\UriFactory;
 
-class UriTest extends PHPUnit_Framework_TestCase
+class UriTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var UriFactory
@@ -34,19 +37,18 @@ class UriTest extends PHPUnit_Framework_TestCase
     {
         $absoluteUri = 'https://joe:bob@example.com:6912/relative/path?user=jon&password=secret#div';
         $uri = $this->uriFactory->createFromAbsolute($absoluteUri);
-        $this->assertEquals( $absoluteUri, $uri->getAbsoluteUri() );
-        $this->assertEquals( 6912, $uri->getPort() );
-        $this->assertEquals( 'example.com', $uri->getHost() );
-        $this->assertEquals( 'https', $uri->getScheme() );
-        $this->assertEquals( '/relative/path', $uri->getPath() );
-        $this->assertEquals( 'joe:bob', $uri->getRawUserInfo() );
-        $this->assertEquals( 'div', $uri->getFragment() );
-        $this->assertEquals( 'joe:********', $uri->getUserInfo() );
-        $this->assertEquals( 'joe:********@example.com:6912', $uri->getAuthority() );
-        $this->assertEquals( 'joe:bob@example.com:6912', $uri->getRawAuthority() );
-
-        $this->assertEquals( 'https://joe:********@example.com:6912/relative/path?user=jon&password=secret#div', (string) $uri );
-        $this->assertEquals( '/relative/path', $uri->getRelativeUri() );
+        $this->assertEquals($absoluteUri, $uri->getAbsoluteUri());
+        $this->assertEquals(6912, $uri->getPort());
+        $this->assertEquals('example.com', $uri->getHost());
+        $this->assertEquals('https', $uri->getScheme());
+        $this->assertEquals('/relative/path', $uri->getPath());
+        $this->assertEquals('joe:bob', $uri->getRawUserInfo());
+        $this->assertEquals('div', $uri->getFragment());
+        $this->assertEquals('joe:********', $uri->getUserInfo());
+        $this->assertEquals('joe:********@example.com:6912', $uri->getAuthority());
+        $this->assertEquals('joe:bob@example.com:6912', $uri->getRawAuthority());
+        $this->assertEquals('https://joe:********@example.com:6912/relative/path?user=jon&password=secret#div', (string) $uri);
+        $this->assertEquals('/relative/path', $uri->getRelativeUri());
     }
 
     /**
@@ -56,16 +58,16 @@ class UriTest extends PHPUnit_Framework_TestCase
     {
         $absoluteUri = 'https://joe:bob@example.com:6912/relative/path?user=jon&password=secret#div';
         $uri = $this->uriFactory->createFromParts('https', 'joe:bob', 'example.com', 6912, '/relative/path', 'user=jon&password=secret', 'div');
-        $this->assertEquals( $absoluteUri, $uri->getAbsoluteUri() );
-        $this->assertEquals( 6912, $uri->getPort() );
-        $this->assertEquals( 'example.com', $uri->getHost() );
-        $this->assertEquals( 'https', $uri->getScheme() );
-        $this->assertEquals( '/relative/path', $uri->getPath() );
-        $this->assertEquals( 'joe:bob', $uri->getRawUserInfo() );
-        $this->assertEquals( 'div', $uri->getFragment() );
-        $this->assertEquals( 'joe:********', $uri->getUserInfo() );
-        $this->assertEquals( 'joe:********@example.com:6912', $uri->getAuthority() );
-        $this->assertEquals( 'joe:bob@example.com:6912', $uri->getRawAuthority() );
+        $this->assertEquals($absoluteUri, $uri->getAbsoluteUri());
+        $this->assertEquals(6912, $uri->getPort());
+        $this->assertEquals('example.com', $uri->getHost());
+        $this->assertEquals('https', $uri->getScheme());
+        $this->assertEquals('/relative/path', $uri->getPath());
+        $this->assertEquals('joe:bob', $uri->getRawUserInfo());
+        $this->assertEquals('div', $uri->getFragment());
+        $this->assertEquals('joe:********', $uri->getUserInfo());
+        $this->assertEquals('joe:********@example.com:6912', $uri->getAuthority());
+        $this->assertEquals('joe:bob@example.com:6912', $uri->getRawAuthority());
     }
 
     /**
@@ -77,13 +79,13 @@ class UriTest extends PHPUnit_Framework_TestCase
         $uri = $this->uriFactory->createFromAbsolute($absoluteUri);
 
         $uri->setPort(443);
-        $this->assertEquals( str_replace(':6912', '', $absoluteUri ), $uri->getAbsoluteUri() );
+        $this->assertEquals(str_replace(':6912', '', $absoluteUri), $uri->getAbsoluteUri());
 
         $uri->setPort(6912);
-        $this->assertEquals( $absoluteUri, $uri->getAbsoluteUri() );
+        $this->assertEquals($absoluteUri, $uri->getAbsoluteUri());
 
         $uri->setHost('github.com');
-        $this->assertEquals( str_replace('example.com', 'github.com', $absoluteUri ), $uri->getAbsoluteUri() );
+        $this->assertEquals(str_replace('example.com', 'github.com', $absoluteUri), $uri->getAbsoluteUri());
     }
 
     public function testExceptionOnBadUri()
@@ -106,12 +108,12 @@ class UriTest extends PHPUnit_Framework_TestCase
 
         $uri = $this->uriFactory->createFromSuperGlobalArray($serverArray);
 
-        $this->assertEquals( $uri->getAbsoluteUri(), 'http://example.com/some/relative/path?test=param' );
-        $this->assertEquals( $uri->getHost(), 'example.com' );
-        $this->assertEquals( $uri->getPort(), 80 );
-        $this->assertEquals( $uri->getScheme(), 'http' );
-        $this->assertEquals( $uri->getPath(), '/some/relative/path' );
-        $this->assertEquals( $uri->getFragment(), '' );
+        $this->assertEquals($uri->getAbsoluteUri(), 'http://example.com/some/relative/path?test=param');
+        $this->assertEquals($uri->getHost(), 'example.com');
+        $this->assertEquals($uri->getPort(), 80);
+        $this->assertEquals($uri->getScheme(), 'http');
+        $this->assertEquals($uri->getPath(), '/some/relative/path');
+        $this->assertEquals($uri->getFragment(), '');
     }
 
 
@@ -130,11 +132,11 @@ class UriTest extends PHPUnit_Framework_TestCase
 
         $uri = $this->uriFactory->createFromSuperGlobalArray($serverArray);
 
-        $this->assertEquals( $uri->getAbsoluteUri(), 'http://example.com:7000/some/relative/path?test=param' );
-        $this->assertEquals( $uri->getHost(), 'example.com' );
-        $this->assertEquals( $uri->getPort(), 7000 );
-        $this->assertEquals( $uri->getScheme(), 'http' );
-        $this->assertEquals( $uri->getPath(), '/some/relative/path' );
-        $this->assertEquals( $uri->getFragment(), '' );
+        $this->assertEquals($uri->getAbsoluteUri(), 'http://example.com:7000/some/relative/path?test=param');
+        $this->assertEquals($uri->getHost(), 'example.com');
+        $this->assertEquals($uri->getPort(), 7000);
+        $this->assertEquals($uri->getScheme(), 'http');
+        $this->assertEquals($uri->getPath(), '/some/relative/path');
+        $this->assertEquals($uri->getFragment(), '');
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @category   OAuth
  * @package    Tests
@@ -7,12 +8,13 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
+namespace OAuth\Unit\Common\Storage;
+
 use OAuth\Common\Storage\Memory;
 use OAuth\Unit\Common\Storage\StorageTest;
 
 class MemoryTest extends StorageTest
 {
-
     public function setUp()
     {
         // set it
@@ -24,5 +26,4 @@ class MemoryTest extends StorageTest
         // delete
         unset($this->storage);
     }
-
 }

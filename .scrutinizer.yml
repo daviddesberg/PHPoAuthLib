@@ -1,5 +1,5 @@
 before_commands:
-    - "composer install --no-dev --prefer-source"
+    - "composer install --dev --prefer-source"
 
 tools:
     php_code_coverage:

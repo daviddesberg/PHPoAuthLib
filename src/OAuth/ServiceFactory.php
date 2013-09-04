@@ -24,7 +24,13 @@ use OAuth\OAuth1\Signature\Signature;
 class ServiceFactory
 {
     /** @var ClientInterface */
-    private $httpClient;
+    protected $httpClient;
+
+    /** @var array */
+    protected $serviceClassMap = array(
+        'OAuth1' => array(),
+        'OAuth2' => array()
+    );
 
     /**
      * @param ClientInterface $httpClient
@@ -36,6 +42,35 @@ class ServiceFactory
         $this->httpClient = $httpClient;
 
         return $this;
+    }
+
+    /**
+     * Register a custom service to classname mapping.
+     *
+     * @param string $serviceName Name of the service
+     * @param string $className   Class to instantiate
+     *
+     * @return ServiceFactory
+     *
+     * @throws Exception If the class is nonexistent or does not implement a valid ServiceInterface
+     */
+    public function registerService($serviceName, $className)
+    {
+        if (!class_exists($className)) {
+            throw new Exception(sprintf('Service class %s does not exist.', $className));
+        }
+
+        $reflClass = new \ReflectionClass($className);
+
+        foreach (array('OAuth2', 'OAuth1') as $version) {
+            if ($reflClass->implementsInterface('OAuth\\' . $version . '\\Service\\ServiceInterface')) {
+                $this->serviceClassMap[$version][ucfirst($serviceName)] = $className;
+
+                return $this;
+            }
+        }
+
+        throw new Exception(sprintf('Service class %s must implement ServiceInterface.', $className));
     }
 
     /**
@@ -56,8 +91,12 @@ class ServiceFactory
         }
 
         $serviceName = ucfirst($serviceName);
-        $v2ClassName = "\\OAuth\\OAuth2\\Service\\$serviceName";
-        $v1ClassName = "\\OAuth\\OAuth1\\Service\\$serviceName";
+        $v2ClassName = isset($this->serviceClassMap['OAuth2'][$serviceName])
+            ? $this->serviceClassMap['OAuth2'][$serviceName]
+            : "\\OAuth\\OAuth2\\Service\\$serviceName";
+        $v1ClassName = isset($this->serviceClassMap['OAuth1'][$serviceName])
+            ? $this->serviceClassMap['OAuth1'][$serviceName]
+            : "\\OAuth\\OAuth1\\Service\\$serviceName";
 
         // if an oauth2 version exists, prefer it
         if (class_exists($v2ClassName)) {

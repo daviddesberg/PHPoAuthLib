@@ -24,8 +24,12 @@ class StreamClient extends AbstractClient
      * @throws TokenResponseException
      * @throws \InvalidArgumentException
      */
-    public function retrieveResponse(UriInterface $endpoint, $requestBody, array $extraHeaders = array(), $method = 'POST')
-    {
+    public function retrieveResponse(
+        UriInterface $endpoint,
+        $requestBody,
+        array $extraHeaders = array(),
+        $method = 'POST'
+    ) {
         // Normalize method name
         $method = strtoupper($method);
 
@@ -64,16 +68,18 @@ class StreamClient extends AbstractClient
 
     private function generateStreamContext($body, $headers, $method)
     {
-        return stream_context_create(array(
-            'http' => array(
-                'method'           => $method,
-                'header'           => array_values($headers),
-                'content'          => $body,
-                'protocol_version' => '1.1',
-                'user_agent'       => 'Lusitanian OAuth Client',
-                'max_redirects'    => $this->maxRedirects,
-                'timeout'          => $this->timeout
-            ),
-        ));
+        return stream_context_create(
+            array(
+                'http' => array(
+                    'method'           => $method,
+                    'header'           => array_values($headers),
+                    'content'          => $body,
+                    'protocol_version' => '1.1',
+                    'user_agent'       => 'Lusitanian OAuth Client',
+                    'max_redirects'    => $this->maxRedirects,
+                    'timeout'          => $this->timeout
+                ),
+            )
+        );
     }
 }

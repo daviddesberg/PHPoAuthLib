@@ -34,8 +34,13 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      *
      * @throws InvalidScopeException
      */
-    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
-    {
+    public function __construct(
+        Credentials $credentials,
+        ClientInterface $httpClient,
+        TokenStorageInterface $storage,
+        $scopes = array(),
+        UriInterface $baseApiUri = null
+    ) {
         parent::__construct($credentials, $httpClient, $storage);
 
         foreach ($scopes as $scope) {
@@ -54,12 +59,15 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     public function getAuthorizationUri(array $additionalParameters = array())
     {
-        $parameters = array_merge($additionalParameters, array(
-            'type'          => 'web_server',
-            'client_id'     => $this->credentials->getConsumerId(),
-            'redirect_uri'  => $this->credentials->getCallbackUrl(),
-            'response_type' => 'code',
-        ));
+        $parameters = array_merge(
+            $additionalParameters,
+            array(
+                'type'          => 'web_server',
+                'client_id'     => $this->credentials->getConsumerId(),
+                'redirect_uri'  => $this->credentials->getCallbackUrl(),
+                'response_type' => 'code',
+            )
+        );
 
         $parameters['scope'] = implode(' ', $this->scopes);
 
@@ -85,7 +93,11 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
             'grant_type'    => 'authorization_code',
         );
 
-        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $bodyParams, $this->getExtraOAuthHeaders());
+        $responseBody = $this->httpClient->retrieveResponse(
+            $this->getAccessTokenEndpoint(),
+            $bodyParams,
+            $this->getExtraOAuthHeaders()
+        );
         $token = $this->parseAccessTokenResponse($responseBody);
         $this->storage->storeAccessToken($this->service(), $token);
 
@@ -96,10 +108,11 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * Sends an authenticated API request to the path provided.
      * If the path provided is not an absolute URI, the base API Uri (must be passed into constructor) will be used.
      *
-     * @param string|UriInterface $path 
+     * @param string|UriInterface $path
      * @param string              $method       HTTP method
      * @param array               $body         Request body if applicable.
-     * @param array               $extraHeaders Extra headers if applicable. These will override service-specific any defaults.
+     * @param array               $extraHeaders Extra headers if applicable. These will override service-specific
+     *                                          any defaults.
      *
      * @return string
      *
@@ -115,7 +128,13 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
             && $token->getEndOfLife() !== TokenInterface::EOL_UNKNOWN
             && time() > $token->getEndOfLife()
         ) {
-            throw new ExpiredTokenException('Token expired on ' . date('m/d/Y', $token->getEndOfLife()) . ' at ' . date('h:i:s A', $token->getEndOfLife()));
+            throw new ExpiredTokenException(
+                sprintf(
+                    'Token expired on %s at %s',
+                    date('m/d/Y', $token->getEndOfLife()),
+                    date('h:i:s A', $token->getEndOfLife())
+                )
+            );
         }
 
         // add the token where it may be needed
@@ -169,7 +188,11 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
             'refresh_token' => $refreshToken,
         );
 
-        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $parameters, $this->getExtraOAuthHeaders());
+        $responseBody = $this->httpClient->retrieveResponse(
+            $this->getAccessTokenEndpoint(),
+            $parameters,
+            $this->getExtraOAuthHeaders()
+        );
         $token = $this->parseAccessTokenResponse($responseBody);
         $this->storage->storeAccessToken($this->service(), $token);
 

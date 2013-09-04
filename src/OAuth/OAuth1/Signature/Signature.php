@@ -124,7 +124,9 @@ class Signature implements SignatureInterface
             case 'HMAC-SHA1':
                 return hash_hmac('sha1', $data, $this->getSigningKey(), true);
             default:
-                throw new UnsupportedHashAlgorithmException('Unsupported hashing algorithm (' . $this->algorithm . ') used.');
+                throw new UnsupportedHashAlgorithmException(
+                    'Unsupported hashing algorithm (' . $this->algorithm . ') used.'
+                );
         }
     }
 }

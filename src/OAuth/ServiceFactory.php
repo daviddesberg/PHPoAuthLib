@@ -83,8 +83,12 @@ class ServiceFactory
      *
      * @throws Exception
      */
-    public function createService($serviceName, Credentials $credentials, TokenStorageInterface $storage, $scopes = array())
-    {
+    public function createService(
+        $serviceName,
+        Credentials $credentials,
+        TokenStorageInterface $storage,
+        $scopes = array()
+    ) {
         if (!$this->httpClient) {
             // for backwards compatibility.
             $this->httpClient = new StreamClient();
@@ -120,7 +124,9 @@ class ServiceFactory
 
         if (class_exists($v1ClassName)) {
             if (!empty($scopes)) {
-                throw new Exception('Scopes passed to ServiceFactory::createService but an OAuth1 service was requested.');
+                throw new Exception(
+                    'Scopes passed to ServiceFactory::createService but an OAuth1 service was requested.'
+                );
             }
             $signature = new Signature($credentials);
 

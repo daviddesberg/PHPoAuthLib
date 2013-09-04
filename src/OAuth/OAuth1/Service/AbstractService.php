@@ -26,8 +26,13 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     /**
      * {@inheritDoc}
      */
-    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, SignatureInterface $signature, UriInterface $baseApiUri = null)
-    {
+    public function __construct(
+        Credentials $credentials,
+        ClientInterface $httpClient,
+        TokenStorageInterface $storage,
+        SignatureInterface $signature,
+        UriInterface $baseApiUri = null
+    ) {
         parent::__construct($credentials, $httpClient, $storage);
 
         $this->signature = $signature;
@@ -111,7 +116,8 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * @param string|UriInterface $path
      * @param string              $method       HTTP method
      * @param array               $body         Request body if applicable (key/value pairs)
-     * @param array               $extraHeaders Extra headers if applicable. These will override service-specific any defaults.
+     * @param array               $extraHeaders Extra headers if applicable.
+     *                                          These will override service-specific any defaults.
      *
      * @return string
      */
@@ -122,7 +128,9 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         /** @var $token StdOAuth1Token */
         $token = $this->storage->retrieveAccessToken($this->service());
         $extraHeaders = array_merge($this->getExtraApiHeaders(), $extraHeaders);
-        $authorizationHeader = array('Authorization' => $this->buildAuthorizationHeaderForAPIRequest($method, $uri, $token, $body));
+        $authorizationHeader = array(
+            'Authorization' => $this->buildAuthorizationHeaderForAPIRequest($method, $uri, $token, $body)
+        );
         $headers = array_merge($authorizationHeader, $extraHeaders);
 
         return $this->httpClient->retrieveResponse($uri, $body, $headers, $method);
@@ -159,7 +167,11 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     {
         $parameters = $this->getBasicAuthorizationHeaderInfo();
         $parameters = array_merge($parameters, $extraParameters);
-        $parameters['oauth_signature'] = $this->signature->getSignature($this->getRequestTokenEndpoint(), $parameters, 'POST');
+        $parameters['oauth_signature'] = $this->signature->getSignature(
+            $this->getRequestTokenEndpoint(),
+            $parameters,
+            'POST'
+        );
 
         $authorizationHeader = 'OAuth ';
         $delimiter = '';
@@ -182,8 +194,12 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      *
      * @return string
      */
-    protected function buildAuthorizationHeaderForAPIRequest($method, UriInterface $uri, TokenInterface $token, $bodyParams = null)
-    {
+    protected function buildAuthorizationHeaderForAPIRequest(
+        $method,
+        UriInterface $uri,
+        TokenInterface $token,
+        $bodyParams = null
+    ) {
         $this->signature->setTokenSecret($token->getAccessTokenSecret());
         $parameters = $this->getBasicAuthorizationHeaderInfo();
         if (isset($parameters['oauth_callback'])) {

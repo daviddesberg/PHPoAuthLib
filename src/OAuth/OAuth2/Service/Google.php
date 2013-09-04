@@ -28,7 +28,9 @@ class Google extends AbstractService
     const SCOPE_GPLUS_ME = 'https://www.googleapis.com/auth/plus.me';
     const SCOPE_GPLUS_LOGIN = 'https://www.googleapis.com/auth/plus.login';
     const SCOPE_GROUPS_PROVISIONING = 'https://apps-apis.google.com/a/feeds/groups/';
-    const SCOPE_GOOGLELATITUDE = 'https://www.googleapis.com/auth/latitude.all.best https://www.googleapis.com/auth/latitude.all.city'; // creepy stalker api...
+    const SCOPE_GOOGLELATITUDE =
+        'https://www.googleapis.com/auth/latitude.all.best https://www.googleapis.com/auth/latitude.all.city';
+        // creepy stalker api...
     const SCOPE_MODERATOR = 'https://www.googleapis.com/auth/moderator';
     const SCOPE_NICKNAME_PROVISIONING = 'https://apps-apis.google.com/a/feeds/alias/';
     const SCOPE_ORKUT = 'https://www.googleapis.com/auth/orkut'; // evidently orkut still exists. who knew?

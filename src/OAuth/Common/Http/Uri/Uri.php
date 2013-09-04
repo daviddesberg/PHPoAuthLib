@@ -77,7 +77,8 @@ class Uri implements UriInterface
     protected function parseUri($uri)
     {
         if (false === ($uriParts = parse_url($uri))) {
-            // congratulations if you've managed to get parse_url to fail, it seems to always return some semblance of a parsed url no matter what
+            // congratulations if you've managed to get parse_url to fail,
+            // it seems to always return some semblance of a parsed url no matter what
             throw new InvalidArgumentException("Invalid URI: $uri");
         }
 

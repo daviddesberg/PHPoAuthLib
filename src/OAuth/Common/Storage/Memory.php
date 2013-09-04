@@ -48,8 +48,7 @@ class Memory implements TokenStorageInterface
      */
     public function hasAccessToken($service)
     {
-        return isset($this->tokens[$service])
-            && $this->tokens[$service] instanceOf TokenInterface;
+        return isset($this->tokens[$service]) && $this->tokens[$service] instanceof TokenInterface;
     }
 
     /**

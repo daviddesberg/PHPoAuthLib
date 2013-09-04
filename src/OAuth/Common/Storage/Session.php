@@ -94,7 +94,7 @@ class Session implements TokenStorageInterface
         return $this;
     }
 
-    public function  __destruct()
+    public function __destruct()
     {
         session_write_close();
     }

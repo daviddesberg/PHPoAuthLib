@@ -24,7 +24,7 @@ class Microsoft extends AbstractService
     const SCOPE_CONTACTS_PHOTOS = 'wl.contacts_photos';
     const SCOPE_CONTACTS_SKYDRIVE = 'wl.contacts_skydrive';
     const SCOPE_EMAILS = 'wl.emails';
-    const sCOPE_EVENTS_CREATE = 'wl.events_create';
+    const SCOPE_EVENTS_CREATE = 'wl.events_create';
     const SCOPE_MESSENGER = 'wl.messenger';
     const SCOPE_PHONE_NUMBERS = 'wl.phone_numbers';
     const SCOPE_PHOTOS = 'wl.photos';
@@ -36,8 +36,13 @@ class Microsoft extends AbstractService
     const SCOPE_APPLICATIONS = 'wl.applications';
     const SCOPE_APPLICATIONS_CREATE = 'wl.applications_create';
 
-    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
-    {
+    public function __construct(
+        Credentials $credentials,
+        ClientInterface $httpClient,
+        TokenStorageInterface $storage,
+        $scopes = array(),
+        UriInterface $baseApiUri = null
+    ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
 
         if (null === $baseApiUri) {

@@ -11,8 +11,11 @@ class SymfonySession implements TokenStorageInterface
     private $session;
     private $sessionVariableName;
 
-    public function __construct(SessionInterface $session, $startSession = true, $sessionVariableName = 'lusitanian_oauth_token')
-    {
+    public function __construct(
+        SessionInterface $session,
+        $startSession = true,
+        $sessionVariableName = 'lusitanian_oauth_token'
+    ) {
         $this->session = $session;
         $this->sessionVariableName = $sessionVariableName;
     }

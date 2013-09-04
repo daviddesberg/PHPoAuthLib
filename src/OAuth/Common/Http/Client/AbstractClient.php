@@ -40,9 +40,12 @@ abstract class AbstractClient implements ClientInterface
     public function normalizeHeaders(&$headers)
     {
         // Normalize headers
-        array_walk($headers, function (&$val, &$key) {
-            $key = ucfirst(strtolower($key));
-            $val = ucfirst(strtolower($key)) . ': ' . $val;
-        });
+        array_walk(
+            $headers,
+            function (&$val, &$key) {
+                $key = ucfirst(strtolower($key));
+                $val = ucfirst(strtolower($key)) . ': ' . $val;
+            }
+        );
     }
 }

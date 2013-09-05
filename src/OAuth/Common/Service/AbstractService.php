@@ -51,7 +51,9 @@ abstract class AbstractService implements ServiceInterface
             $uri = new Uri($path);
         } else {
             if (null === $baseApiUri) {
-                throw new Exception('An absolute URI must be passed to ServiceInterface::request as no baseApiUri is set.');
+                throw new Exception(
+                    'An absolute URI must be passed to ServiceInterface::request as no baseApiUri is set.'
+                );
             }
 
             $uri = clone $baseApiUri;

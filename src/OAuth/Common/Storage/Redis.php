@@ -107,11 +107,13 @@ class Redis implements TokenStorageInterface
         $me = $this; // 5.3 compat
 
         // pipeline for performance
-        $this->redis->pipeline(function ($pipe) use ($keys, $me) {
-            foreach ($keys as $k) {
-                $pipe->hdel($me->getKey(), $k);
+        $this->redis->pipeline(
+            function ($pipe) use ($keys, $me) {
+                foreach ($keys as $k) {
+                    $pipe->hdel($me->getKey(), $k);
+                }
             }
-        });
+        );
 
         // allow chaining
         return $this;

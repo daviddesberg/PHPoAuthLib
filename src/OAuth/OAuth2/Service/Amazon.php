@@ -25,8 +25,13 @@ class Amazon extends AbstractService
     const SCOPE_PROFILE     = 'profile';
     const SCOPE_POSTAL_CODE = 'postal_code';
 
-    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
-    {
+    public function __construct(
+        Credentials $credentials,
+        ClientInterface $httpClient,
+        TokenStorageInterface $storage,
+        $scopes = array(),
+        UriInterface $baseApiUri = null
+    ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
 
         if (null === $baseApiUri) {

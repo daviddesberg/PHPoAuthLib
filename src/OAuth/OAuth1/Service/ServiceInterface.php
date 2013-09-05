@@ -23,7 +23,13 @@ interface ServiceInterface extends BaseServiceInterface
      * @param SignatureInterface    $signature
      * @param UriInterface|null     $baseApiUri
      */
-    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, SignatureInterface $signature, UriInterface $baseApiUri = null);
+    public function __construct(
+        Credentials $credentials,
+        ClientInterface $httpClient,
+        TokenStorageInterface $storage,
+        SignatureInterface $signature,
+        UriInterface $baseApiUri = null
+    );
 
     /**
      * Retrieves and stores/returns the OAuth1 request token obtained from the service.

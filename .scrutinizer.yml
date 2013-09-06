@@ -6,8 +6,7 @@ tools:
         enabled: true
         test_command: phpunit -c phpunit.xml.dist
         filter:
-            paths: ["src"]
-            excluded_dirs: ["vendor"]
+            paths: ["src/*"]
     php_code_sniffer:
         enabled: true
         config:
@@ -16,7 +15,7 @@ tools:
             paths: ["src/*"]
     php_cpd:
         enabled: true
-        excluded_dirs: ["examples", "tests"]
+        excluded_dirs: ["examples", "tests", "vendor"]
     php_cs_fixer:
         enabled: true
         config:
@@ -31,7 +30,7 @@ tools:
             paths: ["src/*"]
     php_pdepend:
         enabled: true
-        excluded_dirs: ["tests", "examples"]
+        excluded_dirs: ["tests", "examples", "vendor"]
     php_analyzer: true
     php_analyzer:
         filter:

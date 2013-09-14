@@ -67,7 +67,13 @@ abstract class AbstractClient implements ClientInterface
         $this->normalizeHeaders($extraHeaders);
 
         if ($method === 'GET' && !empty($requestBody)) {
-            throw new \InvalidArgumentException('No body expected for "GET" request.');
+            if (!is_array($requestBody) && !$requestBody instanceof \Traversable) {
+                throw new \InvalidArgumentException('Only array body expected for "GET" request.');
+            }
+
+            foreach ($requestBody as $key => $value) {
+                $endpoint->addToQuery($key, $value);
+            }
         }
 
         if (!isset($extraHeaders['Content-type']) && $method === 'POST' && is_array($requestBody)) {

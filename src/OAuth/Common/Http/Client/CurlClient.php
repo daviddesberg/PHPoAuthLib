@@ -50,17 +50,30 @@ class CurlClient extends AbstractClient
     /**
      * {@inheritdoc}
      */
-    public function doRetrieveResponse(
+    protected function doRetrieveResponse(
         UriInterface $endpoint,
         $requestBody,
         array $extraHeaders = array(),
-        $method = 'POST'
+        $method = 'POST',
+        $multipart = false
     ) {
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $endpoint->getAbsoluteUri());
 
         if ($method === 'POST' || $method === 'PUT') {
+            if ($multipart) {
+                foreach ($requestBody as $key => $value) {
+                    if ($value instanceof \SplFileInfo) {
+                        $requestBody[$key] = '@'.$value->getRealPath();
+
+                        if ($value->getBasename() != $value->getFilename()) {
+                            $requestBody[$key] .= ';filename='.$value->getFilename();
+                        }
+                    }
+                }
+            }
+
             if ($requestBody && is_array($requestBody)) {
                 $requestBody = http_build_query($requestBody, '', '&');
             }

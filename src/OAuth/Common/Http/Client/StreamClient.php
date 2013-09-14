@@ -17,8 +17,13 @@ class StreamClient extends AbstractClient
         UriInterface $endpoint,
         $requestBody,
         array $extraHeaders = array(),
-        $method = 'POST'
+        $method = 'POST',
+        $multipart = false
     ) {
+        if ($multipart) {
+            throw new \RuntimeException(sprintf('Stream adapter does not supports files uploading.'));
+        }
+
         $host = 'Host: '.$endpoint->getHost();
         // Append port to Host if it has been specified
         if ($endpoint->hasExplicitPortSpecified()) {

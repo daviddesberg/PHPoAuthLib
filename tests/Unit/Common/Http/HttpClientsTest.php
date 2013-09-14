@@ -29,8 +29,8 @@ class HttpClientsTest extends \PHPUnit_Framework_TestCase
         $curlClient = new Client\CurlClient();
         $curlClient->setTimeout(3);
 
-        $this->clients[] = $streamClient;
-        $this->clients[] = $curlClient;
+        $this->clients['stream'] = $streamClient;
+        $this->clients['curl'] = $curlClient;
     }
 
     public function tearDown()
@@ -120,6 +120,24 @@ class HttpClientsTest extends \PHPUnit_Framework_TestCase
         };
 
         $this->__doTestRetrieveResponse($testUri, array('testKey' => 'testValue'), array(), 'POST', $postTestCb);
+    }
+
+    /**
+     * Tests the POST method with file upload
+     */
+    public function testPostWithFileUploads()
+    {
+        // http test server
+        $testUri = new Uri('http://httpbin.org/post');
+
+        $file = new \SplFileInfo(__FILE__);
+        $requestData = array('testKey' => 'testValue', $file->getFilename() => $file);
+
+        $response = $this->clients['curl']->retrieveResponse($testUri, $requestData);
+        $data = json_decode($response, true);
+
+        $this->assertEquals('testValue', $data['form']['testKey']);
+        $this->assertArrayHasKey($file->getFilename(), $data['files']);
     }
 
     /**

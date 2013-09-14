@@ -131,7 +131,7 @@ class HttpClientsTest extends \PHPUnit_Framework_TestCase
 
         foreach ($this->clients as $client) {
             $this->setExpectedException('InvalidArgumentException');
-            $client->retrieveResponse($testUri, array('blah' => 'blih'), array(), 'GET');
+            $client->retrieveResponse($testUri, 'blah', array(), 'GET');
         }
     }
 
@@ -150,6 +150,25 @@ class HttpClientsTest extends \PHPUnit_Framework_TestCase
         };
 
         $this->__doTestRetrieveResponse($testUri, array(), array(), 'GET', $getTestCb);
+    }
+
+    /**
+     * Tests the GET method
+     */
+    public function testGetWithAdditionalQuery()
+    {
+        // test uri
+        $testUri = new Uri('http://httpbin.org/get?testKey=testValue');
+
+        $me = $this;
+        $getTestCb = function ($response) use ($me) {
+            $data = json_decode($response, true);
+            $me->assertEquals('testValue', $data['args']['testKey']);
+            $me->assertEquals('bar', $data['args']['foo']);
+        };
+
+        $this->__doTestRetrieveResponse($testUri, array('foo' => 'bar'), array(), 'GET', $getTestCb);
+        $this->__doTestRetrieveResponse($testUri, new \ArrayIterator(array('foo' => 'bar')), array(), 'GET', $getTestCb);
     }
 
     /**

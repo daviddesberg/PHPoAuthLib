@@ -66,8 +66,12 @@ abstract class AbstractClient implements ClientInterface
 
         $this->normalizeHeaders($extraHeaders);
 
-        if ($method === 'GET' && !empty($requestBody)) {
-            if (!is_array($requestBody) && !$requestBody instanceof \Traversable) {
+        if ($requestBody instanceof \Traversable) {
+            $requestBody = iterator_to_array($requestBody);
+        }
+
+        if (($method === 'GET' || $method === 'HEAD') && !empty($requestBody)) {
+            if (!is_array($requestBody)) {
                 throw new \InvalidArgumentException('Only array body expected for "GET" request.');
             }
 
@@ -76,14 +80,23 @@ abstract class AbstractClient implements ClientInterface
             }
         }
 
+        $multipart = false;
         if (!isset($extraHeaders['Content-type']) && $method === 'POST' && is_array($requestBody)) {
-            $extraHeaders['Content-type'] = 'Content-type: application/x-www-form-urlencoded';
+            foreach ($requestBody as $value) {
+                if ($value instanceof \SplFileInfo) {
+                    $multipart = true;
+                    break;
+                }
+            }
+
+            $extraHeaders['Content-type'] = $multipart ? 'Content-type: multipart/form-data'
+                : 'Content-type: application/x-www-form-urlencoded';
         }
 
         $extraHeaders['Host']       = 'Host: '.$endpoint->getHost();
         $extraHeaders['Connection'] = 'Connection: close';
 
-        return $this->doRetrieveResponse($endpoint, $requestBody, $extraHeaders, $method);
+        return $this->doRetrieveResponse($endpoint, $requestBody, $extraHeaders, $method, $multipart);
     }
 
     /**
@@ -104,6 +117,7 @@ abstract class AbstractClient implements ClientInterface
         UriInterface $endpoint,
         $requestBody,
         array $extraHeaders = array(),
-        $method = 'POST'
+        $method = 'POST',
+        $multipart = false
     );
 }

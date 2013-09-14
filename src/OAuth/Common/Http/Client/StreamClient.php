@@ -17,8 +17,13 @@ class StreamClient extends AbstractClient
         UriInterface $endpoint,
         $requestBody,
         array $extraHeaders = array(),
-        $method = 'POST'
+        $method = 'POST',
+        $multipart = false
     ) {
+        if ($multipart) {
+            throw new \RuntimeException(sprintf('Stream adapter does not supports files uploading.'));
+        }
+
         if (is_array($requestBody)) {
             $requestBody = http_build_query($requestBody, null, '&');
         }

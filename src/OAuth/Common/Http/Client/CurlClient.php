@@ -48,10 +48,17 @@ class CurlClient extends AbstractClient
             if ($multipart) {
                 foreach ($requestBody as $key => $value) {
                     if ($value instanceof \SplFileInfo) {
-                        $requestBody[$key] = '@'.$value->getRealPath();
+                        if (version_compare('5.5', PHP_VERSION, '<=')) {
+                            $requestBody[$key] = new \CURLFile($value->getRealPath());
+                            if ($value->getBasename() != $value->getFilename()) {
+                                $requestBody[$key]->setPostFilename($value->getFilename());
+                            }
+                        } else {
+                            $requestBody[$key] = '@'.$value->getRealPath();
 
-                        if ($value->getBasename() != $value->getFilename()) {
-                            $requestBody[$key] .= ';filename='.$value->getFilename();
+                            if ($value->getBasename() != $value->getFilename()) {
+                                $requestBody[$key] .= ';filename='.$value->getFilename();
+                            }
                         }
                     }
                 }

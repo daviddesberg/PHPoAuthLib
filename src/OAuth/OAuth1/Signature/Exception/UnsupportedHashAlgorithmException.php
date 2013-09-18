@@ -1,4 +1,5 @@
 <?php
+
 namespace OAuth\OAuth1\Signature\Exception;
 
 use OAuth\Common\Exception\Exception;
@@ -8,5 +9,4 @@ use OAuth\Common\Exception\Exception;
  */
 class UnsupportedHashAlgorithmException extends Exception
 {
-
 }

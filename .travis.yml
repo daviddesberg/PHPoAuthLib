@@ -6,7 +6,11 @@ php:
   - 5.5
 
 before_script:
-  - curl -s http://getcomposer.org/installer | php
-  - php composer.phar install --dev
+  - composer self-update
+  - composer install
+  - pyrus install pear/PHP_CodeSniffer
+  - phpenv rehash
 
-script: phpunit
+script:
+  - phpcs --standard=psr2 src/
+  - phpunit --coverage-text

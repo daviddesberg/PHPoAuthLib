@@ -1,4 +1,5 @@
 <?php
+
 namespace OAuth\OAuth2\Service;
 
 use OAuth\OAuth2\Token\StdOAuth2Token;
@@ -20,16 +21,22 @@ class GitHub extends AbstractService
     const SCOPE_DELETE_REPO = 'delete_repo';
     const SCOPE_GIST = 'gist';
 
-    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
-    {
+    public function __construct(
+        Credentials $credentials,
+        ClientInterface $httpClient,
+        TokenStorageInterface $storage,
+        $scopes = array(),
+        UriInterface $baseApiUri = null
+    ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-        if( null === $baseApiUri ) {
+
+        if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://api.github.com/');
         }
     }
 
     /**
-     * @return \OAuth\Common\Http\Uri\UriInterface
+     * {@inheritdoc}
      */
     public function getAuthorizationEndpoint()
     {
@@ -37,7 +44,7 @@ class GitHub extends AbstractService
     }
 
     /**
-     * @return \OAuth\Common\Http\Uri\UriInterface
+     * {@inheritdoc}
      */
     public function getAccessTokenEndpoint()
     {
@@ -45,28 +52,33 @@ class GitHub extends AbstractService
     }
 
     /**
-     * @param string $responseBody
-     * @return \OAuth\Common\Token\TokenInterface|\OAuth\OAuth2\Token\StdOAuth2Token
-     * @throws \OAuth\Common\Http\Exception\TokenResponseException
+     * {@inheritdoc}
+     */
+    protected function getAuthorizationMethod()
+    {
+        return static::AUTHORIZATION_METHOD_QUERY_STRING;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     protected function parseAccessTokenResponse($responseBody)
     {
-        $data = json_decode( $responseBody, true );
+        $data = json_decode($responseBody, true);
 
-        if( null === $data || !is_array($data) ) {
+        if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
-        } elseif( isset($data['error'] ) ) {
+        } elseif (isset($data['error'])) {
             throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
         }
 
         $token = new StdOAuth2Token();
-
-
-        $token->setAccessToken( $data['access_token'] );
+        $token->setAccessToken($data['access_token']);
         // Github tokens evidently never expire...
         $token->setEndOfLife(StdOAuth2Token::EOL_NEVER_EXPIRES);
-        unset( $data['access_token'] );
-        $token->setExtraParams( $data );
+        unset($data['access_token']);
+
+        $token->setExtraParams($data);
 
         return $token;
     }
@@ -89,13 +101,5 @@ class GitHub extends AbstractService
     protected function getExtraApiHeaders()
     {
         return array('Accept' => 'application/vnd.github.beta+json');
-    }
-
-    /**
-     * @return int
-     */
-    protected function getAuthorizationMethod()
-    {
-        return static::AUTHORIZATION_METHOD_QUERY_STRING;
     }
 }

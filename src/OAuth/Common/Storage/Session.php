@@ -1,4 +1,5 @@
 <?php
+
 namespace OAuth\Common\Storage;
 
 use OAuth\Common\Token\TokenInterface;
@@ -15,30 +16,27 @@ class Session implements TokenStorageInterface
     protected $sessionVariableName;
 
     /**
-     * @param bool $startSession Whether or not to start the session upon construction.
+     * @param bool   $startSession        Whether or not to start the session upon construction.
      * @param string $sessionVariableName the variable name to use within the _SESSION superglobal
      */
     public function __construct($startSession = true, $sessionVariableName = 'lusitanian_oauth_token')
     {
-        if( $startSession && !isset($_SESSION)) {
+        if ($startSession && !isset($_SESSION)) {
             session_start();
         }
 
         $this->sessionVariableName = $sessionVariableName;
-        if (!isset($_SESSION[$sessionVariableName]))
-        {
+        if (!isset($_SESSION[$sessionVariableName])) {
             $_SESSION[$sessionVariableName] = array();
         }
     }
 
     /**
-     * @return \OAuth\Common\Token\TokenInterface
-     * @throws TokenNotFoundException
+     * {@inheritDoc}
      */
     public function retrieveAccessToken($service)
     {
-        if ($this->hasAccessToken($service))
-        {
+        if ($this->hasAccessToken($service)) {
             return $_SESSION[$this->sessionVariableName][$service];
         }
 
@@ -46,17 +44,15 @@ class Session implements TokenStorageInterface
     }
 
     /**
-     * @param \OAuth\Common\Token\TokenInterface $token
+     * {@inheritDoc}
      */
     public function storeAccessToken($service, TokenInterface $token)
     {
-        if (isset($_SESSION[$this->sessionVariableName]) &&
-            is_array($_SESSION[$this->sessionVariableName]))
-        {
+        if (isset($_SESSION[$this->sessionVariableName])
+            && is_array($_SESSION[$this->sessionVariableName])
+        ) {
             $_SESSION[$this->sessionVariableName][$service] = $token;
-        }
-        else
-        {
+        } else {
             $_SESSION[$this->sessionVariableName] = array(
                 $service => $token,
             );
@@ -67,15 +63,15 @@ class Session implements TokenStorageInterface
     }
 
     /**
-    * @return bool
-    */
+     * {@inheritDoc}
+     */
     public function hasAccessToken($service)
     {
         return isset($_SESSION[$this->sessionVariableName], $_SESSION[$this->sessionVariableName][$service]);
     }
 
     /**
-     * Delete the user's token. Aka, log out.
+     * {@inheritDoc}
      */
     public function clearToken($service)
     {
@@ -88,8 +84,7 @@ class Session implements TokenStorageInterface
     }
 
     /**
-     * Delete *ALL* user tokens. Use with care. Most of the time you will likely
-     * want to use clearToken() instead.
+     * {@inheritDoc}
      */
     public function clearAllTokens()
     {
@@ -99,7 +94,7 @@ class Session implements TokenStorageInterface
         return $this;
     }
 
-    public function  __destruct()
+    public function __destruct()
     {
         session_write_close();
     }

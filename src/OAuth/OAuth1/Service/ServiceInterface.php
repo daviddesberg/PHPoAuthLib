@@ -1,4 +1,5 @@
 <?php
+
 namespace OAuth\OAuth1\Service;
 
 use OAuth\Common\Consumer\CredentialsInterface;
@@ -17,20 +18,25 @@ use OAuth\OAuth1\Signature\SignatureInterface;
 interface ServiceInterface extends BaseServiceInterface
 {
     /**
-     * @param \OAuth\Common\Consumer\Credentials $credentials
-     * @param \OAuth\Common\Http\Client\ClientInterface $httpClient
-     * @param \OAuth\Common\Storage\TokenStorageInterface $storage
-     * @param \OAuth\OAuth1\Signature\SignatureInterface $signature
-     * @param UriInterface|null $baseApiUri
-     * @abstract
+     * @param Credentials           $credentials
+     * @param ClientInterface       $httpClient
+     * @param TokenStorageInterface $storage
+     * @param SignatureInterface    $signature
+     * @param UriInterface|null     $baseApiUri
      */
-    public function __construct(CredentialsInterface $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, SignatureInterface $signature, UriInterface $baseApiUri = null);
+    public function __construct(
+        Credentials $credentials,
+        ClientInterface $httpClient,
+        TokenStorageInterface $storage,
+        SignatureInterface $signature,
+        UriInterface $baseApiUri = null
+    );
 
     /**
-     * Retrieves and stores/returns the OAuth1 request token.
+     * Retrieves and stores/returns the OAuth1 request token obtained from the service.
      *
-     * @abstract
      * @return TokenInterface $token
+     *
      * @throws TokenResponseException
      */
     public function requestRequestToken();
@@ -38,17 +44,17 @@ interface ServiceInterface extends BaseServiceInterface
     /**
      * Retrieves and stores/returns the OAuth1 access token after a successful authorization.
      *
-     * @abstract
-     * @param string $token The request token from the callback.
+     * @param string $token       The request token from the callback.
      * @param string $verifier
      * @param string $tokenSecret
+     *
      * @return TokenInterface $token
+     *
      * @throws TokenResponseException
      */
     public function requestAccessToken($token, $verifier, $tokenSecret);
 
     /**
-     * @abstract
      * @return UriInterface
      */
     public function getRequestTokenEndpoint();

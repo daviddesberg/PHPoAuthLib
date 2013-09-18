@@ -1,17 +1,18 @@
 <?php
+
 /**
  * Example of retrieving an authentication token of the PayPal service
  *
  * PHP version 5.4
  *
- * @author Flávio Heleno <flaviohbatista@gmail.com>
+ * @author     Flávio Heleno <flaviohbatista@gmail.com>
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
+
 use OAuth\OAuth2\Service\Paypal;
 use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
-use OAuth\Common\Http\Uri\Uri;
 
 /**
  * Bootstrap the example
@@ -32,17 +33,17 @@ $credentials = new Credentials(
 /** @var $paypalService PayPal */
 $paypalService = $serviceFactory->createService('paypal', $credentials, $storage, array('profile', 'openid'));
 
-if( !empty( $_GET['code'] ) ) {
+if (!empty($_GET['code'])) {
     // This was a callback request from PayPal, get the token
-    $token = $paypalService->requestAccessToken( $_GET['code'] );
+    $token = $paypalService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = json_decode( $paypalService->request( '/identity/openidconnect/userinfo/?schema=openid' ), true );
+    $result = json_decode($paypalService->request('/identity/openidconnect/userinfo/?schema=openid'), true);
 
     // Show some of the resultant data
     echo 'Your unique PayPal user id is: ' . $result['user_id'] . ' and your name is ' . $result['name'];
 
-} elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
+} elseif (!empty($_GET['go']) && $_GET['go'] == 'go') {
     $url = $paypalService->getAuthorizationUri();
     header('Location: ' . $url);
 } else {

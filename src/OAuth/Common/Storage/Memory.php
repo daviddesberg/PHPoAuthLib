@@ -1,4 +1,5 @@
 <?php
+
 namespace OAuth\Common\Storage;
 
 use OAuth\Common\Token\TokenInterface;
@@ -20,13 +21,11 @@ class Memory implements TokenStorageInterface
     }
 
     /**
-     * @return \OAuth\Common\Token\TokenInterface
-     * @throws TokenNotFoundException
+     * {@inheritDoc}
      */
     public function retrieveAccessToken($service)
     {
-        if ($this->hasAccessToken($service))
-        {
+        if ($this->hasAccessToken($service)) {
             return $this->tokens[$service];
         }
 
@@ -34,7 +33,7 @@ class Memory implements TokenStorageInterface
     }
 
     /**
-     * @param \OAuth\Common\Token\TokenInterface $token
+     * {@inheritDoc}
      */
     public function storeAccessToken($service, TokenInterface $token)
     {
@@ -45,16 +44,15 @@ class Memory implements TokenStorageInterface
     }
 
     /**
-    * @return bool
-    */
+     * {@inheritDoc}
+     */
     public function hasAccessToken($service)
     {
-        return isset($this->tokens[$service]) &&
-               $this->tokens[$service] instanceOf TokenInterface;
+        return isset($this->tokens[$service]) && $this->tokens[$service] instanceof TokenInterface;
     }
 
     /**
-     * Delete the user's token. Aka, log out.
+     * {@inheritDoc}
      */
     public function clearToken($service)
     {
@@ -67,8 +65,7 @@ class Memory implements TokenStorageInterface
     }
 
     /**
-     * Delete *ALL* user tokens. Use with care. Most of the time you will likely
-     * want to use clearToken() instead.
+     * {@inheritDoc}
      */
     public function clearAllTokens()
     {

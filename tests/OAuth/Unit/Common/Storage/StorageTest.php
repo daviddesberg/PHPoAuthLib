@@ -1,4 +1,5 @@
-<?php namespace OAuth\Unit\Common\Storage;
+<?php
+
 /**
  * @category   OAuth
  * @package    Tests
@@ -8,7 +9,8 @@
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-use \OAuth\Common\Storage\Memory;
+namespace OAuth\Unit\Common\Storage;
+
 use \OAuth\OAuth2\Token\StdOAuth2Token;
 
 abstract class StorageTest extends \PHPUnit_Framework_TestCase
@@ -24,8 +26,8 @@ abstract class StorageTest extends \PHPUnit_Framework_TestCase
         $service_1 = 'Facebook';
         $service_2 = 'Foursquare';
 
-        $token_1 = new StdOAuth2Token('access_1', 'refresh_1', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param') );
-        $token_2 = new StdOAuth2Token('access_2', 'refresh_2', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param') );
+        $token_1 = new StdOAuth2Token('access_1', 'refresh_1', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param'));
+        $token_2 = new StdOAuth2Token('access_2', 'refresh_2', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param'));
 
         // act
         $this->storage->storeAccessToken($service_1, $token_1);
@@ -59,7 +61,7 @@ abstract class StorageTest extends \PHPUnit_Framework_TestCase
     {
         // arrange
         $service = 'Facebook';
-        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param') );
+        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param'));
 
         // act
         $this->storage->storeAccessToken($service, $token);

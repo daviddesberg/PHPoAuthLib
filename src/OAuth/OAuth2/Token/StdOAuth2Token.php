@@ -1,4 +1,5 @@
 <?php
+
 namespace OAuth\OAuth2\Token;
 
 use OAuth\Common\Token\AbstractToken;

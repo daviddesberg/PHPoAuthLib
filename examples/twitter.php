@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Example of retrieving an authentication token of the Twitter service
  *
@@ -9,11 +10,10 @@
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
-use OAuth\OAuth1\Signature\Signature;
+
 use OAuth\OAuth1\Service\Twitter;
 use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
-use OAuth\Common\Http\Uri\Uri;
 
 /**
  * Bootstrap the example
@@ -35,17 +35,22 @@ $credentials = new Credentials(
 /** @var $twitterService Twitter */
 $twitterService = $serviceFactory->createService('twitter', $credentials, $storage);
 
-if( !empty( $_GET['oauth_token'] ) ) {
+if (!empty($_GET['oauth_token'])) {
     $token = $storage->retrieveAccessToken('Twitter');
+
     // This was a callback request from twitter, get the token
-    $twitterService->requestAccessToken( $_GET['oauth_token'], $_GET['oauth_verifier'], $token->getRequestTokenSecret() );
+    $twitterService->requestAccessToken(
+        $_GET['oauth_token'],
+        $_GET['oauth_verifier'],
+        $token->getRequestTokenSecret()
+    );
 
     // Send a request now that we have access token
-    $result = json_decode( $twitterService->request( 'account/verify_credentials.json') );
+    $result = json_decode($twitterService->request('account/verify_credentials.json'));
 
     echo 'result: <pre>' . print_r($result, true) . '</pre>';
 
-} elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
+} elseif (!empty($_GET['go']) && $_GET['go'] == 'go') {
     // extra request needed for oauth1 to request a request token :-)
     $token = $twitterService->requestRequestToken();
 

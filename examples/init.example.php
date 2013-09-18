@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file sets up the information needed to test the examples in different environments.
  *
@@ -75,16 +76,16 @@ $servicesCredentials = [
         'secret'    => '',
     ],
     'amazon' => [
-    	'key'		=> '',
-    	'secret'	=> '',
+        'key'		=> '',
+        'secret'	=> '',
     ],
     'paypal' => [
-    	'key'		=> '',
-    	'secret'	=> '',
+        'key'		=> '',
+        'secret'	=> '',
     ],
     'dropbox' => [
-    	'key'		=> '',
-    	'secret'	=> '',
+        'key'		=> '',
+        'secret'	=> '',
     ],
 ];
 

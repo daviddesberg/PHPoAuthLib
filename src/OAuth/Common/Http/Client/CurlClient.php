@@ -1,4 +1,5 @@
 <?php
+
 namespace OAuth\Common\Http\Client;
 
 use OAuth\Common\Http\Exception\TokenResponseException;
@@ -10,20 +11,22 @@ use OAuth\Common\Http\Uri\UriInterface;
 class CurlClient extends AbstractClient
 {
     /**
-     *  If true, explicitly sets cURL to use SSL version 3. Use this if cURL
-     *  compiles with GnuTLS SSL.
+     * If true, explicitly sets cURL to use SSL version 3. Use this if cURL
+     * compiles with GnuTLS SSL.
      *
-     *  @var bool
+     * @var bool
      */
     private $forceSSL3 = false;
 
     /**
      * @param bool $force
+     *
      * @return CurlClient
      */
     public function setForceSSL3($force)
     {
         $this->forceSSL3 = $force;
+
         return $this;
     }
 
@@ -32,25 +35,31 @@ class CurlClient extends AbstractClient
      * They should return, in string form, the response body and throw an exception on error.
      *
      * @param UriInterface $endpoint
-     * @param mixed $requestBody
-     * @param array $extraHeaders
-     * @param string $method
+     * @param mixed        $requestBody
+     * @param array        $extraHeaders
+     * @param string       $method
+     *
      * @return string
+     *
      * @throws TokenResponseException
      * @throws \InvalidArgumentException
      */
-    public function retrieveResponse(UriInterface $endpoint, $requestBody, array $extraHeaders = array(), $method = 'POST')
-    {
+    public function retrieveResponse(
+        UriInterface $endpoint,
+        $requestBody,
+        array $extraHeaders = array(),
+        $method = 'POST'
+    ) {
         // Normalize method name
         $method = strtoupper($method);
 
         $this->normalizeHeaders($extraHeaders);
 
-        if( $method === 'GET' && !empty($requestBody) ) {
+        if ($method === 'GET' && !empty($requestBody)) {
             throw new \InvalidArgumentException('No body expected for "GET" request.');
         }
 
-        if( !isset($extraHeaders['Content-type'] ) && $method === 'POST' && is_array($requestBody) ) {
+        if (!isset($extraHeaders['Content-type']) && $method === 'POST' && is_array($requestBody)) {
             $extraHeaders['Content-type'] = 'Content-type: application/x-www-form-urlencoded';
         }
 
@@ -61,12 +70,12 @@ class CurlClient extends AbstractClient
 
         curl_setopt($ch, CURLOPT_URL, $endpoint->getAbsoluteUri());
 
-        if( $method === 'POST' || $method === 'PUT' ) {
-            if( $requestBody && is_array($requestBody) ) {
+        if ($method === 'POST' || $method === 'PUT') {
+            if ($requestBody && is_array($requestBody)) {
                 $requestBody = http_build_query($requestBody, null, '&');
             }
 
-            if( $method === 'PUT' ) {
+            if ($method === 'PUT') {
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
             } else {
                 curl_setopt($ch, CURLOPT_POST, true);
@@ -77,7 +86,7 @@ class CurlClient extends AbstractClient
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
         }
 
-        if( $this->maxRedirects > 0 ) {
+        if ($this->maxRedirects > 0) {
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_MAXREDIRS, $this->maxRedirects);
         }
@@ -87,21 +96,21 @@ class CurlClient extends AbstractClient
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $extraHeaders);
 
-        if( $this->forceSSL3 ) {
+        if ($this->forceSSL3) {
             curl_setopt($ch, CURLOPT_SSLVERSION, 3);
         }
 
         $response     = curl_exec($ch);
         $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-        if( false === $response ) {
+        if (false === $response) {
             $errNo  = curl_errno($ch);
             $errStr = curl_error($ch);
             curl_close($ch);
             if (empty($errStr)) {
-                throw new TokenResponseException( 'Failed to request resource.', $responseCode );
+                throw new TokenResponseException('Failed to request resource.', $responseCode);
             }
-            throw new TokenResponseException( 'cURL Error # '.$errNo.': '.$errStr, $responseCode );
+            throw new TokenResponseException('cURL Error # '.$errNo.': '.$errStr, $responseCode);
         }
 
         curl_close($ch);

@@ -1,4 +1,5 @@
 <?php
+
 namespace OAuth\Common\Consumer;
 
 /**
@@ -20,7 +21,6 @@ class Credentials implements CredentialsInterface
      * @var string
      */
     protected $callbackUrl;
-
 
     /**
      * @param string $consumerId

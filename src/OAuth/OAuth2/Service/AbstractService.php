@@ -1,4 +1,5 @@
 <?php
+
 namespace OAuth\OAuth2\Service;
 
 use OAuth\Common\Consumer\Credentials;
@@ -15,32 +16,36 @@ use OAuth\Common\Token\Exception\ExpiredTokenException;
 
 abstract class AbstractService extends BaseAbstractService implements ServiceInterface
 {
-
     /** @const OAUTH_VERSION */
     const OAUTH_VERSION = 2;
 
     /** @var array */
     protected $scopes;
 
-    /** @var \OAuth\Common\Http\Uri\UriInterface|null */
+    /** @var UriInterface|null */
     protected $baseApiUri;
 
     /**
-     * @param \OAuth\Common\Consumer\Credentials $credentials
-     * @param \OAuth\Common\Http\Client\ClientInterface $httpClient
-     * @param \OAuth\Common\Storage\TokenStorageInterface $storage
-     * @param array $scopes
-     * @param UriInterface|null $baseApiUri
+     * @param Credentials           $credentials
+     * @param ClientInterface       $httpClient
+     * @param TokenStorageInterface $storage
+     * @param array                 $scopes
+     * @param UriInterface|null     $baseApiUri
+     *
      * @throws InvalidScopeException
      */
-    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
-    {
+    public function __construct(
+        Credentials $credentials,
+        ClientInterface $httpClient,
+        TokenStorageInterface $storage,
+        $scopes = array(),
+        UriInterface $baseApiUri = null
+    ) {
         parent::__construct($credentials, $httpClient, $storage);
 
-        foreach($scopes as $scope)
-        {
-            if( !$this->isValidScope($scope) ) {
-                throw new InvalidScopeException('Scope ' . $scope . ' is not valid for service ' . get_class($this) );
+        foreach ($scopes as $scope) {
+            if (!$this->isValidScope($scope)) {
+                throw new InvalidScopeException('Scope ' . $scope . ' is not valid for service ' . get_class($this));
             }
         }
 
@@ -50,39 +55,33 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     }
 
     /**
-     * Returns the url to redirect to for authorization purposes.
-     *
-     * @param array $additionalParameters
-     * @return string
+     * {@inheritdoc}
      */
-    public function getAuthorizationUri( array $additionalParameters = array() )
+    public function getAuthorizationUri(array $additionalParameters = array())
     {
-        $parameters = array_merge($additionalParameters, array(
-            'type'          => 'web_server',
-            'client_id'     => $this->credentials->getConsumerId(),
-            'redirect_uri'  => $this->credentials->getCallbackUrl(),
-            'response_type' => 'code',
-        ));
+        $parameters = array_merge(
+            $additionalParameters,
+            array(
+                'type'          => 'web_server',
+                'client_id'     => $this->credentials->getConsumerId(),
+                'redirect_uri'  => $this->credentials->getCallbackUrl(),
+                'response_type' => 'code',
+            )
+        );
 
         $parameters['scope'] = implode(' ', $this->scopes);
 
         // Build the url
         $url = clone $this->getAuthorizationEndpoint();
-        foreach($parameters as $key => $val)
-        {
+        foreach ($parameters as $key => $val) {
             $url->addToQuery($key, $val);
         }
 
         return $url;
     }
 
-
     /**
-     * Retrieves and stores the OAuth2 access token after a successful authorization.
-     *
-     * @param string $code The access code from the callback.
-     * @return TokenInterface $token
-     * @throws TokenResponseException
+     * {@inheritdoc}
      */
     public function requestAccessToken($code)
     {
@@ -94,9 +93,13 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
             'grant_type'    => 'authorization_code',
         );
 
-        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $bodyParams, $this->getExtraOAuthHeaders());
-        $token = $this->parseAccessTokenResponse( $responseBody );
-        $this->storage->storeAccessToken($this->service(), $token );
+        $responseBody = $this->httpClient->retrieveResponse(
+            $this->getAccessTokenEndpoint(),
+            $bodyParams,
+            $this->getExtraOAuthHeaders()
+        );
+        $token = $this->parseAccessTokenResponse($responseBody);
+        $this->storage->storeAccessToken($this->service(), $token);
 
         return $token;
     }
@@ -105,11 +108,14 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * Sends an authenticated API request to the path provided.
      * If the path provided is not an absolute URI, the base API Uri (must be passed into constructor) will be used.
      *
-     * @param $path string|UriInterface
-     * @param string $method HTTP method
-     * @param array $body Request body if applicable.
-     * @param array $extraHeaders Extra headers if applicable. These will override service-specific any defaults.
+     * @param string|UriInterface $path
+     * @param string              $method       HTTP method
+     * @param array               $body         Request body if applicable.
+     * @param array               $extraHeaders Extra headers if applicable. These will override service-specific
+     *                                          any defaults.
+     *
      * @return string
+     *
      * @throws ExpiredTokenException
      * @throws Exception
      */
@@ -118,34 +124,40 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $uri = $this->determineRequestUriFromPath($path, $this->baseApiUri);
         $token = $this->storage->retrieveAccessToken($this->service());
 
-        if( ( $token->getEndOfLife() !== TokenInterface::EOL_NEVER_EXPIRES ) &&
-            ( $token->getEndOfLife() !== TokenInterface::EOL_UNKNOWN ) &&
-            ( time() > $token->getEndOfLife() ) ) {
-
-            throw new ExpiredTokenException('Token expired on ' . date('m/d/Y', $token->getEndOfLife()) . ' at ' . date('h:i:s A', $token->getEndOfLife()) );
+        if ($token->getEndOfLife() !== TokenInterface::EOL_NEVER_EXPIRES
+            && $token->getEndOfLife() !== TokenInterface::EOL_UNKNOWN
+            && time() > $token->getEndOfLife()
+        ) {
+            throw new ExpiredTokenException(
+                sprintf(
+                    'Token expired on %s at %s',
+                    date('m/d/Y', $token->getEndOfLife()),
+                    date('h:i:s A', $token->getEndOfLife())
+                )
+            );
         }
 
         // add the token where it may be needed
-        if( static::AUTHORIZATION_METHOD_HEADER_OAUTH === $this->getAuthorizationMethod() ) {
-            $extraHeaders = array_merge( array('Authorization' => 'OAuth ' . $token->getAccessToken()), $extraHeaders );
-        } elseif( static::AUTHORIZATION_METHOD_QUERY_STRING === $this->getAuthorizationMethod() ) {
-            $uri->addToQuery( 'access_token', $token->getAccessToken() );
-        } elseif( static::AUTHORIZATION_METHOD_QUERY_STRING_V2 === $this->getAuthorizationMethod() ) {
-            $uri->addToQuery( 'oauth2_access_token', $token->getAccessToken() );
-        } elseif( static::AUTHORIZATION_METHOD_HEADER_BEARER === $this->getAuthorizationMethod() ) {
-            $extraHeaders = array_merge( array('Authorization' => 'Bearer ' . $token->getAccessToken()), $extraHeaders );
+        if (static::AUTHORIZATION_METHOD_HEADER_OAUTH === $this->getAuthorizationMethod()) {
+            $extraHeaders = array_merge(array('Authorization' => 'OAuth ' . $token->getAccessToken()), $extraHeaders);
+        } elseif (static::AUTHORIZATION_METHOD_QUERY_STRING === $this->getAuthorizationMethod()) {
+            $uri->addToQuery('access_token', $token->getAccessToken());
+        } elseif (static::AUTHORIZATION_METHOD_QUERY_STRING_V2 === $this->getAuthorizationMethod()) {
+            $uri->addToQuery('oauth2_access_token', $token->getAccessToken());
+        } elseif (static::AUTHORIZATION_METHOD_HEADER_BEARER === $this->getAuthorizationMethod()) {
+            $extraHeaders = array_merge(array('Authorization' => 'Bearer ' . $token->getAccessToken()), $extraHeaders);
         }
 
-        $extraHeaders = array_merge( $this->getExtraApiHeaders(), $extraHeaders );
+        $extraHeaders = array_merge($this->getExtraApiHeaders(), $extraHeaders);
 
         return $this->httpClient->retrieveResponse($uri, $body, $extraHeaders, $method);
     }
 
     /**
-    * Accessor to the storage adapter to be able to retrieve tokens
-    *
-    * @return OAuth\Common\Storage\TokenStorageInterface
-    */
+     * Accessor to the storage adapter to be able to retrieve tokens
+     *
+     * @return TokenStorageInterface
+     */
     public function getStorage()
     {
         return $this->storage;
@@ -154,15 +166,17 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     /**
      * Refreshes an OAuth2 access token.
      *
-     * @param \OAuth\Common\Token\TokenInterface $token
-     * @return \OAuth\Common\Token\TokenInterface $token
-     * @throws \OAuth\OAuth2\Service\Exception\MissingRefreshTokenException
+     * @param TokenInterface $token
+     *
+     * @return TokenInterface $token
+     *
+     * @throws MissingRefreshTokenException
      */
     public function refreshAccessToken(TokenInterface $token)
     {
         $refreshToken = $token->getRefreshToken();
 
-        if ( empty( $refreshToken ) ) {
+        if (empty($refreshToken)) {
             throw new MissingRefreshTokenException();
         }
 
@@ -174,7 +188,11 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
             'refresh_token' => $refreshToken,
         );
 
-        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $parameters, $this->getExtraOAuthHeaders());
+        $responseBody = $this->httpClient->retrieveResponse(
+            $this->getAccessTokenEndpoint(),
+            $parameters,
+            $this->getExtraOAuthHeaders()
+        );
         $token = $this->parseAccessTokenResponse($responseBody);
         $this->storage->storeAccessToken($this->service(), $token);
 
@@ -184,13 +202,15 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     /**
      * Return whether or not the passed scope value is valid.
      *
-     * @param $scope
+     * @param string $scope
+     *
      * @return bool
      */
     public function isValidScope($scope)
     {
         $reflectionClass = new \ReflectionClass(get_class($this));
-        return in_array( $scope, $reflectionClass->getConstants() );
+
+        return in_array($scope, $reflectionClass->getConstants());
     }
 
     /**
@@ -217,8 +237,12 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * Parses the access token response and returns a TokenInterface.
      *
      * @abstract
-     * @return \OAuth\Common\Token\TokenInterface
+     *
      * @param string $responseBody
+     *
+     * @return TokenInterface
+     *
+     * @throws TokenResponseException
      */
     abstract protected function parseAccessTokenResponse($responseBody);
 

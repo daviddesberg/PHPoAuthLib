@@ -1,4 +1,5 @@
 <?php
+
 namespace OAuth\OAuth2\Service;
 
 use OAuth\OAuth2\Token\StdOAuth2Token;
@@ -27,7 +28,9 @@ class Google extends AbstractService
     const SCOPE_GPLUS_ME = 'https://www.googleapis.com/auth/plus.me';
     const SCOPE_GPLUS_LOGIN = 'https://www.googleapis.com/auth/plus.login';
     const SCOPE_GROUPS_PROVISIONING = 'https://apps-apis.google.com/a/feeds/groups/';
-    const SCOPE_GOOGLELATITUDE = 'https://www.googleapis.com/auth/latitude.all.best https://www.googleapis.com/auth/latitude.all.city'; // creepy stalker api...
+    const SCOPE_GOOGLELATITUDE =
+        'https://www.googleapis.com/auth/latitude.all.best https://www.googleapis.com/auth/latitude.all.city';
+        // creepy stalker api...
     const SCOPE_MODERATOR = 'https://www.googleapis.com/auth/moderator';
     const SCOPE_NICKNAME_PROVISIONING = 'https://apps-apis.google.com/a/feeds/alias/';
     const SCOPE_ORKUT = 'https://www.googleapis.com/auth/orkut'; // evidently orkut still exists. who knew?
@@ -43,7 +46,7 @@ class Google extends AbstractService
     const SCOPE_YOUTUBE = 'https://gdata.youtube.com';
 
     /**
-     * @return \OAuth\Common\Http\Uri\UriInterface
+     * {@inheritdoc}
      */
     public function getAuthorizationEndpoint()
     {
@@ -51,7 +54,7 @@ class Google extends AbstractService
     }
 
     /**
-     * @return \OAuth\Common\Http\Uri\UriInterface
+     * {@inheritdoc}
      */
     public function getAccessTokenEndpoint()
     {
@@ -59,33 +62,31 @@ class Google extends AbstractService
     }
 
     /**
-     * @param string $responseBody
-     * @return \OAuth\Common\Token\TokenInterface|\OAuth\OAuth2\Token\StdOAuth2Token
-     * @throws \OAuth\Common\Http\Exception\TokenResponseException
+     * {@inheritdoc}
      */
     protected function parseAccessTokenResponse($responseBody)
     {
-        $data = json_decode( $responseBody, true );
+        $data = json_decode($responseBody, true);
 
-        if( null === $data || !is_array($data) ) {
+        if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
-        } elseif( isset($data['error'] ) ) {
+        } elseif (isset($data['error'])) {
             throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
         }
 
         $token = new StdOAuth2Token();
-        $token->setAccessToken( $data['access_token'] );
-        $token->setLifetime( $data['expires_in'] );
+        $token->setAccessToken($data['access_token']);
+        $token->setLifetime($data['expires_in']);
 
-        if( isset($data['refresh_token'] ) ) {
-            $token->setRefreshToken( $data['refresh_token'] );
+        if (isset($data['refresh_token'])) {
+            $token->setRefreshToken($data['refresh_token']);
             unset($data['refresh_token']);
         }
 
-        unset( $data['access_token'] );
-        unset( $data['expires_in'] );
+        unset($data['access_token']);
+        unset($data['expires_in']);
 
-        $token->setExtraParams( $data );
+        $token->setExtraParams($data);
 
         return $token;
     }

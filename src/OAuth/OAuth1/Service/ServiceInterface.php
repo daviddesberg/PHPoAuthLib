@@ -18,7 +18,7 @@ use OAuth\OAuth1\Signature\SignatureInterface;
 interface ServiceInterface extends BaseServiceInterface
 {
     /**
-     * @param Credentials           $credentials
+     * @param CredentialsInterface           $credentials
      * @param ClientInterface       $httpClient
      * @param TokenStorageInterface $storage
      * @param SignatureInterface    $signature

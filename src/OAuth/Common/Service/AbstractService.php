@@ -30,8 +30,8 @@ abstract class AbstractService implements ServiceInterface
      * @param TokenStorageInterface $storage
      */
     public function __construct(
-        CredentialsInterface $credentials, 
-        ClientInterface $httpClient, 
+        CredentialsInterface $credentials,
+        ClientInterface $httpClient,
         TokenStorageInterface $storage
     ) {
         $this->credentials = $credentials;

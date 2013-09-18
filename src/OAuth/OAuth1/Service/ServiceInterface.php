@@ -25,7 +25,7 @@ interface ServiceInterface extends BaseServiceInterface
      * @param UriInterface|null     $baseApiUri
      */
     public function __construct(
-        Credentials $credentials,
+        CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
         SignatureInterface $signature,

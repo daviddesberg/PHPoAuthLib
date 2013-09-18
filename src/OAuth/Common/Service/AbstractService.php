@@ -1,6 +1,7 @@
 <?php
 namespace OAuth\Common\Service;
 
+use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Http\Uri\Uri;
@@ -27,7 +28,7 @@ abstract class AbstractService implements ServiceInterface
      * @param \OAuth\Common\Http\Client\ClientInterface $httpClient
      * @param \OAuth\Common\Storage\TokenStorageInterface $storage
      */
-    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage)
+    public function __construct(CredentialsInterface $credentials, ClientInterface $httpClient, TokenStorageInterface $storage)
     {
         $this->credentials = $credentials;
         $this->httpClient   = $httpClient;

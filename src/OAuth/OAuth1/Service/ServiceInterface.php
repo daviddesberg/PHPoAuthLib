@@ -1,6 +1,7 @@
 <?php
 namespace OAuth\OAuth1\Service;
 
+use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Token\TokenInterface;
@@ -23,7 +24,7 @@ interface ServiceInterface extends BaseServiceInterface
      * @param UriInterface|null $baseApiUri
      * @abstract
      */
-    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, SignatureInterface $signature, UriInterface $baseApiUri = null);
+    public function __construct(CredentialsInterface $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, SignatureInterface $signature, UriInterface $baseApiUri = null);
 
     /**
      * Retrieves and stores/returns the OAuth1 request token.

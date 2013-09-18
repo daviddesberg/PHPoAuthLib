@@ -1,6 +1,7 @@
 <?php
 namespace OAuth\OAuth1\Service;
 
+use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Exception\TokenResponseException;
@@ -30,7 +31,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * @param \OAuth\OAuth1\Signature\SignatureInterface $signature
      * @param UriInterface|null $baseApiUri
      */
-    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, SignatureInterface $signature, UriInterface $baseApiUri = null)
+    public function __construct(CredentialsInterface $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, SignatureInterface $signature, UriInterface $baseApiUri = null)
     {
         parent::__construct($credentials, $httpClient, $storage);
 

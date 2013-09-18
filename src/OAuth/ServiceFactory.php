@@ -17,7 +17,7 @@ class ServiceFactory
 {
     /** @var Common\Http\Client\ClientInterface */
     private $httpClient;
-
+    
     /**
      * @param Common\Http\Client\ClientInterface $httpClient
      * @return ServiceFactory
@@ -36,7 +36,7 @@ class ServiceFactory
      * @return ServiceInterface
      * @throws Common\Exception\Exception
      */
-    public function createService($serviceName, Common\Consumer\Credentials $credentials, Common\Storage\TokenStorageInterface $storage, $scopes = array())
+    public function createService($serviceName, Common\Consumer\CredentialsInterface $credentials, Common\Storage\TokenStorageInterface $storage, $scopes = array())
     {
         if( !$this->httpClient ) {
             // for backwards compatibility.

@@ -1,10 +1,12 @@
 <?php
+
 namespace OAuth\Common\Consumer;
 
-
+/**
+ * Credentials Interface, credentials should implement this.
+ */
 interface CredentialsInterface
 {
-   
     public function __construct($consumerId, $consumerSecret, $callbackUrl);
     
     /**
@@ -21,6 +23,4 @@ interface CredentialsInterface
      * @return string
      */
     public function getConsumerSecret();
-
-
 }

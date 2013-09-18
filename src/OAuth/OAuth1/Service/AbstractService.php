@@ -28,7 +28,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * {@inheritDoc}
      */
     public function __construct(
-        Credentials $credentials,
+        CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
         SignatureInterface $signature,

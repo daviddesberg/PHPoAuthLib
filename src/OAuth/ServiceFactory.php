@@ -14,7 +14,7 @@
 namespace OAuth;
 
 use OAuth\Common\Service\ServiceInterface;
-use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Http\Client\StreamClient;
@@ -85,7 +85,7 @@ class ServiceFactory
      */
     public function createService(
         $serviceName,
-        Credentials $credentials,
+        CredentialsInterface $credentials,
         TokenStorageInterface $storage,
         $scopes = array()
     ) {

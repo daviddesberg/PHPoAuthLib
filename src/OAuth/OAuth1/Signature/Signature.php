@@ -2,7 +2,7 @@
 
 namespace OAuth\OAuth1\Signature;
 
-use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\OAuth1\Signature\Exception\UnsupportedHashAlgorithmException;
 
@@ -24,9 +24,9 @@ class Signature implements SignatureInterface
     protected $tokenSecret = null;
 
     /**
-     * @param Credentials $credentials
+     * @param CredentialsInterface $credentials
      */
-    public function __construct(Credentials $credentials)
+    public function __construct(CredentialsInterface $credentials)
     {
         $this->credentials = $credentials;
     }

@@ -31,7 +31,7 @@ class ServiceFactory
         'OAuth1' => array(),
         'OAuth2' => array()
     );
-
+    
     /**
      * @param ClientInterface $httpClient
      *

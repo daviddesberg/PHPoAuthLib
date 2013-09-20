@@ -2,7 +2,7 @@
 
 namespace OAuth\OAuth2\Service;
 
-use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Exception\Exception;
 use OAuth\Common\Service\AbstractService as BaseAbstractService;
 use OAuth\Common\Storage\TokenStorageInterface;
@@ -35,7 +35,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * @throws InvalidScopeException
      */
     public function __construct(
-        Credentials $credentials,
+        CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
         $scopes = array(),

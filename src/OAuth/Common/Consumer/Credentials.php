@@ -5,7 +5,7 @@ namespace OAuth\Common\Consumer;
 /**
  * Value object for the credentials of an OAuth service.
  */
-class Credentials
+class Credentials implements CredentialsInterface
 {
     /**
      * @var string

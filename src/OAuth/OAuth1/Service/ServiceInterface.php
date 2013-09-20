@@ -2,7 +2,7 @@
 
 namespace OAuth\OAuth1\Service;
 
-use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Token\TokenInterface;
 use OAuth\Common\Http\Client\ClientInterface;
@@ -24,7 +24,7 @@ interface ServiceInterface extends BaseServiceInterface
      * @param UriInterface|null     $baseApiUri
      */
     public function __construct(
-        Credentials $credentials,
+        CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
         SignatureInterface $signature,

@@ -2,7 +2,7 @@
 
 namespace OAuth\OAuth1\Service;
 
-use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Client\ClientInterface;
@@ -27,7 +27,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * {@inheritDoc}
      */
     public function __construct(
-        Credentials $credentials,
+        CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
         SignatureInterface $signature,

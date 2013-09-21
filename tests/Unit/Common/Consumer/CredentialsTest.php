@@ -7,13 +7,45 @@ use OAuth\Common\Consumer\Credentials;
 class CredentialsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * This is silly.
+     * @covers OAuth\Common\Consumer\Credentials::__construct
      */
-    public function testGetters()
+    public function testConstructCorrectInterface()
     {
-        $a = new Credentials('a', 'b', 'c');
-        $this->assertSame('a', $a->getConsumerId());
-        $this->assertSame('b', $a->getConsumerSecret());
-        $this->assertSame('c', $a->getCallbackUrl());
+        $credentials = new Credentials('foo', 'bar', 'baz');
+
+        $this->assertInstanceOf('\\OAuth\\Common\\Consumer\\CredentialsInterface', $credentials);
+    }
+
+    /**
+     * @covers OAuth\Common\Consumer\Credentials::__construct
+     * @covers OAuth\Common\Consumer\Credentials::getConsumerId
+     */
+    public function testGetConsumerId()
+    {
+        $credentials = new Credentials('foo', 'bar', 'baz');
+
+        $this->assertSame('foo', $credentials->getConsumerId());
+    }
+
+    /**
+     * @covers OAuth\Common\Consumer\Credentials::__construct
+     * @covers OAuth\Common\Consumer\Credentials::getConsumerSecret
+     */
+    public function testGetConsumerSecret()
+    {
+        $credentials = new Credentials('foo', 'bar', 'baz');
+
+        $this->assertSame('bar', $credentials->getConsumerSecret());
+    }
+
+    /**
+     * @covers OAuth\Common\Consumer\Credentials::__construct
+     * @covers OAuth\Common\Consumer\Credentials::getCallbackUrl
+     */
+    public function testGetCallbackUrl()
+    {
+        $credentials = new Credentials('foo', 'bar', 'baz');
+
+        $this->assertSame('baz', $credentials->getCallbackUrl());
     }
 }

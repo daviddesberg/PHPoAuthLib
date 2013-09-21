@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 class SymfonySessionTest extends StorageTest
 {
     protected $session;
+    protected $storage;
 
     public function setUp()
     {

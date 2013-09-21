@@ -18,6 +18,7 @@ use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Http\Client\StreamClient;
+use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\Common\Exception\Exception;
 use OAuth\OAuth1\Signature\Signature;
 
@@ -78,6 +79,7 @@ class ServiceFactory
      * @param Credentials           $credentials
      * @param TokenStorageInterface $storage
      * @param array|null            $scopes      If creating an oauth2 service, array of scopes
+     * @param UriInterface|null     $baseApiUri
      *
      * @return ServiceInterface
      *
@@ -87,7 +89,8 @@ class ServiceFactory
         $serviceName,
         CredentialsInterface $credentials,
         TokenStorageInterface $storage,
-        $scopes = array()
+        $scopes = array(),
+        UriInterface $baseApiUri = null
     ) {
         if (!$this->httpClient) {
             // for backwards compatibility.
@@ -119,7 +122,7 @@ class ServiceFactory
                 }
             }
 
-            return new $v2ClassName($credentials, $this->httpClient, $storage, $resolvedScopes);
+            return new $v2ClassName($credentials, $this->httpClient, $storage, $resolvedScopes, $baseApiUri);
         }
 
         if (class_exists($v1ClassName)) {
@@ -130,7 +133,7 @@ class ServiceFactory
             }
             $signature = new Signature($credentials);
 
-            return new $v1ClassName($credentials, $this->httpClient, $storage, $signature);
+            return new $v1ClassName($credentials, $this->httpClient, $storage, $signature, $baseApiUri);
         }
 
         return null;

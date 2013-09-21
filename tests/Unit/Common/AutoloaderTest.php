@@ -2,42 +2,42 @@
 
 namespace OAuthTest\Unit\Commen\Core;
 
-use OAuth\Common\Autoloader;
+use OAuth\Common\AutoLoader;
 
-class AutoloaderTest extends \PHPUnit_Framework_TestCase
+class AutoLoaderTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers OAuth\Common\Autoloader::__construct
-     * @covers OAuth\Common\Autoloader::register
+     * @covers OAuth\Common\AutoLoader::__construct
+     * @covers OAuth\Common\AutoLoader::register
      */
     public function testRegister()
     {
-        $autoloader = new Autoloader('Test', '/');
+        $autoloader = new AutoLoader('Test', '/');
 
         $this->assertTrue($autoloader->register());
     }
 
     /**
-     * @covers OAuth\Common\Autoloader::__construct
-     * @covers OAuth\Common\Autoloader::register
-     * @covers OAuth\Common\Autoloader::unregister
+     * @covers OAuth\Common\AutoLoader::__construct
+     * @covers OAuth\Common\AutoLoader::register
+     * @covers OAuth\Common\AutoLoader::unregister
      */
     public function testUnregister()
     {
-        $autoloader = new Autoloader('Test', '/');
+        $autoloader = new AutoLoader('Test', '/');
 
         $this->assertTrue($autoloader->register());
         $this->assertTrue($autoloader->unregister());
     }
 
     /**
-     * @covers OAuth\Common\Autoloader::__construct
-     * @covers OAuth\Common\Autoloader::register
-     * @covers OAuth\Common\Autoloader::load
+     * @covers OAuth\Common\AutoLoader::__construct
+     * @covers OAuth\Common\AutoLoader::register
+     * @covers OAuth\Common\AutoLoader::load
      */
     public function testLoadSuccess()
     {
-        $autoloader = new Autoloader('FakeProject', dirname(__DIR__) . '/../Mocks/Common');
+        $autoloader = new AutoLoader('FakeProject', dirname(__DIR__) . '/../Mocks/Common');
 
         $this->assertTrue($autoloader->register());
 
@@ -47,13 +47,13 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Autoloader::__construct
-     * @covers OAuth\Common\Autoloader::register
-     * @covers OAuth\Common\Autoloader::load
+     * @covers OAuth\Common\AutoLoader::__construct
+     * @covers OAuth\Common\AutoLoader::register
+     * @covers OAuth\Common\AutoLoader::load
      */
     public function testLoadSuccessExtraSlashedNamespace()
     {
-        $autoloader = new Autoloader('\\\\FakeProject', dirname(__DIR__) . '/../Mocks/Common');
+        $autoloader = new AutoLoader('\\\\FakeProject', dirname(__DIR__) . '/../Mocks/Common');
 
         $this->assertTrue($autoloader->register());
 
@@ -63,13 +63,13 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Autoloader::__construct
-     * @covers OAuth\Common\Autoloader::register
-     * @covers OAuth\Common\Autoloader::load
+     * @covers OAuth\Common\AutoLoader::__construct
+     * @covers OAuth\Common\AutoLoader::register
+     * @covers OAuth\Common\AutoLoader::load
      */
     public function testLoadSuccessExtraForwardSlashedPath()
     {
-        $autoloader = new Autoloader('FakeProject', dirname(__DIR__) . '/../Mocks/Common//');
+        $autoloader = new AutoLoader('FakeProject', dirname(__DIR__) . '/../Mocks/Common//');
 
         $this->assertTrue($autoloader->register());
 
@@ -79,13 +79,13 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Autoloader::__construct
-     * @covers OAuth\Common\Autoloader::register
-     * @covers OAuth\Common\Autoloader::load
+     * @covers OAuth\Common\AutoLoader::__construct
+     * @covers OAuth\Common\AutoLoader::register
+     * @covers OAuth\Common\AutoLoader::load
      */
     public function testLoadSuccessExtraBackwardSlashedPath()
     {
-        $autoloader = new Autoloader('FakeProject', dirname(__DIR__) . '/../Mocks/Common\\');
+        $autoloader = new AutoLoader('FakeProject', dirname(__DIR__) . '/../Mocks/Common\\');
 
         $this->assertTrue($autoloader->register());
 
@@ -95,13 +95,13 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Autoloader::__construct
-     * @covers OAuth\Common\Autoloader::register
-     * @covers OAuth\Common\Autoloader::load
+     * @covers OAuth\Common\AutoLoader::__construct
+     * @covers OAuth\Common\AutoLoader::register
+     * @covers OAuth\Common\AutoLoader::load
      */
     public function testLoadSuccessExtraMixedSlashedPath()
     {
-        $autoloader = new Autoloader('FakeProject', dirname(__DIR__) . '/../Mocks/Common\\\\/\\//');
+        $autoloader = new AutoLoader('FakeProject', dirname(__DIR__) . '/../Mocks/Common\\\\/\\//');
 
         $this->assertTrue($autoloader->register());
 
@@ -111,13 +111,13 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Autoloader::__construct
-     * @covers OAuth\Common\Autoloader::register
-     * @covers OAuth\Common\Autoloader::load
+     * @covers OAuth\Common\AutoLoader::__construct
+     * @covers OAuth\Common\AutoLoader::register
+     * @covers OAuth\Common\AutoLoader::load
      */
     public function testLoadUnknownClass()
     {
-        $autoloader = new Autoloader('FakeProject', dirname(__DIR__) . '/../Mocks/Common\\\\/\\//');
+        $autoloader = new AutoLoader('FakeProject', dirname(__DIR__) . '/../Mocks/Common\\\\/\\//');
 
         $this->assertTrue($autoloader->register());
 

@@ -26,6 +26,7 @@
             <directory suffix=".php">src/</directory>
             <exclude>
                 <file>src/OAuth/bootstrap.php</file>
+                <file>src/OAuth/Common/Exception/Exception.php</file>
             </exclude>
         </whitelist>
     </filter>

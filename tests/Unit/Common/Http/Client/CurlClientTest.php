@@ -104,7 +104,7 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
 
         $response = $client->retrieveResponse(
             $endPoint,
-            ['foo' => 'bar', 'baz' => 'fab'],
+            array('foo' => 'bar', 'baz' => 'fab'),
             array(),
             'POST'
         );
@@ -132,7 +132,7 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
 
         $response = $client->retrieveResponse(
             $endPoint,
-            ['foo' => 'bar', 'baz' => 'fab'],
+            array('foo' => 'bar', 'baz' => 'fab'),
             array(),
             'POST'
         );

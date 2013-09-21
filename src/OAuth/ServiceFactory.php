@@ -7,6 +7,7 @@
  *
  * @category   OAuth
  * @author     David Desberg <david@daviddesberg.com>
+ * @author     Pieter Hordijk <info@pieterhordijk.com>
  * @copyright  Copyright (c) 2013 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
@@ -24,13 +25,25 @@ use OAuth\OAuth1\Signature\Signature;
 
 class ServiceFactory
 {
-    /** @var ClientInterface */
+    /**
+     *@var ClientInterface
+     */
     protected $httpClient;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     protected $serviceClassMap = array(
         'OAuth1' => array(),
         'OAuth2' => array()
+    );
+
+    /**
+     * @var array
+     */
+    protected $serviceBuilders = array(
+        'OAuth2' => 'buildV2Service',
+        'OAuth1' => 'buildV1Service',
     );
 
     /**
@@ -75,6 +88,10 @@ class ServiceFactory
     }
 
     /**
+     * Builds and returns oauth services
+     *
+     * It will first try to build an OAuth2 service and if none found it will try to build an OAuth1 service
+     *
      * @param string                $serviceName Name of service to create
      * @param Credentials           $credentials
      * @param TokenStorageInterface $storage
@@ -97,45 +114,116 @@ class ServiceFactory
             $this->httpClient = new StreamClient();
         }
 
-        $serviceName = ucfirst($serviceName);
-        $v2ClassName = isset($this->serviceClassMap['OAuth2'][$serviceName])
-            ? $this->serviceClassMap['OAuth2'][$serviceName]
-            : "\\OAuth\\OAuth2\\Service\\$serviceName";
-        $v1ClassName = isset($this->serviceClassMap['OAuth1'][$serviceName])
-            ? $this->serviceClassMap['OAuth1'][$serviceName]
-            : "\\OAuth\\OAuth1\\Service\\$serviceName";
+        foreach ($this->serviceBuilders as $version => $buildMethod) {
+            $fullyQualifiedServiceName = $this->getFullyQualifiedServiceName($serviceName, $version);
 
-        // if an oauth2 version exists, prefer it
-        if (class_exists($v2ClassName)) {
-            // resolve scopes
-            $resolvedScopes = array();
-            $reflClass = new \ReflectionClass($v2ClassName);
-            $constants = $reflClass->getConstants();
-
-            foreach ($scopes as $scope) {
-                $key = strtoupper('SCOPE_' . $scope);
-                // try to find a class constant with this name
-                if (array_key_exists($key, $constants)) {
-                    $resolvedScopes[] = $constants[$key];
-                } else {
-                    $resolvedScopes[] = $scope;
-                }
+            if (class_exists($fullyQualifiedServiceName)) {
+                return $this->$buildMethod($fullyQualifiedServiceName, $credentials, $storage, $scopes, $baseApiUri);
             }
-
-            return new $v2ClassName($credentials, $this->httpClient, $storage, $resolvedScopes, $baseApiUri);
-        }
-
-        if (class_exists($v1ClassName)) {
-            if (!empty($scopes)) {
-                throw new Exception(
-                    'Scopes passed to ServiceFactory::createService but an OAuth1 service was requested.'
-                );
-            }
-            $signature = new Signature($credentials);
-
-            return new $v1ClassName($credentials, $this->httpClient, $storage, $signature, $baseApiUri);
         }
 
         return null;
+    }
+
+    /**
+     * Gets the fully qualified name of the service
+     *
+     * @param string $serviceName The name of the service of which to get the fully qualified name
+     * @param string $type        The type of the service to get (either OAuth1 or OAuth2)
+     *
+     * @return string The fully qualified name of the service
+     */
+    private function getFullyQualifiedServiceName($serviceName, $type)
+    {
+        $serviceName = ucfirst($serviceName);
+
+        if (isset($this->serviceClassMap[$type][$serviceName])) {
+            return $this->serviceClassMap[$type][$serviceName];
+        }
+
+        return '\\OAuth\\' . $type . '\\Service\\' . $serviceName;
+    }
+
+    /**
+     * Builds v2 services
+     *
+     * @param string                $serviceName The fully qualified service name
+     * @param CredentialsInterface  $credentials
+     * @param TokenStorageInterface $storage
+     * @param array|null            $scopes      Array of scopes for the service
+     * @param UriInterface|null     $baseApiUri
+     *
+     * @return ServiceInterface
+     *
+     * @throws Exception
+     */
+    private function buildV2Service(
+        $serviceName,
+        CredentialsInterface $credentials,
+        TokenStorageInterface $storage,
+        array $scopes,
+        UriInterface $baseApiUri = null
+    ) {
+        return new $serviceName(
+            $credentials,
+            $this->httpClient,
+            $storage,
+            $this->resolveScopes($serviceName, $scopes),
+            $baseApiUri
+        );
+    }
+
+    /**
+     * Resolves scopes for v2 services
+     *
+     * @param $string $serviceName The fully qualified service name
+     * @param array   $scopes      List of scopes for the service
+     *
+     * @return array List of resolved scopes
+     */
+    private function resolveScopes($serviceName, array $scopes)
+    {
+        $reflClass = new \ReflectionClass($serviceName);
+        $constants = $reflClass->getConstants();
+
+        $resolvedScopes = array();
+        foreach ($scopes as $scope) {
+            $key = strtoupper('SCOPE_' . $scope);
+
+            if (array_key_exists($key, $constants)) {
+                $resolvedScopes[] = $constants[$key];
+            } else {
+                $resolvedScopes[] = $scope;
+            }
+        }
+
+        return $resolvedScopes;
+    }
+
+    /**
+     * Builds v1 services
+     *
+     * @param string                $serviceName The fully qualified service name
+     * @param CredentialsInterface  $credentials
+     * @param TokenStorageInterface $storage
+     *
+     * @return ServiceInterface
+     *
+     * @throws Exception
+     */
+    private function buildV1Service(
+        $serviceName,
+        CredentialsInterface $credentials,
+        TokenStorageInterface $storage,
+        $scopes,
+        UriInterface $baseApiUri = null
+    ) {
+        if (!empty($scopes)) {
+            throw new Exception(
+                'Scopes passed to ServiceFactory::createService but an OAuth1 service was requested.'
+            );
+        }
+
+        return new $serviceName($credentials, $this->httpClient, $storage, new Signature($credentials), $baseApiUri);
     }
 }

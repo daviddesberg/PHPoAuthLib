@@ -2,3 +2,4 @@
 vendor
 .DS_Store
 examples/init.php
+composer.lock

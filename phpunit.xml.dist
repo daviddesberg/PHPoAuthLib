@@ -27,6 +27,7 @@
             <exclude>
                 <file>src/OAuth/bootstrap.php</file>
                 <file>src/OAuth/Common/Exception/Exception.php</file>
+                <file>src/OAuth/Common/Http/Exception/TokenResponseException.php</file>
             </exclude>
         </whitelist>
     </filter>

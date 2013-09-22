@@ -1,105 +1,225 @@
 <?php
 
-/**
- * @category   OAuth
- * @package    Tests
- * @author     David Desberg <david@daviddesberg.com>
- * @copyright  Copyright (c) 2012 The authors
- * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
- */
-
-namespace OAuth\Unit\Common\Storage;
+namespace OAuthTest\Unit\Common\Storage;
 
 use OAuth\Common\Storage\Session;
-use OAuth\OAuth2\Token\StdOAuth2Token;
 
 class SessionTest extends \PHPUnit_Framework_TestCase
 {
-    protected $storage;
-
-    public function setUp()
+    /**
+     * @covers OAuth\Common\Storage\Session::__construct
+     *
+     * @runInSeparateProcess
+     */
+    public function testConstructCorrectInterface()
     {
-        // set it
-        $_SESSION = array();
-        $this->storage = new Session();
-    }
+        $storage = new Session();
 
-    public function tearDown()
-    {
-        // empty
+        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\TokenStorageInterface', $storage);
     }
 
     /**
-     * Check that the token survives the constructor
+     * @covers OAuth\Common\Storage\Session::__construct
+     *
+     * @runInSeparateProcess
      */
-    public function testStorageSurvivesConstructor()
+    public function testConstructWithoutStartingSession()
     {
-        $service = 'Facebook';
-        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param'));
+        session_start();
 
-        // act
-        $this->storage->storeAccessToken($service, $token);
-        $this->storage = null;
-        $this->storage = new Session(false);
+        $storage = new Session(false);
 
-        // assert
-        $extraParams = $this->storage->retrieveAccessToken($service)->getExtraParams();
-        $this->assertEquals('param', $extraParams['extra']);
-        $this->assertEquals($token, $this->storage->retrieveAccessToken($service));
+        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\TokenStorageInterface', $storage);
     }
 
     /**
-     * Check that the token gets properly stored.
+     * @covers OAuth\Common\Storage\Session::__construct
+     *
+     * @runInSeparateProcess
      */
-    public function testStorage()
+    public function testConstructTryingToStartWhileSessionAlreadyExists()
     {
-        // arrange
-        $service_1 = 'Facebook';
-        $service_2 = 'Foursquare';
+        session_start();
 
-        $token_1 = new StdOAuth2Token('access_1', 'refresh_1', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param'));
-        $token_2 = new StdOAuth2Token('access_2', 'refresh_2', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param'));
+        $storage = new Session();
 
-        // act
-        $this->storage->storeAccessToken($service_1, $token_1);
-        $this->storage->storeAccessToken($service_2, $token_2);
-
-        // assert
-        $extraParams = $this->storage->retrieveAccessToken($service_1)->getExtraParams();
-        $this->assertEquals('param', $extraParams['extra']);
-        $this->assertEquals($token_1, $this->storage->retrieveAccessToken($service_1));
-        $this->assertEquals($token_2, $this->storage->retrieveAccessToken($service_2));
+        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\TokenStorageInterface', $storage);
     }
 
     /**
-     * Test hasAccessToken.
+     * @covers OAuth\Common\Storage\Session::__construct
+     *
+     * @runInSeparateProcess
      */
-    public function testHasAccessToken()
+    public function testConstructWithExistingSessionKey()
     {
-        // arrange
-        $service = 'Facebook';
-        $this->storage->clearToken($service);
+        session_start();
 
-        // act
-        // assert
-        $this->assertFalse($this->storage->hasAccessToken($service));
+        $_SESSION['lusitanian_oauth_token'] = array();
+
+        $storage = new Session();
+
+        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\TokenStorageInterface', $storage);
     }
 
     /**
-     * Check that the token gets properly deleted.
+     * @covers OAuth\Common\Storage\Session::__construct
+     * @covers OAuth\Common\Storage\Session::storeAccessToken
+     *
+     * @runInSeparateProcess
      */
-    public function testStorageClears()
+    public function testStoreAccessTokenIsAlreadyArray()
     {
-        // arrange
-        $service = 'Facebook';
-        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param'));
+        $storage = new Session();
 
-        // act
-        $this->storage->storeAccessToken($service, $token);
-        $this->storage->clearToken($service);
+        $this->assertInstanceOf(
+            '\\OAuth\\Common\\Storage\\Session',
+            $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'))
+        );
+    }
 
-        // assert
-        $this->setExpectedException('OAuth\Common\Storage\Exception\TokenNotFoundException');
-        $this->storage->retrieveAccessToken($service);
+    /**
+     * @covers OAuth\Common\Storage\Session::__construct
+     * @covers OAuth\Common\Storage\Session::storeAccessToken
+     *
+     * @runInSeparateProcess
+     */
+    public function testStoreAccessTokenIsNotArray()
+    {
+        $storage = new Session();
+
+        $_SESSION['lusitanian_oauth_token'] = 'foo';
+
+        $this->assertInstanceOf(
+            '\\OAuth\\Common\\Storage\\Session',
+            $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'))
+        );
+    }
+
+    /**
+     * @covers OAuth\Common\Storage\Session::__construct
+     * @covers OAuth\Common\Storage\Session::storeAccessToken
+     * @covers OAuth\Common\Storage\Session::retrieveAccessToken
+     * @covers OAuth\Common\Storage\Session::hasAccessToken
+     *
+     * @runInSeparateProcess
+     */
+    public function testRetrieveAccessTokenValid()
+    {
+        $storage = new Session();
+
+        $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
+
+        $this->assertInstanceOf('\\OAuth\\Common\\Token\\TokenInterface', $storage->retrieveAccessToken('foo'));
+    }
+
+    /**
+     * @covers OAuth\Common\Storage\Session::__construct
+     * @covers OAuth\Common\Storage\Session::retrieveAccessToken
+     * @covers OAuth\Common\Storage\Session::hasAccessToken
+     *
+     * @runInSeparateProcess
+     */
+    public function testRetrieveAccessTokenThrowsExceptionWhenTokenIsNotFound()
+    {
+        $this->setExpectedException('\\OAuth\\Common\\Storage\\Exception\\TokenNotFoundException');
+
+        $storage = new Session();
+
+        $storage->retrieveAccessToken('foo');
+    }
+
+    /**
+     * @covers OAuth\Common\Storage\Session::__construct
+     * @covers OAuth\Common\Storage\Session::storeAccessToken
+     * @covers OAuth\Common\Storage\Session::hasAccessToken
+     *
+     * @runInSeparateProcess
+     */
+    public function testHasAccessTokenTrue()
+    {
+        $storage = new Session();
+
+        $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
+
+        $this->assertTrue($storage->hasAccessToken('foo'));
+    }
+
+    /**
+     * @covers OAuth\Common\Storage\Session::__construct
+     * @covers OAuth\Common\Storage\Session::hasAccessToken
+     *
+     * @runInSeparateProcess
+     */
+    public function testHasAccessTokenFalse()
+    {
+        $storage = new Session();
+
+        $this->assertFalse($storage->hasAccessToken('foo'));
+    }
+
+    /**
+     * @covers OAuth\Common\Storage\Session::__construct
+     * @covers OAuth\Common\Storage\Session::clearToken
+     *
+     * @runInSeparateProcess
+     */
+    public function testClearTokenIsNotSet()
+    {
+        $storage = new Session();
+
+        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\Session', $storage->clearToken('foo'));
+    }
+
+    /**
+     * @covers OAuth\Common\Storage\Session::__construct
+     * @covers OAuth\Common\Storage\Session::storeAccessToken
+     * @covers OAuth\Common\Storage\Session::clearToken
+     *
+     * @runInSeparateProcess
+     */
+    public function testClearTokenSet()
+    {
+        $storage = new Session();
+
+        $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
+
+        $this->assertTrue($storage->hasAccessToken('foo'));
+        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\Session', $storage->clearToken('foo'));
+        $this->assertFalse($storage->hasAccessToken('foo'));
+    }
+
+    /**
+     * @covers OAuth\Common\Storage\Session::__construct
+     * @covers OAuth\Common\Storage\Session::storeAccessToken
+     * @covers OAuth\Common\Storage\Session::clearAllTokens
+     *
+     * @runInSeparateProcess
+     */
+    public function testClearAllTokens()
+    {
+        $storage = new Session();
+
+        $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
+        $storage->storeAccessToken('bar', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
+
+        $this->assertTrue($storage->hasAccessToken('foo'));
+        $this->assertTrue($storage->hasAccessToken('bar'));
+        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\Session', $storage->clearAllTokens());
+        $this->assertFalse($storage->hasAccessToken('foo'));
+        $this->assertFalse($storage->hasAccessToken('bar'));
+    }
+
+    /**
+     * @covers OAuth\Common\Storage\Session::__construct
+     * @covers OAuth\Common\Storage\Session::__destruct
+     *
+     * @runInSeparateProcess
+     */
+    public function testDestruct()
+    {
+        $storage = new Session();
+
+        unset($storage);
     }
 }

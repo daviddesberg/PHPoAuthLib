@@ -4,13 +4,6 @@ namespace OAuthTest\Unit\Common\Service;
 
 use OAuthTest\Mocks\Common\Service\Mock;
 
-//use OAuth\Common\Consumer\CredentialsInterface;
-//use OAuth\Common\Http\Client\ClientInterface;
-//use OAuth\Common\Http\Uri\Uri;
-//use OAuth\Common\Http\Uri\UriInterface;
-//use OAuth\Common\Exception\Exception;
-//use OAuth\Common\Storage\TokenStorageInterface;
-
 class AbstractServiceTest extends \PHPUnit_Framework_TestCase
 {
     /**

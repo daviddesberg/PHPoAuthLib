@@ -230,11 +230,6 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testRetrieveResponseWithForcedSsl3()
     {
-        $this->setExpectedException(
-            '\\OAuth\\Common\\Http\\Exception\\TokenResponseException',
-            "cURL Error # 60: SSL certificate problem, verify that the CA cert is OK. Details:\nerror:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed"
-        );
-
         $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
         $endPoint->expects($this->any())
             ->method('getHost')
@@ -242,6 +237,37 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
         $endPoint->expects($this->any())
             ->method('getAbsoluteUri')
             ->will($this->returnValue('https://httpbin.org/get'));
+
+        $client = new CurlClient();
+
+        $client->setForceSSL3(true);
+
+        $response = $client->retrieveResponse(
+            $endPoint,
+            '',
+            array('Content-type' => 'foo/bar'),
+            'get'
+        );
+
+        $response = json_decode($response, true);
+
+        $this->assertSame('foo/bar', $response['headers']['Content-Type']);
+    }
+
+    /**
+     * @covers OAuth\Common\Http\Client\CurlClient::retrieveResponse
+     */
+    public function testRetrieveResponseThrowsExceptionOnInvalidUrl()
+    {
+        $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
+
+        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $endPoint->expects($this->any())
+            ->method('getHost')
+            ->will($this->returnValue('jkehfkefcmekjhcnkerjh'));
+        $endPoint->expects($this->any())
+            ->method('getAbsoluteUri')
+            ->will($this->returnValue('jkehfkefcmekjhcnkerjh'));
 
         $client = new CurlClient();
 

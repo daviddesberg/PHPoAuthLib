@@ -112,7 +112,7 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
         $response = json_decode($response, true);
 
         $this->assertSame('application/x-www-form-urlencoded', $response['headers']['Content-Type']);
-        $this->assertEquals(['foo' => 'bar', 'baz' => 'fab'], $response['form']);
+        $this->assertEquals(array('foo' => 'bar', 'baz' => 'fab'), $response['form']);
     }
 
     /**

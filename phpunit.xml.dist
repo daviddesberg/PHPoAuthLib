@@ -32,6 +32,8 @@
                 <file>src/OAuth/Common/Storage/Exception/TokenNotFoundException.php</file>
                 <file>src/OAuth/Common/Token/Exception/ExpiredTokenException.php</file>
                 <file>src/OAuth/OAuth1/Signature/Exception/UnsupportedHashAlgorithmException.php</file>
+                <file>src/OAuth/OAuth2/Service/Exception/InvalidScopeException.php</file>
+                <file>src/OAuth/OAuth2/Service/Exception/MissingRefreshTokenException.php</file>
             </exclude>
         </whitelist>
     </filter>

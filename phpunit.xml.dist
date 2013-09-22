@@ -30,6 +30,7 @@
                 <file>src/OAuth/Common/Http/Exception/TokenResponseException.php</file>
                 <file>src/OAuth/Common/Storage/Exception/StorageException.php</file>
                 <file>src/OAuth/Common/Storage/Exception/TokenNotFoundException.php</file>
+                <file>src/OAuth/Common/Token/Exception/ExpiredTokenException.php</file>
             </exclude>
         </whitelist>
     </filter>

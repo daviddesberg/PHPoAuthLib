@@ -28,6 +28,8 @@
                 <file>src/OAuth/bootstrap.php</file>
                 <file>src/OAuth/Common/Exception/Exception.php</file>
                 <file>src/OAuth/Common/Http/Exception/TokenResponseException.php</file>
+                <file>src/OAuth/Common/Storage/Exception/StorageException.php</file>
+                <file>src/OAuth/Common/Storage/Exception/TokenNotFoundException.php</file>
             </exclude>
         </whitelist>
     </filter>

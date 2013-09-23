@@ -95,6 +95,7 @@ class CurlClient extends AbstractClient
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $extraHeaders);
+        curl_setopt($ch, CURLOPT_USERAGENT, $this->userAgent);
 
         if ($this->forceSSL3) {
             curl_setopt($ch, CURLOPT_SSLVERSION, 3);

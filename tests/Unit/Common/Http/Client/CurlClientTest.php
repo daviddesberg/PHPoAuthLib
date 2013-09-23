@@ -61,6 +61,62 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers OAuth\Common\Http\Client\StreamClient::retrieveResponse
+     * @covers OAuth\Common\Http\Client\StreamClient::generateStreamContext
+     */
+    public function testRetrieveResponseDefaultUserAgent()
+    {
+        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $endPoint->expects($this->any())
+            ->method('getHost')
+            ->will($this->returnValue('httpbin.org'));
+        $endPoint->expects($this->any())
+            ->method('getAbsoluteUri')
+            ->will($this->returnValue('http://httpbin.org/get'));
+
+        $client = new CurlClient();
+
+        $response = $client->retrieveResponse(
+            $endPoint,
+            '',
+            array(),
+            'get'
+        );
+
+        $response = json_decode($response, true);
+
+        $this->assertSame('Lusitanian OAuth Client', $response['headers']['User-Agent']);
+    }
+
+    /**
+     * @covers OAuth\Common\Http\Client\StreamClient::retrieveResponse
+     * @covers OAuth\Common\Http\Client\StreamClient::generateStreamContext
+     */
+    public function testRetrieveResponseCustomUserAgent()
+    {
+        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $endPoint->expects($this->any())
+            ->method('getHost')
+            ->will($this->returnValue('httpbin.org'));
+        $endPoint->expects($this->any())
+            ->method('getAbsoluteUri')
+            ->will($this->returnValue('http://httpbin.org/get'));
+
+        $client = new CurlClient('My Super Awesome Http Client');
+
+        $response = $client->retrieveResponse(
+            $endPoint,
+            '',
+            array(),
+            'get'
+        );
+
+        $response = json_decode($response, true);
+
+        $this->assertSame('My Super Awesome Http Client', $response['headers']['User-Agent']);
+    }
+
+    /**
      * @covers OAuth\Common\Http\Client\CurlClient::retrieveResponse
      */
     public function testRetrieveResponseWithCustomContentType()

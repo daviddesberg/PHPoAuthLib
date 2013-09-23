@@ -5,7 +5,7 @@ namespace OAuthTest\Unit\Common\Http;
 class AbstractClientTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     *
+     * @covers OAuth\Common\Http\Client\AbstractClient::__construct
      */
     public function testConstructCorrectInterface()
     {
@@ -15,6 +15,7 @@ class AbstractClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers OAuth\Common\Http\Client\AbstractClient::__construct
      * @covers OAuth\Common\Http\Client\AbstractClient::setMaxRedirects
      */
     public function testSetMaxRedirects()
@@ -26,6 +27,7 @@ class AbstractClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers OAuth\Common\Http\Client\AbstractClient::__construct
      * @covers OAuth\Common\Http\Client\AbstractClient::setTimeout
      */
     public function testSetTimeout()
@@ -37,6 +39,7 @@ class AbstractClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers OAuth\Common\Http\Client\AbstractClient::__construct
      * @covers OAuth\Common\Http\Client\AbstractClient::normalizeHeaders
      */
     public function testNormalizeHeaders()

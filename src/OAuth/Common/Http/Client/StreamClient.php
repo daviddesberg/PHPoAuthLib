@@ -75,7 +75,7 @@ class StreamClient extends AbstractClient
                     'header'           => array_values($headers),
                     'content'          => $body,
                     'protocol_version' => '1.1',
-                    'user_agent'       => 'Lusitanian OAuth Client',
+                    'user_agent'       => $this->userAgent,
                     'max_redirects'    => $this->maxRedirects,
                     'timeout'          => $this->timeout
                 ),

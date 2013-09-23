@@ -7,8 +7,30 @@ namespace OAuth\Common\Http\Client;
  */
 abstract class AbstractClient implements ClientInterface
 {
+    /**
+     * @var string The user agent string passed to services
+     */
+    protected $userAgent;
+
+    /**
+     * @var int The maximum number of redirects
+     */
     protected $maxRedirects = 5;
-    protected $timeout      = 15;
+
+    /**
+     * @var int The maximum timeout
+     */
+    protected $timeout = 15;
+
+    /**
+     * Creates instance
+     *
+     * @param string $userAgent The UA string the client will use
+     */
+    public function __construct($userAgent = 'Lusitanian OAuth Client')
+    {
+        $this->userAgent = $userAgent;
+    }
 
     /**
      * @param int $maxRedirects Maximum redirects for client

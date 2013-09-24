@@ -47,7 +47,7 @@ if (!empty($_GET['code'])) {
     // Show some of the resultant data
     echo 'Your unique instagram user id is: ' . $result['data']['id'] . ' and your name is ' . $result['data']['full_name'];
 
-} elseif (!empty($_GET['go']) && $_GET['go'] == 'go') {
+} elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $instagramService->getAuthorizationUri();
     header('Location: ' . $url);
 } else {

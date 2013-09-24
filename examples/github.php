@@ -42,7 +42,7 @@ if (!empty($_GET['code'])) {
 
     echo 'The first email on your github account is ' . $result[0];
 
-} elseif (!empty($_GET['go']) && $_GET['go'] == 'go') {
+} elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $gitHub->getAuthorizationUri();
     header('Location: ' . $url);
 

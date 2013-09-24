@@ -44,7 +44,7 @@ if (!empty($_GET['code'])) {
     // Show some of the resultant data
     echo 'Your unique user id is: ' . $result['id'] . ' and your name is ' . $result['username'];
 
-} elseif (!empty($_GET['go']) && $_GET['go'] == 'go') {
+} elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $soundcloudService->getAuthorizationUri();
     header('Location: ' . $url);
 } else {

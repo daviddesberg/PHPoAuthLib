@@ -26,7 +26,7 @@ date_default_timezone_set('Europe/Amsterdam');
  */
 spl_autoload_register(function ($class) {
     $nslen = strlen(__NAMESPACE__);
-    if (substr($class, 0, $nslen) != __NAMESPACE__) {
+    if (substr($class, 0, $nslen) !== __NAMESPACE__) {
         return;
     }
     $path = substr(str_replace('\\', '/', $class), $nslen);

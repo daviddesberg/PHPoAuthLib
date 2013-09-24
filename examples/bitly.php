@@ -44,7 +44,7 @@ if (!empty($_GET['code'])) {
     // Show some of the resultant data
     echo 'Your unique user id is: ' . $result['data']['login'] . ' and your name is ' . $result['data']['display_name'];
 
-} elseif (!empty($_GET['go']) && $_GET['go'] == 'go') {
+} elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $bitlyService->getAuthorizationUri();
     header('Location: ' . $url);
 } else {

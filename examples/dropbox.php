@@ -43,7 +43,7 @@ if (!empty($_GET['code'])) {
     // Show some of the resultant data
     echo 'Your unique Dropbox user id is: ' . $result['uid'] . ' and your name is ' . $result['display_name'];
 
-} elseif (!empty($_GET['go']) && $_GET['go'] == 'go') {
+} elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $dropboxService->getAuthorizationUri();
     header('Location: ' . $url);
 } else {

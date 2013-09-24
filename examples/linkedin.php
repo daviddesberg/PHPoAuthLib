@@ -45,7 +45,7 @@ if (!empty($_GET['code'])) {
     // Show some of the resultant data
     echo 'Your linkedin first name is ' . $result['firstName'] . ' and your last name is ' . $result['lastName'];
 
-} elseif (!empty($_GET['go']) && $_GET['go'] == 'go') {
+} elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     // state is used to prevent CSRF, it's required
     $url = $linkedinService->getAuthorizationUri(array('state' => 'DCEEFWF45453sdffef424'));
     header('Location: ' . $url);

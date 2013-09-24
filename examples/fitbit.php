@@ -49,7 +49,7 @@ if (!empty($_GET['oauth_token'])) {
 
     echo 'result: <pre>' . print_r($result, true) . '</pre>';
 
-} elseif (!empty($_GET['go']) && $_GET['go'] == 'go') {
+} elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     // extra request needed for oauth1 to request a request token :-)
     $token = $fitbitService->requestRequestToken();
 

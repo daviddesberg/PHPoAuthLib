@@ -44,7 +44,7 @@ if (!empty($_GET['code'])) {
     // Show some of the resultant data
     echo 'Your unique foursquare user id is: ' . $result['response']['user']['id'] . ' and your name is ' . $result['response']['user']['firstName'] . $result['response']['user']['lastName'];
 
-} elseif (!empty($_GET['go']) && $_GET['go'] == 'go') {
+} elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $foursquareService->getAuthorizationUri();
     header('Location: ' . $url);
 } else {

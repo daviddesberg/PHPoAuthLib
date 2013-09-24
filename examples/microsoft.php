@@ -40,7 +40,7 @@ if (!empty($_GET['code'])) {
 
     var_dump($token);
 
-} elseif (!empty($_GET['go']) && $_GET['go'] == 'go') {
+} elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $microsoft->getAuthorizationUri();
     header('Location: ' . $url);
 } else {

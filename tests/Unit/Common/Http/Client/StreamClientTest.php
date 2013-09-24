@@ -75,7 +75,7 @@ class StreamClientTest extends \PHPUnit_Framework_TestCase
 
         $response = json_decode($response, true);
 
-        $this->assertSame('Lusitanian OAuth Client', $response['headers']['User-Agent']);
+        $this->assertSame('PHPoAuthLib', $response['headers']['User-Agent']);
     }
 
     /**

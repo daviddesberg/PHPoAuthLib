@@ -76,16 +76,20 @@ $servicesCredentials = array(
         'secret'    => '',
     ),
     'amazon' => array(
-        'key'		=> '',
-        'secret'	=> '',
+        'key'       => '',
+        'secret'    => '',
     ),
     'paypal' => array(
-        'key'		=> '',
-        'secret'	=> '',
+        'key'       => '',
+        'secret'    => '',
     ),
     'dropbox' => array(
-        'key'		=> '',
-        'secret'	=> '',
+        'key'       => '',
+        'secret'    => '',
+    ),
+    'dailymotion' => array(
+        'key'       => '',
+        'secret'    => '',
     ),
 );
 

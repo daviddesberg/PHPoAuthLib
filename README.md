@@ -64,6 +64,7 @@ Included service implementations
     - Amazon
     - PayPal
     - Dropbox
+    - Dailymotion
 - more to come!
 
 Examples

@@ -94,10 +94,12 @@ class Dailymotion extends AbstractService
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error_description']) || isset($data['error'])) {
-            throw new TokenResponseException(sprintf(
-                'Error in retrieving token: "%s"',
-                isset($data['error_description']) ? $data['error_description'] : $data['error']
-            ));
+            throw new TokenResponseException(
+                sprintf(
+                    'Error in retrieving token: "%s"',
+                    isset($data['error_description']) ? $data['error_description'] : $data['error']
+                )
+            );
         }
 
         $token = new StdOAuth2Token();

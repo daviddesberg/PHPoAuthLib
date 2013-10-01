@@ -222,4 +222,24 @@ class SessionTest extends \PHPUnit_Framework_TestCase
 
         unset($storage);
     }
+
+    /**
+     * @covers OAuth\Common\Storage\Session::storeAccessToken
+     * @covers OAuth\Common\Storage\Session::retrieveAccessToken
+     *
+     * @runInSeparateProcess
+     */
+    public function testSerializeUnserialize()
+    {
+        $mock = $this->getMock('\\OAuth\\Common\\Token\\AbstractToken', array('__sleep'));
+        $mock->expects($this->once())
+            ->method('__sleep')
+            ->will($this->returnValue(array('accessToken')));
+
+        $storage = new Session();
+        $storage->storeAccessToken('foo', $mock);
+        $retrievedToken = $storage->retrieveAccessToken('foo');
+
+        $this->assertInstanceOf('\\OAuth\\Common\\Token\\AbstractToken', $retrievedToken);
+    }
 }

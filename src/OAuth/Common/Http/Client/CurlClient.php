@@ -19,6 +19,21 @@ class CurlClient extends AbstractClient
     private $forceSSL3 = false;
 
     /**
+     * Additional parameters (as `key => value` pairs) to be passed to `curl_setopt`
+     *
+     * @var array
+     */
+    private $parameters;
+
+    /**
+     * @param array $parameters
+     */
+    public function __construct(array $parameters = array())
+    {
+        $this->parameters = $parameters;
+    }
+
+    /**
      * @param bool $force
      *
      * @return CurlClient
@@ -96,6 +111,10 @@ class CurlClient extends AbstractClient
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $extraHeaders);
         curl_setopt($ch, CURLOPT_USERAGENT, $this->userAgent);
+
+        foreach ($this->parameters as $key => $value) {
+            curl_setopt($ch, $key, $value);
+        }
 
         if ($this->forceSSL3) {
             curl_setopt($ch, CURLOPT_SSLVERSION, 3);

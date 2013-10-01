@@ -340,4 +340,33 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame('foo/bar', $response['headers']['Content-Type']);
     }
+
+    public function testAdditionalParameters()
+    {
+        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $endPoint->expects($this->any())
+            ->method('getHost')
+            ->will($this->returnValue('httpbin.org'));
+        $endPoint->expects($this->any())
+            ->method('getAbsoluteUri')
+            ->will($this->returnValue('http://httpbin.org/gzip'));
+
+        $client = new CurlClient();
+        $client->setCurlParameters(array(
+            CURLOPT_ENCODING => 'gzip',
+        ));
+
+        $response = $client->retrieveResponse(
+            $endPoint,
+            '',
+            array(),
+            'get'
+        );
+
+        $response = json_decode($response, true);
+
+        $this->assertNotNull($response);
+        $this->assertSame('gzip', $response['headers']['Accept-Encoding']);
+        $this->assertTrue($response['gzipped']);
+    }
 }

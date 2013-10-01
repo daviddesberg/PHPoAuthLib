@@ -23,12 +23,14 @@ class CurlClient extends AbstractClient
      *
      * @var array
      */
-    private $parameters;
+    private $parameters = array();
 
     /**
+     * Additional `curl_setopt` parameters
+     *
      * @param array $parameters
      */
-    public function __construct(array $parameters = array())
+    public function setCurlParameters(array $parameters)
     {
         $this->parameters = $parameters;
     }

@@ -351,7 +351,8 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
             ->method('getAbsoluteUri')
             ->will($this->returnValue('http://httpbin.org/gzip'));
 
-        $client = new CurlClient(array(
+        $client = new CurlClient();
+        $client->setCurlParameters(array(
             CURLOPT_ENCODING => 'gzip',
         ));
 

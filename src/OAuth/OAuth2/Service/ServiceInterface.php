@@ -24,21 +24,6 @@ interface ServiceInterface extends BaseServiceInterface
     const AUTHORIZATION_METHOD_QUERY_STRING_V2 = 3;
 
     /**
-     * @param Credentials           $credentials
-     * @param ClientInterface       $httpClient
-     * @param TokenStorageInterface $storage
-     * @param array                 $scopes
-     * @param UriInterface|null     $baseApiUri
-     */
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
-    );
-
-    /**
      * Retrieves and stores/returns the OAuth2 access token after a successful authorization.
      *
      * @param string $code The access code from the callback.

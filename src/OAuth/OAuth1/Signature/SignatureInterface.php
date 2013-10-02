@@ -8,11 +8,6 @@ use OAuth\Common\Http\Uri\UriInterface;
 interface SignatureInterface
 {
     /**
-     * @param CredentialsInterface $credentials
-     */
-    public function __construct(CredentialsInterface $credentials);
-
-    /**
      * @param string $algorithm
      */
     public function setHashingAlgorithm($algorithm);

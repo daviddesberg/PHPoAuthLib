@@ -17,21 +17,6 @@ use OAuth\OAuth1\Signature\SignatureInterface;
 interface ServiceInterface extends BaseServiceInterface
 {
     /**
-     * @param Credentials           $credentials
-     * @param ClientInterface       $httpClient
-     * @param TokenStorageInterface $storage
-     * @param SignatureInterface    $signature
-     * @param UriInterface|null     $baseApiUri
-     */
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        SignatureInterface $signature,
-        UriInterface $baseApiUri = null
-    );
-
-    /**
      * Retrieves and stores/returns the OAuth1 request token obtained from the service.
      *
      * @return TokenInterface $token

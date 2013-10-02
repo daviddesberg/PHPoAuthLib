@@ -37,7 +37,7 @@ class Session implements TokenStorageInterface
     public function retrieveAccessToken($service)
     {
         if ($this->hasAccessToken($service)) {
-            return $_SESSION[$this->sessionVariableName][$service];
+            return unserialize($_SESSION[$this->sessionVariableName][$service]);
         }
 
         throw new TokenNotFoundException('Token not found in session, are you sure you stored it?');
@@ -48,13 +48,15 @@ class Session implements TokenStorageInterface
      */
     public function storeAccessToken($service, TokenInterface $token)
     {
+        $serializedToken = serialize($token);
+
         if (isset($_SESSION[$this->sessionVariableName])
             && is_array($_SESSION[$this->sessionVariableName])
         ) {
-            $_SESSION[$this->sessionVariableName][$service] = $token;
+            $_SESSION[$this->sessionVariableName][$service] = $serializedToken;
         } else {
             $_SESSION[$this->sessionVariableName] = array(
-                $service => $token,
+                $service => $serializedToken,
             );
         }
 

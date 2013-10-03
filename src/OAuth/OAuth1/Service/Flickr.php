@@ -12,11 +12,11 @@ use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Client\ClientInterface;
 
 class Flickr extends AbstractService{
-
+	
 	public function __construct(CredentialsInterface $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, SignatureInterface $signature, UriInterface $baseApiUri = null){
 		parent::__construct($credentials, $httpClient, $storage, $signature, $baseApiUri);
 		if($baseApiUri === null){
-			$this->baseApiUri = new Uri('https://api.flickr.com/services/rest/?');
+			$this->baseApiUri = new Uri('https://api.flickr.com/services/rest/');
 		}
 	}
 	
@@ -62,5 +62,19 @@ class Flickr extends AbstractService{
 		$token->setExtraParams($data);
 		
 		return $token;
+	}
+	
+	public function request($path, $method = 'GET', $body = null, array $extraHeaders = array()){
+		$uri = $this->determineRequestUriFromPath('/', $this->baseApiUri);
+		$uri->addToQuery('method', $path);
+		
+		$token = $this->storage->retrieveAccessToken($this->service());
+		$extraHeaders = array_merge($this->getExtraApiHeaders(), $extraHeaders);
+		$authorizationHeader = array(
+			'Authorization' => $this->buildAuthorizationHeaderForAPIRequest($method, $uri, $token, $body)
+		);
+		$headers = array_merge($authorizationHeader, $extraHeaders);
+		
+		return $this->httpClient->retrieveResponse($uri, $body, $headers, $method);
 	}
 }

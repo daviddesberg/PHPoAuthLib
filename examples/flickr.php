@@ -11,6 +11,7 @@
 use OAuth\OAuth1\Service\Flickr;
 use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Http\Client\CurlClient;
 
 /**
  * Bootstrap the example
@@ -29,6 +30,7 @@ $credentials = new Credentials(
 
 // Instantiate the Flickr service using the credentials, http client and storage mechanism for the token
 /** @var $flickr Flickr */
+$serviceFactory->setHttpClient(new CurlClient());
 $flickrService = $serviceFactory->createService('Flickr', $credentials, $storage, array());
 
 /*

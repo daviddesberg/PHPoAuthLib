@@ -48,6 +48,7 @@ Included service implementations
     - Tumblr
     - FitBit
     - Etsy
+    - Flickr
 - OAuth2
     - Google
     - Microsoft

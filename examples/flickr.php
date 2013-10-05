@@ -29,7 +29,6 @@ $credentials = new Credentials(
 );
 
 // Instantiate the Flickr service using the credentials, http client and storage mechanism for the token
-$serviceFactory->setHttpClient(new CurlClient());
 $flickrService = $serviceFactory->createService('Flickr', $credentials, $storage);
 
 $step = isset($_GET['step']) ? (int)$_GET['step'] : null;

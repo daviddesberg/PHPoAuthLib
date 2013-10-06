@@ -91,6 +91,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'flickr' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
 );
 
 /** @var $serviceFactory \OAuth\ServiceFactory An OAuth service factory. */

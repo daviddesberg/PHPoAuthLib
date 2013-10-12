@@ -18,19 +18,22 @@ class RedisTest extends \PHPUnit_Framework_TestCase
 {
     protected $storage;
 
-    const REDIS_HOST = '127.0.0.1';
-    const REDIS_PORT = 6379;
-
     public function setUp()
     {
         // connect to a redis daemon
         $predis = new Predis(array(
-            'host' => RedisTest::REDIS_HOST,
-            'port' => RedisTest::REDIS_PORT,
+            'host' => $_ENV['redis_host'],
+            'port' => $_ENV['redis_port'],
         ));
 
         // set it
         $this->storage = new Redis($predis, 'test_user_token');
+
+        try {
+            $predis->connect();
+        } catch (\Predis\Connection\ConnectionException $e) {
+            $this->markTestSkipped('No redis instance available: ' . $e->getMessage());
+        }
     }
 
     public function tearDown()

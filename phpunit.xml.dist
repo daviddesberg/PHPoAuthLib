@@ -38,4 +38,8 @@
             </exclude>
         </whitelist>
     </filter>
+    <php>
+        <env name="redis_host" value="127.0.0.1"/>
+        <env name="redis_port" value="6379"/>
+    </php>
 </phpunit>

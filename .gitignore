@@ -1,5 +1,7 @@
 .idea
-vendor
+/vendor
 .DS_Store
-composer.lock
-examples/init.php
+/composer.lock
+/examples/init.php
+/tags
+/phpunit.xml

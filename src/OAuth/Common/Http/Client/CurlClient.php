@@ -89,7 +89,7 @@ class CurlClient extends AbstractClient
 
         if ($method === 'POST' || $method === 'PUT') {
             if ($requestBody && is_array($requestBody)) {
-                $requestBody = http_build_query($requestBody, null, '&');
+                $requestBody = http_build_query($requestBody, '', '&');
             }
 
             if ($method === 'PUT') {

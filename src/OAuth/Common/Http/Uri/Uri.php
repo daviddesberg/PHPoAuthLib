@@ -338,7 +338,7 @@ class Uri implements UriInterface
         if (strlen($this->query) > 0) {
             $this->query .= '&';
         }
-        $this->query .= http_build_query(array($var => $val));
+        $this->query .= http_build_query(array($var => $val), '', '&');
     }
 
     /**

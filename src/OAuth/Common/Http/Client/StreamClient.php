@@ -47,7 +47,7 @@ class StreamClient extends AbstractClient
         $extraHeaders['Connection'] = 'Connection: close';
 
         if (is_array($requestBody)) {
-            $requestBody = http_build_query($requestBody, null, '&');
+            $requestBody = http_build_query($requestBody, '', '&');
         }
         $extraHeaders['Content-length'] = 'Content-length: '.strlen($requestBody);
 

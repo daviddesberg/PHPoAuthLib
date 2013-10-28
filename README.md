@@ -66,6 +66,7 @@ Included service implementations
     - PayPal
     - Dropbox
     - Dailymotion
+    - Heroku
 - more to come!
 
 Examples

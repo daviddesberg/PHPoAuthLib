@@ -2,7 +2,7 @@
 
 namespace OAuthTest\Unit\OAuth1\Service;
 
-use OAuthTest\Mocks\Oauth1\Service\Mock;
+use OAuthTest\Mocks\OAuth1\Service\Mock;
 
 class AbstractServiceTest extends \PHPUnit_Framework_TestCase
 {

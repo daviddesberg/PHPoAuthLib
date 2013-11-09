@@ -168,43 +168,4 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\\OAuth\\Common\\Http\\Uri\\UriInterface', $uri);
         $this->assertSame('https://example.com/path', $uri->getAbsoluteUri());
     }
-
-    /**
-     * @param UriInterface|string $path
-     * @param UriInterface        $baseApiUri
-     *
-     * @return UriInterface
-     *
-     * @throws Exception
-     */
-    protected function determineRequestUriFromPath($path, UriInterface $baseApiUri = null)
-    {
-        if ($path instanceof UriInterface) {
-            $uri = $path;
-        } elseif (stripos($path, 'http://') === 0 || stripos($path, 'https://') === 0) {
-            $uri = new Uri($path);
-        } else {
-            if (null === $baseApiUri) {
-                throw new Exception(
-                    'An absolute URI must be passed to ServiceInterface::request as no baseApiUri is set.'
-                );
-            }
-
-            $uri = clone $baseApiUri;
-            if (false !== strpos($path, '?')) {
-                $parts = explode('?', $path, 2);
-                $path = $parts[0];
-                $query = $parts[1];
-                $uri->setQuery($query);
-            }
-
-            if ($path[0] === '/') {
-                $path = substr($path, 1);
-            }
-
-            $uri->setPath($uri->getPath() . $path);
-        }
-
-        return $uri;
-    }
 }

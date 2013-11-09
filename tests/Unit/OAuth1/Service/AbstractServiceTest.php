@@ -84,24 +84,4 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame('http://pieterhordijk.com/auth', $service->getAuthorizationUri()->getAbsoluteUri());
     }
-
-    /**
-     * @covers OAuth\OAuth1\Service\AbstractService::getAuthorizationUri
-     * @covers OAuth\OAuth1\Service\AbstractService::getAuthorizationEndpoint
-     */
-    public function testGetAuthorizationUriWithParameters()
-    {
-        $service = new Mock(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
-        );
-
-        $this->assertSame('http://pieterhordijk.com/auth?foo=bar&baz=beer', $service->getAuthorizationUri([
-            'foo' => 'bar',
-            'baz' => 'beer',
-        ])->getAbsoluteUri());
-    }
 }

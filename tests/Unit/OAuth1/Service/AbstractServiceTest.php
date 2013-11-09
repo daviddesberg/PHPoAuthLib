@@ -12,7 +12,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
     public function testConstructCorrectInterface()
     {
         $service = $this->getMockForAbstractClass(
-            '\\OAuth\\Oauth1\\Service\\AbstractService',
+            '\\OAuth\\OAuth1\\Service\\AbstractService',
             array(
                 $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
                 $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
@@ -31,7 +31,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
     public function testConstructCorrectParent()
     {
         $service = $this->getMockForAbstractClass(
-            '\\OAuth\\Oauth1\\Service\\AbstractService',
+            '\\OAuth\\OAuth1\\Service\\AbstractService',
             array(
                 $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
                 $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),

@@ -73,7 +73,7 @@ class StreamClient extends AbstractClient
             array(
                 'http' => array(
                     'method'           => $method,
-                    'header'           => array_values($headers),
+                    'header'           => implode("\r\n", array_values($headers)),
                     'content'          => $body,
                     'protocol_version' => '1.1',
                     'user_agent'       => $this->userAgent,

@@ -103,10 +103,10 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
             $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
 
-        $this->assertSame('http://pieterhordijk.com/auth?foo=bar&baz=beer', $service->getAuthorizationUri([
+        $this->assertSame('http://pieterhordijk.com/auth?foo=bar&baz=beer', $service->getAuthorizationUri(array(
             'foo' => 'bar',
             'baz' => 'beer',
-        ])->getAbsoluteUri());
+        ))->getAbsoluteUri());
     }
 
     /**

@@ -210,7 +210,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     {
         $reflectionClass = new \ReflectionClass(get_class($this));
 
-        return in_array($scope, $reflectionClass->getConstants());
+        return in_array($scope, $reflectionClass->getConstants(), true);
     }
 
     /**

@@ -44,6 +44,10 @@ class Google extends AbstractService
     const SCOPE_USER_PROVISIONING = 'https://apps-apis.google.com/a/feeds/user/';
     const SCOPE_WEBMASTERTOOLS = 'https://www.google.com/webmasters/tools/feeds/';
     const SCOPE_YOUTUBE = 'https://gdata.youtube.com';
+    
+    const SCOPE_GLASS_TIMELINE = 'https://www.googleapis.com/auth/glass.timeline';
+    const SCOPE_GLASS_LOCATION = 'https://www.googleapis.com/auth/glass.location';
+
 
     /**
      * {@inheritdoc}

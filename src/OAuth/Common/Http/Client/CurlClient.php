@@ -110,7 +110,7 @@ class CurlClient extends AbstractClient
 
         curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_HEADER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $extraHeaders);
         curl_setopt($ch, CURLOPT_USERAGENT, $this->userAgent);
 
@@ -125,8 +125,12 @@ class CurlClient extends AbstractClient
         $response     = curl_exec($ch);
         $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-        if (false === $response) {
-            $errNo  = curl_errno($ch);
+        // Parser headers
+        $pos      = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+        $headers  = $this->parserHeaders(rtrim(substr($response, 0, $pos)));
+        $response = substr($response, $pos);
+
+        if ($errNo = curl_errno($ch)) {
             $errStr = curl_error($ch);
             curl_close($ch);
             if (empty($errStr)) {
@@ -137,6 +141,27 @@ class CurlClient extends AbstractClient
 
         curl_close($ch);
 
-        return $response;
+        return new Response((string)$response, $responseCode, $headers);
+    }
+    
+    /**
+     * A helper for getting the last set of headers.
+     *
+     * @param string $raw A string of many header chunks
+     *
+     * @return array An array of header lines
+     */
+    private function parserHeaders($raw)
+    {
+        $headers = array();
+        foreach (preg_split('/(\\r?\\n)/', $raw) as $header) {
+            if ($header) {
+                $headers[] = $header;
+            } else {
+                $headers = array();
+            }
+        }
+
+        return $headers;
     }
 }

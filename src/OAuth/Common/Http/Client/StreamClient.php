@@ -64,7 +64,7 @@ class StreamClient extends AbstractClient
             throw new TokenResponseException($lastError['message']);
         }
 
-        return $response;
+        return new Response($response, null, $http_response_header);
     }
 
     private function generateStreamContext($body, $headers, $method)

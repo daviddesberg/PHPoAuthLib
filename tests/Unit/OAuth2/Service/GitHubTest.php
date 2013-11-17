@@ -168,8 +168,8 @@ class GitHubTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Dailymotion::__construct
-     * @covers OAuth\OAuth2\Service\Dailymotion::getExtraOAuthHeaders
+     * @covers OAuth\OAuth2\Service\GitHub::__construct
+     * @covers OAuth\OAuth2\Service\GitHub::getExtraOAuthHeaders
      */
     public function testGetExtraOAuthHeaders()
     {
@@ -191,8 +191,8 @@ class GitHubTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Foursquare::__construct
-     * @covers OAuth\OAuth2\Service\Foursquare::getExtraApiHeaders
+     * @covers OAuth\OAuth2\Service\GitHub::__construct
+     * @covers OAuth\OAuth2\Service\GitHub::getExtraApiHeaders
      */
     public function testGetExtraApiHeaders()
     {

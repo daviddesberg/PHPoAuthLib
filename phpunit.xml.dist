@@ -34,7 +34,7 @@
                 <file>src/OAuth/OAuth1/Signature/Exception/UnsupportedHashAlgorithmException.php</file>
                 <file>src/OAuth/OAuth2/Service/Exception/InvalidScopeException.php</file>
                 <file>src/OAuth/OAuth2/Service/Exception/MissingRefreshTokenException.php</file>
-                <file>src/OAuth/OAuth2/Token/Exception/StdOAuth2Token.php</file>
+                <file>src/OAuth/OAuth2/Token/StdOAuth2Token.php</file>
             </exclude>
         </whitelist>
     </filter>

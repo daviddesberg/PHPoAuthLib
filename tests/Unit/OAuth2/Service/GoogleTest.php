@@ -111,26 +111,6 @@ class GoogleTest extends \PHPUnit_Framework_TestCase
      * @covers OAuth\OAuth2\Service\Google::__construct
      * @covers OAuth\OAuth2\Service\Google::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseThrowsExceptionOnErrorDescription()
-    {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('error_description=some_error'));
-
-        $service = new Google(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
-        );
-
-        $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
-
-        $service->requestAccessToken('foo');
-    }
-
-    /**
-     * @covers OAuth\OAuth2\Service\Google::__construct
-     * @covers OAuth\OAuth2\Service\Google::parseAccessTokenResponse
-     */
     public function testParseAccessTokenResponseThrowsExceptionOnError()
     {
         $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');

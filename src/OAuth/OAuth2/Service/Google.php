@@ -12,6 +12,7 @@ class Google extends AbstractService
      * Defined scopes -- Google has way too many Application Programming Interfaces
      */
     const SCOPE_ADSENSE = 'https://www.googleapis.com/auth/adsense';
+    const SCOPE_ADWORDS = 'https://adwords.google.com/api/adwords/';
     const SCOPE_GAN = 'https://www.googleapis.com/auth/gan'; // google affiliate network...?
     const SCOPE_ANALYTICS = 'https://www.googleapis.com/auth/analytics.readonly';
     const SCOPE_BOOKS = 'https://www.googleapis.com/auth/books';
@@ -47,6 +48,7 @@ class Google extends AbstractService
     
     const SCOPE_GLASS_TIMELINE = 'https://www.googleapis.com/auth/glass.timeline';
     const SCOPE_GLASS_LOCATION = 'https://www.googleapis.com/auth/glass.location';
+    
 
 
     /**

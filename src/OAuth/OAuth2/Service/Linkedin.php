@@ -28,7 +28,7 @@ class Linkedin extends AbstractService
     const SCOPE_R_NETWORK           = 'r_network';
     const SCOPE_R_CONTACTINFO       = 'r_contactinfo';
     const SCOPE_RW_NUS              = 'rw_nus';
-    const SCOPE_RW_COMPANY_ADMIN    = 'rw_company_admin'
+    const SCOPE_RW_COMPANY_ADMIN    = 'rw_company_admin';
     const SCOPE_RW_GROUPS           = 'rw_groups';
     const SCOPE_W_MESSAGES          = 'w_messages';
 

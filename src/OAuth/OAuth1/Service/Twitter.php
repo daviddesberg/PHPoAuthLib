@@ -46,10 +46,10 @@ class Twitter extends AbstractService
      */
     public function getAuthorizationEndpoint()
     {
-        if( $this->authorizationEndpoint != self::ENDPOINT_AUTHENTICATE || $this->authorizationEndpoint != self::ENDPOINT_AUTHORIZE ){
+        if ($this->authorizationEndpoint != self::ENDPOINT_AUTHENTICATE
+        || $this->authorizationEndpoint != self::ENDPOINT_AUTHORIZE) {
             $this->authorizationEndpoint = self::ENDPOINT_AUTHENTICATE;
         }
-
         return new Uri($this->authorizationEndpoint);
     }
 
@@ -58,12 +58,14 @@ class Twitter extends AbstractService
      *
      * @throws Exception
      */
-    public function setAuthorizationEndpoint($authorizationEndpoint)
+    public function setAuthorizationEndpoint($endpoint)
     {
-        if( $authorizationEndpoint != self::ENDPOINT_AUTHENTICATE && $authorizationEndpoint != self::ENDPOINT_AUTHORIZE ){
-            throw new Exception( sprintf("'%s' is not a correct Twitter authorization endpoint.", $authorizationEndpoint));
+        if ($endpoint != self::ENDPOINT_AUTHENTICATE && $endpoint != self::ENDPOINT_AUTHORIZE) {
+            throw new Exception(
+                sprintf("'%s' is not a correct Twitter authorization endpoint.", $endpoint)
+            );
         }
-        $this->authorizationEndpoint = $authorizationEndpoint;
+        $this->authorizationEndpoint = $endpoint;
     }
 
     /**

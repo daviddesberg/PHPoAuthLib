@@ -84,10 +84,39 @@ class TwitterTest extends \PHPUnit_Framework_TestCase
             $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
         );
 
-        $this->assertSame(
-            'https://api.twitter.com/oauth/authenticate',
-            $service->getAuthorizationEndpoint()->getAbsoluteUri()
+        $this->assertTrue(
+            in_array(
+                strtolower($service->getAuthorizationEndpoint()->getAbsoluteUri()), 
+                array(\OAuth\OAuth1\Service\Twitter::ENDPOINT_AUTHENTICATE, \OAuth\OAuth1\Service\Twitter::ENDPOINT_AUTHORIZE)
+            )
         );
+
+        $service->setAuthorizationEndpoint( \OAuth\OAuth1\Service\Twitter::ENDPOINT_AUTHORIZE );
+
+        $this->assertTrue(
+            in_array(
+                strtolower($service->getAuthorizationEndpoint()->getAbsoluteUri()), 
+                array(\OAuth\OAuth1\Service\Twitter::ENDPOINT_AUTHENTICATE, \OAuth\OAuth1\Service\Twitter::ENDPOINT_AUTHORIZE)
+            )
+        );
+    }
+
+    /**
+     * @covers OAuth\OAuth1\Service\Twitter::__construct
+     * @covers OAuth\OAuth1\Service\Twitter::setAuthorizationEndpoint
+     */
+    public function testSetAuthorizationEndpoint()
+    {
+        $service = new Twitter(
+            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
+            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
+        );
+
+        $this->setExpectedException('\\OAuth\\Common\\Exception\\Exception');
+
+        $service->setAuthorizationEndpoint('foo');
     }
 
     /**

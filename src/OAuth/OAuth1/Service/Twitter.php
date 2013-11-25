@@ -10,9 +10,15 @@ use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\Common\Exception\Exception;
 
 class Twitter extends AbstractService
 {
+    const ENDPOINT_AUTHENTICATE = "https://api.twitter.com/oauth/authenticate";
+    const ENDPOINT_AUTHORIZE    = "https://api.twitter.com/oauth/authorize";
+
+    protected $authorizationEndpoint   = self::ENDPOINT_AUTHENTICATE;
+
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
@@ -40,9 +46,26 @@ class Twitter extends AbstractService
      */
     public function getAuthorizationEndpoint()
     {
-        // @todo if the app will post tweets, authorize must be used instead.
-        // figure something out re: that but it's late and i don't want to now
-        return new Uri('https://api.twitter.com/oauth/authenticate');
+        if ($this->authorizationEndpoint != self::ENDPOINT_AUTHENTICATE
+        && $this->authorizationEndpoint != self::ENDPOINT_AUTHORIZE) {
+            $this->authorizationEndpoint = self::ENDPOINT_AUTHENTICATE;
+        }
+        return new Uri($this->authorizationEndpoint);
+    }
+
+    /**
+     * @param string $authorizationEndpoint
+     *
+     * @throws Exception
+     */
+    public function setAuthorizationEndpoint($endpoint)
+    {
+        if ($endpoint != self::ENDPOINT_AUTHENTICATE && $endpoint != self::ENDPOINT_AUTHORIZE) {
+            throw new Exception(
+                sprintf("'%s' is not a correct Twitter authorization endpoint.", $endpoint)
+            );
+        }
+        $this->authorizationEndpoint = $endpoint;
     }
 
     /**

@@ -18,4 +18,3 @@ class GuzzleException extends Exception
         $this->response = $response;
     }
 }
-

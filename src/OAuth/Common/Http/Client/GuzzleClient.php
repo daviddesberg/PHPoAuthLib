@@ -43,4 +43,3 @@ class GuzzleClient extends AbstractClient
         return $this->client;
     }
 }
-

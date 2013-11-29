@@ -15,6 +15,10 @@
  * @var array A list of all the credentials to be used by the different services in the examples
  */
 $servicesCredentials = array(
+    'bitbucket' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),    
     'bitly' => array(
         'key'       => '',
         'secret'    => '',

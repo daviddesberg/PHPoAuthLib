@@ -39,6 +39,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'runkeeper' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'yammer' => array(
         'key'       => '',
         'secret'    => ''

@@ -66,6 +66,7 @@ Included service implementations
     - LinkedIn
     - Microsoft
     - PayPal
+    - RunKeeper
     - SoundCloud
     - Vkontakte
     - Yammer

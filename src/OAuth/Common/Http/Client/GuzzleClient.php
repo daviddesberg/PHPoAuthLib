@@ -29,9 +29,9 @@ class GuzzleClient extends AbstractClient
             $this->lastResponse = $e->getResponse();
             // See http://docs.guzzlephp.org/en/latest/http-client/response.html
 
-            $http_status = $response->getStatusCode();
+            $http_status = $this->lastResponse->getStatusCode();
             $guzzleException = new GuzzleException("Guzzle HTTP {$http_status} Error");
-            $guzzleException->setGuzzleResponse($response);
+            $guzzleException->setGuzzleResponse($this->lastResponse);
             throw $guzzleException;
         }
     }

@@ -11,6 +11,7 @@ use OAuth\Common\Http\Uri\UriInterface;
 class GuzzleClient extends AbstractClient
 {
     protected $client;
+    protected $lastResponse;
 
     public function retrieveResponse(
         UriInterface $endpoint,
@@ -21,11 +22,11 @@ class GuzzleClient extends AbstractClient
 
         try {
             $request = $this->client()->createRequest($method, $endpoint, $extraHeaders, $requestBody);
-            $response = $request->send();
-            return $response->getBody();
+            $this->lastResponse = $request->send();
+            return $this->lastResponse->getBody();
 
         } catch (\Guzzle\Http\Exception\ClientErrorResponseException $e) {
-            $response = $e->getResponse();
+            $this->lastResponse = $e->getResponse();
             // See http://docs.guzzlephp.org/en/latest/http-client/response.html
 
             $http_status = $response->getStatusCode();
@@ -41,5 +42,10 @@ class GuzzleClient extends AbstractClient
             $this->client = new \Guzzle\Http\Client();
         }
         return $this->client;
+    }
+
+    public function getLastResponse()
+    {
+        return $this->lastResponse;
     }
 }

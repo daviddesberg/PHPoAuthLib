@@ -64,8 +64,8 @@ class Yammer extends AbstractService
         }
 
         $token = new StdOAuth2Token();
-        $token->setAccessToken($data['access_token']);
-        $token->setLifetime($data['expires_in']);
+        $token->setAccessToken($data['access_token']['token']);
+        $token->setLifetime($data['access_token']['expires_at']);
 
         if (isset($data['refresh_token'])) {
             $token->setRefreshToken($data['refresh_token']);

@@ -156,7 +156,7 @@ class YammerTest extends \PHPUnit_Framework_TestCase
     public function testParseAccessTokenResponseValidWithoutRefreshToken()
     {
         $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"access_token":"foo","expires_in":"bar"}'));
+        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"access_token":{"token":"foo", "expires_at":null}}'));
 
         $service = new Yammer(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -174,7 +174,7 @@ class YammerTest extends \PHPUnit_Framework_TestCase
     public function testParseAccessTokenResponseValidWithRefreshToken()
     {
         $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"access_token":"foo","expires_in":"bar","refresh_token":"baz"}'));
+        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"access_token":{"token":"foo", "expires_at":null},"refresh_token":"baz"}'));
 
         $service = new Yammer(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),

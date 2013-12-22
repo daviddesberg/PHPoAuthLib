@@ -108,7 +108,7 @@ class Reddit extends AbstractService
     protected function getExtraOAuthHeaders()
     {
         // Reddit uses a Basic OAuth header
-        return array('Authorization' => 'Basic ' . 
+        return array('Authorization' => 'Basic ' .
             base64_encode($this->credentials->getConsumerId() . ':' . $this->credentials->getConsumerSecret()));
     }
 }

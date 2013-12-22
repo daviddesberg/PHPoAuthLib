@@ -70,6 +70,7 @@ Included service implementations
     - SoundCloud
     - Vkontakte
     - Yammer
+    - Reddit
 - more to come!
 
 Examples

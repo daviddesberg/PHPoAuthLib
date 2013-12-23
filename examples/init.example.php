@@ -103,6 +103,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'reddit' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
 );
 
 /** @var $serviceFactory \OAuth\ServiceFactory An OAuth service factory. */

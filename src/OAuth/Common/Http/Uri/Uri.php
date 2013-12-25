@@ -397,4 +397,12 @@ class Uri implements UriInterface
     {
         return $this->explicitTrailingHostSlash;
     }
+
+    /**
+     * @return bool
+     */
+    public function hasExplicitPortSpecified()
+    {
+        return $this->explicitPortSpecified;
+    }
 }

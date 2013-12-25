@@ -871,4 +871,28 @@ class UriTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($uri->hasExplicitTrailingHostSlash());
     }
+
+    /**
+     * @covers OAuth\Common\Http\Uri\Uri::__construct
+     * @covers OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers OAuth\Common\Http\Uri\Uri::hasExplicitPortSpecified
+     */
+    public function testHasExplicitPortSpecifiedTrue()
+    {
+        $uri = new Uri('http://example.com:8080');
+
+        $this->assertTrue($uri->hasExplicitPortSpecified());
+    }
+
+    /**
+     * @covers OAuth\Common\Http\Uri\Uri::__construct
+     * @covers OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers OAuth\Common\Http\Uri\Uri::hasExplicitPortSpecified
+     */
+    public function testHasExplicitPortSpecifiedFalse()
+    {
+        $uri = new Uri('http://example.com');
+
+        $this->assertFalse($uri->hasExplicitPortSpecified());
+    }
 }

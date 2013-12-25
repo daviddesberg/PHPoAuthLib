@@ -125,4 +125,9 @@ interface UriInterface
      * @return bool
      */
     public function hasExplicitTrailingHostSlash();
+
+    /**
+     * @return bool
+     */
+    public function hasExplicitPortSpecified();
 }

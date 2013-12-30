@@ -131,13 +131,22 @@ class Facebook extends AbstractService
      */
     protected function parseAccessTokenResponse($responseBody)
     {
-        // Facebook gives us a query string ... Oh wait. JSON is too simple, understand ?
-        parse_str($responseBody, $data);
+        // Facebook can return JSON for now
+        if(($data = json_decode($responseBody, true)) === null){
+            parse_str($responseBody, $data);
+        }
 
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            if(is_array($data['error'])){
+                $errorString = $data['error']['message'];
+                $code = $data['error']['code'];
+            }else{
+                $errorString = $data['error'];
+                $code = 0;
+            }
+            throw new TokenResponseException('Error in retrieving token: "' . $errorString . '"',$code);
         }
 
         $token = new StdOAuth2Token();

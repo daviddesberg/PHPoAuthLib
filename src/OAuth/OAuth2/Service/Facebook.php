@@ -146,7 +146,7 @@ class Facebook extends AbstractService
                 $errorString = $data['error'];
                 $code = 0;
             }
-            throw new TokenResponseException('Error in retrieving token: "' . $errorString . '"',$code);
+            throw new TokenResponseException('Error in retrieving token: "' . $errorString . '"', $code);
         }
 
         $token = new StdOAuth2Token();

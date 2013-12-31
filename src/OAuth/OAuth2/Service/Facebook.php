@@ -132,7 +132,7 @@ class Facebook extends AbstractService
     protected function parseAccessTokenResponse($responseBody)
     {
         // Facebook can return JSON for now
-        if(($data = json_decode($responseBody, true)) === null){
+        if (($data = json_decode($responseBody, true)) === null) {
             parse_str($responseBody, $data);
         }
 

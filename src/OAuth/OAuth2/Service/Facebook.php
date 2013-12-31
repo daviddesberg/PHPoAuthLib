@@ -139,10 +139,10 @@ class Facebook extends AbstractService
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            if(is_array($data['error'])){
+            if (is_array($data['error'])) {
                 $errorString = $data['error']['message'];
                 $code = $data['error']['code'];
-            }else{
+            } else {
                 $errorString = $data['error'];
                 $code = 0;
             }

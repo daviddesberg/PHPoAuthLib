@@ -64,7 +64,7 @@ class GoogleTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertSame(
-            'https://accounts.google.com/o/oauth2/auth',
+            'https://accounts.google.com/o/oauth2/auth?access_type=offline',
             $service->getAuthorizationEndpoint()->getAbsoluteUri()
         );
     }

@@ -1,6 +1,6 @@
 {
-    "name": "lusitanian/oauth",
-    "description": "PHP 5.3+ oAuth 1/2 Library",
+    "name": "bchecketts/oauth",
+    "description": "PHP 5.3+ oAuth 1/2 Library branch from  lusitanian/oauth with Guzzle Client",
     "keywords": ["oauth", "authentication", "authorization", "security"],
     "license": "MIT",
     "authors": [
@@ -11,6 +11,10 @@
         {
             "name": "Pieter Hordijk",
             "email": "info@pieterhordijk.com"
+        },
+        {
+            "name": "Brandon Checketts",
+            "email": "brandon@brandonchecketts.com"
         }
     ],
     "require": {

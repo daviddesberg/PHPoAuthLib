@@ -1,6 +1,7 @@
 <?php
 
 namespace OAuth\Common\Service;
+
 use OAuth\OAuth2\Service\AbstractService;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;

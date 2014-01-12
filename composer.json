@@ -3,6 +3,7 @@
     "description": "PHP 5.3+ oAuth 1/2 Library",
     "keywords": ["oauth", "authentication", "authorization", "security"],
     "license": "MIT",
+    "type": "library",
     "authors": [
         {
             "name": "David Desberg",

@@ -107,6 +107,9 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'pocket' => array(
+        'key'       => '',
+    ),
 );
 
 /** @var $serviceFactory \OAuth\ServiceFactory An OAuth service factory. */

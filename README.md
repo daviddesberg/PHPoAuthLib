@@ -66,11 +66,11 @@ Included service implementations
     - LinkedIn
     - Microsoft
     - PayPal
+    - Reddit
     - RunKeeper
     - SoundCloud
     - Vkontakte
     - Yammer
-    - Reddit
 - more to come!
 
 Examples

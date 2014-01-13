@@ -22,6 +22,7 @@ interface ServiceInterface extends BaseServiceInterface
     const AUTHORIZATION_METHOD_HEADER_BEARER   = 1;
     const AUTHORIZATION_METHOD_QUERY_STRING    = 2;
     const AUTHORIZATION_METHOD_QUERY_STRING_V2 = 3;
+    const AUTHORIZATION_METHOD_QUERY_STRING_V3 = 4;
 
     /**
      * Retrieves and stores/returns the OAuth2 access token after a successful authorization.

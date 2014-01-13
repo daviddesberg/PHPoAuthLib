@@ -15,6 +15,10 @@
  * @var array A list of all the credentials to be used by the different services in the examples
  */
 $servicesCredentials = array(
+    'amazon' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'bitbucket' => array(
         'key'       => '',
         'secret'    => '',
@@ -23,7 +27,35 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'box' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
+    'dailymotion' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
+    'dropbox' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
+    'etsy' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'facebook' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
+    'fitbit' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
+    'flickr' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
+    'foursquare' => array(
         'key'       => '',
         'secret'    => '',
     ),
@@ -35,34 +67,6 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
-    'microsoft' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'runkeeper' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'yammer' => array(
-        'key'       => '',
-        'secret'    => ''
-    ),
-    'soundcloud' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'foursquare' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'twitter' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'fitbit' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
     'instagram' => array(
         'key'       => '',
         'secret'    => '',
@@ -71,19 +75,11 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
-    'box' => array(
+    'mailchimp' => array(
         'key'       => '',
         'secret'    => '',
     ),
-    'tumblr' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'etsy' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'amazon' => array(
+    'microsoft' => array(
         'key'       => '',
         'secret'    => '',
     ),
@@ -91,21 +87,29 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
-    'dropbox' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'dailymotion' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'flickr' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
     'reddit' => array(
         'key'       => '',
         'secret'    => '',
+    ),
+    'runkeeper' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
+    'soundcloud' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
+    'tumblr' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
+    'twitter' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
+    'yammer' => array(
+        'key'       => '',
+        'secret'    => ''
     ),
 );
 

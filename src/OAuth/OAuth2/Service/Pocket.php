@@ -60,7 +60,13 @@ class Pocket extends AbstractService
     
     public function requestRequestToken()
     {
-        $responseBody = $this->httpClient->retrieveResponse($this->getRequestTokenEndpoint(), array('consumer_key' => $this->credentials->getConsumerId(), 'redirect_uri' => $this->credentials->getCallbackUrl()));
+        $responseBody = $this->httpClient->retrieveResponse(
+            $this->getRequestTokenEndpoint(),
+            array(
+                'consumer_key' => $this->credentials->getConsumerId(),
+                'redirect_uri' => $this->credentials->getCallbackUrl(),
+            )
+        );
         
         $code = $this->parseRequestTokenResponse($responseBody);
 
@@ -116,5 +122,4 @@ class Pocket extends AbstractService
         
         return $token;
     }
-    
 }

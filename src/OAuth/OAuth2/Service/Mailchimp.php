@@ -10,7 +10,8 @@ use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 
-class Mailchimp extends AbstractService {
+class Mailchimp extends AbstractService
+{
 
     public function __construct(
         CredentialsInterface $credentials,
@@ -18,18 +19,13 @@ class Mailchimp extends AbstractService {
         TokenStorageInterface $storage,
         $scopes = array(),
         UriInterface $baseApiUri = null
-    )
-    {
+    ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
 
-        if (is_null($baseApiUri))
-        {
-            if ($storage->hasAccessToken($this->service()))
-            {
+        if (is_null($baseApiUri)) {
+            if ($storage->hasAccessToken($this->service())) {
                 $this->setBaseApiUri($storage->retrieveAccessToken($this->service()));
-            }
-            else
-            {
+            } else {
                 $this->baseApiUri = new Uri('https://us1.api.mailchimp.com/2.0/');
             }
         }

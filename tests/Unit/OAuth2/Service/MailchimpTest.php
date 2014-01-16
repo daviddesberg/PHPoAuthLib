@@ -4,6 +4,7 @@ namespace OAuthTest\Unit\OAuth2\Service;
 
 use OAuth\OAuth2\Service\Mailchimp;
 use OAuth\Common\Token\TokenInterface;
+use OAuth\Common\Http\Uri\Uri;
 
 class MailchimpTest extends \PHPUnit_Framework_TestCase
 {
@@ -96,7 +97,7 @@ class MailchimpTest extends \PHPUnit_Framework_TestCase
         $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
         $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(0));
 
-        $token = $this->getMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
+        $token = $this->getMock('\\OAuth\\OAuth2\\Token\\StdOAuth2Token');
         $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
         $token->expects($this->once())->method('getAccessToken')->will($this->returnValue('foo'));
 
@@ -106,7 +107,9 @@ class MailchimpTest extends \PHPUnit_Framework_TestCase
         $service = new Mailchimp(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $storage
+            $storage,
+            array(),
+            new Uri('https://us1.api.mailchimp.com/2.0/')
         );
 
         $uri         = $service->request('https://pieterhordijk.com/my/awesome/path');

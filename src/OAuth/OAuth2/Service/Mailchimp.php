@@ -22,12 +22,8 @@ class Mailchimp extends AbstractService
     ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
 
-        if (is_null($baseApiUri)) {
-            if ($storage->hasAccessToken($this->service())) {
-                $this->setBaseApiUri($storage->retrieveAccessToken($this->service()));
-            } else {
-                $this->baseApiUri = new Uri('https://us1.api.mailchimp.com/2.0/');
-            }
+        if (is_null($this->baseApiUri) && $storage->hasAccessToken($this->service())) {
+            $this->setBaseApiUri($storage->retrieveAccessToken($this->service()));
         }
     }
 
@@ -80,6 +76,18 @@ class Mailchimp extends AbstractService
         $token->setEndOfLife(StdOAuth2Token::EOL_NEVER_EXPIRES);
 
         return $token;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function request($path, $method = 'GET', $body = null, array $extraHeaders = array())
+    {
+        if (is_null($this->baseApiUri)) {
+            $this->setBaseApiUri($this->storage->retrieveAccessToken($this->service()));
+        }
+
+        return parent::request($path, $method, $body, $extraHeaders);
     }
 
     /**

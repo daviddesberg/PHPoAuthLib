@@ -1,7 +1,7 @@
 {
-    "name": "lusitanian/oauth",
-    "description": "PHP 5.3+ oAuth 1/2 Library",
-    "keywords": ["oauth", "authentication", "authorization", "security"],
+    "name": "hannesvdvreken/oauth-clone",
+    "description": "[temporary: please use lusitanian/oauth] PHP 5.3+ oAuth 1/2 Library",
+    "keywords": ["temporary", "oauth", "authentication", "authorization", "security"],
     "license": "MIT",
     "authors": [
         {

@@ -28,10 +28,7 @@ class Google extends AbstractService
 
     // Google Drive
     const SCOPE_DOCUMENTSLIST               = 'https://docs.google.com/feeds/';
-    const SCOPE_GOOGLEDRIVE                 = 'https://www.googleapis.com/auth/drive';
-    const SCOPE_GOOGLEDRIVE_FILES           = 'https://www.googleapis.com/auth/drive.file';
     const SCOPE_SPREADSHEETS                = 'https://spreadsheets.google.com/feeds/';
-
     const SCOPE_GOOGLEDRIVE                 = 'https://www.googleapis.com/auth/drive';
     const SCOPE_DRIVE_APPS                  = 'https://www.googleapis.com/auth/drive.appdata';
     const SCOPE_DRIVE_APPS_READ_ONLY        = 'https://www.googleapis.com/auth/drive.apps.readonly';

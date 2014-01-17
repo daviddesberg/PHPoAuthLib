@@ -69,8 +69,9 @@ class Google extends AbstractService
     const SCOPE_NICKNAME_PROVISIONING       = 'https://apps-apis.google.com/a/feeds/alias/';
 
     // Old
-    const SCOPE_ORKUT                       = 'https://www.googleapis.com/auth/orkut'; // evidently orkut still exists. who knew?
-    const SCOPE_GOOGLELATITUDE              = 'https://www.googleapis.com/auth/latitude.all.best https://www.googleapis.com/auth/latitude.all.city';
+    const SCOPE_ORKUT                       = 'https://www.googleapis.com/auth/orkut';
+    const SCOPE_GOOGLELATITUDE =
+        'https://www.googleapis.com/auth/latitude.all.best https://www.googleapis.com/auth/latitude.all.city';
     const SCOPE_OPENID                      = 'openid';
 
     // YouTube

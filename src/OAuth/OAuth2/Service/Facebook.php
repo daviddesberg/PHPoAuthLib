@@ -2,6 +2,7 @@
 
 namespace OAuth\OAuth2\Service;
 
+use OAuth\Common\Exception\Exception;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
@@ -12,6 +13,11 @@ use OAuth\Common\Http\Uri\UriInterface;
 
 class Facebook extends AbstractService
 {
+    /**
+     * Facebook www url - used to build dialog urls
+     */
+    const WWW_URL = 'https://www.facebook.com/';
+
     /**
      * Defined scopes
      *
@@ -155,5 +161,16 @@ class Facebook extends AbstractService
         $token->setExtraParams($data);
 
         return $token;
+    }
+
+    public function getDialogUri($dialogPath, array $parameters)
+    {
+        if (!isset($parameters['redirect_uri'])) {
+            throw new Exception("Redirect uri is mandatory for this request");
+        }
+        $parameters['app_id'] = $this->credentials->getConsumerId();
+        $baseUrl = self::WWW_URL . 'dialog/' . $dialogPath;
+        $query = http_build_query($parameters);
+        return new Uri($baseUrl . '?' . $query);
     }
 }

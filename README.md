@@ -64,6 +64,7 @@ Included service implementations
     - Heroku
     - Instagram
     - LinkedIn
+    - Mailchimp
     - Microsoft
     - PayPal
     - RunKeeper

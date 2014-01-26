@@ -59,15 +59,12 @@ class StreamClient extends AbstractClient
 
         $context = $this->generateStreamContext($requestBody, $extraHeaders, $method);
 
-        $level = error_reporting(0);
         $response = file_get_contents($endpoint->getAbsoluteUri(), false, $context);
-        error_reporting($level);
-        if (false === $response) {
-            $lastError = error_get_last();
-            if (is_null($lastError)) {
-                throw new TokenResponseException('Failed to request resource.');
-            }
-            throw new TokenResponseException($lastError['message']);
+        preg_match('/HTTP\/1\.[0|1|x] ([0-9]{3})/', $http_response_header[0], $matches);
+        $statusCode = (int)$matches[1];
+        $isSuccess = $statusCode >= 200 && $statusCode < 300 || $statusCode === 304;
+        if (!$isSuccess) {
+            throw new TokenResponseException($response);
         }
 
         return $response;

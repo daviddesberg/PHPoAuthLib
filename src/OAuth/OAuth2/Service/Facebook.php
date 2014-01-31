@@ -94,7 +94,7 @@ class Facebook extends AbstractService
     const SCOPE_USER_NEWS                     = 'user_actions.news';
     const SCOPE_FRIENDS_NEWS                  = 'friends_actions.news';
     const SCOPE_USER_VIDEO                    = 'user_actions.video';
-    const SCOPE_FREINDS_VIDEO                 = 'friends_actions.video';
+    const SCOPE_FRIENDS_VIDEO                 = 'friends_actions.video';
     const SCOPE_USER_APP                      = 'user_actions:APP_NAMESPACE';
     const SCOPE_FRIENDS_APP                   = 'friends_actions:APP_NAMESPACE';
     const SCOPE_USER_GAMES                    = 'user_games_activity';

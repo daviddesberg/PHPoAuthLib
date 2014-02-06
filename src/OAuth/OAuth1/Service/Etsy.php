@@ -23,7 +23,7 @@ class Etsy extends AbstractService
         parent::__construct($credentials, $httpClient, $storage, $signature, $baseApiUri);
 
         if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('http://openapi.etsy.com/v2/');
+            $this->baseApiUri = new Uri('https://openapi.etsy.com/v2/');
         }
     }
 

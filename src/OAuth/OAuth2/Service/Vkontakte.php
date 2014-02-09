@@ -97,4 +97,12 @@ class Vkontakte extends AbstractService
 
         return $token;
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected function getAuthorizationMethod()
+    {
+        return static::AUTHORIZATION_METHOD_QUERY_STRING;
+    }
 }

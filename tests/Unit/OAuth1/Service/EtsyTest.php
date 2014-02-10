@@ -104,7 +104,7 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertSame(
-            'http://openapi.etsy.com/v2/oauth/access_token',
+            'https://openapi.etsy.com/v2/oauth/access_token',
             $service->getAccessTokenEndpoint()->getAbsoluteUri()
         );
     }

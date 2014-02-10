@@ -55,8 +55,6 @@ class Harvest extends AbstractService {
      */
     protected function parseAccessTokenResponse($responseBody)
     {
-
-        echo "OK";
         $data = json_decode($responseBody, true);
 
         if ( null === $data || ! is_array($data) ) {

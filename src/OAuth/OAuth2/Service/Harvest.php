@@ -10,7 +10,8 @@ use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 
-class Harvest extends AbstractService {
+class Harvest extends AbstractService
+{
 
     public function __construct(
         CredentialsInterface $credentials,
@@ -21,7 +22,7 @@ class Harvest extends AbstractService {
     ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
 
-        if ( null === $baseApiUri ) {
+        if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://api.github.com/');
         }
     }
@@ -57,9 +58,9 @@ class Harvest extends AbstractService {
     {
         $data = json_decode($responseBody, true);
 
-        if ( null === $data || ! is_array($data) ) {
+        if (null === $data || ! is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
-        } elseif ( isset($data['error']) ) {
+        } elseif (isset($data['error'])) {
             throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
         }
 
@@ -81,5 +82,4 @@ class Harvest extends AbstractService {
     {
         return array('Accept' => 'application/json');
     }
-
 }

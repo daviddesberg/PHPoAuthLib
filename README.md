@@ -88,6 +88,10 @@ Framework Integration
 * Lithium: Sébastien Charrier has written [an adapter](https://github.com/scharrier/li3_socialauth) for the library.
 * Laravel 4: Dariusz Prząda has written [a service provider](https://github.com/artdarek/oauth-4-laravel) for the library.
 
+Extensions
+----------
+* Extract *user data* with the library [PHPoAuthUserData](https://github.com/Oryzone/PHPoAuthUserData) by Luciano Mammino
+
 Tests
 ------
 To run the tests, you must install dependencies with `composer install --dev`

@@ -61,6 +61,7 @@ Included service implementations
     - Foursquare
     - GitHub
     - Google
+    - Harvest
     - Heroku
     - Instagram
     - LinkedIn

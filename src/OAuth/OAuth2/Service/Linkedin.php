@@ -39,7 +39,7 @@ class Linkedin extends AbstractService
         $scopes = array(),
         UriInterface $baseApiUri = null
     ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
+        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, true);
 
         if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://api.linkedin.com/v1/');

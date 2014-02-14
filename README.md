@@ -90,7 +90,7 @@ Framework Integration
 
 Extensions
 ----------
-* Extract *user data* with the library [PHPoAuthUserData](https://github.com/Oryzone/PHPoAuthUserData) by Luciano Mammino
+* Extract normalized user data from OAuth Services with the library [PHPoAuthUserData](https://github.com/Oryzone/PHPoAuthUserData) by Luciano Mammino
 
 Tests
 ------

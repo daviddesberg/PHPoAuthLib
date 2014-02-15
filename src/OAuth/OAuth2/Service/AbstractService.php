@@ -248,7 +248,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * Validates the authorization state against a given one
      *
      * @param string $state
-     * @throws Exception\InvalidAuthorizationStateException
+     * @throws InvalidAuthorizationStateException
      */
     protected function validateAuthorizationState($state)
     {

@@ -78,6 +78,11 @@ class Vkontakte extends AbstractService
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
+            $errorText = $data['error'];
+            if (isset($data['error_description'])) {
+                $errorText .= '; ' . $data['error_description'];
+            }
+            throw new TokenResponseException('Error in retrieving token: "' . $errorText . '"');
             throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
         }
 

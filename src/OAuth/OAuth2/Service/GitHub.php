@@ -75,17 +75,17 @@ class GitHub extends AbstractService
     /**
      * Grants read and ping access to hooks in public or private repositories.
      */
-    const SCOPE_HOOKS_READ = 'read:repo_hook';
+    const SCOPE_REPO_HOOK_READ = 'read:repo_hook';
     
     /**
      * Grants read, write, and ping access to hooks in public or private repositories.
      */
-    const SCOPE_HOOKS_WRITE = 'write:repo_hook';
+    const SCOPE_REPO_HOOK_WRITE = 'write:repo_hook';
     
     /**
      * Grants read, write, ping, and delete access to hooks in public or private repositories.
      */
-    const SCOPE_HOOKS_ADMIN = 'admin:repo_hook';
+    const SCOPE_REPO_HOOK_ADMIN = 'admin:repo_hook';
 
     public function __construct(
         CredentialsInterface $credentials,

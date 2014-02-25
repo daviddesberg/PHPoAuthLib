@@ -86,6 +86,21 @@ class GitHub extends AbstractService
      * Grants read, write, ping, and delete access to hooks in public or private repositories.
      */
     const SCOPE_REPO_HOOK_ADMIN = 'admin:repo_hook';
+    
+    /**
+     * List and view details for public keys.
+     */
+    const SCOPE_PUBLIC_KEY_READ = 'read:public_key';
+    
+    /**
+     * Create, list, and view details for public keys.
+     */
+    const SCOPE_PUBLIC_KEY_WRITE = 'write:public_key';
+    
+    /**
+     * Fully manage public keys.
+     */
+    const SCOPE_PUBLIC_KEY_ADMIN = 'admin:public_key';
 
     public function __construct(
         CredentialsInterface $credentials,

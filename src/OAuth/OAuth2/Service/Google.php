@@ -87,6 +87,9 @@ class Google extends AbstractService
     // Google Glass
     const SCOPE_GLASS_TIMELINE              = 'https://www.googleapis.com/auth/glass.timeline';
     const SCOPE_GLASS_LOCATION              = 'https://www.googleapis.com/auth/glass.location';
+    
+    // Android Publisher
+    const SCOPE_ANDROID_PUBLISHER           = 'https://www.googleapis.com/auth/androidpublisher';
 
 
 

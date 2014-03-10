@@ -119,6 +119,32 @@ class Facebook extends AbstractService
     /**
      * {@inheritdoc}
      */
+    public function getAuthorizationUri(array $additionalParameters = array())
+    {
+        $parameters = array_merge(
+            $additionalParameters,
+            array(
+                'type'          => 'web_server',
+                'client_id'     => $this->credentials->getConsumerId(),
+                'redirect_uri'  => $this->credentials->getCallbackUrl(),
+                'response_type' => 'code',
+            )
+        );
+
+        $parameters['scope'] = implode(',', $this->scopes);
+
+        // Build the url
+        $url = clone $this->getAuthorizationEndpoint();
+        foreach ($parameters as $key => $val) {
+            $url->addToQuery($key, $val);
+        }
+
+        return $url;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getAuthorizationEndpoint()
     {
         return new Uri('https://www.facebook.com/dialog/oauth');

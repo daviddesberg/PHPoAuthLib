@@ -11,7 +11,7 @@ use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 
-class SalesforceService extends AbstractService
+class Salesforce extends AbstractService
 {
     /**
      * Scopes

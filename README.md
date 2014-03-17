@@ -51,6 +51,7 @@ Included service implementations
     - Flickr
     - Tumblr
     - Twitter
+    - Xing
 - OAuth2
     - Amazon
     - BitLy

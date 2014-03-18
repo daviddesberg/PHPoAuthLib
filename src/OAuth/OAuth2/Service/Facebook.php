@@ -149,7 +149,10 @@ class Facebook extends AbstractService
 
         $token = new StdOAuth2Token();
         $token->setAccessToken($data['access_token']);
-        $token->setLifeTime($data['expires']);
+        
+        if (isset($data['expires'])) {
+            $token->setLifeTime($data['expires']);
+        }
 
         if (isset($data['refresh_token'])) {
             $token->setRefreshToken($data['refresh_token']);

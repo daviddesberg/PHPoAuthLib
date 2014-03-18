@@ -69,11 +69,12 @@ Included service implementations
     - Mailchimp
     - Microsoft
     - PayPal
+    - Pocket
+    - Reddit
     - RunKeeper
     - SoundCloud
     - Vkontakte
     - Yammer
-    - Reddit
 - more to come!
 
 Examples

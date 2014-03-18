@@ -98,7 +98,7 @@ class Google extends AbstractService
      */
     public function getAuthorizationEndpoint()
     {
-        return new Uri('https://accounts.google.com/o/oauth2/auth');
+        return new Uri('https://accounts.google.com/o/oauth2/auth?access_type=offline');
     }
 
     /**

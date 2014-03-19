@@ -96,10 +96,12 @@ switch($step){
         $params = array('ProfileOptions' => array('PublicProfileData' => true), 'DeviceInfo' => $deviceInfo);
 
         $user = $geocachingService->request('GetYourUserProfile', 'POST', $params);
+        $data = $geocachingService->request('GetAPILimits', 'GET');
 
         echo "<p>Logged as: <strong>".$user->Profile->User->UserName."</strong><br />";
         preg_match('/([0-9]+)/', $user->Profile->PublicProfile->MemberSince, $matches);
         $memberSince = date('Y-m-d H:i:s', floor($matches[0]/1000));
         echo "Member since: <strong>" . $memberSince . "</strong></p>\n";
+        print_r($data);
         break;
 }

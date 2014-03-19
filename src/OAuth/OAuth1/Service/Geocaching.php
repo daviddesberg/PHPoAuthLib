@@ -43,11 +43,13 @@ class Geocaching extends AbstractService
         return $this->getEndPoint();
     }
 
-    public function getEndPoint() {
+    public function getEndPoint()
+    {
         return new Uri($this->endPoint);
     }
 
-    public function setEndPoint($endPoint = 'live') {
+    public function setEndPoint($endPoint = 'live')
+    {
         switch($endPoint) {
             case 'staging':
                 $this->endPoint = 'http://staging.geocaching.com/OAuth/oauth.ashx';
@@ -61,7 +63,8 @@ class Geocaching extends AbstractService
         }
     }
 
-    public function setBaseApiUri($platform = 'live') {
+    public function setBaseApiUri($platform = 'live')
+    {
         switch($platform) {
             case 'staging':
                 $this->baseApiUri = new Uri('https://staging.api.groundspeak.com/Live/V6Beta/geocaching.svc/');
@@ -116,11 +119,11 @@ class Geocaching extends AbstractService
     {
         $token = $this->storage->retrieveAccessToken($this->service());
 
-        if($method == 'GET') {
+        if ($method == 'GET') {
             $uri = $this->determineRequestUriFromPath($path . '?AccessToken=' . $token->getRequestToken() . '&format=json', $this->baseApiUri);
-        } else if($method == 'POST') {
+        } elseif ($method == 'POST') {
             $uri  = $this->determineRequestUriFromPath($path . '?format=json', $this->baseApiUri);
-            if(!is_array($body)) {
+            if (!is_array($body)) {
                 throw new Exception('body is not an array.');
             }
             $body = array_merge(array('AccessToken' => $token->getRequestToken()), $body);

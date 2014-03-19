@@ -120,9 +120,9 @@ class Geocaching extends AbstractService
         $token = $this->storage->retrieveAccessToken($this->service());
 
         if ($method == 'GET') {
-            $uri = $this->determineRequestUriFromPath($path . 
-                                                     '?AccessToken=' . $token->getRequestToken() .
-                                                     '&format=json', $this->baseApiUri);
+            $parameters = array('AccessToken' => $token->getRequestToken(), 'format' => 'json');
+            $query = http_build_query($parameters, '', '&');
+            $uri = $this->determineRequestUriFromPath($path . '?' . $query, $this->baseApiUri);
         } elseif ($method == 'POST') {
             $uri  = $this->determineRequestUriFromPath($path . '?format=json', $this->baseApiUri);
             if (!is_array($body)) {

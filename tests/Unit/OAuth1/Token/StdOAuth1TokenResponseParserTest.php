@@ -16,17 +16,18 @@ class StdOauth1TokenResponseParserTest extends \PHPUnit_Framework_TestCase
         $this->parser = new StdOAuth1TokenResponseParser();
     }
 
-    public function testParseReturnsToken()
+    public function testParseAccessTokenResponseReturnsToken()
     {
         $responseBody = 'oauth_token=foo&oauth_token_secret=bar';
 
-        $this->assertInstanceOf(
-            '\\OAuth\\OAuth1\\Token\\StdOAuth1Token',
-            $this->parser->parseAccessTokenResponse($responseBody)
-        );
+        $token = $this->parser->parseAccessTokenResponse($responseBody);
+
+        $this->assertInstanceOf('\\OAuth\\OAuth1\\Token\\StdOAuth1Token', $token);
+        $this->assertEquals('foo', $token->getAccessToken());
+        $this->assertEquals('bar', $token->getAccessTokenSecret());
     }
 
-    public function testParseThrowsExceptionForInvalidResponse()
+    public function testParseAccessTokenResponseThrowsExceptionForInvalidResponse()
     {
         $this->setExpectedException(
             '\\OAuth\\Common\\Http\\Exception\\TokenResponseException',
@@ -38,7 +39,7 @@ class StdOauth1TokenResponseParserTest extends \PHPUnit_Framework_TestCase
         $this->parser->parseAccessTokenResponse($responseBody);
     }
 
-    public function testParseThrowsExceptionWithErrors()
+    public function testParseAccessTokenResponseThrowsExceptionWithErrors()
     {
         $this->setExpectedException(
             '\\OAuth\\Common\\Http\\Exception\\TokenResponseException',
@@ -48,6 +49,15 @@ class StdOauth1TokenResponseParserTest extends \PHPUnit_Framework_TestCase
         $responseBody = 'error=Something%20went%20wrong';
 
         $this->parser->parseAccessTokenResponse($responseBody);
+    }
+
+    public function testParseAccessTokenResponseAddsExtraParams()
+    {
+        $responseBody = 'oauth_token=foo&oauth_token_secret=bar&baz=biz';
+
+        $token = $this->parser->parseAccessTokenResponse($responseBody);
+
+        $this->assertEquals(array('baz' => 'biz'), $token->getExtraParams());
     }
 
     public function testParseRequestTokenResponse()

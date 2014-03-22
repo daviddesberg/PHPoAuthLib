@@ -2,9 +2,9 @@
 
 namespace OAuthTest\Unit\OAuth1\Token;
 
-use OAuth\OAuth1\Token\StdOauth1AccessTokenResponseParser;
+use OAuth\OAuth1\Token\StdOAuth1TokenResponseParser;
 
-class StdOauth1AccessTokenResponseParserTest extends \PHPUnit_Framework_TestCase
+class StdOauth1TokenResponseParserTest extends \PHPUnit_Framework_TestCase
 {
     private $parser;
 
@@ -13,7 +13,7 @@ class StdOauth1AccessTokenResponseParserTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->parser = new StdOauth1AccessTokenResponseParser();
+        $this->parser = new StdOAuth1TokenResponseParser();
     }
 
     public function testParseReturnsToken()

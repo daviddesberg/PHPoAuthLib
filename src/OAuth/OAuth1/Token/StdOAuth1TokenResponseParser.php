@@ -5,7 +5,7 @@ namespace OAuth\OAuth1\Token;
 use OAuth\OAuth1\Token\StdOAuth1Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 
-class StdOauth1AccessTokenResponseParser
+class StdOauth1TokenResponseParser
 {
     public function parse($responseBody)
     {

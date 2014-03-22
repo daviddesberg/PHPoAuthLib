@@ -27,6 +27,18 @@ class StdOauth1TokenResponseParserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('bar', $token->getAccessTokenSecret());
     }
 
+    public function testParseAccessTokenResponseThrowsExceptionForNullResponse()
+    {
+        $this->setExpectedException(
+            '\\OAuth\\Common\\Http\\Exception\\TokenResponseException',
+            'Unable to parse response'
+        );
+
+        $responseBody = null;
+
+        $this->parser->parseAccessTokenResponse($responseBody);
+    }
+
     public function testParseAccessTokenResponseThrowsExceptionForInvalidResponse()
     {
         $this->setExpectedException(
@@ -34,7 +46,7 @@ class StdOauth1TokenResponseParserTest extends \PHPUnit_Framework_TestCase
             'Unable to parse response'
         );
 
-        $responseBody = '';
+        $responseBody = 'notanarray';
 
         $this->parser->parseAccessTokenResponse($responseBody);
     }
@@ -78,7 +90,7 @@ class StdOauth1TokenResponseParserTest extends \PHPUnit_Framework_TestCase
             'Error in retrieving token'
         );
 
-        $responseBody = '';
+        $responseBody = 'oauth_token=foo&oauth_token_secret=bar&oauth_callback_confirmed=false';
 
         $this->parser->parseRequestTokenResponse($responseBody);
     }

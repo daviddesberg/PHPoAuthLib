@@ -11,7 +11,7 @@ use OAuth\OAuth1\Signature\SignatureInterface;
 use OAuth\OAuth1\Token\TokenInterface;
 use OAuth\OAuth1\Token\StdOAuth1Token;
 use OAuth\Common\Service\AbstractService as BaseAbstractService;
-use OAuth\OAuth1\Token\StdOauth1TokenResponseParser;
+use OAuth\OAuth1\Token\StdOAuth1TokenResponseParser;
 
 abstract class AbstractService extends BaseAbstractService implements ServiceInterface
 {
@@ -304,8 +304,9 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     protected function parseRequestTokenResponse($responseBody)
     {
-        return (new StdOauth1TokenResponseParser)
-            ->parseRequestTokenResponse($responseBody);
+        $parser = new StdOauth1TokenResponseParser();
+
+        return $parser->parseRequestTokenResponse($responseBody);
     }
 
     /**
@@ -319,7 +320,8 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     protected function parseAccessTokenResponse($responseBody)
     {
-        return (new StdOauth1TokenResponseParser)
-            ->parseAccessTokenResponse($responseBody);
+        $parser = new StdOauth1TokenResponseParser();
+
+        return $parser->parseAccessTokenResponse($responseBody);
     }
 }

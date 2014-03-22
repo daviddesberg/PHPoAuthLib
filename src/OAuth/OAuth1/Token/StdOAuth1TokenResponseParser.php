@@ -66,8 +66,7 @@ class StdOauth1TokenResponseParser
 
         if (isset($data['error'])) {
             throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
-        }
-        elseif (null === $data || ! is_array($data)
+        } elseif (null === $data || ! is_array($data)
             || ! isset($data['oauth_token'])
             || ! isset($data['oauth_token_secret'])
         ) {
@@ -88,8 +87,7 @@ class StdOauth1TokenResponseParser
 
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
-        }
-        elseif (! isset($data['oauth_callback_confirmed'])
+        } elseif (! isset($data['oauth_callback_confirmed'])
             || $data['oauth_callback_confirmed'] !== 'true') {
             throw new TokenResponseException('Error in retrieving token.');
         }

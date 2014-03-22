@@ -64,10 +64,11 @@ class StdOauth1TokenResponseParserTest extends \PHPUnit_Framework_TestCase
     {
         $responseBody = 'oauth_token=foo&oauth_token_secret=bar&oauth_callback_confirmed=true';
 
-        $this->assertInstanceOf(
-            '\\OAuth\\OAuth1\\Token\\StdOAuth1Token',
-            $this->parser->parseRequestTokenResponse($responseBody)
-        );
+        $token = $this->parser->parseRequestTokenResponse($responseBody);
+
+        $this->assertInstanceOf('\\OAuth\\OAuth1\\Token\\StdOAuth1Token', $token);
+        $this->assertEquals('foo', $token->getRequestToken());
+        $this->assertEquals('bar', $token->getRequestTokenSecret());
     }
 
     public function testParseRequestTokenResponseThrowsException()

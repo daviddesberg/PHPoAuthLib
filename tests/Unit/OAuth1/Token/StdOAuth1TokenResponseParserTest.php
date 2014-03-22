@@ -22,7 +22,7 @@ class StdOauth1TokenResponseParserTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(
             '\\OAuth\\OAuth1\\Token\\StdOAuth1Token',
-            $this->parser->parse($responseBody)
+            $this->parser->parseAccessTokenResponse($responseBody)
         );
     }
 
@@ -35,7 +35,7 @@ class StdOauth1TokenResponseParserTest extends \PHPUnit_Framework_TestCase
 
         $responseBody = '';
 
-        $this->parser->parse($responseBody);
+        $this->parser->parseAccessTokenResponse($responseBody);
     }
 
     public function testParseThrowsExceptionWithErrors()
@@ -47,10 +47,20 @@ class StdOauth1TokenResponseParserTest extends \PHPUnit_Framework_TestCase
 
         $responseBody = 'error=Something%20went%20wrong';
 
-        $this->parser->parse($responseBody);
+        $this->parser->parseAccessTokenResponse($responseBody);
     }
 
-    public function testValidateRequestTokenResponse()
+    public function testParseRequestTokenResponse()
+    {
+        $responseBody = 'oauth_token=foo&oauth_token_secret=bar&oauth_callback_confirmed=true';
+
+        $this->assertInstanceOf(
+            '\\OAuth\\OAuth1\\Token\\StdOAuth1Token',
+            $this->parser->parseRequestTokenResponse($responseBody)
+        );
+    }
+
+    public function testParseRequestTokenResponseThrowsException()
     {
         $this->setExpectedException(
             '\\OAuth\\Common\\Http\\Exception\\TokenResponseException',
@@ -59,6 +69,6 @@ class StdOauth1TokenResponseParserTest extends \PHPUnit_Framework_TestCase
 
         $responseBody = '';
 
-        $this->parser->validateRequestTokenResponse($responseBody);
+        $this->parser->parseRequestTokenResponse($responseBody);
     }
 }

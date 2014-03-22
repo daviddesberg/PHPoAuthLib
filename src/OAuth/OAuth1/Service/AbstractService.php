@@ -304,10 +304,8 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     protected function parseRequestTokenResponse($responseBody)
     {
-        (new StdOauth1TokenResponseParser)
-            ->validateRequestTokenResponse($responseBody);
-
-        return $this->parseAccessTokenResponse($responseBody);
+        return (new StdOauth1TokenResponseParser)
+            ->parseRequestTokenResponse($responseBody);
     }
 
     /**
@@ -321,6 +319,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     protected function parseAccessTokenResponse($responseBody)
     {
-        return (new StdOauth1TokenResponseParser)->parse($responseBody);
+        return (new StdOauth1TokenResponseParser)
+            ->parseAccessTokenResponse($responseBody);
     }
 }

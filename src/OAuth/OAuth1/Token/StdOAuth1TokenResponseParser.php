@@ -20,7 +20,14 @@ class StdOauth1TokenResponseParser
      */
     public function parseRequestTokenResponse($responseBody)
     {
-        $this->validateRequestTokenResponse($responseBody);
+        parse_str($responseBody, $data);
+
+        if (null === $data || !is_array($data)) {
+            throw new TokenResponseException('Unable to parse response.');
+        } elseif (! isset($data['oauth_callback_confirmed'])
+            || $data['oauth_callback_confirmed'] !== 'true') {
+            throw new TokenResponseException('Error in retrieving token.');
+        }
 
         return $this->parseAccessTokenResponse($responseBody);
     }
@@ -36,9 +43,17 @@ class StdOauth1TokenResponseParser
      */
     public function parseAccessTokenResponse($responseBody)
     {
-        $this->validateAccessTokenResponse($responseBody);
-
         parse_str($responseBody, $data);
+
+        if (isset($data['error'])) {
+            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+        } elseif (null === $data || ! is_array($data)
+            || ! isset($data['oauth_token'])
+            || ! isset($data['oauth_token_secret'])
+        ) {
+            throw new TokenResponseException('Unable to parse response.');
+        }
+
         $token = new StdOAuth1Token();
 
         $token->setRequestToken($data['oauth_token']);
@@ -51,45 +66,5 @@ class StdOauth1TokenResponseParser
         $token->setExtraParams($data);
 
         return $token;
-    }
-
-    /**
-     * This verifies the `oauth_token` and `oauth_token_secret` parameters.
-     *
-     * @param string $responseBody
-     *
-     * @throws TokenResponseException
-     */
-    private function validateAccessTokenResponse($responseBody)
-    {
-        parse_str($responseBody, $data);
-
-        if (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
-        } elseif (null === $data || ! is_array($data)
-            || ! isset($data['oauth_token'])
-            || ! isset($data['oauth_token_secret'])
-        ) {
-            throw new TokenResponseException('Unable to parse response.');
-        }
-    }
-
-    /**
-     * This verifies the `oauth_callback_confirmed` parameter.
-     *
-     * @param string $responseBody
-     *
-     * @throws TokenResponseException
-     */
-    private function validateRequestTokenResponse($responseBody)
-    {
-        parse_str($responseBody, $data);
-
-        if (null === $data || !is_array($data)) {
-            throw new TokenResponseException('Unable to parse response.');
-        } elseif (! isset($data['oauth_callback_confirmed'])
-            || $data['oauth_callback_confirmed'] !== 'true') {
-            throw new TokenResponseException('Error in retrieving token.');
-        }
     }
 }

@@ -42,15 +42,17 @@ $credentials = new Credentials(
 $yammerService = $serviceFactory->createService('yammer', $credentials, $storage, array());
 
 if (!empty($_GET['code'])) {
-    // This was a callback request from github, get the token
+    // This was a callback request from yammer, get the token
     $yammerService->requestAccessToken($_GET['code']);
 
-    $result = json_decode($yammerService->request('messages.json'), true);
-    // show all public messages
-    print_r($result);
+    // yammer token, save somewhere and use it for all requests to yammer service
+    echo $token->getAccessToken();
+    
+    // example of showing al public messages for current user
     // all endpoints can be find here: https://developer.yammer.com/restapi/#rest-networks
+    $result = json_decode($yammerService->request('messages.json'), true);
+    print_r($result);
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
-    $token = $yammerService->getAccessTokenEndpoint();
     $url = $yammerService->getAuthorizationUri();
     header('Location: ' . $url);
 } else {

@@ -43,12 +43,12 @@ $yammerService = $serviceFactory->createService('yammer', $credentials, $storage
 
 if (!empty($_GET['code'])) {
     // This was a callback request from yammer, get the token
-    $yammerService->requestAccessToken($_GET['code']);
+    $token = $yammerService->requestAccessToken($_GET['code']);
 
     // yammer token, save somewhere and use it for all requests to yammer service
     echo $token->getAccessToken();
     
-    // example of showing al public messages for current user
+    // example of showing all public messages for current user
     // all endpoints can be find here: https://developer.yammer.com/restapi/#rest-networks
     $result = json_decode($yammerService->request('messages.json'), true);
     print_r($result);

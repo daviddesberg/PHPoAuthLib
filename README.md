@@ -18,7 +18,7 @@ Edit your `composer.json` and add:
 ```json
 {
     "require": {
-        "lusitanian/oauth": "~0.2"
+        "lusitanian/oauth": "~0.3"
     }
 }
 ```

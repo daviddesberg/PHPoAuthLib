@@ -17,10 +17,12 @@ use OAuth\Common\Consumer\Credentials;
 include_once(__DIR__.'/OAuth/bootstrap.php');
 
 $storage = new Session();
-$serviceFactory = new \OAuth\ServiceFactory();
+
 /**
  * In case if you don't use bootstrap from example folder uncomment lines below
- * Create a new instance of the URI class with the current URI, stripping the query string
+ */
+//$serviceFactory = new \OAuth\ServiceFactory(); 
+/* Create a new instance of the URI class with the current URI, stripping the query string
  */
 //$uriFactory = new \OAuth\Common\Http\Uri\UriFactory();
 //$currentUri = $uriFactory->createFromSuperGlobalArray($_SERVER);

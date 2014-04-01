@@ -16,20 +16,15 @@ use OAuth\Common\Consumer\Credentials;
 
 include_once(__DIR__.'/OAuth/bootstrap.php');
 
-/**
- * Setup error reporting
- */
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 $storage = new Session();
 $serviceFactory = new \OAuth\ServiceFactory();
 /**
+ * In case if you don't use bootstrap from example folder uncomment lines below
  * Create a new instance of the URI class with the current URI, stripping the query string
  */
-$uriFactory = new \OAuth\Common\Http\Uri\UriFactory();
-$currentUri = $uriFactory->createFromSuperGlobalArray($_SERVER);
-$currentUri->setQuery('');
+//$uriFactory = new \OAuth\Common\Http\Uri\UriFactory();
+//$currentUri = $uriFactory->createFromSuperGlobalArray($_SERVER);
+//$currentUri->setQuery('');
 
 // Setup the credentials for the requests
 $credentials = new Credentials(

@@ -66,7 +66,7 @@ class ScoopItTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertSame(
-            'https://www.ScoopIt.com/services/oauth/request_token',
+            'https://www.scoop.it/oauth/request',
             $service->getRequestTokenEndpoint()->getAbsoluteUri()
         );
     }
@@ -85,7 +85,7 @@ class ScoopItTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertSame(
-            'https://www.ScoopIt.com/services/oauth/authorize',
+            'https://www.scoop.it/oauth/authorize',
             $service->getAuthorizationEndpoint()->getAbsoluteUri()
         );
     }
@@ -104,7 +104,7 @@ class ScoopItTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertSame(
-            'https://www.ScoopIt.com/services/oauth/access_token',
+            'https://www.scoop.it/oauth/access',
             $service->getAccessTokenEndpoint()->getAbsoluteUri()
         );
     }

@@ -22,7 +22,7 @@ $servicesCredentials = array(
     'bitbucket' => array(
         'key'       => '',
         'secret'    => '',
-    ),    
+    ),
     'bitly' => array(
         'key'       => '',
         'secret'    => '',
@@ -113,6 +113,10 @@ $servicesCredentials = array(
     ),
     'pocket' => array(
         'key'       => '',
+    ),
+    'scoopit' => array(
+        'key'       => '',
+        'secret'    => ''
     ),
 );
 

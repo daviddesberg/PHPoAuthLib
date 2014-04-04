@@ -87,6 +87,9 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'pocket' => array(
+        'key'       => '',
+    ),
     'reddit' => array(
         'key'       => '',
         'secret'    => '',
@@ -94,6 +97,10 @@ $servicesCredentials = array(
     'runkeeper' => array(
         'key'       => '',
         'secret'    => '',
+    ),
+    'scoopit' => array(
+        'key'       => '',
+        'secret'    => ''
     ),
     'soundcloud' => array(
         'key'       => '',
@@ -107,18 +114,11 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
-    'yammer' => array(
-        'key'       => '',
-        'secret'    => ''
-    ),
-    'pocket' => array(
-        'key'       => '',
-    ),
-    'scoopit' => array(
-        'key'       => '',
-        'secret'    => ''
-    ),
     'yahoo' => array(
+        'key'       => '',
+        'secret'    => ''
+    ),
+    'yammer' => array(
         'key'       => '',
         'secret'    => ''
     ),

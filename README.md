@@ -53,6 +53,7 @@ Included service implementations
     - Tumblr
     - Twitter
     - Xing
+    - Yahoo
 - OAuth2
     - Amazon
     - BitLy

@@ -118,6 +118,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => ''
     ),
+    'yahoo' => array(
+        'key'       => '',
+        'secret'    => ''
+    ),
 );
 
 /** @var $serviceFactory \OAuth\ServiceFactory An OAuth service factory. */

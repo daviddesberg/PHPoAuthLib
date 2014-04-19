@@ -11,36 +11,17 @@ use OAuth\Common\Http\Uri\UriInterface;
 class StreamClient extends AbstractClient
 {
     /**
-     * Any implementing HTTP providers should send a request to the provided endpoint with the parameters.
-     * They should return, in string form, the response body and throw an exception on error.
-     *
-     * @param UriInterface $endpoint
-     * @param mixed        $requestBody
-     * @param array        $extraHeaders
-     * @param string       $method
-     *
-     * @return string
-     *
-     * @throws TokenResponseException
-     * @throws \InvalidArgumentException
+     * {@inheritdoc}
      */
-    public function retrieveResponse(
+    protected function doRetrieveResponse(
         UriInterface $endpoint,
         $requestBody,
         array $extraHeaders = array(),
-        $method = 'POST'
+        $method = 'POST',
+        $multipart = false
     ) {
-        // Normalize method name
-        $method = strtoupper($method);
-
-        $this->normalizeHeaders($extraHeaders);
-
-        if ($method === 'GET' && !empty($requestBody)) {
-            throw new \InvalidArgumentException('No body expected for "GET" request.');
-        }
-
-        if (!isset($extraHeaders['Content-type']) && $method === 'POST' && is_array($requestBody)) {
-            $extraHeaders['Content-type'] = 'Content-type: application/x-www-form-urlencoded';
+        if ($multipart) {
+            throw new \RuntimeException(sprintf('Stream adapter does not supports files uploading.'));
         }
 
         $host = 'Host: '.$endpoint->getHost();
@@ -48,9 +29,6 @@ class StreamClient extends AbstractClient
         if ($endpoint->hasExplicitPortSpecified()) {
             $host .= ':'.$endpoint->getPort();
         }
-
-        $extraHeaders['Host']       = $host;
-        $extraHeaders['Connection'] = 'Connection: close';
 
         if (is_array($requestBody)) {
             $requestBody = http_build_query($requestBody, '', '&');

@@ -48,46 +48,39 @@ class CurlClient extends AbstractClient
     }
 
     /**
-     * Any implementing HTTP providers should send a request to the provided endpoint with the parameters.
-     * They should return, in string form, the response body and throw an exception on error.
-     *
-     * @param UriInterface $endpoint
-     * @param mixed        $requestBody
-     * @param array        $extraHeaders
-     * @param string       $method
-     *
-     * @return string
-     *
-     * @throws TokenResponseException
-     * @throws \InvalidArgumentException
+     * {@inheritdoc}
      */
-    public function retrieveResponse(
+    protected function doRetrieveResponse(
         UriInterface $endpoint,
         $requestBody,
         array $extraHeaders = array(),
-        $method = 'POST'
+        $method = 'POST',
+        $multipart = false
     ) {
-        // Normalize method name
-        $method = strtoupper($method);
-
-        $this->normalizeHeaders($extraHeaders);
-
-        if ($method === 'GET' && !empty($requestBody)) {
-            throw new \InvalidArgumentException('No body expected for "GET" request.');
-        }
-
-        if (!isset($extraHeaders['Content-type']) && $method === 'POST' && is_array($requestBody)) {
-            $extraHeaders['Content-type'] = 'Content-type: application/x-www-form-urlencoded';
-        }
-
-        $extraHeaders['Host']       = 'Host: '.$endpoint->getHost();
-        $extraHeaders['Connection'] = 'Connection: close';
-
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $endpoint->getAbsoluteUri());
 
         if ($method === 'POST' || $method === 'PUT') {
+            if ($multipart) {
+                foreach ($requestBody as $key => $value) {
+                    if ($value instanceof \SplFileInfo) {
+                        if (version_compare('5.5', PHP_VERSION, '<=')) {
+                            $requestBody[$key] = new \CURLFile($value->getRealPath());
+                            if ($value->getBasename() != $value->getFilename()) {
+                                $requestBody[$key]->setPostFilename($value->getFilename());
+                            }
+                        } else {
+                            $requestBody[$key] = '@'.$value->getRealPath();
+
+                            if ($value->getBasename() != $value->getFilename()) {
+                                $requestBody[$key] .= ';filename='.$value->getFilename();
+                            }
+                        }
+                    }
+                }
+            }
+
             if ($requestBody && is_array($requestBody)) {
                 $requestBody = http_build_query($requestBody, '', '&');
             }

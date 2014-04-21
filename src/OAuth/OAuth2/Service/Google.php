@@ -91,14 +91,26 @@ class Google extends AbstractService
     // Android Publisher
     const SCOPE_ANDROID_PUBLISHER           = 'https://www.googleapis.com/auth/androidpublisher';
 
+    protected $access_type = 'online';
 
+
+    public function setAccessType($access_type = 'online')
+    {
+        if ('online' == $access_type || 'offline' == $access_type) {
+            $this->access_type = $access_type;
+        }
+    }
 
     /**
      * {@inheritdoc}
      */
     public function getAuthorizationEndpoint()
     {
-        return new Uri('https://accounts.google.com/o/oauth2/auth');
+        if ('offline' == $this->access_type) {
+            return new Uri('https://accounts.google.com/o/oauth2/auth?access_type=offline');
+        } else {
+            return new Uri('https://accounts.google.com/o/oauth2/auth?access_type=online');
+        }
     }
 
     /**

@@ -6,10 +6,47 @@ use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\UriInterface;
 
 /**
- * Client implementation for streams/file_get_contents
+ * Client implementation for cURL
  */
-class StreamClient extends AbstractClient
+class CurlClient extends AbstractClient
 {
+    /**
+     * If true, explicitly sets cURL to use SSL version 3. Use this if cURL
+     * compiles with GnuTLS SSL.
+     *
+     * @var bool
+     */
+    private $forceSSL3 = false;
+
+    /**
+     * Additional parameters (as `key => value` pairs) to be passed to `curl_setopt`
+     *
+     * @var array
+     */
+    private $parameters = array();
+
+    /**
+     * Additional `curl_setopt` parameters
+     *
+     * @param array $parameters
+     */
+    public function setCurlParameters(array $parameters)
+    {
+        $this->parameters = $parameters;
+    }
+
+    /**
+     * @param bool $force
+     *
+     * @return CurlClient
+     */
+    public function setForceSSL3($force)
+    {
+        $this->forceSSL3 = $force;
+
+        return $this;
+    }
+
     /**
      * Any implementing HTTP providers should send a request to the provided endpoint with the parameters.
      * They should return, in string form, the response body and throw an exception on error.
@@ -39,54 +76,67 @@ class StreamClient extends AbstractClient
             throw new \InvalidArgumentException('No body expected for "GET" request.');
         }
 
-        if (!isset($extraHeaders['Content-type']) && $method === 'POST' && is_array($requestBody)) {
-            $extraHeaders['Content-type'] = 'Content-type: application/x-www-form-urlencoded';
+        if (!isset($extraHeaders['Content-Type']) && $method === 'POST' && is_array($requestBody)) {
+            $extraHeaders['Content-Type'] = 'Content-Type: application/x-www-form-urlencoded';
         }
 
-        $host = 'Host: '.$endpoint->getHost();
-        // Append port to Host if it has been specified
-        if ($endpoint->hasExplicitPortSpecified()) {
-            $host .= ':'.$endpoint->getPort();
-        }
-
-        $extraHeaders['Host']       = $host;
+        $extraHeaders['Host']       = 'Host: '.$endpoint->getHost();
         $extraHeaders['Connection'] = 'Connection: close';
 
-        if (is_array($requestBody)) {
-            $requestBody = http_build_query($requestBody, '', '&');
-        }
-        $extraHeaders['Content-length'] = 'Content-length: '.strlen($requestBody);
+        $ch = curl_init();
 
-        $context = $this->generateStreamContext($requestBody, $extraHeaders, $method);
+        curl_setopt($ch, CURLOPT_URL, $endpoint->getAbsoluteUri());
 
-        $level = error_reporting(0);
-        $response = file_get_contents($endpoint->getAbsoluteUri(), false, $context);
-        error_reporting($level);
-        if (false === $response) {
-            $lastError = error_get_last();
-            if (is_null($lastError)) {
-                throw new TokenResponseException('Failed to request resource.');
+        if ($method === 'POST' || $method === 'PUT') {
+            if ($requestBody && is_array($requestBody)) {
+                $requestBody = http_build_query($requestBody, '', '&');
             }
-            throw new TokenResponseException($lastError['message']);
+
+            if ($method === 'PUT') {
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            } else {
+                curl_setopt($ch, CURLOPT_POST, true);
+            }
+
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $requestBody);
+        } else {
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
         }
+
+        if ($this->maxRedirects > 0) {
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+            curl_setopt($ch, CURLOPT_MAXREDIRS, $this->maxRedirects);
+        }
+
+        curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $extraHeaders);
+        curl_setopt($ch, CURLOPT_USERAGENT, $this->userAgent);
+
+        foreach ($this->parameters as $key => $value) {
+            curl_setopt($ch, $key, $value);
+        }
+
+        if ($this->forceSSL3) {
+            curl_setopt($ch, CURLOPT_SSLVERSION, 3);
+        }
+
+        $response     = curl_exec($ch);
+        $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if (false === $response) {
+            $errNo  = curl_errno($ch);
+            $errStr = curl_error($ch);
+            curl_close($ch);
+            if (empty($errStr)) {
+                throw new TokenResponseException('Failed to request resource.', $responseCode);
+            }
+            throw new TokenResponseException('cURL Error # '.$errNo.': '.$errStr, $responseCode);
+        }
+
+        curl_close($ch);
 
         return $response;
-    }
-
-    private function generateStreamContext($body, $headers, $method)
-    {
-        return stream_context_create(
-            array(
-                'http' => array(
-                    'method'           => $method,
-                    'header'           => implode("\r\n", array_values($headers)),
-                    'content'          => $body,
-                    'protocol_version' => '1.1',
-                    'user_agent'       => $this->userAgent,
-                    'max_redirects'    => $this->maxRedirects,
-                    'timeout'          => $this->timeout
-                ),
-            )
-        );
     }
 }

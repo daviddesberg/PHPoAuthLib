@@ -39,8 +39,8 @@ class StreamClient extends AbstractClient
             throw new \InvalidArgumentException('No body expected for "GET" request.');
         }
 
-        if (!isset($extraHeaders['Content-type']) && $method === 'POST' && is_array($requestBody)) {
-            $extraHeaders['Content-type'] = 'Content-type: application/x-www-form-urlencoded';
+        if (!isset($extraHeaders['Content-Type']) && $method === 'POST' && is_array($requestBody)) {
+            $extraHeaders['Content-Type'] = 'Content-Type: application/x-www-form-urlencoded';
         }
 
         $host = 'Host: '.$endpoint->getHost();

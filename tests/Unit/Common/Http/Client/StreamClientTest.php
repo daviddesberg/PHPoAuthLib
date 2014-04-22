@@ -125,7 +125,7 @@ class StreamClientTest extends \PHPUnit_Framework_TestCase
         $response = $client->retrieveResponse(
             $endPoint,
             '',
-            array('Content-type' => 'foo/bar'),
+            array('Content-Type' => 'foo/bar'),
             'get'
         );
 
@@ -268,7 +268,7 @@ class StreamClientTest extends \PHPUnit_Framework_TestCase
         $response = $client->retrieveResponse(
             $endPoint,
             '',
-            array('Content-type' => 'foo/bar'),
+            array('Content-Type' => 'foo/bar'),
             'get'
         );
 

@@ -99,7 +99,7 @@ class HttpClientsTest extends \PHPUnit_Framework_TestCase
             $me->assertEquals(json_encode(array('testKey' => 'testValue')), $data['data']);
         };
 
-        $this->__doTestRetrieveResponse($testUri, json_encode(array('testKey' => 'testValue')), array('Content-type' => 'application/json'), 'PUT', $putTestCb);
+        $this->__doTestRetrieveResponse($testUri, json_encode(array('testKey' => 'testValue')), array('Content-Type' => 'application/json'), 'PUT', $putTestCb);
     }
 
     /**

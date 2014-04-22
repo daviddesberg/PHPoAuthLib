@@ -1,372 +1,142 @@
 <?php
 
-namespace OAuthTest\Unit\Common\Http\Client;
+namespace OAuth\Common\Http\Client;
 
-use OAuth\Common\Http\Client\CurlClient;
+use OAuth\Common\Http\Exception\TokenResponseException;
+use OAuth\Common\Http\Uri\UriInterface;
 
-class CurlClientTest extends \PHPUnit_Framework_TestCase
+/**
+ * Client implementation for cURL
+ */
+class CurlClient extends AbstractClient
 {
     /**
+     * If true, explicitly sets cURL to use SSL version 3. Use this if cURL
+     * compiles with GnuTLS SSL.
      *
+     * @var bool
      */
-    public function testConstructCorrectInstance()
-    {
-        $client = new CurlClient();
+    private $forceSSL3 = false;
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Http\\Client\\AbstractClient', $client);
+    /**
+     * Additional parameters (as `key => value` pairs) to be passed to `curl_setopt`
+     *
+     * @var array
+     */
+    private $parameters = array();
+
+    /**
+     * Additional `curl_setopt` parameters
+     *
+     * @param array $parameters
+     */
+    public function setCurlParameters(array $parameters)
+    {
+        $this->parameters = $parameters;
     }
 
     /**
-     * @covers OAuth\Common\Http\Client\CurlClient::setForceSSL3
+     * @param bool $force
+     *
+     * @return CurlClient
      */
-    public function testSetForceSSL3()
+    public function setForceSSL3($force)
     {
-        $client = new CurlClient();
+        $this->forceSSL3 = $force;
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Http\\Client\\CurlClient', $client->setForceSSL3(true));
+        return $this;
     }
 
     /**
-     * @covers OAuth\Common\Http\Client\CurlClient::retrieveResponse
+     * Any implementing HTTP providers should send a request to the provided endpoint with the parameters.
+     * They should return, in string form, the response body and throw an exception on error.
+     *
+     * @param UriInterface $endpoint
+     * @param mixed        $requestBody
+     * @param array        $extraHeaders
+     * @param string       $method
+     *
+     * @return string
+     *
+     * @throws TokenResponseException
+     * @throws \InvalidArgumentException
      */
-    public function testRetrieveResponseThrowsExceptionOnGetRequestWithBody()
-    {
-        $this->setExpectedException('\\InvalidArgumentException');
-
-        $client = new CurlClient();
-
-        $client->retrieveResponse(
-            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface'),
-            'foo',
-            array(),
-            'GET'
-        );
-    }
-
-    /**
-     * @covers OAuth\Common\Http\Client\CurlClient::retrieveResponse
-     */
-    public function testRetrieveResponseThrowsExceptionOnGetRequestWithBodyMethodConvertedToUpper()
-    {
-        $this->setExpectedException('\\InvalidArgumentException');
-
-        $client = new CurlClient();
-
-        $client->retrieveResponse(
-            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface'),
-            'foo',
-            array(),
-            'get'
-        );
-    }
-
-    /**
-     * @covers OAuth\Common\Http\Client\StreamClient::retrieveResponse
-     * @covers OAuth\Common\Http\Client\StreamClient::generateStreamContext
-     */
-    public function testRetrieveResponseDefaultUserAgent()
-    {
-        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $endPoint->expects($this->any())
-            ->method('getHost')
-            ->will($this->returnValue('httpbin.org'));
-        $endPoint->expects($this->any())
-            ->method('getAbsoluteUri')
-            ->will($this->returnValue('http://httpbin.org/get'));
-
-        $client = new CurlClient();
-
-        $response = $client->retrieveResponse(
-            $endPoint,
-            '',
-            array(),
-            'get'
-        );
-
-        $response = json_decode($response, true);
-
-        $this->assertSame('PHPoAuthLib', $response['headers']['User-Agent']);
-    }
-
-    /**
-     * @covers OAuth\Common\Http\Client\StreamClient::retrieveResponse
-     * @covers OAuth\Common\Http\Client\StreamClient::generateStreamContext
-     */
-    public function testRetrieveResponseCustomUserAgent()
-    {
-        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $endPoint->expects($this->any())
-            ->method('getHost')
-            ->will($this->returnValue('httpbin.org'));
-        $endPoint->expects($this->any())
-            ->method('getAbsoluteUri')
-            ->will($this->returnValue('http://httpbin.org/get'));
-
-        $client = new CurlClient('My Super Awesome Http Client');
-
-        $response = $client->retrieveResponse(
-            $endPoint,
-            '',
-            array(),
-            'get'
-        );
-
-        $response = json_decode($response, true);
-
-        $this->assertSame('My Super Awesome Http Client', $response['headers']['User-Agent']);
-    }
-
-    /**
-     * @covers OAuth\Common\Http\Client\CurlClient::retrieveResponse
-     */
-    public function testRetrieveResponseWithCustomContentType()
-    {
-        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $endPoint->expects($this->any())
-            ->method('getHost')
-            ->will($this->returnValue('httpbin.org'));
-        $endPoint->expects($this->any())
-            ->method('getAbsoluteUri')
-            ->will($this->returnValue('http://httpbin.org/get'));
-
-        $client = new CurlClient();
-
-        $response = $client->retrieveResponse(
-            $endPoint,
-            '',
-            array('Content-type' => 'foo/bar'),
-            'get'
-        );
-
-        $response = json_decode($response, true);
-
-        $this->assertSame('foo/bar', $response['headers']['Content-Type']);
-    }
-
-    /**
-     * @covers OAuth\Common\Http\Client\CurlClient::retrieveResponse
-     */
-    public function testRetrieveResponseWithFormUrlEncodedContentType()
-    {
-        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $endPoint->expects($this->any())
-            ->method('getHost')
-            ->will($this->returnValue('httpbin.org'));
-        $endPoint->expects($this->any())
-            ->method('getAbsoluteUri')
-            ->will($this->returnValue('http://httpbin.org/post'));
-
-        $client = new CurlClient();
-
-        $response = $client->retrieveResponse(
-            $endPoint,
-            array('foo' => 'bar', 'baz' => 'fab'),
-            array(),
-            'POST'
-        );
-
-        $response = json_decode($response, true);
-
-        $this->assertSame('application/x-www-form-urlencoded', $response['headers']['Content-Type']);
-        $this->assertEquals(array('foo' => 'bar', 'baz' => 'fab'), $response['form']);
-    }
-
-    /**
-     * @covers OAuth\Common\Http\Client\CurlClient::retrieveResponse
-     */
-    public function testRetrieveResponseHost()
-    {
-        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $endPoint->expects($this->any())
-            ->method('getHost')
-            ->will($this->returnValue('httpbin.org'));
-        $endPoint->expects($this->any())
-            ->method('getAbsoluteUri')
-            ->will($this->returnValue('http://httpbin.org/post'));
-
-        $client = new CurlClient();
-
-        $response = $client->retrieveResponse(
-            $endPoint,
-            array('foo' => 'bar', 'baz' => 'fab'),
-            array(),
-            'POST'
-        );
-
-        $response = json_decode($response, true);
-
-        $this->assertSame('httpbin.org', $response['headers']['Host']);
-    }
-
-    /**
-     * @covers OAuth\Common\Http\Client\CurlClient::retrieveResponse
-     */
-    public function testRetrieveResponsePostRequestWithRequestBodyAsString()
-    {
-        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $endPoint->expects($this->any())
-            ->method('getHost')
-            ->will($this->returnValue('httpbin.org'));
-        $endPoint->expects($this->any())
-            ->method('getAbsoluteUri')
-            ->will($this->returnValue('http://httpbin.org/post'));
-
-        $client = new CurlClient();
-
-        $response = $client->retrieveResponse(
-            $endPoint,
-            'foo',
-            array(),
-            'POST'
-        );
-
-        $response = json_decode($response, true);
-
-        $this->assertSame('foo', $response['data']);
-    }
-
-    /**
-     * @covers OAuth\Common\Http\Client\CurlClient::retrieveResponse
-     */
-    public function testRetrieveResponsePutRequestWithRequestBodyAsString()
-    {
-        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $endPoint->expects($this->any())
-            ->method('getHost')
-            ->will($this->returnValue('httpbin.org'));
-        $endPoint->expects($this->any())
-            ->method('getAbsoluteUri')
-            ->will($this->returnValue('http://httpbin.org/put'));
-
-        $client = new CurlClient();
-
-        $response = $client->retrieveResponse(
-            $endPoint,
-            'foo',
-            array(),
-            'PUT'
-        );
-
-        $response = json_decode($response, true);
-
-        $this->assertSame('foo', $response['data']);
-    }
-
-    /**
-     * @covers OAuth\Common\Http\Client\CurlClient::retrieveResponse
-     */
-    public function testRetrieveResponsePutRequestWithRequestBodyAsStringNoRedirects()
-    {
-        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $endPoint->expects($this->any())
-            ->method('getHost')
-            ->will($this->returnValue('httpbin.org'));
-        $endPoint->expects($this->any())
-            ->method('getAbsoluteUri')
-            ->will($this->returnValue('http://httpbin.org/put'));
-
-        $client = new CurlClient();
-
-        $client->setMaxRedirects(0);
-
-        $response = $client->retrieveResponse(
-            $endPoint,
-            'foo',
-            array(),
-            'PUT'
-        );
-
-        $response = json_decode($response, true);
-
-        $this->assertSame('foo', $response['data']);
-    }
-
-    /**
-     * @covers OAuth\Common\Http\Client\CurlClient::retrieveResponse
-     */
-    public function testRetrieveResponseWithForcedSsl3()
-    {
-        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $endPoint->expects($this->any())
-            ->method('getHost')
-            ->will($this->returnValue('httpbin.org'));
-        $endPoint->expects($this->any())
-            ->method('getAbsoluteUri')
-            ->will($this->returnValue('https://httpbin.org/get'));
-
-        $client = new CurlClient();
-
-        $client->setForceSSL3(true);
-
-        $response = $client->retrieveResponse(
-            $endPoint,
-            '',
-            array('Content-type' => 'foo/bar'),
-            'get'
-        );
-
-        $response = json_decode($response, true);
-
-        $this->assertSame('foo/bar', $response['headers']['Content-Type']);
-    }
-
-    /**
-     * @covers OAuth\Common\Http\Client\CurlClient::retrieveResponse
-     */
-    public function testRetrieveResponseThrowsExceptionOnInvalidUrl()
-    {
-        $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
-
-        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $endPoint->expects($this->any())
-            ->method('getHost')
-            ->will($this->returnValue('jkehfkefcmekjhcnkerjh'));
-        $endPoint->expects($this->any())
-            ->method('getAbsoluteUri')
-            ->will($this->returnValue('jkehfkefcmekjhcnkerjh'));
-
-        $client = new CurlClient();
-
-        $client->setForceSSL3(true);
-
-        $response = $client->retrieveResponse(
-            $endPoint,
-            '',
-            array('Content-type' => 'foo/bar'),
-            'get'
-        );
-
-        $response = json_decode($response, true);
-
-        $this->assertSame('foo/bar', $response['headers']['Content-Type']);
-    }
-
-    public function testAdditionalParameters()
-    {
-        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $endPoint->expects($this->any())
-            ->method('getHost')
-            ->will($this->returnValue('httpbin.org'));
-        $endPoint->expects($this->any())
-            ->method('getAbsoluteUri')
-            ->will($this->returnValue('http://httpbin.org/gzip'));
-
-        $client = new CurlClient();
-        $client->setCurlParameters(array(
-            CURLOPT_ENCODING => 'gzip',
-        ));
-
-        $response = $client->retrieveResponse(
-            $endPoint,
-            '',
-            array(),
-            'get'
-        );
-
-        $response = json_decode($response, true);
-
-        $this->assertNotNull($response);
-        $this->assertSame('gzip', $response['headers']['Accept-Encoding']);
-        $this->assertTrue($response['gzipped']);
+    public function retrieveResponse(
+        UriInterface $endpoint,
+        $requestBody,
+        array $extraHeaders = array(),
+        $method = 'POST'
+    ) {
+        // Normalize method name
+        $method = strtoupper($method);
+
+        $this->normalizeHeaders($extraHeaders);
+
+        if ($method === 'GET' && !empty($requestBody)) {
+            throw new \InvalidArgumentException('No body expected for "GET" request.');
+        }
+
+        if (!isset($extraHeaders['Content-Type']) && $method === 'POST' && is_array($requestBody)) {
+            $extraHeaders['Content-Type'] = 'Content-Type: application/x-www-form-urlencoded';
+        }
+
+        $extraHeaders['Host']       = 'Host: '.$endpoint->getHost();
+        $extraHeaders['Connection'] = 'Connection: close';
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $endpoint->getAbsoluteUri());
+
+        if ($method === 'POST' || $method === 'PUT') {
+            if ($requestBody && is_array($requestBody)) {
+                $requestBody = http_build_query($requestBody, '', '&');
+            }
+
+            if ($method === 'PUT') {
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            } else {
+                curl_setopt($ch, CURLOPT_POST, true);
+            }
+
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $requestBody);
+        } else {
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+        }
+
+        if ($this->maxRedirects > 0) {
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+            curl_setopt($ch, CURLOPT_MAXREDIRS, $this->maxRedirects);
+        }
+
+        curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $extraHeaders);
+        curl_setopt($ch, CURLOPT_USERAGENT, $this->userAgent);
+
+        foreach ($this->parameters as $key => $value) {
+            curl_setopt($ch, $key, $value);
+        }
+
+        if ($this->forceSSL3) {
+            curl_setopt($ch, CURLOPT_SSLVERSION, 3);
+        }
+
+        $response     = curl_exec($ch);
+        $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if (false === $response) {
+            $errNo  = curl_errno($ch);
+            $errStr = curl_error($ch);
+            curl_close($ch);
+            if (empty($errStr)) {
+                throw new TokenResponseException('Failed to request resource.', $responseCode);
+            }
+            throw new TokenResponseException('cURL Error # '.$errNo.': '.$errStr, $responseCode);
+        }
+
+        curl_close($ch);
+
+        return $response;
     }
 }

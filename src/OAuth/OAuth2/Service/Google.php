@@ -97,7 +97,7 @@ class Google extends AbstractService
 
     public function setAccessType($accessType)
     {
-        if (!in_array($accessType, array('online', 'offline'))) {
+        if (!in_array($accessType, array('online', 'offline'), true)) {
             throw new InvalidAccessTypeException('Invalid accessType, expected either online or offline but ' . $accessType . ' given');
         }
         $this->accessType = $accessType;
@@ -141,7 +141,7 @@ class Google extends AbstractService
             unset($data['refresh_token']);
         }
 
-        unset($data['access_token']);a
+        unset($data['access_token']);
         unset($data['expires_in']);
 
         $token->setExtraParams($data);

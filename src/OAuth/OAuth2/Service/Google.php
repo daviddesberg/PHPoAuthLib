@@ -92,15 +92,15 @@ class Google extends AbstractService
     // Android Publisher
     const SCOPE_ANDROID_PUBLISHER           = 'https://www.googleapis.com/auth/androidpublisher';
 
-    protected $access_type = 'online';
+    protected $accessType = 'online';
 
 
-    public function setAccessType($access_type)
+    public function setAccessType($accessType)
     {
-        if (! ('online' == $access_type || 'offline' == $access_type)) {
-            throw new InvalidAccessTypeException('Invalid access_type argument');
+        if (!in_array($accessType, array('online', 'offline'))) {
+            throw new InvalidAccessTypeException('Invalid accessType, expected either online or offline but ' . $accessType . ' given');
         }
-        $this->access_type = $access_type;
+        $this->accessType = $accessType;
     }
 
     /**
@@ -108,11 +108,7 @@ class Google extends AbstractService
      */
     public function getAuthorizationEndpoint()
     {
-        if ('offline' == $this->access_type) {
-            return new Uri('https://accounts.google.com/o/oauth2/auth?access_type=offline');
-        } else {
-            return new Uri('https://accounts.google.com/o/oauth2/auth?access_type=online');
-        }
+        return new Uri('https://accounts.google.com/o/oauth2/auth?access_type=' . $this->accessType);
     }
 
     /**
@@ -145,7 +141,7 @@ class Google extends AbstractService
             unset($data['refresh_token']);
         }
 
-        unset($data['access_token']);
+        unset($data['access_token']);a
         unset($data['expires_in']);
 
         $token->setExtraParams($data);

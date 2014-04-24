@@ -98,7 +98,7 @@ class Google extends AbstractService
     public function setAccessType($accessType)
     {
         if (!in_array($accessType, array('online', 'offline'), true)) {
-            throw new InvalidAccessTypeException('Invalid accessType, expected either online or offline but ' . $accessType . ' given');
+            throw new InvalidAccessTypeException('Invalid accessType, expected either online or offline');
         }
         $this->accessType = $accessType;
     }

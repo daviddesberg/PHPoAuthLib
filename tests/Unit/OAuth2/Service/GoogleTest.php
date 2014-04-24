@@ -64,9 +64,39 @@ class GoogleTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertSame(
-            'https://accounts.google.com/o/oauth2/auth',
+            'https://accounts.google.com/o/oauth2/auth?access_type=online',
             $service->getAuthorizationEndpoint()->getAbsoluteUri()
         );
+
+        // Verify that 'offine' works
+        $service->setAccessType('offline');
+        $this->assertSame(
+            'https://accounts.google.com/o/oauth2/auth?access_type=offline',
+            $service->getAuthorizationEndpoint()->getAbsoluteUri()
+        );
+
+    }
+
+    /**
+     * @covers OAuth\OAuth2\Service\Google::__construct
+     * @covers OAuth\OAuth2\Service\Google::getAuthorizationEndpoint
+     */
+    public function testGetAuthorizationEndpointException()
+    {
+        $service = new Google(
+            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+        );
+
+        $this->setExpectedException('OAuth\OAuth2\Service\Exception\InvalidAccessTypeException');
+
+        try {
+            $service->setAccessType('invalid');
+        } catch (InvalidAccessTypeException $e) {
+            return;
+        }
+        $this->fail('Expected InvalidAccessTypeException not thrown');
     }
 
     /**

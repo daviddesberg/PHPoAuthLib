@@ -4,6 +4,7 @@ namespace OAuth\OAuth2\Service;
 
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
+use OAuth\OAuth2\Service\Exception\InvalidAccessTypeException;
 use OAuth\Common\Http\Uri\Uri;
 
 class Google extends AbstractService
@@ -14,7 +15,7 @@ class Google extends AbstractService
      *
      * Make a pull request if you need more scopes.
      */
-    
+
     // Basic
     const SCOPE_EMAIL                       = 'email';
     const SCOPE_PROFILE                     = 'profile';
@@ -60,7 +61,7 @@ class Google extends AbstractService
     const SCOPE_URLSHORTENER                = 'https://www.googleapis.com/auth/urlshortener';
     const SCOPE_WEBMASTERTOOLS              = 'https://www.google.com/webmasters/tools/feeds/';
     const SCOPE_TASKS                       = 'https://www.googleapis.com/auth/tasks';
-    
+
     // Cloud services
     const SCOPE_CLOUDSTORAGE                = 'https://www.googleapis.com/auth/devstorage.read_write';
     const SCOPE_CONTENTFORSHOPPING          = 'https://www.googleapis.com/auth/structuredcontent'; // what even is this
@@ -87,18 +88,31 @@ class Google extends AbstractService
     // Google Glass
     const SCOPE_GLASS_TIMELINE              = 'https://www.googleapis.com/auth/glass.timeline';
     const SCOPE_GLASS_LOCATION              = 'https://www.googleapis.com/auth/glass.location';
-    
+
     // Android Publisher
     const SCOPE_ANDROID_PUBLISHER           = 'https://www.googleapis.com/auth/androidpublisher';
 
+    protected $access_type = 'online';
 
+
+    public function setAccessType($access_type)
+    {
+        if (! ('online' == $access_type || 'offline' == $access_type)) {
+            throw new InvalidAccessTypeException('Invalid access_type argument');
+        }
+        $this->access_type = $access_type;
+    }
 
     /**
      * {@inheritdoc}
      */
     public function getAuthorizationEndpoint()
     {
-        return new Uri('https://accounts.google.com/o/oauth2/auth');
+        if ('offline' == $this->access_type) {
+            return new Uri('https://accounts.google.com/o/oauth2/auth?access_type=offline');
+        } else {
+            return new Uri('https://accounts.google.com/o/oauth2/auth?access_type=online');
+        }
     }
 
     /**

@@ -15,9 +15,30 @@ class WordPressMemory implements TokenStorageInterface
      */
     protected $tokens;
 
+    /**
+     * Key for storing token in WordPress options table
+     * @var string
+     */
+    private $tokenOptionName;
+
+    /**
+     * Key for storing state in WordPress options table
+     * @var string
+     */
+    private $stateOptionName;
+
+    /**
+     * @var array
+     */
+    protected $states;
+
     public function __construct()
     {
-        $this->tokens = (array)maybe_unserialize( get_option( 'lusitanian_oauth_token' ) );
+        $this->tokenOptionName = 'lusitanian_oauth_token';
+        $this->stateOptionName = 'lusitanian_oauth_state';
+
+        $this->tokens = (array)maybe_unserialize( get_option( $this->tokenOptionName ) );
+        $this->states = (array)maybe_unserialize( get_option( $this->stateOptionName ) );
     }
 
     /**
@@ -40,7 +61,7 @@ class WordPressMemory implements TokenStorageInterface
 
         $this->tokens[$service] = $token;
 
-        update_option( 'lusitanian_oauth_token', $this->tokens);
+        update_option( $this->tokenOptionName, $this->tokens);
 
         // allow chaining
         return $this;
@@ -63,7 +84,7 @@ class WordPressMemory implements TokenStorageInterface
             unset($this->tokens[$service]);
         }
 
-        update_option( 'lusitanian_oauth_token', $this->tokens);
+        update_option( $this->tokenOptionName, $this->tokens);
 
         // allow chaining
         return $this;
@@ -77,7 +98,68 @@ class WordPressMemory implements TokenStorageInterface
 
         $this->tokens = array();
 
-        update_option( 'lusitanian_oauth_token', $this->tokens);
+        update_option( $this->tokenOptionName, $this->tokens);
+
+        // allow chaining
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function retrieveAuthorizationState($service)
+    {
+        if ($this->hasAuthorizationState($service)) {
+            return $this->states[$service];
+        }
+
+        throw new AuthorizationStateNotFoundException('State not stored');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function storeAuthorizationState($service, $state)
+    {
+        $this->states[$service] = $state;
+
+        update_option( $this->stateOptionName, $this->states);
+
+        // allow chaining
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function hasAuthorizationState($service)
+    {
+        return isset($this->states[$service]) && null !== $this->states[$service];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function clearAuthorizationState($service)
+    {
+        if (array_key_exists($service, $this->states)) {
+            unset($this->states[$service]);
+
+            update_option( $this->stateOptionName, $this->states);
+        }
+
+        // allow chaining
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function clearAllAuthorizationStates()
+    {
+        $this->states = array();
+
+        update_option( $this->stateOptionName, $this->states);
 
         // allow chaining
         return $this;

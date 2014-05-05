@@ -51,7 +51,7 @@ class WordPressMemory implements TokenStorageInterface
      */
     public function hasAccessToken($service)
     {
-        return is_array($tokens) && isset($this->tokens[$service]) && $this->tokens[$service] instanceof TokenInterface;
+        return is_array($this->tokens) && isset($this->tokens[$service]) && $this->tokens[$service] instanceof TokenInterface;
     }
 
     /**

@@ -12,7 +12,8 @@ use OAuth\Common\Http\Uri\UriInterface;
 
 class Stripe extends AbstractService
 {
-    const SCOPE_READONLY     = 'read_only';
+    const SCOPE_READONLY = 'read_only';
+    const SCOPE_READWRITE = 'read_write';
 
     public function __construct(
         CredentialsInterface $credentials,

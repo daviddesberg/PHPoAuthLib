@@ -12,6 +12,11 @@ use OAuth\Common\Storage\Exception\AuthorizationStateNotFoundException;
 class Session implements TokenStorageInterface
 {
     /**
+     * @var bool
+     */
+    protected $startSession;
+
+    /**
      * @var string
      */
     protected $sessionVariableName;
@@ -35,6 +40,7 @@ class Session implements TokenStorageInterface
             session_start();
         }
 
+        $this->startSession = $startSession;
         $this->sessionVariableName = $sessionVariableName;
         $this->stateVariableName = $stateVariableName;
         if (!isset($_SESSION[$sessionVariableName])) {
@@ -175,6 +181,8 @@ class Session implements TokenStorageInterface
 
     public function __destruct()
     {
-        session_write_close();
+        if ($this->startSession) {
+            session_write_close();
+        }
     }
 }

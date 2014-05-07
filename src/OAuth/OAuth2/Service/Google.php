@@ -83,8 +83,8 @@ class Google extends AbstractService
     const SCOPE_YOUTUBE                     = 'https://www.googleapis.com/auth/youtube';
     const SCOPE_YOUTUBE_READ_ONLY           = 'https://www.googleapis.com/auth/youtube.readonly';
     const SCOPE_YOUTUBE_UPLOAD              = 'https://www.googleapis.com/auth/youtube.upload';
-    const SCOPE_YOUTUBE_PATNER              = 'https://www.googleapis.com/auth/youtubepartner';
-    const SCOPE_YOUTUBE_PARTNER_EDIT        = 'https://www.googleapis.com/auth/youtubepartner-channel-edit';
+    const SCOPE_YOUTUBE_PARTNER             = 'https://www.googleapis.com/auth/youtubepartner';
+    const SCOPE_YOUTUBE_PARTNER_AUDIT       = 'https://www.googleapis.com/auth/youtubepartner-channel-audit';
 
     // Google Glass
     const SCOPE_GLASS_TIMELINE              = 'https://www.googleapis.com/auth/glass.timeline';

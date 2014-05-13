@@ -82,10 +82,6 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         }
         $this->signature->setTokenSecret($tokenSecret);
 
-        $extraAuthenticationHeaders = array(
-            'oauth_token' => $token,
-        );
-
         $bodyParams = array(
             'oauth_verifier' => $verifier,
         );

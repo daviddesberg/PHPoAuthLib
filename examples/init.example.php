@@ -31,6 +31,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'buffer' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'dailymotion' => array(
         'key'       => '',
         'secret'    => '',

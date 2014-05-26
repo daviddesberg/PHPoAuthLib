@@ -1,4 +1,5 @@
 <?php
+
 namespace OAuth\Common\Http\Uri;
 
 use RuntimeException;
@@ -10,7 +11,9 @@ class UriFactory implements UriFactoryInterface
 {
     /**
      * Factory method to build a URI from a super-global $_SERVER array.
+     *
      * @param array $_server
+     *
      * @return UriInterface
      */
     public function createFromSuperGlobalArray(array $_server)
@@ -30,6 +33,7 @@ class UriFactory implements UriFactoryInterface
 
     /**
      * @param string $absoluteUri
+     *
      * @return UriInterface
      */
     public function createFromAbsolute($absoluteUri)
@@ -47,6 +51,7 @@ class UriFactory implements UriFactoryInterface
      * @param string $path
      * @param string $query
      * @param string $fragment
+     *
      * @return UriInterface
      */
     public function createFromParts($scheme, $userInfo, $host, $port, $path = '', $query = '', $fragment = '')
@@ -65,6 +70,7 @@ class UriFactory implements UriFactoryInterface
 
     /**
      * @param array $_server
+     *
      * @return UriInterface|null
      */
     private function attemptProxyStyleParse($_server)
@@ -81,16 +87,19 @@ class UriFactory implements UriFactoryInterface
 
     /**
      * @param array $_server
+     *
      * @return string
+     *
      * @throws RuntimeException
      */
-    private function detectPath($_server) {
+    private function detectPath($_server)
+    {
         if (isset($_server['REQUEST_URI'])) {
             $uri = $_server['REQUEST_URI'];
         } elseif (isset($_server['REDIRECT_URL'])) {
             $uri = $_server['REDIRECT_URL'];
         } else {
-            throw new RuntimeException("Could not detect URI path from superglobal");
+            throw new RuntimeException('Could not detect URI path from superglobal');
         }
 
         $queryStr = strpos($uri, '?');
@@ -103,9 +112,11 @@ class UriFactory implements UriFactoryInterface
 
     /**
      * @param array $_server
+     *
      * @return string
      */
-    private function detectHost(array $_server) {
+    private function detectHost(array $_server)
+    {
         $host = isset($_server['HTTP_HOST']) ? $_server['HTTP_HOST'] : '';
 
         if (strstr($host, ':')) {
@@ -117,17 +128,21 @@ class UriFactory implements UriFactoryInterface
 
     /**
      * @param array $_server
+     *
      * @return string
      */
-    private function detectPort(array $_server) {
+    private function detectPort(array $_server)
+    {
         return isset($_server['SERVER_PORT']) ? $_server['SERVER_PORT'] : 80;
     }
 
     /**
      * @param array $_server
+     *
      * @return string
      */
-    private function detectQuery(array $_server) {
+    private function detectQuery(array $_server)
+    {
         return isset($_server['QUERY_STRING']) ? $_server['QUERY_STRING'] : '';
     }
 
@@ -142,10 +157,9 @@ class UriFactory implements UriFactoryInterface
      *
      * @return string Returns http or https depending on the URI scheme
      */
-    private function detectScheme(array $_server) {
-        if (isset($_server['HTTPS'])
-            && filter_var($_server['HTTPS'], FILTER_VALIDATE_BOOLEAN)
-        ) {
+    private function detectScheme(array $_server)
+    {
+        if (isset($_server['HTTPS']) && filter_var($_server['HTTPS'], FILTER_VALIDATE_BOOLEAN)) {
             return 'https';
         } else {
             return 'http';

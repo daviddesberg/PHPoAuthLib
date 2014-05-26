@@ -1,8 +1,9 @@
 <?php
+
 /**
  * Bootstrap the library
  */
-require_once __DIR__ . '/../src/OAuth/bootstrap.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 /**
  * Setup error reporting

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Example of retrieving an authentication token of the Linkedin service
  *
@@ -10,18 +11,18 @@
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
+
 use OAuth\OAuth2\Service\Linkedin;
-use OAuth\Common\Storage\Memory;
+use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
-use OAuth\Common\Http\Uri\Uri;
 
 /**
  * Bootstrap the example
  */
 require_once __DIR__ . '/bootstrap.php';
 
-// In-memory storage
-$storage = new Memory();
+// Session storage
+$storage = new Session();
 
 // Setup the credentials for the requests
 $credentials = new Credentials(
@@ -34,19 +35,21 @@ $credentials = new Credentials(
 /** @var $linkedinService Linkedin */
 $linkedinService = $serviceFactory->createService('linkedin', $credentials, $storage, array('r_basicprofile'));
 
-if( !empty( $_GET['code'] ) ) {
-    // This was a callback request from google, get the token
-    $token = $linkedinService->requestAccessToken( $_GET['code'] );
+if (!empty($_GET['code'])) {
+    // retrieve the CSRF state parameter
+    $state = isset($_GET['state']) ? $_GET['state'] : null;
+
+    // This was a callback request from linkedin, get the token
+    $token = $linkedinService->requestAccessToken($_GET['code'], $state);
 
     // Send a request with it. Please note that XML is the default format.
-    $result = json_decode( $linkedinService->request( '/people/~?format=json' ), true );
+    $result = json_decode($linkedinService->request('/people/~?format=json'), true);
 
     // Show some of the resultant data
     echo 'Your linkedin first name is ' . $result['firstName'] . ' and your last name is ' . $result['lastName'];
 
-} elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
-    // state is used to prevent CSRF, it's required
-    $url = $linkedinService->getAuthorizationUri(array('state' => 'DCEEFWF45453sdffef424'));
+} elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
+    $url = $linkedinService->getAuthorizationUri();
     header('Location: ' . $url);
 } else {
     $url = $currentUri->getRelativeUri() . '?go=go';

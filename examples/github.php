@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Example of retrieving an authentication token of the Github service
  *
@@ -9,18 +10,18 @@
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
+
 use OAuth\OAuth2\Service\GitHub;
-use OAuth\Common\Storage\Memory;
+use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
-use OAuth\Common\Http\Uri\Uri;
 
 /**
  * Bootstrap the example
  */
 require_once __DIR__ . '/bootstrap.php';
 
-// In-memory storage
-$storage = new Memory();
+// Session storage
+$storage = new Session();
 
 // Setup the credentials for the requests
 $credentials = new Credentials(
@@ -33,13 +34,15 @@ $credentials = new Credentials(
 /** @var $gitHub GitHub */
 $gitHub = $serviceFactory->createService('GitHub', $credentials, $storage, array('user'));
 
-if( !empty( $_GET['code'] ) ) {
-    // This was a callback request from google, get the token
-    $gitHub->requestAccessToken( $_GET['code'] );
-    $result = json_decode( $gitHub->request( 'user/emails' ), true );
+if (!empty($_GET['code'])) {
+    // This was a callback request from github, get the token
+    $gitHub->requestAccessToken($_GET['code']);
+
+    $result = json_decode($gitHub->request('user/emails'), true);
+
     echo 'The first email on your github account is ' . $result[0];
 
-} elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
+} elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $gitHub->getAuthorizationUri();
     header('Location: ' . $url);
 

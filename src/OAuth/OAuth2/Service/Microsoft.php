@@ -1,10 +1,11 @@
 <?php
+
 namespace OAuth\OAuth2\Service;
 
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Uri\UriInterface;
@@ -23,7 +24,7 @@ class Microsoft extends AbstractService
     const SCOPE_CONTACTS_PHOTOS = 'wl.contacts_photos';
     const SCOPE_CONTACTS_SKYDRIVE = 'wl.contacts_skydrive';
     const SCOPE_EMAILS = 'wl.emails';
-    const sCOPE_EVENTS_CREATE = 'wl.events_create';
+    const SCOPE_EVENTS_CREATE = 'wl.events_create';
     const SCOPE_MESSENGER = 'wl.messenger';
     const SCOPE_PHONE_NUMBERS = 'wl.phone_numbers';
     const SCOPE_PHOTOS = 'wl.photos';
@@ -35,16 +36,35 @@ class Microsoft extends AbstractService
     const SCOPE_APPLICATIONS = 'wl.applications';
     const SCOPE_APPLICATIONS_CREATE = 'wl.applications_create';
 
-    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
-    {
+    /**
+     * MS uses some magical not officialy supported scope to get even moar info like full emailaddresses.
+     * They agree that giving 3rd party apps access to 3rd party emailaddresses is a pretty lame thing to do so in all
+     * their wisdom they added this scope because fuck you that's why.
+     *
+     * https://github.com/Lusitanian/PHPoAuthLib/issues/214
+     * http://social.msdn.microsoft.com/Forums/live/en-US/c6dcb9ab-aed4-400a-99fb-5650c393a95d/how-retrieve-users-
+     *                                  contacts-email-address?forum=messengerconnect
+     *
+     * Considering this scope is not officially supported: use with care
+     */
+    const SCOPE_CONTACTS_EMAILS = 'wl.contacts_emails';
+
+    public function __construct(
+        CredentialsInterface $credentials,
+        ClientInterface $httpClient,
+        TokenStorageInterface $storage,
+        $scopes = array(),
+        UriInterface $baseApiUri = null
+    ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-        if( null === $baseApiUri ) {
+
+        if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://apis.live.net/v5.0/');
         }
     }
 
     /**
-     * @return \OAuth\Common\Http\Uri\UriInterface
+     * {@inheritdoc}
      */
     public function getAuthorizationEndpoint()
     {
@@ -52,7 +72,7 @@ class Microsoft extends AbstractService
     }
 
     /**
-     * @return \OAuth\Common\Http\Uri\UriInterface
+     * {@inheritdoc}
      */
     public function getAccessTokenEndpoint()
     {
@@ -60,42 +80,40 @@ class Microsoft extends AbstractService
     }
 
     /**
-     * @param string $responseBody
-     * @return \OAuth\Common\Token\TokenInterface|\OAuth\OAuth2\Token\StdOAuth2Token
-     * @throws \OAuth\Common\Http\Exception\TokenResponseException
-     */
-    protected function parseAccessTokenResponse($responseBody)
-    {
-        $data = json_decode( $responseBody, true );
-
-        if( null === $data || !is_array($data) ) {
-            throw new TokenResponseException('Unable to parse response.');
-        } elseif( isset($data['error'] ) ) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
-        }
-
-        $token = new StdOAuth2Token();
-        $token->setAccessToken( $data['access_token'] );
-        $token->setLifetime( $data['expires_in'] );
-
-        if( isset($data['refresh_token'] ) ) {
-            $token->setRefreshToken( $data['refresh_token'] );
-            unset($data['refresh_token']);
-        }
-
-        unset( $data['access_token'] );
-        unset( $data['expires_in'] );
-
-        $token->setExtraParams( $data );
-
-        return $token;
-    }
-
-    /**
-     * @return int
+     * {@inheritdoc}
      */
     public function getAuthorizationMethod()
     {
         return static::AUTHORIZATION_METHOD_QUERY_STRING;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function parseAccessTokenResponse($responseBody)
+    {
+        $data = json_decode($responseBody, true);
+
+        if (null === $data || !is_array($data)) {
+            throw new TokenResponseException('Unable to parse response.');
+        } elseif (isset($data['error'])) {
+            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+        }
+
+        $token = new StdOAuth2Token();
+        $token->setAccessToken($data['access_token']);
+        $token->setLifetime($data['expires_in']);
+
+        if (isset($data['refresh_token'])) {
+            $token->setRefreshToken($data['refresh_token']);
+            unset($data['refresh_token']);
+        }
+
+        unset($data['access_token']);
+        unset($data['expires_in']);
+
+        $token->setExtraParams($data);
+
+        return $token;
     }
 }

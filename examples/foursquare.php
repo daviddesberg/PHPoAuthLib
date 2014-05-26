@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Example of retrieving an authentication token of the Foursquare service
  *
@@ -9,18 +10,18 @@
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
+
 use OAuth\OAuth2\Service\Foursquare;
-use OAuth\Common\Storage\Memory;
+use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
-use OAuth\Common\Http\Uri;
 
 /**
  * Bootstrap the example
  */
 require_once __DIR__ . '/bootstrap.php';
 
-// In-memory storage
-$storage = new Memory();
+// Session storage
+$storage = new Session();
 
 // Setup the credentials for the requests
 $credentials = new Credentials(
@@ -32,17 +33,18 @@ $credentials = new Credentials(
 // Instantiate the Foursquare service using the credentials, http client and storage mechanism for the token
 /** @var $foursquareService Foursquare */
 $foursquareService = $serviceFactory->createService('foursquare', $credentials, $storage);
-if( !empty( $_GET['code'] ) ) {
-    // This was a callback request from google, get the token
-    $foursquareService->requestAccessToken( $_GET['code'] );
+
+if (!empty($_GET['code'])) {
+    // This was a callback request from foursquare, get the token
+    $foursquareService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = json_decode( $foursquareService->request( 'users/self' ), true );
+    $result = json_decode($foursquareService->request('users/self'), true);
 
     // Show some of the resultant data
     echo 'Your unique foursquare user id is: ' . $result['response']['user']['id'] . ' and your name is ' . $result['response']['user']['firstName'] . $result['response']['user']['lastName'];
 
-} elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
+} elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $foursquareService->getAuthorizationUri();
     header('Location: ' . $url);
 } else {

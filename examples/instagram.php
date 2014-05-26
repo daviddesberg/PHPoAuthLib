@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Example of retrieving an authentication token of the Instagram service
  *
@@ -10,18 +11,18 @@
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
+
 use OAuth\OAuth2\Service\Instagram;
-use OAuth\Common\Storage\Memory;
+use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
-use OAuth\Common\Http\Uri;
 
 /**
  * Bootstrap the example
  */
 require_once __DIR__ . '/bootstrap.php';
 
-// In-memory storage
-$storage = new Memory();
+// Session storage
+$storage = new Session();
 
 // Setup the credentials for the requests
 $credentials = new Credentials(
@@ -35,17 +36,18 @@ $scopes = array('basic', 'comments', 'relationships', 'likes');
 // Instantiate the Instagram service using the credentials, http client and storage mechanism for the token
 /** @var $instagramService Instagram */
 $instagramService = $serviceFactory->createService('instagram', $credentials, $storage, $scopes);
-if( !empty( $_GET['code'] ) ) {
+
+if (!empty($_GET['code'])) {
     // This was a callback request from Instagram, get the token
-    $instagramService->requestAccessToken( $_GET['code'] );
+    $instagramService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = json_decode( $instagramService->request( 'users/self' ), true );
+    $result = json_decode($instagramService->request('users/self'), true);
 
     // Show some of the resultant data
     echo 'Your unique instagram user id is: ' . $result['data']['id'] . ' and your name is ' . $result['data']['full_name'];
 
-} elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
+} elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $instagramService->getAuthorizationUri();
     header('Location: ' . $url);
 } else {

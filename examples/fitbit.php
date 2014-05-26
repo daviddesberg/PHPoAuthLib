@@ -10,17 +10,17 @@
  * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
-use OAuth\OAuth1\Signature\Signature;
+
+use OAuth\OAuth1\Service\FitBit;
 use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
-use OAuth\Common\Http\Uri\Uri;
 
 /**
  * Bootstrap the example
  */
 require_once __DIR__ . '/bootstrap.php';
 
-// In-memory storage
+// Session storage
 $storage = new Session();
 
 // Setup the credentials for the requests
@@ -34,24 +34,26 @@ $credentials = new Credentials(
 /** @var $fitbitService FitBit */
 $fitbitService = $serviceFactory->createService('FitBit', $credentials, $storage);
 
-if( !empty( $_GET['oauth_token'] ) ) {
-    $token = $storage->retrieveAccessToken();
+if (!empty($_GET['oauth_token'])) {
+    $token = $storage->retrieveAccessToken('FitBit');
+
     // This was a callback request from fitbit, get the token
     $fitbitService->requestAccessToken(
         $_GET['oauth_token'],
         $_GET['oauth_verifier'],
-        $token->getRequestTokenSecret() );
+        $token->getRequestTokenSecret()
+    );
 
     // Send a request now that we have access token
-    $result = json_decode( $fitbitService->request( 'user/-/profile.json') );
+    $result = json_decode($fitbitService->request('user/-/profile.json'));
 
     echo 'result: <pre>' . print_r($result, true) . '</pre>';
 
-} elseif( !empty($_GET['go'] ) && $_GET['go'] == 'go' ) {
+} elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     // extra request needed for oauth1 to request a request token :-)
     $token = $fitbitService->requestRequestToken();
 
-    $url = $fitbitService->getAuthorizationUri(['oauth_token' => $token->getRequestToken()]);
+    $url = $fitbitService->getAuthorizationUri(array('oauth_token' => $token->getRequestToken()));
     header('Location: ' . $url);
 } else {
     $url = $currentUri->getRelativeUri() . '?go=go';

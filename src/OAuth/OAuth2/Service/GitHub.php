@@ -1,10 +1,11 @@
 <?php
+
 namespace OAuth\OAuth2\Service;
 
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Uri\UriInterface;
@@ -12,24 +13,96 @@ use OAuth\Common\Http\Uri\UriInterface;
 class GitHub extends AbstractService
 {
     /**
-     * Defined scopes, see http://developer.github.com/v3/oauth/ for definitions
+     * Defined scopes, see http://developer.github.com/v3/oauth/ for definitions.
+     */
+
+    /**
+     * Public read-only access (includes public user profile info, public repo info, and gists)
+     */
+    const SCOPE_READONLY = '';
+
+    /**
+     * Read/write access to profile info only.
+     *
+     * Includes SCOPE_USER_EMAIL and SCOPE_USER_FOLLOW.
      */
     const SCOPE_USER = 'user';
-    const SCOPE_PUBLIC_REPO = 'public_repo';
-    const SCOPE_REPO = 'repo';
-    const SCOPE_DELETE_REPO = 'delete_repo';
-    const SCOPE_GIST = 'gist';
 
-    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
-    {
+    /**
+     * Read access to a user’s email addresses.
+     */
+    const SCOPE_USER_EMAIL = 'user:email';
+
+    /**
+     * Access to follow or unfollow other users.
+     */
+    const SCOPE_USER_FOLLOW = 'user:follow';
+
+    /**
+     * Read/write access to public repos and organizations.
+     */
+    const SCOPE_PUBLIC_REPO = 'public_repo';
+
+    /**
+     * Read/write access to public and private repos and organizations.
+     *
+     * Includes SCOPE_REPO_STATUS.
+     */
+    const SCOPE_REPO = 'repo';
+
+    /**
+     * Read/write access to public and private repository commit statuses. This scope is only necessary to grant other
+     * users or services access to private repository commit statuses without granting access to the code. The repo and
+     * public_repo scopes already include access to commit status for private and public repositories, respectively.
+     */
+    const SCOPE_REPO_STATUS = 'repo:status';
+
+    /**
+     * Delete access to adminable repositories.
+     */
+    const SCOPE_DELETE_REPO = 'delete_repo';
+
+    /**
+     * Read access to a user’s notifications. repo is accepted too.
+     */
+    const SCOPE_NOTIFICATIONS = 'notifications';
+
+    /**
+     * Write access to gists.
+     */
+    const SCOPE_GIST = 'gist';
+    
+    /**
+     * Grants read and ping access to hooks in public or private repositories.
+     */
+    const SCOPE_HOOKS_READ = 'read:repo_hook';
+    
+    /**
+     * Grants read, write, and ping access to hooks in public or private repositories.
+     */
+    const SCOPE_HOOKS_WRITE = 'write:repo_hook';
+    
+    /**
+     * Grants read, write, ping, and delete access to hooks in public or private repositories.
+     */
+    const SCOPE_HOOKS_ADMIN = 'admin:repo_hook';
+
+    public function __construct(
+        CredentialsInterface $credentials,
+        ClientInterface $httpClient,
+        TokenStorageInterface $storage,
+        $scopes = array(),
+        UriInterface $baseApiUri = null
+    ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-        if( null === $baseApiUri ) {
+
+        if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://api.github.com/');
         }
     }
 
     /**
-     * @return \OAuth\Common\Http\Uri\UriInterface
+     * {@inheritdoc}
      */
     public function getAuthorizationEndpoint()
     {
@@ -37,7 +110,7 @@ class GitHub extends AbstractService
     }
 
     /**
-     * @return \OAuth\Common\Http\Uri\UriInterface
+     * {@inheritdoc}
      */
     public function getAccessTokenEndpoint()
     {
@@ -45,28 +118,33 @@ class GitHub extends AbstractService
     }
 
     /**
-     * @param string $responseBody
-     * @return \OAuth\Common\Token\TokenInterface|\OAuth\OAuth2\Token\StdOAuth2Token
-     * @throws \OAuth\Common\Http\Exception\TokenResponseException
+     * {@inheritdoc}
+     */
+    protected function getAuthorizationMethod()
+    {
+        return static::AUTHORIZATION_METHOD_QUERY_STRING;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     protected function parseAccessTokenResponse($responseBody)
     {
-        $data = json_decode( $responseBody, true );
+        $data = json_decode($responseBody, true);
 
-        if( null === $data || !is_array($data) ) {
+        if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
-        } elseif( isset($data['error'] ) ) {
+        } elseif (isset($data['error'])) {
             throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
         }
 
         $token = new StdOAuth2Token();
-
-
-        $token->setAccessToken( $data['access_token'] );
+        $token->setAccessToken($data['access_token']);
         // Github tokens evidently never expire...
         $token->setEndOfLife(StdOAuth2Token::EOL_NEVER_EXPIRES);
-        unset( $data['access_token'] );
-        $token->setExtraParams( $data );
+        unset($data['access_token']);
+
+        $token->setExtraParams($data);
 
         return $token;
     }
@@ -89,13 +167,5 @@ class GitHub extends AbstractService
     protected function getExtraApiHeaders()
     {
         return array('Accept' => 'application/vnd.github.beta+json');
-    }
-
-    /**
-     * @return int
-     */
-    protected function getAuthorizationMethod()
-    {
-        return static::AUTHORIZATION_METHOD_QUERY_STRING;
     }
 }

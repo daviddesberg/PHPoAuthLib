@@ -1,4 +1,5 @@
 <?php
+
 namespace OAuth\Common\Http\Uri;
 
 /**
@@ -9,8 +10,8 @@ interface UriFactoryInterface
     /**
      * Factory method to build a URI from a super-global $_SERVER array.
      *
-     * @abstract
      * @param array $_server
+     *
      * @return UriInterface
      */
     public function createFromSuperGlobalArray(array $_server);
@@ -18,8 +19,8 @@ interface UriFactoryInterface
     /**
      * Creates a URI from an absolute URI
      *
-     * @abstract
      * @param string $absoluteUri
+     *
      * @return UriInterface
      */
     public function createFromAbsolute($absoluteUri);
@@ -27,7 +28,6 @@ interface UriFactoryInterface
     /**
      * Factory method to build a URI from parts
      *
-     * @abstract
      * @param string $scheme
      * @param string $userInfo
      * @param string $host
@@ -35,6 +35,7 @@ interface UriFactoryInterface
      * @param string $path
      * @param string $query
      * @param string $fragment
+     *
      * @return UriInterface
      */
     public function createFromParts($scheme, $userInfo, $host, $port, $path = '', $query = '', $fragment = '');

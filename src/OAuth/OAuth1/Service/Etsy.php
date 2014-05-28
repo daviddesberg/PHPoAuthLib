@@ -13,8 +13,6 @@ use OAuth\Common\Http\Client\ClientInterface;
 
 class Etsy extends AbstractService
 {
-<<<<<<< HEAD
-
     protected $scopes;
 
     /**
@@ -40,8 +38,6 @@ class Etsy extends AbstractService
     const TREASURY_R        = "treasury_r";
     const TREASURY_W        = "treasury_w";
 
-=======
->>>>>>> parent of 71a17c5... Etsy scopes
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,

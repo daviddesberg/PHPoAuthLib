@@ -53,8 +53,8 @@ class Etsy extends AbstractService
         }
     }
 	
-	public function setScopes($requested_scopes = array()) {
-        
+    public function setScopes($requested_scopes = array()) 
+    {        
         if ($requested_scopes) {
             $this->scopes = '?scope=' . implode('%20', $requested_scopes);
         }
@@ -125,6 +125,5 @@ class Etsy extends AbstractService
         $token->setExtraParams($data);
 
         return $token;
-    }
-	
+    }	
 }

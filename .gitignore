@@ -3,3 +3,6 @@ vendor
 .DS_Store
 composer.lock
 examples/init.php
+/nbproject/private/
+nbproject/project.xml
+*.properties

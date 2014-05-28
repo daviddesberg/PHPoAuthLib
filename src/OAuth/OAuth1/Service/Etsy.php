@@ -13,6 +13,32 @@ use OAuth\Common\Http\Client\ClientInterface;
 
 class Etsy extends AbstractService
 {
+
+    protected $scopes;
+
+    /**
+     * Defined scopes
+     * @link https://www.etsy.com/developers/documentation/getting_started/oauth#section_permission_scopes
+     */
+    const EMAIL_R           = "email_r";
+    const LISTINGS_R        = "listings_r";
+    const LISTINGS_W        = "listings_w";
+    const LISTINGS_D        = "listings_d";
+    const TRANSACTIONS_R    = "transactions_r";
+    const TRANSACTIONS_W    = "transactions_w";
+    const BILLING_R         = "billing_r";
+    const PROFILE_R         = "profile_r";
+    const PROFILE_W         = "profile_w";
+    const ADDRESS_R         = "address_r";
+    const ADDRESS_W         = "address_w";
+    const FAVORITES_RW      = "favorites_rw";
+    const SHOPS_RW          = "shops_rw";
+    const CART_RW           = "cart_rw";
+    const RECOMMEND_RW      = "recommend_rw";
+    const FEEDBACK_R        = "feedback_r";
+    const TREASURY_R        = "treasury_r";
+    const TREASURY_W        = "treasury_w";
+	
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
@@ -92,5 +118,16 @@ class Etsy extends AbstractService
         $token->setExtraParams($data);
 
         return $token;
+    }
+	
+	 public function setScopes($request_scopes = array()) {
+        
+        if ($request_scopes) {
+            $this->scopes = '?scope=' . implode('%20', $request_scopes);
+        }
+    }
+	
+    public function getRequestTokenEndpoint() {        
+        return new Uri($this->baseApiUri . 'oauth/request_token' . $this->scopes);
     }
 }

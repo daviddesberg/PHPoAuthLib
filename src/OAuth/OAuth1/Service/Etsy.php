@@ -38,7 +38,7 @@ class Etsy extends AbstractService
     const FEEDBACK_R        = "feedback_r";
     const TREASURY_R        = "treasury_r";
     const TREASURY_W        = "treasury_w";
-	
+
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
@@ -52,9 +52,9 @@ class Etsy extends AbstractService
             $this->baseApiUri = new Uri('https://openapi.etsy.com/v2/');
         }
     }
-	
-    public function setScopes($requested_scopes = array()) 
-    {        
+
+    public function setScopes($requested_scopes = array())
+    {
         if ($requested_scopes) {
             $this->scopes = '?scope=' . implode('%20', $requested_scopes);
         }
@@ -125,5 +125,5 @@ class Etsy extends AbstractService
         $token->setExtraParams($data);
 
         return $token;
-    }	
+    }
 }

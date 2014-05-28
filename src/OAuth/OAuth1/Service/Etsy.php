@@ -52,13 +52,20 @@ class Etsy extends AbstractService
             $this->baseApiUri = new Uri('https://openapi.etsy.com/v2/');
         }
     }
+	
+	public function setScopes($requested_scopes = array()) {
+        
+        if ($requested_scopes) {
+            $this->scopes = '?scope=' . implode('%20', $requested_scopes);
+        }
+    }
 
     /**
      * {@inheritdoc}
      */
     public function getRequestTokenEndpoint()
     {
-        return new Uri($this->baseApiUri . 'oauth/request_token');
+        return new Uri($this->baseApiUri . 'oauth/request_token' . $this->scopes);
     }
 
     /**
@@ -120,14 +127,4 @@ class Etsy extends AbstractService
         return $token;
     }
 	
-	 public function setScopes($request_scopes = array()) {
-        
-        if ($request_scopes) {
-            $this->scopes = '?scope=' . implode('%20', $request_scopes);
-        }
-    }
-	
-    public function getRequestTokenEndpoint() {        
-        return new Uri($this->baseApiUri . 'oauth/request_token' . $this->scopes);
-    }
 }

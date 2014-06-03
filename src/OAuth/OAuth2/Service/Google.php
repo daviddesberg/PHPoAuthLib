@@ -57,6 +57,7 @@ class Google extends AbstractService
     const SCOPE_CONTACT                     = 'https://www.google.com/m8/feeds/';
     const SCOPE_CHROMEWEBSTORE              = 'https://www.googleapis.com/auth/chromewebstore.readonly';
     const SCOPE_GMAIL                       = 'https://mail.google.com/mail/feed/atom';
+    const SCOPE_GMAIL_IMAP_SMTP             = 'https://mail.google.com';
     const SCOPE_PICASAWEB                   = 'https://picasaweb.google.com/data/';
     const SCOPE_SITES                       = 'https://sites.google.com/feeds/';
     const SCOPE_URLSHORTENER                = 'https://www.googleapis.com/auth/urlshortener';

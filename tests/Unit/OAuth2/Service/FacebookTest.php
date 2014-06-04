@@ -132,6 +132,26 @@ class FacebookTest extends \PHPUnit_Framework_TestCase
      * @covers OAuth\OAuth2\Service\Facebook::__construct
      * @covers OAuth\OAuth2\Service\Facebook::parseAccessTokenResponse
      */
+    public function testParseAccessTokenResponseThrowsExceptionOnErrorJson()
+    {
+        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"error":{"message":"some_error"}}'));
+
+        $service = new Facebook(
+            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $client,
+            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+        );
+
+        $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
+
+        $service->requestAccessToken('foo');
+    }
+
+    /**
+     * @covers OAuth\OAuth2\Service\Facebook::__construct
+     * @covers OAuth\OAuth2\Service\Facebook::parseAccessTokenResponse
+     */
     public function testParseAccessTokenResponseValidWithoutRefreshToken()
     {
         $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');

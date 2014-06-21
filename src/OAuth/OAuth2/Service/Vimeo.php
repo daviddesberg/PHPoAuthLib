@@ -81,7 +81,7 @@ class Vimeo extends AbstractService
         $token = new StdOAuth2Token();
         $token->setAccessToken($data['access_token']);
 
-        if( isset($data['expires_in']) ) {
+        if (isset($data['expires_in'])) {
             $token->setLifeTime($data['expires_in']);
             unset($data['expires_in']);
         }

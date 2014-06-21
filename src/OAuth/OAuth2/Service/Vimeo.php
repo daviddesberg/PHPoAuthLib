@@ -18,7 +18,14 @@ class Vimeo extends AbstractService
      * @link https://developer.vimeo.com/apis/advanced#oauth
      */
     // User scopes
-    const SCOPE_PUBLIC                         = 'public';
+    const SCOPE_PUBLIC    = 'public';
+    const SCOPE_PRIVATE   = 'private';
+    const SCOPE_PURCHASED = 'purchased';
+    const SCOPE_CREATE    = 'create';
+    const SCOPE_EDIT      = 'edit';
+    const SCOPE_DELETE    = 'delete';
+    const SCOPE_INTERACT  = 'interact';
+    const SCOPE_UPLOAD    = 'upload';
 
     public function __construct(
         CredentialsInterface $credentials,

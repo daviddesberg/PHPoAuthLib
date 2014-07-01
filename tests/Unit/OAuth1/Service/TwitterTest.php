@@ -321,7 +321,7 @@ class TwitterTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
         $method = new \ReflectionMethod(get_class($service), 'parseAccessTokenResponse');
         $method->setAccessible(true);
-        $method->invokeArgs($service, ["hoho"]);
+        $method->invokeArgs($service, array("hoho"));
     }
     
     /**
@@ -340,7 +340,7 @@ class TwitterTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
         $method = new \ReflectionMethod(get_class($service), 'parseAccessTokenResponse');
         $method->setAccessible(true);
-        $method->invokeArgs($service, ["error=hihihaha"]);
+        $method->invokeArgs($service, array("error=hihihaha"));
     }
     
     /**
@@ -359,7 +359,7 @@ class TwitterTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
         $method = new \ReflectionMethod(get_class($service), 'parseAccessTokenResponse');
         $method->setAccessible(true);
-        $method->invokeArgs($service, ["oauth_token_secret=1"]);
+        $method->invokeArgs($service, array("oauth_token_secret=1"));
     }
     
     /**
@@ -378,6 +378,6 @@ class TwitterTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
         $method = new \ReflectionMethod(get_class($service), 'parseAccessTokenResponse');
         $method->setAccessible(true);
-        $method->invokeArgs($service, ["oauth_token=1"]);
+        $method->invokeArgs($service, array("oauth_token=1"));
     }
 }

@@ -82,6 +82,10 @@ class Flickr extends AbstractService
 
         if (!empty($this->format)) {
             $uri->addToQuery('format', $this->format);
+            
+            if ($this->format === 'json') {
+                $uri->addToQuery('nojsoncallback', 1)
+            }
         }
 
         $token = $this->storage->retrieveAccessToken($this->service());

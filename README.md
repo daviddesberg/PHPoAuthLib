@@ -99,3 +99,4 @@ Extensions
 Tests
 ------
 To run the tests, you must install dependencies with `composer install --dev`
+ 

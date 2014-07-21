@@ -66,7 +66,7 @@ class WithingsTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertSame(
-            'https://api.Withings.com/oauth/request_token',
+            'https://oauth.withings.com/account/request_token',
             $service->getRequestTokenEndpoint()->getAbsoluteUri()
         );
     }
@@ -104,7 +104,7 @@ class WithingsTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertSame(
-            'https://api.Withings.com/oauth/access_token',
+            'https://oauth.withings.com/account/access_token',
             $service->getAccessTokenEndpoint()->getAbsoluteUri()
         );
     }

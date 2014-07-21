@@ -122,6 +122,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => ''
     ),
+    'withings' => array(
+        'key'       => '',
+        'secret'    => ''
+    ),
 );
 
 /** @var $serviceFactory \OAuth\ServiceFactory An OAuth service factory. */

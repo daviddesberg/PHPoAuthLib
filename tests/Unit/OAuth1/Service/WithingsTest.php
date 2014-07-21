@@ -85,7 +85,7 @@ class WithingsTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertSame(
-            'https://www.Withings.com/oauth/authorize',
+            'https://oauth.withings.com/account/authorize',
             $service->getAuthorizationEndpoint()->getAbsoluteUri()
         );
     }

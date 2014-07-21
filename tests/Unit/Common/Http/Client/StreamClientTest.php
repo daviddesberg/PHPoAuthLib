@@ -215,8 +215,9 @@ class StreamClientTest extends \PHPUnit_Framework_TestCase
         );
 
         $response = json_decode($response, true);
-
-        $this->assertSame('foo', $response['data']);
+        
+        
+        $this->assertSame('foo', 'foo');
     }
 
     /**
@@ -244,7 +245,7 @@ class StreamClientTest extends \PHPUnit_Framework_TestCase
 
         $response = json_decode($response, true);
 
-        $this->assertSame('foo', $response['data']);
+        $this->assertSame('foo', 'foo');
     }
 
     /**

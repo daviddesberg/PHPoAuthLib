@@ -59,7 +59,7 @@ class Withings extends AbstractService
         parse_str($responseBody, $data);
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
-        } elseif (!isset($data['oauth_token']) ) {
+        } elseif (!isset($data['oauth_token'])) {
             throw new TokenResponseException('Error in retrieving token.');
         }
 

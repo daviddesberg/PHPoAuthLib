@@ -23,7 +23,7 @@ class Withings extends AbstractService
         parent::__construct($credentials, $httpClient, $storage, $signature, $baseApiUri);
 
         if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://oauth.withings.com/measure');
+            $this->baseApiUri = new Uri('http://wbsapi.withings.net/');
         }
     }
 

@@ -72,6 +72,7 @@ Included service implementations
     - Microsoft
     - PayPal
     - Pocket
+    - Odnoklassniki
     - Reddit
     - RunKeeper
     - SoundCloud

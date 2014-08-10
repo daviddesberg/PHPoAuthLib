@@ -42,7 +42,7 @@ if (!empty($_GET['code'])) {
     $googleService->requestAccessToken($_GET['code'], $state);
 
     // Send a request with it
-    $result = json_decode($googleService->request('https://www.googleapis.com/oauth2/v1/userinfo'), true);
+    $result = json_decode($googleService->request('userinfo'), true);
 
     // Show some of the resultant data
     echo 'Your unique google user id is: ' . $result['id'] . ' and your name is ' . $result['name'];

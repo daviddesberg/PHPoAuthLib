@@ -2,6 +2,10 @@
 
 namespace OAuth\OAuth2\Service;
 
+use OAuth\Common\Consumer\CredentialsInterface;
+use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\OAuth2\Service\Exception\InvalidAccessTypeException;
@@ -95,6 +99,19 @@ class Google extends AbstractService
 
     protected $accessType = 'online';
 
+    public function __construct(
+        CredentialsInterface $credentials,
+        ClientInterface $httpClient,
+        TokenStorageInterface $storage,
+        $scopes = array(),
+        UriInterface $baseApiUri = null
+    ) {
+        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, true);
+
+        if (null === $baseApiUri) {
+            $this->baseApiUri = new Uri('https://www.googleapis.com/oauth2/v1/');
+        }
+    }
 
     public function setAccessType($accessType)
     {

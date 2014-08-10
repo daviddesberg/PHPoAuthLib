@@ -36,8 +36,11 @@ $credentials = new Credentials(
 $facebookService = $serviceFactory->createService('facebook', $credentials, $storage, array());
 
 if (!empty($_GET['code'])) {
+    // retrieve the CSRF state parameter
+    $state = isset($_GET['state']) ? $_GET['state'] : null;
+
     // This was a callback request from facebook, get the token
-    $token = $facebookService->requestAccessToken($_GET['code']);
+    $token = $facebookService->requestAccessToken($_GET['code'], $state);
 
     // Send a request with it
     $result = json_decode($facebookService->request('/me'), true);

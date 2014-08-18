@@ -117,20 +117,86 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      *
      * @return string
      */
-    public function request($path, $method = 'GET', $body = null, array $extraHeaders = array())
-    {
+    public function request($path, $method = 'GET', $body = null, array $extraHeaders = array(), $querystring = array() )
+    {    
         $uri = $this->determineRequestUriFromPath($path, $this->baseApiUri);
-
+        
         /** @var $token StdOAuth1Token */
         $token = $this->storage->retrieveAccessToken($this->service());
         $extraHeaders = array_merge($this->getExtraApiHeaders(), $extraHeaders);
         $authorizationHeader = array(
             'Authorization' => $this->buildAuthorizationHeaderForAPIRequest($method, $uri, $token, $body)
         );
+        
         $headers = array_merge($authorizationHeader, $extraHeaders);
+        
+        
+        // if querystring array is not empty then we use an API wich require oauth parameters directly in URI
+        if ( !empty ( $querystring ) ){
+            $uri = $this->determineRequestUriFromPath($path . "?" . $querystring['action'], $this->baseApiUri);
+        
+            // Init value to build signature according to withings spec
+            $dateTime = new \DateTime();
+            $sigUri  = $this->baseApiUri . $path;
+            $time = time();
+            $nonce = $this->generateNonce();
 
+            // Params for signature uri generation
+            $params = "&oauth_consumer_key=" . $this->credentials->getConsumerId();
+            $params .= "&oauth_nonce=" . $nonce;
+            $params .= "&oauth_signature_method=HMAC-SHA1";
+            $params .= "&oauth_timestamp=" . $time;
+            $params .= "&oauth_token=" . $token->getAccessToken();
+            $params .= "&oauth_version=1.0";
+            
+            //withings specifics
+            if ( $querystring['api'] == "withings" )
+                $params .= "&userid=" . $querystring['userid'];
+
+            // urlencode of the full query for signature
+            $sigUri = "GET&" . rawurlencode( $sigUri ) . "&" . rawurlencode( $querystring['action'] . $params );
+
+            // secrets keys for encoding ( app secret + user token secret )
+            $keys = array ( $this->credentials->getConsumerSecret() ,  $token->getAccessTokenSecret() );
+            $key    = implode ( '&', $keys );
+            $signature = rawurlencode (  base64_encode ( $this->hmacsha1( $key, $sigUri ) ) );
+
+            $uri->query .= "&oauth_consumer_key=" . $this->credentials->getConsumerId();
+            $uri->query .= "&oauth_nonce=" . $nonce;
+            $uri->query .= "&oauth_signature=" . $signature;
+            $uri->query .= "&oauth_signature_method=HMAC-SHA1";
+            $uri->query .= "&oauth_timestamp=" . $time;
+            $uri->query .= "&oauth_token=" . $token->getAccessToken();
+            $uri->query .= "&oauth_version=1.0";
+            
+            //withings specifics
+            if ( $querystring['api'] == "withings" )
+                $uri->query .= "&userid=" . $querystring['userid'];
+        }
+        
         return $this->httpClient->retrieveResponse($uri, $body, $headers, $method);
     }
+    
+    public function hmacsha1($key,$data) {
+        $blocksize=64;
+        $hashfunc='sha1';
+        if (strlen($key)>$blocksize)
+            $key=pack('H*', $hashfunc($key));
+        $key=str_pad($key,$blocksize,chr(0x00));
+        $ipad=str_repeat(chr(0x36),$blocksize);
+        $opad=str_repeat(chr(0x5c),$blocksize);
+        $hmac = pack(
+                    'H*',$hashfunc(
+                        ($key^$opad).pack(
+                            'H*',$hashfunc(
+                                ($key^$ipad).$data
+                            )
+                        )
+                    )
+                );
+        return $hmac;
+    }
+
 
     /**
      * Return any additional headers always needed for this service implementation's OAuth calls.
@@ -246,15 +312,10 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     protected function generateNonce($length = 32)
     {
-        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $mt = microtime();
+        $rand = mt_rand();
 
-        $nonce = '';
-        $maxRand = strlen($characters)-1;
-        for ($i = 0; $i < $length; $i++) {
-            $nonce.= $characters[rand(0, $maxRand)];
-        }
-
-        return $nonce;
+        return md5($mt . $rand); // md5s look nicer than numbers
     }
 
     /**

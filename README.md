@@ -18,7 +18,7 @@ Edit your `composer.json` and add:
 ```json
 {
     "require": {
-        "lusitanian/oauth": "~0.3"
+        "huitiemesens/oauth": "dev-master"
     }
 }
 ```
@@ -54,6 +54,7 @@ Included service implementations
     - Twitter
     - Xing
     - Yahoo
+    - Withings
 - OAuth2
     - Amazon
     - BitLy
@@ -86,17 +87,3 @@ Examples of basic usage are located in the examples/ directory.
 Usage
 ------
 For usage with complete auth flow, please see the examples. More in-depth documentation will come with release 1.0.
-
-Framework Integration
----------------------
-* Lithium: Sébastien Charrier has written [an adapter](https://github.com/scharrier/li3_socialauth) for the library.
-* Laravel 4: Dariusz Prząda has written [a service provider](https://github.com/artdarek/oauth-4-laravel) for the library.
-
-Extensions
-----------
-* Extract normalized user data from OAuth Services with the library [PHPoAuthUserData](https://github.com/Oryzone/PHPoAuthUserData) by Luciano Mammino
-
-Tests
-------
-To run the tests, you must install dependencies with `composer install --dev`
- 

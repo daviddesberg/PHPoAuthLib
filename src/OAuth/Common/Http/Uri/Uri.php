@@ -42,7 +42,7 @@ class Uri implements UriInterface
     /**
      * @var string
      */
-    private $query = '';
+    public $query = '';
 
     /**
      * @var string

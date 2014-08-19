@@ -66,11 +66,13 @@ abstract class AbstractService implements ServiceInterface
                 $query = $parts[1];
                 $uri->setQuery($query);
             }
-
-            if ($path[0] === '/') {
-                $path = substr($path, 1);
+            
+            if ( is_array ( $path ) ){
+                if ($path[0] === '/') {
+                    $path = substr($path, 1);
+                }
             }
-
+            
             $uri->setPath($uri->getPath() . $path);
         }
 

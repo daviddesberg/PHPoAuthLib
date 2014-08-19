@@ -1,9 +1,13 @@
 {
-    "name": "lusitanian/oauth",
-    "description": "PHP 5.3+ oAuth 1/2 Library",
+    "name": "huitiemesens/oauth",
+    "description": "Fork of lusitanian/oauth with Withings support. PHP 5.3+ oAuth 1/2 Library",
     "keywords": ["oauth", "authentication", "authorization", "security"],
     "license": "MIT",
     "authors": [
+        {
+            "name": "Charles-antoine FOURNEL",
+            "email": "charles@huitiemesens.fr"
+        },
         {
             "name": "David Desberg",
             "email": "david@daviddesberg.com"
@@ -30,11 +34,6 @@
         "psr-0": {
             "OAuth": "src",
             "OAuth\\Unit": "tests"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.1-dev"
         }
     }
 }

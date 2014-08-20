@@ -26,6 +26,11 @@ class Google extends AbstractService
     // Google+
     const SCOPE_GPLUS_ME                    = 'https://www.googleapis.com/auth/plus.me';
     const SCOPE_GPLUS_LOGIN                 = 'https://www.googleapis.com/auth/plus.login';
+    const SCOPE_GPLUS_CIRCLES_READ          = 'https://www.googleapis.com/auth/plus.circles.read';
+    const SCOPE_GPLUS_CIRCLES_WRITE         = 'https://www.googleapis.com/auth/plus.circles.write';
+    const SCOPE_GPLUS_STREAM_READ           = 'https://www.googleapis.com/auth/plus.stream.read';
+    const SCOPE_GPLUS_STREAM_WRITE          = 'https://www.googleapis.com/auth/plus.stream.write';
+    const SCOPE_GPLUS_MEDIA                 = 'https://www.googleapis.com/auth/plus.media.upload';
 
     // Google Drive
     const SCOPE_DOCUMENTSLIST               = 'https://docs.google.com/feeds/';

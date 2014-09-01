@@ -28,8 +28,7 @@
     },
     "autoload": {
         "psr-0": {
-            "OAuth": "src",
-            "OAuth\\Unit": "tests"
+            "OAuth": "src"
         }
     },
     "extra": {

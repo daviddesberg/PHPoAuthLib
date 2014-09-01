@@ -216,7 +216,7 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
         $response = $client->retrieveResponse(
             $endPoint,
             'foo',
-            array(),
+            array('Content-Type' => 'Content-Type: application/octet-stream'),
             'POST'
         );
 
@@ -243,7 +243,7 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
         $response = $client->retrieveResponse(
             $endPoint,
             'foo',
-            array(),
+            array('Content-Type' => 'Content-Type: application/octet-stream'),
             'PUT'
         );
 
@@ -272,7 +272,7 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
         $response = $client->retrieveResponse(
             $endPoint,
             'foo',
-            array(),
+            array('Content-Type' => 'Content-Type: application/octet-stream'),
             'PUT'
         );
 

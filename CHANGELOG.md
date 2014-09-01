@@ -1,6 +1,6 @@
 # Changelog for [HuffAndPuff fork of PHPoAuthLib](https://github.com/HuffAndPuff/PHPoAuthLib)
 
-## LATEST
+## 0.4.0
 
 ### New services
 

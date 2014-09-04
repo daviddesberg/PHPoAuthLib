@@ -87,6 +87,36 @@ class GitHub extends AbstractService
      */
     const SCOPE_HOOKS_ADMIN = 'admin:repo_hook';
 
+    /**
+     * Read-only access to organization, teams, and membership.
+     */
+    const SCOPE_READ_ORG = 'read:org';
+
+    /**
+     * Publicize and unpublicize organization membership.
+     */
+    const SCOPE_WRITE_ORG = 'write:org';
+
+    /**
+     * Fully manage organization, teams, and memberships.
+     */
+    const SCOPE_ADMIN_ORG = 'admin:org';
+
+    /**
+     * List and view details for public keys.
+     */
+    const SCOPE_READ_PUBLIC_KEY = 'read:public_key';
+
+    /**
+     * Create, list, and view details for public keys.
+     */
+    const SCOPE_WRITE_PUBLIC_KEY = 'write:public_key';
+
+    /**
+     * Fully manage public keys.
+     */
+    const SCOPE_ADMIN_PUBLIC_KEY = 'admin:public_key';
+
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,

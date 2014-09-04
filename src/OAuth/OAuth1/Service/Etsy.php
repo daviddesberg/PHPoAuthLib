@@ -13,6 +13,9 @@ use OAuth\Common\Http\Client\ClientInterface;
 
 class Etsy extends AbstractService
 {
+	
+	protected $_scopes = array();
+	
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
@@ -32,7 +35,12 @@ class Etsy extends AbstractService
      */
     public function getRequestTokenEndpoint()
     {
-        return new Uri($this->baseApiUri . 'oauth/request_token');
+        $uri = new Uri($this->baseApiUri . 'oauth/request_token');
+
+		if(($scopes = $this->getScopes()) && count($scopes))
+			$uri->setQuery('scope='.implode('%20', $scopes));
+
+		return $uri;
     }
 
     /**
@@ -93,4 +101,25 @@ class Etsy extends AbstractService
 
         return $token;
     }
+
+	/**
+	 * Set the scopes for permissions
+	 * @see https://www.etsy.com/developers/documentation/getting_started/oauth#section_permission_scopes
+	 * @param array $scope
+	 *
+	 * @return $this
+	 */
+	public function setScopes(array $scope) {
+		$this->_scopes = $scope;
+		return $this;
+	}
+
+	/**
+	 * Return the defined scopes
+	 * @return array
+	 */
+	public function getScopes() {
+		return $this->_scopes;
+	}
+	
 }

@@ -118,6 +118,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'ustream' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'yahoo' => array(
         'key'       => '',
         'secret'    => ''

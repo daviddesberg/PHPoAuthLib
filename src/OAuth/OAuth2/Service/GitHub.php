@@ -52,7 +52,8 @@ class GitHub extends AbstractService
 
     /**
      * Grants access to deployment statuses for public and private repositories.
-     * This scope is only necessary to grant other users or services access to deployment statuses, without granting access to the code.
+     * This scope is only necessary to grant other users or services access to deployment statuses,
+     * without granting access to the code.
      */
     const SCOPE_REPO_DEPLOYMENT = 'repo_deployment';
 

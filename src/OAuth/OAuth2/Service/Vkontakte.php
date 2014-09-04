@@ -33,6 +33,7 @@ class Vkontakte extends AbstractService
     const SCOPE_WALL          = 'wall';
     const SCOPE_GROUPS        = 'groups';
     const SCOPE_MESSAGES      = 'messages';
+    const SCOPE_EMAIL         = 'email';
     const SCOPE_NOTIFICATIONS = 'notifications';
     const SCOPE_STATS         = 'stats';
     const SCOPE_ADS           = 'ads';

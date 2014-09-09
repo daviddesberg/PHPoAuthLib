@@ -125,7 +125,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $token = $this->storage->retrieveAccessToken($this->service());
         $extraHeaders = array_merge($this->getExtraApiHeaders(), $extraHeaders);
         $authorizationHeader = array(
-            'Authorization' => $this->buildAuthorizationHeaderForAPIRequest($method, $uri, $token, $body)
+            'Authorization' => $this->buildAuthorizationHeaderForAPIRequest($method, $uri, $token, $body, $extraHeaders)
         );
         $headers = array_merge($authorizationHeader, $extraHeaders);
 
@@ -194,7 +194,8 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $method,
         UriInterface $uri,
         TokenInterface $token,
-        $bodyParams = null
+        $bodyParams = null,
+        $headers = null
     ) {
         $this->signature->setTokenSecret($token->getAccessTokenSecret());
         $parameters = $this->getBasicAuthorizationHeaderInfo();
@@ -203,7 +204,8 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         }
 
         $parameters = array_merge($parameters, array('oauth_token' => $token->getAccessToken()));
-        $parameters = (is_array($bodyParams)) ? array_merge($parameters, $bodyParams) : $parameters;
+
+        $parameters = (is_array($bodyParams) && !($headers && $headers['Content-type'] == 'multipart/form-data')) ? array_merge($parameters, $bodyParams) : $parameters;
         $parameters['oauth_signature'] = $this->signature->getSignature($uri, $parameters, $method);
 
         $authorizationHeader = 'OAuth ';

@@ -1,5 +1,9 @@
 # Changelog for [HuffAndPuff fork of PHPoAuthLib](https://github.com/HuffAndPuff/PHPoAuthLib)
 
+## 0.4.1
+
+SoundCloud service has scopes now.
+
 ## 0.4.0
 
 ### New services

@@ -12,6 +12,9 @@ use OAuth\Common\Http\Uri\UriInterface;
 
 class SoundCloud extends AbstractService
 {
+    const SCOPE_EXPIRING = '*';
+    const SCOPE_NONEXPIRING = 'non-expiring';
+
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,

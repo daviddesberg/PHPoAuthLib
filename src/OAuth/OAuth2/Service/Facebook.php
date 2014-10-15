@@ -190,4 +190,36 @@ class Facebook extends AbstractService
         $query = http_build_query($parameters);
         return new Uri($baseUrl . '?' . $query);
     }
+
+    /**
+     * set access token
+     */
+    public function setAccessToken($token) {
+        /**
+         * Data
+         */
+        
+            $data = array(
+                    'access_token' => $token
+                );
+
+        /**
+         * Prepare token
+         */
+
+            $token = new StdOAuth2Token();
+            $token->setAccessToken($data['access_token']);
+
+        /**
+         * Params
+         */
+        
+            $token->setExtraParams($data);
+
+        /**
+         * Set code
+         */
+
+            $this->storage->storeAccessToken($this->service(), $token);
+    }
 }

@@ -1,9 +1,13 @@
 {
-    "name": "lusitanian/oauth",
-    "description": "PHP 5.3+ oAuth 1/2 Library",
-    "keywords": ["oauth", "authentication", "authorization", "security"],
+    "name": "develme/oauth",
+    "description": "PHP 5.3+ oAuth 1/2 Library with PowerSchool Support",
+    "keywords": ["oauth", "authentication", "authorization", "security", "PowerSchool"],
     "license": "MIT",
     "authors": [
+        {
+            "name": "Verron Knowles",
+            "email": "Verron.Knowles@develme.com"
+        },
         {
             "name": "David Desberg",
             "email": "david@daviddesberg.com"

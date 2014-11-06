@@ -35,7 +35,7 @@ class File implements TokenStorageInterface
 
         if($this->file_path != null)
         {
-            if(file_exist($this->file_path))
+            if(file_exists($this->file_path))
             {
                 $this->parseFromFile();
             }

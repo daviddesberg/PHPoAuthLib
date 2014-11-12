@@ -2,7 +2,7 @@
 namespace OAuth\Common\Storage;
 
 use OAuth\Common\Token\TokenInterface;
-use OAuth\Common\Storage\Exception;
+use OAuth\Common\Storage\Exception\StorageException;
 use OAuth\Common\Storage\Exception\TokenNotFoundException;
 use OAuth\Common\Storage\Exception\AuthorizationStateNotFoundException;
 
@@ -15,12 +15,12 @@ class File implements TokenStorageInterface
      * @var array of object|TokenInterface
      */
     protected $tokens;
-    
+
     /**
      * @var array
      */
     protected $states;
-    
+
     /**
      * @var string
      */
@@ -30,11 +30,11 @@ class File implements TokenStorageInterface
     {
         $this->tokens = array();
         $this->states = array();
-        
+
         if(!is_null($file_path))
         {
             $this->file_path = $file_path;
-            
+
             if(file_exists($this->file_path))
                 $this->parseFromFile();
         }
@@ -48,7 +48,7 @@ class File implements TokenStorageInterface
         if($this->hasAccessToken($service)) {
             return $this->tokens[$service];
         }
-        
+
         throw new TokenNotFoundException('Token not stored');
     }
 
@@ -59,7 +59,7 @@ class File implements TokenStorageInterface
     {
         $this->tokens[$service] = $token;
         $this->updateFile();
-        
+
         // allow chaining
         return $this;
     }
@@ -81,7 +81,7 @@ class File implements TokenStorageInterface
             unset($this->tokens[$service]);
             $this->updateFile();
         }
-        
+
         // allow chaining
         return $this;
     }
@@ -93,7 +93,7 @@ class File implements TokenStorageInterface
     {
         $this->tokens = array();
         $this->updateFile();
-        
+
         // allow chaining
         return $this;
     }
@@ -106,7 +106,7 @@ class File implements TokenStorageInterface
         if($this->hasAuthorizationState($service)) {
             return $this->states[$service];
         }
-        
+
         throw new AuthorizationStateNotFoundException('State not stored');
     }
 
@@ -117,7 +117,7 @@ class File implements TokenStorageInterface
     {
         $this->states[$service] = $state;
         $this->updateFile();
-        
+
         // allow chaining
         return $this;
     }
@@ -139,7 +139,7 @@ class File implements TokenStorageInterface
             unset($this->states[$service]);
             $this->updateFile();
         }
-        
+
         // allow chaining
         return $this;
     }
@@ -151,7 +151,7 @@ class File implements TokenStorageInterface
     {
         $this->states = array();
         $this->updateFile();
-        
+
         // allow chaining
         return $this;
     }
@@ -161,14 +161,14 @@ class File implements TokenStorageInterface
      */
     private function updateFile()
     {
-        if(is_null($this->file_path) || !file_exists($this->file_path))
+        if(is_null($this->file_path))
             throw new StorageException('Invalid file path');
-            
+
         $data = array(
             'tokens' => $this->tokens,
             'states' => $this->states
         );
-        
+
         file_put_contents($this->file_path, serialize($data));
     }
 
@@ -187,11 +187,11 @@ class File implements TokenStorageInterface
      */
     private function parseFromFile()
     {
-        if(is_null($this->file_path) || !file_exists($this->file_path))
+        if(is_null($this->file_path))
             throw new StorageException('Invalid file path');
-            
+
         $data = unserialize(file_get_contents($this->file_path));
-        
+
         if($data === false)
             throw new StorageException('File contents not unserializeable');
 

@@ -1,8 +1,11 @@
 <?php
 namespace OAuth\Common\Storage;
+
 use OAuth\Common\Token\TokenInterface;
+use OAuth\Common\Storage\Exception;
 use OAuth\Common\Storage\Exception\TokenNotFoundException;
 use OAuth\Common\Storage\Exception\AuthorizationStateNotFoundException;
+
 /*
  * Stores a token in a file
  */
@@ -12,34 +15,43 @@ class File implements TokenStorageInterface
      * @var array of object|TokenInterface
      */
     protected $tokens;
+    
     /**
      * @var array
      */
     protected $states;
+    
     /**
      * @var string
      */
     protected $file_path;
+
     public function __construct($file_path = null)
     {
         $this->tokens = array();
         $this->states = array();
-        $this->file_path = $file_path;
-        if($this->file_path != null && file_exists($this->file_path))
+        
+        if(!is_null($file_path))
         {
-            $this->parseFromFile();
+            $this->file_path = $file_path;
+            
+            if(file_exists($this->file_path))
+                $this->parseFromFile();
         }
     }
+
     /**
      * {@inheritDoc}
      */
     public function retrieveAccessToken($service)
     {
-        if ($this->hasAccessToken($service)) {
+        if($this->hasAccessToken($service)) {
             return $this->tokens[$service];
         }
+        
         throw new TokenNotFoundException('Token not stored');
     }
+
     /**
      * {@inheritDoc}
      */
@@ -47,9 +59,11 @@ class File implements TokenStorageInterface
     {
         $this->tokens[$service] = $token;
         $this->updateFile();
+        
         // allow chaining
         return $this;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -57,18 +71,21 @@ class File implements TokenStorageInterface
     {
         return isset($this->tokens[$service]) && $this->tokens[$service] instanceof TokenInterface;
     }
+
     /**
      * {@inheritDoc}
      */
     public function clearToken($service)
     {
-        if (array_key_exists($service, $this->tokens)) {
+        if(array_key_exists($service, $this->tokens)) {
             unset($this->tokens[$service]);
             $this->updateFile();
         }
+        
         // allow chaining
         return $this;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -76,19 +93,23 @@ class File implements TokenStorageInterface
     {
         $this->tokens = array();
         $this->updateFile();
+        
         // allow chaining
         return $this;
     }
+
     /**
      * {@inheritDoc}
      */
     public function retrieveAuthorizationState($service)
     {
-        if ($this->hasAuthorizationState($service)) {
+        if($this->hasAuthorizationState($service)) {
             return $this->states[$service];
         }
+        
         throw new AuthorizationStateNotFoundException('State not stored');
     }
+
     /**
      * {@inheritDoc}
      */
@@ -96,9 +117,11 @@ class File implements TokenStorageInterface
     {
         $this->states[$service] = $state;
         $this->updateFile();
+        
         // allow chaining
         return $this;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -106,18 +129,21 @@ class File implements TokenStorageInterface
     {
         return isset($this->states[$service]) && null !== $this->states[$service];
     }
+
     /**
      * {@inheritDoc}
      */
     public function clearAuthorizationState($service)
     {
-        if (array_key_exists($service, $this->states)) {
+        if(array_key_exists($service, $this->states)) {
             unset($this->states[$service]);
             $this->updateFile();
         }
+        
         // allow chaining
         return $this;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -125,33 +151,49 @@ class File implements TokenStorageInterface
     {
         $this->states = array();
         $this->updateFile();
+        
         // allow chaining
         return $this;
     }
+
     /**
      * Update file containing tokens and states
      */
     private function updateFile()
     {
+        if(is_null($this->file_path) || !file_exists($this->file_path))
+            throw new StorageException('Invalid file path');
+            
         $data = array(
             'tokens' => $this->tokens,
             'states' => $this->states
         );
+        
         file_put_contents($this->file_path, serialize($data));
     }
+
     /**
      * Set file path
      * @param $file_path
      */
-    protected function setFilePath($file_path) {
-        $this->file_path = $file_path;
+    protected function setFilePath($file_path = null)
+    {
+        if(!is_null($file_path))
+            $this->file_path = $file_path;
     }
+
     /**
      * Get serialized content from a file
      */
     private function parseFromFile()
     {
+        if(is_null($this->file_path) || !file_exists($this->file_path))
+            throw new StorageException('Invalid file path');
+            
         $data = unserialize(file_get_contents($this->file_path));
+        
+        if($data === false)
+            throw new StorageException('File contents not unserializeable');
 
         $this->tokens = $data['tokens'];
         $this->states = $data['states'];

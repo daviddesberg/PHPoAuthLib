@@ -27,7 +27,7 @@ class Bitrix24 extends AbstractService
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
-        $scopes = array(),
+        array $scopes,
         UriInterface $baseApiUri
     ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);

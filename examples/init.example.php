@@ -27,6 +27,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'bitrix24' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'box' => array(
         'key'       => '',
         'secret'    => '',

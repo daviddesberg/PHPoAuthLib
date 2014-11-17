@@ -145,7 +145,7 @@ class Redis implements TokenStorageInterface
 
         $val = $this->redis->hget($this->stateKey, $service);
 
-        return $this->cachedStates[$service] = unserialize($val);
+        return $this->cachedStates[$service] = $val;
     }
 
     /**

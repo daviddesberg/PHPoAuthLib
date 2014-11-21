@@ -31,5 +31,6 @@
             "OAuth": "src",
             "OAuth\\Unit": "tests"
         }
-    }
+    },
+    "minimum-stability": "dev"
 }

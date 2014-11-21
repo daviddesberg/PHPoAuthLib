@@ -60,6 +60,7 @@ Included service implementations
     - Box
     - Dailymotion
     - Dropbox
+    - Eve Online
     - Facebook
     - Foursquare
     - GitHub

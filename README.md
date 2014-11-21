@@ -76,6 +76,7 @@ Included service implementations
     - Reddit
     - RunKeeper
     - SoundCloud
+    - Spotify
     - Ustream
     - Vkontakte
     - Yammer

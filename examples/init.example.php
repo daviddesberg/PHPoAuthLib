@@ -110,6 +110,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'spotify' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'tumblr' => array(
         'key'       => '',
         'secret'    => '',

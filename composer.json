@@ -1,5 +1,5 @@
 {
-    "name": "lusitanian-cmdev/oauth",
+    "name": "lusitanian/oauth",
     "description": "PHP 5.3+ oAuth 1/2 Library",
     "keywords": ["oauth", "authentication", "authorization", "security"],
     "license": "MIT",
@@ -32,5 +32,9 @@
             "OAuth\\Unit": "tests"
         }
     },
-    "minimum-stability": "dev"
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
 }

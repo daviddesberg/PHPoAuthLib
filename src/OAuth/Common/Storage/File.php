@@ -157,6 +157,19 @@ class File implements TokenStorageInterface
     }
 
     /**
+     * Set file path
+     * @param $file_path
+     * @return File
+     */
+    public function setFilePath($file_path = null)
+    {
+        if(!is_null($file_path))
+            $this->file_path = $file_path;
+
+        return $this;
+    }
+
+    /**
      * Update file containing tokens and states
      */
     private function updateFile()
@@ -170,16 +183,6 @@ class File implements TokenStorageInterface
         );
 
         file_put_contents($this->file_path, serialize($data));
-    }
-
-    /**
-     * Set file path
-     * @param $file_path
-     */
-    protected function setFilePath($file_path = null)
-    {
-        if(!is_null($file_path))
-            $this->file_path = $file_path;
     }
 
     /**

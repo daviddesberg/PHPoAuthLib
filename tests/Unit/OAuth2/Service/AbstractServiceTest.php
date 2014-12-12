@@ -17,7 +17,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
             '\\OAuth\\OAuth2\\Service\\AbstractService',
             array(
                 $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-                $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+                $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
                 $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
                 array(),
             )
@@ -35,7 +35,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
             '\\OAuth\\OAuth2\\Service\\AbstractService',
             array(
                 $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-                $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+                $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
                 $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
                 array(),
             )
@@ -53,7 +53,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
             '\\OAuth\\OAuth2\\Service\\AbstractService',
             array(
                 $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-                $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+                $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
                 $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
                 array(),
                 $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface'),
@@ -73,7 +73,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
 
         $service = new Mock(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
             array('invalidscope')
         );
@@ -92,7 +92,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
 
         $service = new Mock(
             $credentials,
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -115,7 +115,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
 
         $service = new Mock(
             $credentials,
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -139,7 +139,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
 
         $service = new Mock(
             $credentials,
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
             array('mock', 'mock2')
         );
@@ -162,7 +162,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Mock(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -186,7 +186,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
 
         $service = new Mock(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $storage
         );
 
@@ -206,8 +206,8 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testRequestOauthAuthorizationMethod()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(2));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('send')->will($this->returnArgument(2));
 
         $token = $this->getMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
         $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
@@ -239,8 +239,8 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testRequestQueryStringMethod()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(0));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('send')->will($this->returnArgument(0));
 
         $token = $this->getMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
         $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
@@ -274,8 +274,8 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testRequestQueryStringTwoMethod()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(0));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('send')->will($this->returnArgument(0));
 
         $token = $this->getMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
         $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
@@ -309,8 +309,8 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testRequestBearerMethod()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(2));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('send')->will($this->returnArgument(2));
 
         $token = $this->getMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
         $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
@@ -341,7 +341,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Mock(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -359,7 +359,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Mock(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -377,7 +377,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Mock(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -392,7 +392,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Mock(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 

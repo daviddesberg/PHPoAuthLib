@@ -2,6 +2,7 @@
 
 namespace OAuth\Common\Service;
 
+use Ivory\HttpAdapter\Message\ResponseInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 
 /**
@@ -20,7 +21,7 @@ interface ServiceInterface
      * @param array               $extraHeaders Extra headers if applicable. These will override service-specific
      *                                          any defaults.
      *
-     * @return string
+     * @return ResponseInterface
      */
     public function request($path, $method = 'GET', $body = null, array $extraHeaders = array());
 

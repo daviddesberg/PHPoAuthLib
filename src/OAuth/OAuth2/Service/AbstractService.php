@@ -2,12 +2,13 @@
 
 namespace OAuth\OAuth2\Service;
 
+use Ivory\HttpAdapter\Message\ResponseInterface;
 use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Exception\Exception;
 use OAuth\Common\Service\AbstractService as BaseAbstractService;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Exception\TokenResponseException;
-use OAuth\Common\Http\Client\ClientInterface;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\OAuth2\Service\Exception\InvalidAuthorizationStateException;
 use OAuth\OAuth2\Service\Exception\InvalidScopeException;
@@ -34,7 +35,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
 
     /**
      * @param CredentialsInterface  $credentials
-     * @param ClientInterface       $httpClient
+     * @param HttpAdapterInterface       $httpAdapter
      * @param TokenStorageInterface $storage
      * @param array                 $scopes
      * @param UriInterface|null     $baseApiUri
@@ -45,14 +46,14 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     public function __construct(
         CredentialsInterface $credentials,
-        ClientInterface $httpClient,
+        HttpAdapterInterface $httpAdapter,
         TokenStorageInterface $storage,
         $scopes = array(),
         UriInterface $baseApiUri = null,
         $stateParameterInAutUrl = false,
         $apiVersion = ""
     ) {
-        parent::__construct($credentials, $httpClient, $storage);
+        parent::__construct($credentials, $httpAdapter, $storage);
         $this->stateParameterInAuthUrl = $stateParameterInAutUrl;
 
         foreach ($scopes as $scope) {
@@ -118,11 +119,12 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
             'grant_type'    => 'authorization_code',
         );
 
-        $responseBody = $this->httpClient->retrieveResponse(
+        $response = $this->httpAdapter->post(
             $this->getAccessTokenEndpoint(),
-            $bodyParams,
-            $this->getExtraOAuthHeaders()
+            $this->getExtraOAuthHeaders(),
+            $bodyParams
         );
+        $responseBody = $response ? (string) $response->getBody() : "";
 
         $token = $this->parseAccessTokenResponse($responseBody);
         $this->storage->storeAccessToken($this->service(), $token);
@@ -140,7 +142,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * @param array               $extraHeaders Extra headers if applicable. These will override service-specific
      *                                          any defaults.
      *
-     * @return string
+     * @return ResponseInterface
      *
      * @throws ExpiredTokenException
      * @throws Exception
@@ -177,8 +179,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         }
 
         $extraHeaders = array_merge($this->getExtraApiHeaders(), $extraHeaders);
-
-        return $this->httpClient->retrieveResponse($uri, $body, $extraHeaders, $method);
+        return $this->httpAdapter->send($uri, $method, $extraHeaders, $body);
     }
 
     /**
@@ -216,11 +217,13 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
             'refresh_token' => $refreshToken,
         );
 
-        $responseBody = $this->httpClient->retrieveResponse(
+        $response = $this->httpAdapter->post(
             $this->getAccessTokenEndpoint(),
-            $parameters,
-            $this->getExtraOAuthHeaders()
+            $this->getExtraOAuthHeaders(),
+            $parameters
         );
+        $responseBody = $response ? (string) $response->getBody() : "";
+
         $token = $this->parseAccessTokenResponse($responseBody);
         $this->storage->storeAccessToken($this->service(), $token);
 
@@ -340,7 +343,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     
     /**
      * Returns api version string if is set else retrun empty string
-     * 
+     *
      * @return string
      */
     protected function getApiVersionString()

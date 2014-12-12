@@ -4,6 +4,7 @@ namespace OAuthTest\Unit\OAuth2\Service;
 
 use OAuth\OAuth2\Service\Dropbox;
 use OAuth\Common\Token\TokenInterface;
+use OAuthTest\Unit\Common\TestHelper;
 
 class DropboxTest extends \PHPUnit_Framework_TestCase
 {
@@ -14,7 +15,7 @@ class DropboxTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Dropbox(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -28,7 +29,7 @@ class DropboxTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Dropbox(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -42,7 +43,7 @@ class DropboxTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Dropbox(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
             array(),
             $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
@@ -63,7 +64,7 @@ class DropboxTest extends \PHPUnit_Framework_TestCase
 
         $service = new Dropbox(
             $credentials,
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -85,7 +86,7 @@ class DropboxTest extends \PHPUnit_Framework_TestCase
 
         $service = new Dropbox(
             $credentials,
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -103,7 +104,7 @@ class DropboxTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Dropbox(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -118,7 +119,7 @@ class DropboxTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Dropbox(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -131,8 +132,8 @@ class DropboxTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAuthorizationMethod()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(0));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('send')->will($this->returnArgument(0));
 
         $token = $this->getMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
         $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
@@ -159,8 +160,8 @@ class DropboxTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseAccessTokenResponseThrowsExceptionOnNulledResponse()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue(null));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('post')->will($this->returnValue(TestHelper::createStringResponse(null)));
 
         $service = new Dropbox(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -179,8 +180,8 @@ class DropboxTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseAccessTokenResponseThrowsExceptionOnError()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('error=some_error'));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('post')->will($this->returnValue(TestHelper::createStringResponse('error=some_error')));
 
         $service = new Dropbox(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -199,8 +200,8 @@ class DropboxTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseAccessTokenResponseValidWithoutRefreshToken()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"access_token":"foo","expires_in":"bar"}'));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('post')->will($this->returnValue(TestHelper::createStringResponse('{"access_token":"foo","expires_in":"bar"}')));
 
         $service = new Dropbox(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -217,8 +218,8 @@ class DropboxTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseAccessTokenResponseValidWithRefreshToken()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"access_token":"foo","expires_in":"bar","refresh_token":"baz"}'));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('post')->will($this->returnValue(TestHelper::createStringResponse('{"access_token":"foo","expires_in":"bar","refresh_token":"baz"}')));
 
         $service = new Dropbox(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),

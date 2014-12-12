@@ -4,6 +4,7 @@ namespace OAuthTest\Unit\OAuth2\Service;
 
 use OAuth\OAuth2\Service\Bitly;
 use OAuth\Common\Token\TokenInterface;
+use OAuthTest\Unit\Common\TestHelper;
 
 class BitlyTest extends \PHPUnit_Framework_TestCase
 {
@@ -14,7 +15,7 @@ class BitlyTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Bitly(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -28,7 +29,7 @@ class BitlyTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Bitly(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -42,7 +43,7 @@ class BitlyTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Bitly(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
             array(),
             $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
@@ -59,7 +60,7 @@ class BitlyTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Bitly(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -74,7 +75,7 @@ class BitlyTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Bitly(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -87,8 +88,8 @@ class BitlyTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAuthorizationMethod()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(0));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('send')->will($this->returnArgument(0));
 
         $token = $this->getMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
         $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
@@ -115,8 +116,8 @@ class BitlyTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseAccessTokenResponseThrowsExceptionOnError()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('error=some_error'));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('post')->will($this->returnValue(TestHelper::createStringResponse('error=some_error')));
 
         $service = new Bitly(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -136,8 +137,8 @@ class BitlyTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseAccessTokenResponseValid()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('access_token=foo'));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('post')->will($this->returnValue(TestHelper::createStringResponse('access_token=foo')));
 
         $service = new Bitly(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),

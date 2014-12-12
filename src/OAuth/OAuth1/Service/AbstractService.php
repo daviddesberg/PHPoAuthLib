@@ -2,10 +2,11 @@
 
 namespace OAuth\OAuth1\Service;
 
+use Ivory\HttpAdapter\Message\ResponseInterface;
 use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Exception\TokenResponseException;
-use OAuth\Common\Http\Client\ClientInterface;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\OAuth1\Signature\SignatureInterface;
 use OAuth\OAuth1\Token\TokenInterface;
@@ -28,12 +29,12 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     public function __construct(
         CredentialsInterface $credentials,
-        ClientInterface $httpClient,
+        HttpAdapterInterface $httpAdapter,
         TokenStorageInterface $storage,
         SignatureInterface $signature,
         UriInterface $baseApiUri = null
     ) {
-        parent::__construct($credentials, $httpClient, $storage);
+        parent::__construct($credentials, $httpAdapter, $storage);
 
         $this->signature = $signature;
         $this->baseApiUri = $baseApiUri;
@@ -49,7 +50,8 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $authorizationHeader = array('Authorization' => $this->buildAuthorizationHeaderForTokenRequest());
         $headers = array_merge($authorizationHeader, $this->getExtraOAuthHeaders());
 
-        $responseBody = $this->httpClient->retrieveResponse($this->getRequestTokenEndpoint(), array(), $headers);
+        $response = $this->httpAdapter->post($this->getRequestTokenEndpoint(), $headers);
+        $responseBody = $response ? (string) $response->getBody() : "";
 
         $token = $this->parseRequestTokenResponse($responseBody);
         $this->storage->storeAccessToken($this->service(), $token);
@@ -97,7 +99,8 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
 
         $headers = array_merge($authorizationHeader, $this->getExtraOAuthHeaders());
 
-        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $bodyParams, $headers);
+        $response = $this->httpAdapter->post($this->getAccessTokenEndpoint(), $headers, $bodyParams);
+        $responseBody = $response ? (string) $response->getBody() : "";
 
         $token = $this->parseAccessTokenResponse($responseBody);
         $this->storage->storeAccessToken($this->service(), $token);
@@ -115,7 +118,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * @param array               $extraHeaders Extra headers if applicable.
      *                                          These will override service-specific any defaults.
      *
-     * @return string
+     * @return ResponseInterface
      */
     public function request($path, $method = 'GET', $body = null, array $extraHeaders = array())
     {
@@ -129,7 +132,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         );
         $headers = array_merge($authorizationHeader, $extraHeaders);
 
-        return $this->httpClient->retrieveResponse($uri, $body, $headers, $method);
+        return $this->httpAdapter->send($uri, $method, $headers, $body);
     }
 
     /**

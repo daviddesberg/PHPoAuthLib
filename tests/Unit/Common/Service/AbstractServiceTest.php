@@ -15,7 +15,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
             '\\OAuth\\Common\\Service\\AbstractService',
             array(
                 $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-                $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+                $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
                 $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
             )
         );
@@ -33,7 +33,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
             '\\OAuth\\Common\\Service\\AbstractService',
             array(
                 $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-                $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+                $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
                 $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
             )
         );
@@ -49,7 +49,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Mock(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -64,7 +64,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Mock(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -82,7 +82,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Mock(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -100,7 +100,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Mock(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -120,7 +120,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
 
         $service = new Mock(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -135,7 +135,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Mock(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -156,7 +156,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Mock(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 

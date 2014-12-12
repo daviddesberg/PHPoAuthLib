@@ -8,18 +8,18 @@ use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 
 class Pocket extends AbstractService
 {
     public function __construct(
         CredentialsInterface $credentials,
-        ClientInterface $httpClient,
+        HttpAdapterInterface $httpAdapter,
         TokenStorageInterface $storage,
         $scopes = array(),
         UriInterface $baseApiUri = null
     ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
+        parent::__construct($credentials, $httpAdapter, $storage, $scopes, $baseApiUri);
         if ($baseApiUri === null) {
             $this->baseApiUri = new Uri('https://getpocket.com/v3/');
         }
@@ -60,13 +60,15 @@ class Pocket extends AbstractService
     
     public function requestRequestToken()
     {
-        $responseBody = $this->httpClient->retrieveResponse(
+        $response = $this->httpAdapter->post(
             $this->getRequestTokenEndpoint(),
+            array(),
             array(
                 'consumer_key' => $this->credentials->getConsumerId(),
                 'redirect_uri' => $this->credentials->getCallbackUrl(),
             )
         );
+        $responseBody = $response ? (string) $response->getBody() : "";
         
         $code = $this->parseRequestTokenResponse($responseBody);
 
@@ -92,11 +94,13 @@ class Pocket extends AbstractService
             'code'             => $code,
         );
 
-        $responseBody = $this->httpClient->retrieveResponse(
+        $response = $this->httpAdapter->sen(
             $this->getAccessTokenEndpoint(),
-            $bodyParams,
-            $this->getExtraOAuthHeaders()
+            $this->getExtraOAuthHeaders(),
+            $bodyParams
         );
+        $responseBody = $response ? (string) $response->getBody() : "";
+
         $token = $this->parseAccessTokenResponse($responseBody);
         $this->storage->storeAccessToken($this->service(), $token);
 

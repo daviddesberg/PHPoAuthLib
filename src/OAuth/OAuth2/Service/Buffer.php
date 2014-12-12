@@ -8,7 +8,7 @@ use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 
 /**
  * Buffer API.
@@ -19,12 +19,12 @@ class Buffer extends AbstractService
 {
     public function __construct(
         CredentialsInterface $credentials,
-        ClientInterface $httpClient,
+        HttpAdapterInterface $httpAdapter,
         TokenStorageInterface $storage,
         $scopes = array(),
         UriInterface $baseApiUri = null
     ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
+        parent::__construct($credentials, $httpAdapter, $storage, $scopes, $baseApiUri);
         if ($baseApiUri === null) {
             $this->baseApiUri = new Uri('https://api.bufferapp.com/1/');
         }
@@ -82,14 +82,15 @@ class Buffer extends AbstractService
      */
     public function requestRequestToken()
     {
-        $responseBody = $this->httpClient->retrieveResponse(
-            $this->getRequestTokenEndpoint(),
+        $response = $this->httpAdapter->post(
             array(
                 'client_key' => $this->credentials->getConsumerId(),
                 'redirect_uri' => $this->credentials->getCallbackUrl(),
                 'response_type' => 'code',
-            )
+            ),
+            $this->getRequestTokenEndpoint()
         );
+        $responseBody = $response ? (string) $response->getBody() : "";
 
         $code = $this->parseRequestTokenResponse($responseBody);
 
@@ -118,11 +119,13 @@ class Buffer extends AbstractService
             'grant_type'    => 'authorization_code',
         );
 
-        $responseBody = $this->httpClient->retrieveResponse(
+        $response = $this->httpAdapter->post(
             $this->getAccessTokenEndpoint(),
-            $bodyParams,
-            $this->getExtraOAuthHeaders()
+            $this->getExtraOAuthHeaders(),
+            $bodyParams
         );
+        $responseBody = $response ? (string) $response->getBody() : "";
+
         $token = $this->parseAccessTokenResponse($responseBody);
         $this->storage->storeAccessToken($this->service(), $token);
 

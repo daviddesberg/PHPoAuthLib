@@ -6,7 +6,7 @@ use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 
@@ -126,12 +126,12 @@ class GitHub extends AbstractService
 
     public function __construct(
         CredentialsInterface $credentials,
-        ClientInterface $httpClient,
+        HttpAdapterInterface $httpAdapter,
         TokenStorageInterface $storage,
         $scopes = array(),
         UriInterface $baseApiUri = null
     ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
+        parent::__construct($credentials, $httpAdapter, $storage, $scopes, $baseApiUri);
 
         if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://api.github.com/');

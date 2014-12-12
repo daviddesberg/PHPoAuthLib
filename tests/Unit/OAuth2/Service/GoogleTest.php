@@ -4,6 +4,7 @@ namespace OAuthTest\Unit\OAuth2\Service;
 
 use OAuth\OAuth2\Service\Google;
 use OAuth\Common\Token\TokenInterface;
+use OAuthTest\Unit\Common\TestHelper;
 
 class GoogleTest extends \PHPUnit_Framework_TestCase
 {
@@ -14,7 +15,7 @@ class GoogleTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Google(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -28,7 +29,7 @@ class GoogleTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Google(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -42,7 +43,7 @@ class GoogleTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Google(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
             array(),
             $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
@@ -59,7 +60,7 @@ class GoogleTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Google(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -85,7 +86,7 @@ class GoogleTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Google(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -107,7 +108,7 @@ class GoogleTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Google(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -123,8 +124,8 @@ class GoogleTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseAccessTokenResponseThrowsExceptionOnNulledResponse()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue(null));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('post')->will($this->returnValue(TestHelper::createStringResponse(null)));
 
         $service = new Google(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -143,8 +144,8 @@ class GoogleTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseAccessTokenResponseThrowsExceptionOnError()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('error=some_error'));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('post')->will($this->returnValue(TestHelper::createStringResponse('error=some_error')));
 
         $service = new Google(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -163,8 +164,8 @@ class GoogleTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseAccessTokenResponseValidWithoutRefreshToken()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"access_token":"foo","expires_in":"bar"}'));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('post')->will($this->returnValue(TestHelper::createStringResponse('{"access_token":"foo","expires_in":"bar"}')));
 
         $service = new Google(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -181,8 +182,8 @@ class GoogleTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseAccessTokenResponseValidWithRefreshToken()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"access_token":"foo","expires_in":"bar","refresh_token":"baz"}'));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('post')->will($this->returnValue(TestHelper::createStringResponse('{"access_token":"foo","expires_in":"bar","refresh_token":"baz"}')));
 
         $service = new Google(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),

@@ -2,8 +2,8 @@
 
 namespace OAuth\Common\Service;
 
+use Ivory\HttpAdapter\HttpAdapterInterface;
 use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\Common\Exception\Exception;
@@ -17,24 +17,24 @@ abstract class AbstractService implements ServiceInterface
     /** @var Credentials */
     protected $credentials;
 
-    /** @var ClientInterface */
-    protected $httpClient;
+    /** @var HttpAdapterInterface */
+    protected $httpAdapter;
 
     /** @var TokenStorageInterface */
     protected $storage;
 
     /**
      * @param CredentialsInterface  $credentials
-     * @param ClientInterface       $httpClient
+     * @param HttpAdapterInterface  $httpAdapter
      * @param TokenStorageInterface $storage
      */
     public function __construct(
         CredentialsInterface $credentials,
-        ClientInterface $httpClient,
+        HttpAdapterInterface $httpAdapter,
         TokenStorageInterface $storage
     ) {
         $this->credentials = $credentials;
-        $this->httpClient = $httpClient;
+        $this->httpAdapter = $httpAdapter;
         $this->storage = $storage;
     }
 

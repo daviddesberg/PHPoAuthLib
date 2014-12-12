@@ -9,18 +9,18 @@ use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 
 class ScoopIt extends AbstractService
 {
     public function __construct(
         CredentialsInterface $credentials,
-        ClientInterface $httpClient,
+        HttpAdapterInterface $httpAdapter,
         TokenStorageInterface $storage,
         SignatureInterface $signature,
         UriInterface $baseApiUri = null
     ) {
-        parent::__construct($credentials, $httpClient, $storage, $signature, $baseApiUri);
+        parent::__construct($credentials, $httpAdapter, $storage, $signature, $baseApiUri);
 
         if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://www.scoop.it/api/1/');

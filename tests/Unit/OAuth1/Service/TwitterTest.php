@@ -87,16 +87,16 @@ class TwitterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue(
             in_array(
-                strtolower($service->getAuthorizationEndpoint()->getAbsoluteUri()), 
+                strtolower($service->getAuthorizationEndpoint()->getAbsoluteUri()),
                 array(\OAuth\OAuth1\Service\Twitter::ENDPOINT_AUTHENTICATE, \OAuth\OAuth1\Service\Twitter::ENDPOINT_AUTHORIZE)
             )
         );
 
-        $service->setAuthorizationEndpoint( \OAuth\OAuth1\Service\Twitter::ENDPOINT_AUTHORIZE );
+        $service->setAuthorizationEndpoint(\OAuth\OAuth1\Service\Twitter::ENDPOINT_AUTHORIZE);
 
         $this->assertTrue(
             in_array(
-                strtolower($service->getAuthorizationEndpoint()->getAbsoluteUri()), 
+                strtolower($service->getAuthorizationEndpoint()->getAbsoluteUri()),
                 array(\OAuth\OAuth1\Service\Twitter::ENDPOINT_AUTHENTICATE, \OAuth\OAuth1\Service\Twitter::ENDPOINT_AUTHORIZE)
             )
         );

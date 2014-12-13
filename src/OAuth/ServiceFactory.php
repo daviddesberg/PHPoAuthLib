@@ -35,7 +35,7 @@ class ServiceFactory
      */
     protected $serviceClassMap = array(
         'OAuth1' => array(),
-        'OAuth2' => array()
+        'OAuth2' => array(),
     );
 
     /**
@@ -77,7 +77,7 @@ class ServiceFactory
         $reflClass = new \ReflectionClass($className);
 
         foreach (array('OAuth2', 'OAuth1') as $version) {
-            if ($reflClass->implementsInterface('OAuth\\' . $version . '\\Service\\ServiceInterface')) {
+            if ($reflClass->implementsInterface('OAuth\\'.$version.'\\Service\\ServiceInterface')) {
                 $this->serviceClassMap[$version][ucfirst($serviceName)] = $className;
 
                 return $this;
@@ -129,7 +129,7 @@ class ServiceFactory
             }
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -148,7 +148,7 @@ class ServiceFactory
             return $this->serviceClassMap[$type][$serviceName];
         }
 
-        return '\\OAuth\\' . $type . '\\Service\\' . $serviceName;
+        return '\\OAuth\\'.$type.'\\Service\\'.$serviceName;
     }
 
     /**
@@ -197,7 +197,7 @@ class ServiceFactory
 
         $resolvedScopes = array();
         foreach ($scopes as $scope) {
-            $key = strtoupper('SCOPE_' . $scope);
+            $key = strtoupper('SCOPE_'.$scope);
 
             if (array_key_exists($key, $constants)) {
                 $resolvedScopes[] = $constants[$key];

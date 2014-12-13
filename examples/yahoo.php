@@ -22,9 +22,9 @@ $storage = new Session();
 
 // Setup the credentials for the requests
 $credentials = new Credentials(
-	$servicesCredentials['yahoo']['key'],
-	$servicesCredentials['yahoo']['secret'],
-	$currentUri->getAbsoluteUri()
+    $servicesCredentials['yahoo']['key'],
+    $servicesCredentials['yahoo']['secret'],
+    $currentUri->getAbsoluteUri()
 );
 
 // Instantiate the Yahoo service using the credentials, http client and storage mechanism for the token
@@ -43,15 +43,14 @@ if (!empty($_GET['oauth_token'])) {
     // Send a request now that we have access token
     $result = json_decode($yahooService->request('profile'));
 
-    echo 'result: <pre>' . print_r($result, true) . '</pre>';
-
+    echo 'result: <pre>'.print_r($result, true).'</pre>';
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     // extra request needed for oauth1 to request a request token :-)
     $token = $yahooService->requestRequestToken();
 
     $url = $yahooService->getAuthorizationUri(array('oauth_token' => $token->getRequestToken()));
-    header('Location: ' . $url);
+    header('Location: '.$url);
 } else {
-    $url = $currentUri->getRelativeUri() . '?go=go';
+    $url = $currentUri->getRelativeUri().'?go=go';
     echo "<a href='$url'>Login with Yahoo!</a>";
 }

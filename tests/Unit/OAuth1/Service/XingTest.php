@@ -11,7 +11,6 @@ class XingTest extends \PHPUnit_Framework_TestCase
     private $storage;
     private $xing;
 
-
     protected function setUp()
     {
         parent::setUp();
@@ -230,7 +229,6 @@ class XingTest extends \PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('retrieveAccessToken')
             ->will($this->returnValue($token));
-
 
         $this->assertInstanceOf(
             '\\OAuth\\OAuth1\\Token\\StdOAuth1Token',

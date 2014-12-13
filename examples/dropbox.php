@@ -17,7 +17,7 @@ use OAuth\Common\Consumer\Credentials;
 /**
  * Bootstrap the example
  */
-require_once __DIR__ . '/bootstrap.php';
+require_once __DIR__.'/bootstrap.php';
 
 // Session storage
 $storage = new Session();
@@ -41,12 +41,11 @@ if (!empty($_GET['code'])) {
     $result = json_decode($dropboxService->request('/account/info'), true);
 
     // Show some of the resultant data
-    echo 'Your unique Dropbox user id is: ' . $result['uid'] . ' and your name is ' . $result['display_name'];
-
+    echo 'Your unique Dropbox user id is: '.$result['uid'].' and your name is '.$result['display_name'];
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $dropboxService->getAuthorizationUri();
-    header('Location: ' . $url);
+    header('Location: '.$url);
 } else {
-    $url = $currentUri->getRelativeUri() . '?go=go';
+    $url = $currentUri->getRelativeUri().'?go=go';
     echo "<a href='$url'>Login with Dropbox!</a>";
 }

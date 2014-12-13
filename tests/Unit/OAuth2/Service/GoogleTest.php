@@ -3,7 +3,6 @@
 namespace OAuthTest\Unit\OAuth2\Service;
 
 use OAuth\OAuth2\Service\Google;
-use OAuth\Common\Token\TokenInterface;
 use OAuthTest\Unit\Common\TestHelper;
 
 class GoogleTest extends \PHPUnit_Framework_TestCase
@@ -75,7 +74,6 @@ class GoogleTest extends \PHPUnit_Framework_TestCase
             'https://accounts.google.com/o/oauth2/auth?access_type=offline',
             $service->getAuthorizationEndpoint()->getAbsoluteUri()
         );
-
     }
 
     /**

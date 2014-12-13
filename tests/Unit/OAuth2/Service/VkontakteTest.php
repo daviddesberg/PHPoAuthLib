@@ -3,7 +3,6 @@
 namespace OAuthTest\Unit\OAuth2\Service;
 
 use OAuth\OAuth2\Service\Vkontakte;
-use OAuth\Common\Token\TokenInterface;
 use OAuthTest\Unit\Common\TestHelper;
 
 class VkontakteTest extends \PHPUnit_Framework_TestCase

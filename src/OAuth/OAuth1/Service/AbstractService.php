@@ -94,7 +94,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
                 $this->getAccessTokenEndpoint(),
                 $this->storage->retrieveAccessToken($this->service()),
                 $bodyParams
-            )
+            ),
         );
 
         $headers = array_merge($authorizationHeader, $this->getExtraOAuthHeaders());
@@ -128,7 +128,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $token = $this->storage->retrieveAccessToken($this->service());
         $extraHeaders = array_merge($this->getExtraApiHeaders(), $extraHeaders);
         $authorizationHeader = array(
-            'Authorization' => $this->buildAuthorizationHeaderForAPIRequest($method, $uri, $token, $body)
+            'Authorization' => $this->buildAuthorizationHeaderForAPIRequest($method, $uri, $token, $body),
         );
         $headers = array_merge($authorizationHeader, $extraHeaders);
 
@@ -175,7 +175,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $authorizationHeader = 'OAuth ';
         $delimiter = '';
         foreach ($parameters as $key => $value) {
-            $authorizationHeader .= $delimiter . rawurlencode($key) . '="' . rawurlencode($value) . '"';
+            $authorizationHeader .= $delimiter.rawurlencode($key).'="'.rawurlencode($value).'"';
 
             $delimiter = ', ';
         }
@@ -214,7 +214,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $delimiter = '';
 
         foreach ($authParameters as $key => $value) {
-            $authorizationHeader .= $delimiter . rawurlencode($key) . '="' . rawurlencode($value) . '"';
+            $authorizationHeader .= $delimiter.rawurlencode($key).'="'.rawurlencode($value).'"';
             $delimiter = ', ';
         }
 
@@ -255,7 +255,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $nonce = '';
         $maxRand = strlen($characters)-1;
         for ($i = 0; $i < $length; $i++) {
-            $nonce.= $characters[rand(0, $maxRand)];
+            $nonce .= $characters[rand(0, $maxRand)];
         }
 
         return $nonce;

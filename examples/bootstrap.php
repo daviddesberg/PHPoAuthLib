@@ -3,7 +3,7 @@
 /**
  * Bootstrap the library
  */
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
 /**
  * Setup error reporting
@@ -26,4 +26,4 @@ $currentUri->setQuery('');
 /**
  * Load the credential for the different services
  */
-require_once __DIR__ . '/init.php';
+require_once __DIR__.'/init.php';

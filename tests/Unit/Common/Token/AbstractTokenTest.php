@@ -2,7 +2,7 @@
 
 namespace OAuthTest\Unit\Common\Token;
 
-use \OAuth\Common\Token\AbstractToken;
+use OAuth\Common\Token\AbstractToken;
 
 class AbstractTokenTest extends \PHPUnit_Framework_TestCase
 {

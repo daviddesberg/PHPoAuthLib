@@ -10,11 +10,11 @@ use OAuth\Common\Http\Uri\Uri;
 class Google extends AbstractService
 {
     /**
-     * Defined scopes - More scopes are listed here:
-     * https://developers.google.com/oauthplayground/
-     *
-     * Make a pull request if you need more scopes.
-     */
+ * Defined scopes - More scopes are listed here:
+ * https://developers.google.com/oauthplayground/
+ *
+ * Make a pull request if you need more scopes.
+ */
 
     // Basic
     const SCOPE_EMAIL                       = 'email';
@@ -101,7 +101,6 @@ class Google extends AbstractService
 
     protected $accessType = 'online';
 
-
     public function setAccessType($accessType)
     {
         if (!in_array($accessType, array('online', 'offline'), true)) {
@@ -115,7 +114,7 @@ class Google extends AbstractService
      */
     public function getAuthorizationEndpoint()
     {
-        return new Uri('https://accounts.google.com/o/oauth2/auth?access_type=' . $this->accessType);
+        return new Uri('https://accounts.google.com/o/oauth2/auth?access_type='.$this->accessType);
     }
 
     /**
@@ -136,7 +135,7 @@ class Google extends AbstractService
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            throw new TokenResponseException('Error in retrieving token: "'.$data['error'].'"');
         }
 
         $token = new StdOAuth2Token();

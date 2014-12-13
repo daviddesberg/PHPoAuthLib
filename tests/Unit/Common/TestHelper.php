@@ -5,7 +5,7 @@ namespace OAuthTest\Unit\Common;
 class TestHelper
 {
     /**
-     * @param string $response
+     * @param  string                                                 $response
      * @return \PHPUnit_Framework_MockObject_Builder_InvocationMocker
      */
     public static function createStringResponse($responseBody)

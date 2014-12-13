@@ -104,7 +104,7 @@ $servicesCredentials = array(
     ),
     'scoopit' => array(
         'key'       => '',
-        'secret'    => ''
+        'secret'    => '',
     ),
     'soundcloud' => array(
         'key'       => '',
@@ -128,11 +128,11 @@ $servicesCredentials = array(
     ),
     'yahoo' => array(
         'key'       => '',
-        'secret'    => ''
+        'secret'    => '',
     ),
     'yammer' => array(
         'key'       => '',
-        'secret'    => ''
+        'secret'    => '',
     ),
 );
 

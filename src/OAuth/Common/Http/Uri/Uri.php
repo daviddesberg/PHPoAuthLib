@@ -114,7 +114,7 @@ class Uri implements UriInterface
             $userInfo .= $uriParts['user'];
         }
         if ($userInfo && !empty($uriParts['pass'])) {
-            $userInfo .= ':' . $uriParts['pass'];
+            $userInfo .= ':'.$uriParts['pass'];
         }
 
         $this->setUserInfo($userInfo);
@@ -135,7 +135,7 @@ class Uri implements UriInterface
         // subcomponent unless the data after the colon is the empty string
         // (indicating no password)"
         if ($colonPos !== false && strlen($rawUserInfo)-1 > $colonPos) {
-            return substr($rawUserInfo, 0, $colonPos) . ':********';
+            return substr($rawUserInfo, 0, $colonPos).':********';
         } else {
             return $rawUserInfo;
         }
@@ -243,7 +243,7 @@ class Uri implements UriInterface
      */
     public function getAbsoluteUri()
     {
-        $uri = $this->scheme . '://' . $this->getRawAuthority();
+        $uri = $this->scheme.'://'.$this->getRawAuthority();
 
         if ('/' === $this->path) {
             $uri .= $this->explicitTrailingHostSlash ? '/' : '';
@@ -286,7 +286,7 @@ class Uri implements UriInterface
      */
     public function __toString()
     {
-        $uri = $this->scheme . '://' . $this->getAuthority();
+        $uri = $this->scheme.'://'.$this->getAuthority();
 
         if ('/' === $this->path) {
             $uri .= $this->explicitTrailingHostSlash ? '/' : '';
@@ -357,7 +357,6 @@ class Uri implements UriInterface
         $this->scheme = $scheme;
     }
 
-
     /**
      * @param string $userInfo
      */
@@ -366,7 +365,6 @@ class Uri implements UriInterface
         $this->userInfo = $userInfo ? $this->protectUserInfo($userInfo) : '';
         $this->rawUserInfo = $userInfo;
     }
-
 
     /**
      * @param int $port

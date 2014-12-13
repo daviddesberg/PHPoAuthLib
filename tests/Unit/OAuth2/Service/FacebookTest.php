@@ -202,10 +202,10 @@ class FacebookTest extends \PHPUnit_Framework_TestCase
             'feed',
             array(
                 'redirect_uri' => 'http://www.facebook.com',
-                'state' => 'Random state'
+                'state' => 'Random state',
             )
         );
-        $this->assertInstanceOf('\\OAuth\\Common\\Http\\Uri\\Uri',$dialogUri);
+        $this->assertInstanceOf('\\OAuth\\Common\\Http\\Uri\\Uri', $dialogUri);
     }
 
     /**
@@ -218,7 +218,6 @@ class FacebookTest extends \PHPUnit_Framework_TestCase
         $credentials = $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
         $credentials->expects($this->any())->method('getConsumerId')->will($this->returnValue('application_id'));
 
-
         $service = new Facebook(
             $credentials,
             $client,
@@ -229,7 +228,7 @@ class FacebookTest extends \PHPUnit_Framework_TestCase
             'feed',
             array(
                 'redirect_uri' => 'http://www.facebook.com',
-                'state' => 'Random state'
+                'state' => 'Random state',
             )
         );
 

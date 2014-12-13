@@ -158,12 +158,12 @@ class Facebook extends AbstractService
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            throw new TokenResponseException('Error in retrieving token: "'.$data['error'].'"');
         }
 
         $token = new StdOAuth2Token();
         $token->setAccessToken($data['access_token']);
-        
+
         if (isset($data['expires'])) {
             $token->setLifeTime($data['expires']);
         }
@@ -187,8 +187,9 @@ class Facebook extends AbstractService
             throw new Exception("Redirect uri is mandatory for this request");
         }
         $parameters['app_id'] = $this->credentials->getConsumerId();
-        $baseUrl = self::WWW_URL .$this->getApiVersionString(). '/dialog/' . $dialogPath;
+        $baseUrl = self::WWW_URL.$this->getApiVersionString().'/dialog/'.$dialogPath;
         $query = http_build_query($parameters);
-        return new Uri($baseUrl . '?' . $query);
+
+        return new Uri($baseUrl.'?'.$query);
     }
 }

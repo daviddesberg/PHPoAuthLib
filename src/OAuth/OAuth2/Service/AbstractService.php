@@ -29,17 +29,17 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
 
     /** @var bool */
     protected $stateParameterInAuthUrl;
-    
+
     /** @var string */
     protected $apiVersion;
 
     /**
      * @param CredentialsInterface  $credentials
-     * @param HttpAdapterInterface       $httpAdapter
+     * @param HttpAdapterInterface  $httpAdapter
      * @param TokenStorageInterface $storage
      * @param array                 $scopes
      * @param UriInterface|null     $baseApiUri
-     * @param bool $stateParameterInAutUrl
+     * @param bool                  $stateParameterInAutUrl
      * @param string                $apiVersion
      *
      * @throws InvalidScopeException
@@ -58,14 +58,14 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
 
         foreach ($scopes as $scope) {
             if (!$this->isValidScope($scope)) {
-                throw new InvalidScopeException('Scope ' . $scope . ' is not valid for service ' . get_class($this));
+                throw new InvalidScopeException('Scope '.$scope.' is not valid for service '.get_class($this));
             }
         }
 
         $this->scopes = $scopes;
 
         $this->baseApiUri = $baseApiUri;
-        
+
         $this->apiVersion = $apiVersion;
     }
 
@@ -167,7 +167,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
 
         // add the token where it may be needed
         if (static::AUTHORIZATION_METHOD_HEADER_OAUTH === $this->getAuthorizationMethod()) {
-            $extraHeaders = array_merge(array('Authorization' => 'OAuth ' . $token->getAccessToken()), $extraHeaders);
+            $extraHeaders = array_merge(array('Authorization' => 'OAuth '.$token->getAccessToken()), $extraHeaders);
         } elseif (static::AUTHORIZATION_METHOD_QUERY_STRING === $this->getAuthorizationMethod()) {
             $uri->addToQuery('access_token', $token->getAccessToken());
         } elseif (static::AUTHORIZATION_METHOD_QUERY_STRING_V2 === $this->getAuthorizationMethod()) {
@@ -175,10 +175,11 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         } elseif (static::AUTHORIZATION_METHOD_QUERY_STRING_V3 === $this->getAuthorizationMethod()) {
             $uri->addToQuery('apikey', $token->getAccessToken());
         } elseif (static::AUTHORIZATION_METHOD_HEADER_BEARER === $this->getAuthorizationMethod()) {
-            $extraHeaders = array_merge(array('Authorization' => 'Bearer ' . $token->getAccessToken()), $extraHeaders);
+            $extraHeaders = array_merge(array('Authorization' => 'Bearer '.$token->getAccessToken()), $extraHeaders);
         }
 
         $extraHeaders = array_merge($this->getExtraApiHeaders(), $extraHeaders);
+
         return $this->httpAdapter->send($uri, $method, $extraHeaders, $body);
     }
 
@@ -257,7 +258,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     /**
      * Validates the authorization state against a given one
      *
-     * @param string $state
+     * @param  string                             $state
      * @throws InvalidAuthorizationStateException
      */
     protected function validateAuthorizationState($state)
@@ -340,7 +341,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     {
         return static::AUTHORIZATION_METHOD_HEADER_OAUTH;
     }
-    
+
     /**
      * Returns api version string if is set else retrun empty string
      *
@@ -348,6 +349,6 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     protected function getApiVersionString()
     {
-        return !(empty($this->apiVersion)) ? "/".$this->apiVersion : "" ;
+        return !(empty($this->apiVersion)) ? "/".$this->apiVersion : "";
     }
 }

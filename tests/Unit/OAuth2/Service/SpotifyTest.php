@@ -193,9 +193,10 @@ class SpotifyTest extends \PHPUnit_Framework_TestCase
     public function testGetExtraOAuthHeaders()
     {
         $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
-        $client->expects($this->once())->method('post')->will($this->returnCallback(function($uri, $extraHeaders, $params) {
+        $client->expects($this->once())->method('post')->will($this->returnCallback(function ($uri, $extraHeaders, $params) {
             \PHPUnit_Framework_Assert::assertTrue(array_key_exists('Authorization', $extraHeaders));
-            \PHPUnit_Framework_Assert::assertSame('Basic ' . base64_encode('foo:bar'), $extraHeaders['Authorization']);
+            \PHPUnit_Framework_Assert::assertSame('Basic '.base64_encode('foo:bar'), $extraHeaders['Authorization']);
+
             return TestHelper::createStringResponse('{"access_token":"foo","expires_in":"bar"}');
         }));
 

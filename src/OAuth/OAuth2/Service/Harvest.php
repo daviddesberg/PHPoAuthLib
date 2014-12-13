@@ -13,7 +13,6 @@ use OAuth\OAuth2\Token\StdOAuth2Token;
 
 class Harvest extends AbstractService
 {
-
     public function __construct(
         CredentialsInterface $credentials,
         HttpAdapterInterface $httpAdapter,
@@ -86,7 +85,7 @@ class Harvest extends AbstractService
         if (null === $data || ! is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            throw new TokenResponseException('Error in retrieving token: "'.$data['error'].'"');
         }
 
         $token = new StdOAuth2Token();

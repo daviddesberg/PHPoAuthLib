@@ -54,7 +54,7 @@ class Foursquare extends AbstractService
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            throw new TokenResponseException('Error in retrieving token: "'.$data['error'].'"');
         }
 
         $token = new StdOAuth2Token();
@@ -73,7 +73,7 @@ class Foursquare extends AbstractService
      */
     public function request($path, $method = 'GET', $body = null, array $extraHeaders = array())
     {
-        $uri = new Uri($this->baseApiUri . $path);
+        $uri = new Uri($this->baseApiUri.$path);
         $uri->addToQuery('v', $this->apiVersionDate);
 
         return parent::request($uri, $method, $body, $extraHeaders);

@@ -11,7 +11,7 @@
 
 namespace OAuth\Unit\Common\Storage;
 
-use \OAuth\OAuth2\Token\StdOAuth2Token;
+use OAuth\OAuth2\Token\StdOAuth2Token;
 
 abstract class StorageTest extends \PHPUnit_Framework_TestCase
 {

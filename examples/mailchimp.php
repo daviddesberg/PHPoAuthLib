@@ -20,7 +20,7 @@ $_SERVER['SERVER_PORT'] = 80;
 /**
  * Bootstrap the example
  */
-require_once __DIR__ . '/bootstrap.php';
+require_once __DIR__.'/bootstrap.php';
 
 // Session storage
 $storage = new Session();
@@ -44,12 +44,12 @@ if (!empty($_GET['code'])) {
     $result = $mailchimpService->request('/users/profile.json');
 
     header('Content-Type: application/json');
-    echo $result; exit;
-
+    echo $result;
+    exit;
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $mailchimpService->getAuthorizationUri();
-    header('Location: ' . $url);
+    header('Location: '.$url);
 } else {
-    $url = $currentUri->getRelativeUri() . '?go=go';
+    $url = $currentUri->getRelativeUri().'?go=go';
     echo "<a href='$url'>Login with Mailchimp!</a>";
 }

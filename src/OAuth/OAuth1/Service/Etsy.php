@@ -13,7 +13,6 @@ use Ivory\HttpAdapter\HttpAdapterInterface;
 
 class Etsy extends AbstractService
 {
-
     protected $scopes = array();
 
     public function __construct(
@@ -35,11 +34,11 @@ class Etsy extends AbstractService
      */
     public function getRequestTokenEndpoint()
     {
-        $uri = new Uri($this->baseApiUri . 'oauth/request_token');
+        $uri = new Uri($this->baseApiUri.'oauth/request_token');
         $scopes = $this->getScopes();
 
         if (count($scopes)) {
-            $uri->setQuery('scope=' . implode('%20', $scopes));
+            $uri->setQuery('scope='.implode('%20', $scopes));
         }
 
         return $uri;
@@ -58,7 +57,7 @@ class Etsy extends AbstractService
      */
     public function getAccessTokenEndpoint()
     {
-        return new Uri($this->baseApiUri . 'oauth/access_token');
+        return new Uri($this->baseApiUri.'oauth/access_token');
     }
 
     /**
@@ -87,7 +86,7 @@ class Etsy extends AbstractService
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            throw new TokenResponseException('Error in retrieving token: "'.$data['error'].'"');
         }
 
         $token = new StdOAuth1Token();
@@ -118,6 +117,7 @@ class Etsy extends AbstractService
         }
 
         $this->scopes = $scopes;
+
         return $this;
     }
 

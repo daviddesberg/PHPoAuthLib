@@ -13,13 +13,12 @@
 
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Storage\Session;
-use OAuth\Common\Token\Exception\ExpiredTokenException;
 use OAuth\OAuth2\Service\Harvest;
 
 /**
  * Bootstrap the example
  */
-require_once __DIR__ . '/bootstrap.php';
+require_once __DIR__.'/bootstrap.php';
 
 $serviceName = 'Harvest';
 $scopes = array();
@@ -41,34 +40,31 @@ $harvest = $serviceFactory->createService($serviceName, $credentials, $storage, 
 if (!empty($_GET['clearToken'])) {
     // Clear the current AccessToken and go back to the Beginning.
     $storage->clearToken($serviceName);
-    header('Location: ' . $currentUri->getAbsoluteUri());
-
+    header('Location: '.$currentUri->getAbsoluteUri());
 } elseif ($storage->hasAccessToken($serviceName)) {
     // fetch the accessToken for the service
     $accessToken = $storage->retrieveAccessToken($serviceName);
 
     // is the accessToken expired? then let's refesh it!
-    if ($accessToken->isExpired() === TRUE) {
+    if ($accessToken->isExpired() === true) {
         $harvest->refreshAccessToken($accessToken);
     }
 
     // use the service with the valid access token to fetch my email
     $result = json_decode($harvest->request('account/who_am_i'), true);
-    echo 'The email on your harvest account is ' . $result['user']['email'];
+    echo 'The email on your harvest account is '.$result['user']['email'];
 
-    $url = $currentUri->getRelativeUri() . '?clearToken=1';
+    $url = $currentUri->getRelativeUri().'?clearToken=1';
     echo " <a href='$url'>Click here to clear the current access token</a>";
-
 } elseif (!empty($_GET['code'])) {
     // This was a callback request from harvest, get the token
     $harvest->requestAccessToken($_GET['code']);
-    header('Location: ' . $currentUri->getAbsoluteUri());
-
+    header('Location: '.$currentUri->getAbsoluteUri());
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     // Redirect to the Authorization uri
     $url = $harvest->getAuthorizationUri();
-    header('Location: ' . $url);
+    header('Location: '.$url);
 } else {
-    $url = $currentUri->getRelativeUri() . '?go=go';
+    $url = $currentUri->getRelativeUri().'?go=go';
     echo "<a href='$url'>Login with Harvest!</a>";
 }

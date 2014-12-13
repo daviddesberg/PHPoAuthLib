@@ -79,7 +79,7 @@ class Vkontakte extends AbstractService
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            throw new TokenResponseException('Error in retrieving token: "'.$data['error'].'"');
         }
 
         $token = new StdOAuth2Token();
@@ -98,7 +98,7 @@ class Vkontakte extends AbstractService
 
         return $token;
     }
-    
+
     /**
      * {@inheritdoc}
      */

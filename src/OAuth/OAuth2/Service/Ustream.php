@@ -68,7 +68,7 @@ class Ustream extends AbstractService
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            throw new TokenResponseException('Error in retrieving token: "'.$data['error'].'"');
         }
 
         $token = new StdOAuth2Token();
@@ -93,6 +93,6 @@ class Ustream extends AbstractService
      */
     protected function getExtraOAuthHeaders()
     {
-        return array('Authorization' => 'Basic ' . $this->credentials->getConsumerSecret());
+        return array('Authorization' => 'Basic '.$this->credentials->getConsumerSecret());
     }
 }

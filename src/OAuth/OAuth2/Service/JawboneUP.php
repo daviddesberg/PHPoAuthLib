@@ -19,11 +19,11 @@ use OAuth\Common\Http\Uri\UriInterface;
 class JawboneUP extends AbstractService
 {
     /**
-     * Defined scopes
-     *
-     *
-     * @link https://jawbone.com/up/developer/authentication
-     */
+ * Defined scopes
+ *
+ *
+ * @link https://jawbone.com/up/developer/authentication
+ */
     // general information scopes
     const SCOPE_BASIC_READ          = 'basic_read';
     const SCOPE_EXTENDED_READ       = 'extended_read';
@@ -47,7 +47,6 @@ class JawboneUP extends AbstractService
     // generic event scopes
     const SCOPE_GENERIC_EVENT_READ  = 'generic_event_read';
     const SCOPE_GENERIC_EVENT_WRITE = 'generic_event_write';
-
 
     public function __construct(
         CredentialsInterface $credentials,
@@ -122,7 +121,7 @@ class JawboneUP extends AbstractService
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            throw new TokenResponseException('Error in retrieving token: "'.$data['error'].'"');
         }
 
         $token = new StdOAuth2Token();

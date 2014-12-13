@@ -13,10 +13,10 @@ use OAuth\Common\Http\Uri\UriInterface;
 class Reddit extends AbstractService
 {
     /**
-     * Defined scopes
-     *
-     * @link http://www.reddit.com/dev/api/oauth
-     */
+ * Defined scopes
+ *
+ * @link http://www.reddit.com/dev/api/oauth
+ */
     // User scopes
     const SCOPE_EDIT                         = 'edit';
     const SCOPE_HISTORY                      = 'history';
@@ -82,7 +82,7 @@ class Reddit extends AbstractService
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            throw new TokenResponseException('Error in retrieving token: "'.$data['error'].'"');
         }
 
         $token = new StdOAuth2Token();
@@ -108,7 +108,7 @@ class Reddit extends AbstractService
     protected function getExtraOAuthHeaders()
     {
         // Reddit uses a Basic OAuth header
-        return array('Authorization' => 'Basic ' .
-            base64_encode($this->credentials->getConsumerId() . ':' . $this->credentials->getConsumerSecret()));
+        return array('Authorization' => 'Basic '.
+            base64_encode($this->credentials->getConsumerId().':'.$this->credentials->getConsumerSecret()), );
     }
 }

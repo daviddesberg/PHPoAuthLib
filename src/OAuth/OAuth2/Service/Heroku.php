@@ -30,8 +30,8 @@ class Heroku extends AbstractService
     const SCOPE_WRITE_PROTECTED = 'write-protected';
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function __construct(
         CredentialsInterface $credentials,
         HttpAdapterInterface $httpAdapter,

@@ -213,7 +213,7 @@ class DailymotionTest extends \PHPUnit_Framework_TestCase
     public function testGetExtraOAuthHeaders()
     {
         $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
-        $client->expects($this->once())->method('post')->will($this->returnCallback(function($uri, $extraHeaders, $params) {
+        $client->expects($this->once())->method('post')->will($this->returnCallback(function ($uri, $extraHeaders, $params) {
             \PHPUnit_Framework_Assert::assertTrue(array_key_exists('Accept', $extraHeaders));
             \PHPUnit_Framework_Assert::assertTrue(in_array('application/json', $extraHeaders, true));
 

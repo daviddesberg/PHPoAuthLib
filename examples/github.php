@@ -18,7 +18,7 @@ use OAuth\Common\Consumer\Credentials;
 /**
  * Bootstrap the example
  */
-require_once __DIR__ . '/bootstrap.php';
+require_once __DIR__.'/bootstrap.php';
 
 // Session storage
 $storage = new Session();
@@ -40,13 +40,11 @@ if (!empty($_GET['code'])) {
 
     $result = json_decode($gitHub->request('user/emails'), true);
 
-    echo 'The first email on your github account is ' . $result[0];
-
+    echo 'The first email on your github account is '.$result[0];
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $gitHub->getAuthorizationUri();
-    header('Location: ' . $url);
-
+    header('Location: '.$url);
 } else {
-    $url = $currentUri->getRelativeUri() . '?go=go';
+    $url = $currentUri->getRelativeUri().'?go=go';
     echo "<a href='$url'>Login with Github!</a>";
 }

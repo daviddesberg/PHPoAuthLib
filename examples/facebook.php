@@ -19,7 +19,7 @@ use OAuth\Common\Consumer\Credentials;
 /**
  * Bootstrap the example
  */
-require_once __DIR__ . '/bootstrap.php';
+require_once __DIR__.'/bootstrap.php';
 
 // Session storage
 $storage = new Session();
@@ -43,12 +43,11 @@ if (!empty($_GET['code'])) {
     $result = json_decode($facebookService->request('/me'), true);
 
     // Show some of the resultant data
-    echo 'Your unique facebook user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
-
+    echo 'Your unique facebook user id is: '.$result['id'].' and your name is '.$result['name'];
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $facebookService->getAuthorizationUri();
-    header('Location: ' . $url);
+    header('Location: '.$url);
 } else {
-    $url = $currentUri->getRelativeUri() . '?go=go';
+    $url = $currentUri->getRelativeUri().'?go=go';
     echo "<a href='$url'>Login with Facebook!</a>";
 }

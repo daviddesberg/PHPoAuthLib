@@ -19,7 +19,7 @@ use OAuth\Common\Consumer\Credentials;
 /**
  * Bootstrap the example
  */
-require_once __DIR__ . '/bootstrap.php';
+require_once __DIR__.'/bootstrap.php';
 
 // Session storage
 $storage = new Session();
@@ -46,12 +46,11 @@ if (!empty($_GET['code'])) {
     $result = json_decode($linkedinService->request('/people/~?format=json'), true);
 
     // Show some of the resultant data
-    echo 'Your linkedin first name is ' . $result['firstName'] . ' and your last name is ' . $result['lastName'];
-
+    echo 'Your linkedin first name is '.$result['firstName'].' and your last name is '.$result['lastName'];
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $linkedinService->getAuthorizationUri();
-    header('Location: ' . $url);
+    header('Location: '.$url);
 } else {
-    $url = $currentUri->getRelativeUri() . '?go=go';
+    $url = $currentUri->getRelativeUri().'?go=go';
     echo "<a href='$url'>Login with Linkedin!</a>";
 }

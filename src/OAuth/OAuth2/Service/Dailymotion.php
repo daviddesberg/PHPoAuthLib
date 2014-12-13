@@ -44,8 +44,8 @@ class Dailymotion extends AbstractService
           DISPLAY_MOBILE = 'mobile';
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function __construct(
         CredentialsInterface $credentials,
         HttpAdapterInterface $httpAdapter,

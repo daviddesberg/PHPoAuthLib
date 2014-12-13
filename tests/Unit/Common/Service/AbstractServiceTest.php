@@ -16,7 +16,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
             array(
                 $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
                 $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
-                $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+                $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
             )
         );
 
@@ -34,7 +34,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
             array(
                 $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
                 $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
-                $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+                $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
             )
         );
 

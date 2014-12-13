@@ -2,16 +2,11 @@
 
 namespace OAuth\OAuth2\Service;
 
-use OAuth\OAuth2\Service\AbstractService;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Consumer\CredentialsInterface;
-use Ivory\HttpAdapter\HttpAdapterInterface;
-use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Http\Uri\UriInterface;
 
-class SalesforceService extends AbstractService
+class Salesforce extends AbstractService
 {
     /**
      * Scopes
@@ -63,7 +58,7 @@ class SalesforceService extends AbstractService
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            throw new TokenResponseException('Error in retrieving token: "'.$data['error'].'"');
         }
 
         $token = new StdOAuth2Token();

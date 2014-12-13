@@ -50,6 +50,7 @@ class Twitter extends AbstractService
         && $this->authorizationEndpoint != self::ENDPOINT_AUTHORIZE) {
             $this->authorizationEndpoint = self::ENDPOINT_AUTHENTICATE;
         }
+
         return new Uri($this->authorizationEndpoint);
     }
 
@@ -102,7 +103,7 @@ class Twitter extends AbstractService
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            throw new TokenResponseException('Error in retrieving token: "'.$data['error'].'"');
         }
 
         $token = new StdOAuth1Token();

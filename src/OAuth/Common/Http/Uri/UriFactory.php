@@ -82,7 +82,7 @@ class UriFactory implements UriFactoryInterface
             return new Uri($_server['REQUEST_URI']);
         }
 
-        return null;
+        return;
     }
 
     /**

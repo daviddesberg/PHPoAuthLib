@@ -12,7 +12,6 @@ use OAuth\Common\Http\Uri\UriInterface;
 
 class Mailchimp extends AbstractService
 {
-
     public function __construct(
         CredentialsInterface $credentials,
         HttpAdapterInterface $httpAdapter,
@@ -63,7 +62,7 @@ class Mailchimp extends AbstractService
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            throw new TokenResponseException('Error in retrieving token: "'.$data['error'].'"');
         }
 
         // Create token object.
@@ -98,7 +97,7 @@ class Mailchimp extends AbstractService
     protected function setBaseApiUri(StdOAuth2Token $token)
     {
         // Make request uri.
-        $endpoint = 'https://login.mailchimp.com/oauth2/metadata?oauth_token='. $token->getAccessToken();
+        $endpoint = 'https://login.mailchimp.com/oauth2/metadata?oauth_token='.$token->getAccessToken();
 
         // Grab meta data about the token.
         $response = $this->httpAdapter->get(new Uri($endpoint));
@@ -108,7 +107,7 @@ class Mailchimp extends AbstractService
         $meta = json_decode($responseBody, true);
 
         // Set base api uri.
-        $this->baseApiUri = new Uri('https://'. $meta['dc'] .'.api.mailchimp.com/2.0/');
+        $this->baseApiUri = new Uri('https://'.$meta['dc'].'.api.mailchimp.com/2.0/');
 
         // Allow chaining.
         return $this;

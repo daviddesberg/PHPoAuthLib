@@ -2,7 +2,6 @@
 
 namespace OAuth\OAuth1\Signature;
 
-use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 
 interface SignatureInterface

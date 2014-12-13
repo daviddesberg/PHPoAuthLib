@@ -22,9 +22,9 @@ $storage = new Session();
 
 // Setup the credentials for the requests
 $credentials = new Credentials(
-	$servicesCredentials['scoopit']['key'],
-	$servicesCredentials['scoopit']['secret'],
-	$currentUri->getAbsoluteUri()
+    $servicesCredentials['scoopit']['key'],
+    $servicesCredentials['scoopit']['secret'],
+    $currentUri->getAbsoluteUri()
 );
 
 // Instantiate the ScoopIt service using the credentials, http client and storage mechanism for the token
@@ -43,15 +43,14 @@ if (!empty($_GET['oauth_token'])) {
     // Send a request now that we have access token
     $result = json_decode($scoopItService->request('profile'));
 
-    echo 'result: <pre>' . print_r($result, true) . '</pre>';
-
+    echo 'result: <pre>'.print_r($result, true).'</pre>';
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     // extra request needed for oauth1 to request a request token :-)
     $token = $scoopItService->requestRequestToken();
 
     $url = $scoopItService->getAuthorizationUri(array('oauth_token' => $token->getRequestToken()));
-    header('Location: ' . $url);
+    header('Location: '.$url);
 } else {
-    $url = $currentUri->getRelativeUri() . '?go=go';
+    $url = $currentUri->getRelativeUri().'?go=go';
     echo "<a href='$url'>Login with ScoopIt!</a>";
 }

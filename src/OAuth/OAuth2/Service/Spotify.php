@@ -74,9 +74,8 @@ class Spotify extends AbstractService
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            throw new TokenResponseException('Error in retrieving token: "'.$data['error'].'"');
         }
-
 
         $token = new StdOAuth2Token();
         $token->setAccessToken($data['access_token']);
@@ -103,7 +102,7 @@ class Spotify extends AbstractService
      */
     protected function getExtraOAuthHeaders()
     {
-        return array('Authorization' => 'Basic ' .
-            base64_encode($this->credentials->getConsumerId() . ':' . $this->credentials->getConsumerSecret()));
+        return array('Authorization' => 'Basic '.
+            base64_encode($this->credentials->getConsumerId().':'.$this->credentials->getConsumerSecret()), );
     }
 }

@@ -5,7 +5,7 @@ namespace OAuthTest\Unit\OAuth1\Service;
 use OAuthTest\Mocks\OAuth1\Service\Mock;
 use OAuthTest\Unit\Common\TestHelper;
 
-class AbstractTestTest extends \PHPUnit_Framework_TestCase
+class AbstractServiceTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers OAuth\OAuth1\Service\AbstractService::__construct
@@ -58,8 +58,9 @@ class AbstractTestTest extends \PHPUnit_Framework_TestCase
     public function testRequestRequestTokenBuildAuthHeaderTokenRequestWithoutParams()
     {
         $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
-        $client->expects($this->once())->method('post')->will($this->returnCallback(function($endpoint, $array, $headers) {
+        $client->expects($this->once())->method('post')->will($this->returnCallback(function ($endpoint, $array, $headers) {
             \PHPUnit_Framework_Assert::assertSame('http://pieterhordijk.com/token', $endpoint->getAbsoluteUri());
+
             return TestHelper::createStringResponse(null);
         }));
 
@@ -126,8 +127,9 @@ class AbstractTestTest extends \PHPUnit_Framework_TestCase
     public function testRequestAccessTokenWithoutSecret()
     {
         $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
-        $client->expects($this->once())->method('post')->will($this->returnCallback(function($endpoint, $array, $headers) {
+        $client->expects($this->once())->method('post')->will($this->returnCallback(function ($endpoint, $array, $headers) {
             \PHPUnit_Framework_Assert::assertSame('http://pieterhordijk.com/access', $endpoint->getAbsoluteUri());
+
             return TestHelper::createStringResponse("");
         }));
 
@@ -163,8 +165,9 @@ class AbstractTestTest extends \PHPUnit_Framework_TestCase
     public function testRequestAccessTokenWithSecret()
     {
         $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
-        $client->expects($this->once())->method('post')->will($this->returnCallback(function($endpoint, $array, $headers) {
+        $client->expects($this->once())->method('post')->will($this->returnCallback(function ($endpoint, $array, $headers) {
             \PHPUnit_Framework_Assert::assertSame('http://pieterhordijk.com/access', $endpoint->getAbsoluteUri());
+
             return TestHelper::createStringResponse("");
         }));
 

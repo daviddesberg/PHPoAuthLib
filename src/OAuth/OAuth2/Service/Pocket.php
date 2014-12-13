@@ -24,22 +24,22 @@ class Pocket extends AbstractService
             $this->baseApiUri = new Uri('https://getpocket.com/v3/');
         }
     }
-    
+
     public function getRequestTokenEndpoint()
     {
         return new Uri('https://getpocket.com/v3/oauth/request');
     }
-    
+
     public function getAuthorizationEndpoint()
     {
         return new Uri('https://getpocket.com/auth/authorize');
     }
-    
+
     public function getAccessTokenEndpoint()
     {
         return new Uri('https://getpocket.com/v3/oauth/authorize');
     }
-    
+
     public function getAuthorizationUri(array $additionalParameters = array())
     {
         $parameters = array_merge(
@@ -48,7 +48,7 @@ class Pocket extends AbstractService
                 'redirect_uri' => $this->credentials->getCallbackUrl(),
             )
         );
-        
+
         // Build the url
         $url = clone $this->getAuthorizationEndpoint();
         foreach ($parameters as $key => $val) {
@@ -57,7 +57,7 @@ class Pocket extends AbstractService
 
         return $url;
     }
-    
+
     public function requestRequestToken()
     {
         $response = $this->httpAdapter->post(
@@ -69,24 +69,25 @@ class Pocket extends AbstractService
             )
         );
         $responseBody = $response ? (string) $response->getBody() : "";
-        
+
         $code = $this->parseRequestTokenResponse($responseBody);
 
         return $code;
     }
-    
+
     protected function parseRequestTokenResponse($responseBody)
     {
         parse_str($responseBody, $data);
-        
+
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (!isset($data['code'])) {
             throw new TokenResponseException('Error in retrieving code.');
         }
+
         return $data['code'];
     }
-    
+
     public function requestAccessToken($code)
     {
         $bodyParams = array(
@@ -106,24 +107,24 @@ class Pocket extends AbstractService
 
         return $token;
     }
-    
+
     protected function parseAccessTokenResponse($responseBody)
     {
         parse_str($responseBody, $data);
-        
+
         if ($data === null || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            throw new TokenResponseException('Error in retrieving token: "'.$data['error'].'"');
         }
-        
+
         $token = new StdOAuth2Token();
         #$token->setRequestToken($data['access_token']);
         $token->setAccessToken($data['access_token']);
         $token->setEndOfLife(StdOAuth2Token::EOL_NEVER_EXPIRES);
         unset($data['access_token']);
         $token->setExtraParams($data);
-        
+
         return $token;
     }
 }

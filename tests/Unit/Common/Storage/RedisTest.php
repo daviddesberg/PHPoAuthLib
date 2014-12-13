@@ -32,7 +32,7 @@ class RedisTest extends \PHPUnit_Framework_TestCase
         try {
             $predis->connect();
         } catch (\Predis\Connection\ConnectionException $e) {
-            $this->markTestSkipped('No redis instance available: ' . $e->getMessage());
+            $this->markTestSkipped('No redis instance available: '.$e->getMessage());
         }
     }
 

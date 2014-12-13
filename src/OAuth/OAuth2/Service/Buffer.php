@@ -106,6 +106,7 @@ class Buffer extends AbstractService
         } elseif (!isset($data['code'])) {
             throw new TokenResponseException('Error in retrieving code.');
         }
+
         return $data['code'];
     }
 
@@ -139,7 +140,7 @@ class Buffer extends AbstractService
         if ($data === null || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            throw new TokenResponseException('Error in retrieving token: "'.$data['error'].'"');
         }
 
         $token = new StdOAuth2Token();

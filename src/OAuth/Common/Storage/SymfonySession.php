@@ -15,9 +15,9 @@ class SymfonySession implements TokenStorageInterface
 
     /**
      * @param SessionInterface $session
-     * @param bool $startSession
-     * @param string $sessionVariableName
-     * @param string $stateVariableName
+     * @param bool             $startSession
+     * @param string           $sessionVariableName
+     * @param string           $stateVariableName
      */
     public function __construct(
         SessionInterface $session,

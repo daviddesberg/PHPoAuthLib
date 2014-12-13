@@ -38,7 +38,7 @@ if (!empty($_GET['code'])) {
     $token = $amazonService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = json_decode($amazonService->request('/user/profile'), true);
+    $result = json_decode($amazonService->request('/user/profile')->getBody(), true);
 
     // Show some of the resultant data
     echo 'Your unique Amazon user id is: '.$result['user_id'].' and your name is '.$result['name'];

@@ -74,7 +74,7 @@ class Flickr extends AbstractService
         return $token;
     }
 
-    public function request($path, $method = 'GET', $body = null, array $extraHeaders = array())
+    public function request($path, $method = 'GET', $body = array(), array $extraHeaders = array())
     {
         $uri = $this->determineRequestUriFromPath('/', $this->baseApiUri);
         $uri->addToQuery('method', $path);

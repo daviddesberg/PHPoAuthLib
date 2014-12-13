@@ -38,7 +38,7 @@ if (!empty($_GET['code'])) {
     $token = $jawboneService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = json_decode($jawboneService->request('/users/@me'), true);
+    $result = json_decode($jawboneService->request('/users/@me')->getBody(), true);
 
     // Show some of the resultant data
     echo 'Your unique Jawbone UP user id is: '.$result['data']['xid'];

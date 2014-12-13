@@ -38,7 +38,7 @@ if (!empty($_GET['code'])) {
     // This was a callback request from github, get the token
     $gitHub->requestAccessToken($_GET['code']);
 
-    $result = json_decode($gitHub->request('user/emails'), true);
+    $result = json_decode($gitHub->request('user/emails')->getBody(), true);
 
     echo 'The first email on your github account is '.$result[0];
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {

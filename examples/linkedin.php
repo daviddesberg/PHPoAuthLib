@@ -43,7 +43,7 @@ if (!empty($_GET['code'])) {
     $token = $linkedinService->requestAccessToken($_GET['code'], $state);
 
     // Send a request with it. Please note that XML is the default format.
-    $result = json_decode($linkedinService->request('/people/~?format=json'), true);
+    $result = json_decode($linkedinService->request('/people/~?format=json')->getBody(), true);
 
     // Show some of the resultant data
     echo 'Your linkedin first name is '.$result['firstName'].' and your last name is '.$result['lastName'];

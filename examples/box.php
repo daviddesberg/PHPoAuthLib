@@ -43,7 +43,7 @@ if (!empty($_GET['code'])) {
     $token = $boxService->requestAccessToken($_GET['code'], $state);
 
     // Send a request with it
-    $result = json_decode($boxService->request('/users/me'), true);
+    $result = json_decode($boxService->request('/users/me')->getBody(), true);
 
     // Show some of the resultant data
     echo 'Your Box name is '.$result['name'].' and your email is '.$result['login'];

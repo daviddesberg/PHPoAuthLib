@@ -80,7 +80,7 @@ class Mailchimp extends AbstractService
     /**
      * {@inheritdoc}
      */
-    public function request($path, $method = 'GET', $body = null, array $extraHeaders = array())
+    public function request($path, $method = 'GET', $body = array(), array $extraHeaders = array())
     {
         if (is_null($this->baseApiUri)) {
             $this->setBaseApiUri($this->storage->retrieveAccessToken($this->service()));

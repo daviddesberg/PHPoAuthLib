@@ -51,7 +51,7 @@ if (!empty($_GET['clearToken'])) {
     }
 
     // use the service with the valid access token to fetch my email
-    $result = json_decode($harvest->request('account/who_am_i'), true);
+    $result = json_decode($harvest->request('account/who_am_i')->getBody(), true);
     echo 'The email on your harvest account is '.$result['user']['email'];
 
     $url = $currentUri->getRelativeUri().'?clearToken=1';

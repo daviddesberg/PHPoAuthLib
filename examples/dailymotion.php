@@ -38,7 +38,7 @@ if (!empty($_GET['code'])) {
     $token = $dailymotionService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = json_decode($dailymotionService->request('/me?fields=email,id'), true);
+    $result = json_decode($dailymotionService->request('/me?fields=email,id')->getBody(), true);
 
     // Show some of the resultant data
     echo 'Your unique Dailymotion user id is: '.$result['id'].' and your email is '.$result['email'];

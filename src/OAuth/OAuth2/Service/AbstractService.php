@@ -147,7 +147,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * @throws ExpiredTokenException
      * @throws Exception
      */
-    public function request($path, $method = 'GET', $body = null, array $extraHeaders = array())
+    public function request($path, $method = 'GET', $body = array(), array $extraHeaders = array())
     {
         $uri = $this->determineRequestUriFromPath($path, $this->baseApiUri);
         $token = $this->storage->retrieveAccessToken($this->service());

@@ -46,7 +46,7 @@ if (!empty($_GET['oauth_token'])) {
     );
 
     // Send a request now that we have access token
-    $result = json_decode($tumblrService->request('user/info'));
+    $result = json_decode($tumblrService->request('user/info')->getBody());
 
     echo 'result: <pre>'.print_r($result, true).'</pre>';
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {

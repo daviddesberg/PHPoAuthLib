@@ -39,7 +39,7 @@ if (!empty($_GET['code'])) {
     $spotifyService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = json_decode($spotifyService->request('me'), true);
+    $result = json_decode($spotifyService->request('me')->getBody(), true);
 
     // Show some of the resultant data
     echo 'Your unique user id is: '.$result['id'].' and your name is '.$result['display_name'];

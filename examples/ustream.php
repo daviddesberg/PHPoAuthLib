@@ -40,7 +40,7 @@ if (!empty($_GET['code'])) {
     // This was a callback request from Ustream, get the token
     $ustream->requestAccessToken($_GET['code'], $state);
 
-    $result = json_decode($ustream->request('users/self.json'), true);
+    $result = json_decode($ustream->request('users/self.json')->getBody(), true);
 
     echo 'Your unique Ustream user id is: '.$result['id'].' and your username is '.$result['username'];
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {

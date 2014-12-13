@@ -39,7 +39,7 @@ if (!empty($_GET['code'])) {
     $foursquareService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = json_decode($foursquareService->request('users/self'), true);
+    $result = json_decode($foursquareService->request('users/self')->getBody(), true);
 
     // Show some of the resultant data
     echo 'Your unique foursquare user id is: '.$result['response']['user']['id'].' and your name is '.$result['response']['user']['firstName'].$result['response']['user']['lastName'];

@@ -38,7 +38,7 @@ if (!empty($_GET['code'])) {
     $token = $dropboxService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = json_decode($dropboxService->request('/account/info'), true);
+    $result = json_decode($dropboxService->request('/account/info')->getBody(), true);
 
     // Show some of the resultant data
     echo 'Your unique Dropbox user id is: '.$result['uid'].' and your name is '.$result['display_name'];

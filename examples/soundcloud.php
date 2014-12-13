@@ -39,7 +39,7 @@ if (!empty($_GET['code'])) {
     $soundcloudService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = json_decode($soundcloudService->request('me.json'), true);
+    $result = json_decode($soundcloudService->request('me.json')->getBody(), true);
 
     // Show some of the resultant data
     echo 'Your unique user id is: '.$result['id'].' and your name is '.$result['username'];

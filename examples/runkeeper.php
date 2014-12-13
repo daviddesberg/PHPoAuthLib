@@ -37,7 +37,7 @@ if (!empty($_GET['code'])) {
     $token = $runkeeperService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = json_decode($runkeeperService->request('/user'), true);
+    $result = json_decode($runkeeperService->request('/user')->getBody(), true);
 
     // Show some of the resultant data
     echo 'Your unique RunKeeper user id is: '.$result['userID'];

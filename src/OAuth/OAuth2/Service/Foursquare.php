@@ -71,7 +71,7 @@ class Foursquare extends AbstractService
     /**
      * {@inheritdoc}
      */
-    public function request($path, $method = 'GET', $body = null, array $extraHeaders = array())
+    public function request($path, $method = 'GET', $body = array(), array $extraHeaders = array())
     {
         $uri = new Uri($this->baseApiUri.$path);
         $uri->addToQuery('v', $this->apiVersionDate);

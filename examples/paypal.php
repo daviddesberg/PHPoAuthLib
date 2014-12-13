@@ -38,7 +38,7 @@ if (!empty($_GET['code'])) {
     $token = $paypalService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = json_decode($paypalService->request('/identity/openidconnect/userinfo/?schema=openid'), true);
+    $result = json_decode($paypalService->request('/identity/openidconnect/userinfo/?schema=openid')->getBody(), true);
 
     // Show some of the resultant data
     echo 'Your unique PayPal user id is: '.$result['user_id'].' and your name is '.$result['name'];

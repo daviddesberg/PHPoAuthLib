@@ -40,7 +40,7 @@ if (!empty($_GET['code'])) {
     // This was a callback request from reddit, get the token
     $reddit->requestAccessToken($_GET['code'], $state);
 
-    $result = json_decode($reddit->request('api/v1/me.json'), true);
+    $result = json_decode($reddit->request('api/v1/me.json')->getBody(), true);
 
     echo 'Your unique reddit user id is: '.$result['id'].' and your username is '.$result['name'];
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {

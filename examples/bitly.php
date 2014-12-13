@@ -39,7 +39,7 @@ if (!empty($_GET['code'])) {
     $bitlyService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = json_decode($bitlyService->request('user/info'), true);
+    $result = json_decode($bitlyService->request('user/info')->getBody(), true);
 
     // Show some of the resultant data
     echo 'Your unique user id is: '.$result['data']['login'].' and your name is '.$result['data']['display_name'];

@@ -41,7 +41,7 @@ if (!empty($_GET['code'])) {
     $token = $mailchimpService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = $mailchimpService->request('/users/profile.json');
+    $result = $mailchimpService->request('/users/profile.json')->getBody();
 
     header('Content-Type: application/json');
     echo $result;

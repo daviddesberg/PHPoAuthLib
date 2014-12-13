@@ -73,7 +73,7 @@ switch ($step) {
         break;
 
     case 3:
-        $xml = simplexml_load_string($flickrService->request('flickr.test.login'));
+        $xml = simplexml_load_string($flickrService->request('flickr.test.login')->getBody());
         print "status: ".(string) $xml->attributes()->stat."\n";
         break;
 }

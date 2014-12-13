@@ -48,7 +48,7 @@ if (!empty($_GET['oauth_token'])) {
     );
 
     // Send a request now that we have access token
-    $result = json_decode($bbService->request('user/repositories'));
+    $result = json_decode($bbService->request('user/repositories')->getBody());
 
     echo('The first repo in the list is '.$result[0]->name);
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {

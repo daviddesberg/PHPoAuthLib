@@ -39,7 +39,7 @@ if (!empty($_GET['code'])) {
     $bufferService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = json_decode($bufferService->request('user.json'), true);
+    $result = json_decode($bufferService->request('user.json')->getBody(), true);
 
     // Show some of the resultant data
     echo 'Your unique user id is: '.$result['id'].' and your plan is '.$result['plan'];

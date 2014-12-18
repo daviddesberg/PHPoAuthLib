@@ -18,8 +18,20 @@ class SalesforceService extends AbstractService
      *
      * @var string
      */
-    const   SCOPE_API           =   'api',
-            SCOPE_REFRESH_TOKEN =   'refresh_token';
+       const   SCOPE_API            = 'api',
+               SCOPE_REFRESH_TOKEN  = 'refresh_token',
+               SCOPE_FULL           = 'full',
+               SCOPE_WEB            = 'web',
+               SCOPE_CHATTER            = 'chatter_api',
+               SCOPE_CUSTOM_PERMISSIONS            = 'customer_permissions',
+               SCOPE_ID            = 'id',
+               SCOPE_PROFILE            = 'profile',
+               SCOPE_EMAIL            = 'email',
+               SCOPE_ADDRESS            = 'address',
+               SCOPE_PHONE            = 'phone',
+               SCOPE_OPEN_ID            = 'open_id',
+               SCOPE_VISUALFORCE            = 'visualforce',
+               SCOPE_OFFLINE_ACCESS = 'offline_access';
 
     /**
      * {@inheritdoc}

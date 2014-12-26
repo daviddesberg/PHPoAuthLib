@@ -99,6 +99,12 @@ class Google extends AbstractService
     // Android Publisher
     const SCOPE_ANDROID_PUBLISHER           = 'https://www.googleapis.com/auth/androidpublisher';
 
+    // Reports
+    const SCOPE_REPORTS_USAGE               = 'https://www.googleapis.com/auth/admin.reports.usage.readonly';
+    const SCOPE_REPORTS_AUDIT               = 'https://www.googleapis.com/auth/admin.reports.audit.readonly';
+
+
+
     protected $accessType = 'online';
 
 

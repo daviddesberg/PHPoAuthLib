@@ -31,7 +31,7 @@ class EveOnline extends AbstractService
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
 
         if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://sisilogin.testeveonline.com');
+            $this->baseApiUri = new Uri('https://login.eveonline.com');
         }
     }
 

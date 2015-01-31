@@ -26,9 +26,11 @@ class Facebook extends AbstractService
      * @link https://developers.facebook.com/docs/reference/login/
      * @link https://developers.facebook.com/tools/explorer For a list of permissions use 'Get Access Token'
      */
-    // email scopes
+    // Default scope
+    const SCOPE_PUBLIC_PROFILE                = 'public_profile';
+    // Email scopes
     const SCOPE_EMAIL                         = 'email';
-    // extended permissions
+    // Extended permissions
     const SCOPE_READ_FRIENDLIST               = 'read_friendlists';
     const SCOPE_READ_INSIGHTS                 = 'read_insights';
     const SCOPE_READ_MAILBOX                  = 'read_mailbox';

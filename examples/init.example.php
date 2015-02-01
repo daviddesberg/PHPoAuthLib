@@ -55,6 +55,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'fivehundredpx' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'flickr' => array(
         'key'       => '',
         'secret'    => '',

@@ -63,7 +63,7 @@ class EveOnlineTest extends \PHPUnit_Framework_TestCase
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertSame('https://sisilogin.testeveonline.com/oauth/authorize',
+        $this->assertSame('https://login.eveonline.com/oauth/authorize',
             $service->getAuthorizationEndpoint()->getAbsoluteUri());
     }
 
@@ -79,7 +79,7 @@ class EveOnlineTest extends \PHPUnit_Framework_TestCase
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertSame('https://sisilogin.testeveonline.com/oauth/token',
+        $this->assertSame('https://login.eveonline.com/oauth/token',
             $service->getAccessTokenEndpoint()->getAbsoluteUri());
     }
 

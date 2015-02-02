@@ -92,7 +92,7 @@ class Mailchimp extends AbstractService
 
     /**
      * Set the right base endpoint.
-     * 
+     *
      * @param StdOAuth2Token $token
      */
     protected function setBaseApiUri(StdOAuth2Token $token)

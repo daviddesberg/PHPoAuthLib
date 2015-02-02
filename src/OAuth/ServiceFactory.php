@@ -118,7 +118,13 @@ class ServiceFactory
             $fullyQualifiedServiceName = $this->getFullyQualifiedServiceName($serviceName, $version);
 
             if (class_exists($fullyQualifiedServiceName)) {
-                return $this->$buildMethod($fullyQualifiedServiceName, $credentials, $storage, $scopes, $baseApiUri, $apiVersion);
+                return $this->$buildMethod(
+                    $fullyQualifiedServiceName,
+                    $credentials,
+                    $storage,
+                    $scopes,
+                    $baseApiUri,
+                    $apiVersion);
             }
         }
 

@@ -97,5 +97,4 @@ class EveOnline extends AbstractService
     {
         return static::AUTHORIZATION_METHOD_HEADER_BEARER;
     }
-
 }

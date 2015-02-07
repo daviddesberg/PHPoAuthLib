@@ -42,7 +42,7 @@ Features
 
 Service support
 ---------------
-The library supports both oAuth 1.x and oAuth 2.0 compliant services. A list of currently implemented services can be found below. 
+The library supports both oAuth 1.x and oAuth 2.0 compliant services. A list of currently implemented services can be found below.
 
 Included service implementations
 --------------------------------
@@ -81,6 +81,7 @@ Included service implementations
     - SoundCloud
     - Spotify
     - Ustream
+    - Vimeo
     - Vkontakte
     - Yammer
 - more to come!

@@ -130,6 +130,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'vimeo' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'yahoo' => array(
         'key'       => '',
         'secret'    => ''

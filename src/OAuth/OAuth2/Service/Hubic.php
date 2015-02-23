@@ -136,5 +136,4 @@ class Hubic extends AbstractService
 
         return $url;
     }
-
 }

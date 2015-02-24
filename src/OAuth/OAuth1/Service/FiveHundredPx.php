@@ -1,4 +1,11 @@
 <?php
+/**
+ * 500px service.
+ *
+ * @author  Pedro Ammorim <contact@pamorim.fr>
+ * @license http://www.opensource.org/licenses/mit-license.html MIT License
+ * @link    https://developers.500px.com/
+ */
 
 namespace OAuth\OAuth1\Service;
 
@@ -14,9 +21,9 @@ use OAuth\Common\Http\Client\ClientInterface;
 /**
  * 500px service.
  *
- * @author      Pedro Ammorim <contact@pamorim.fr>
- * @license     http://www.opensource.org/licenses/mit-license.html  MIT License
- * @link        https://developers.500px.com/
+ * @author  Pedro Ammorim <contact@pamorim.fr>
+ * @license http://www.opensource.org/licenses/mit-license.html MIT License
+ * @link    https://developers.500px.com/
  */
 class FiveHundredPx extends AbstractService
 {
@@ -27,7 +34,13 @@ class FiveHundredPx extends AbstractService
         SignatureInterface $signature,
         UriInterface $baseApiUri = null
     ) {
-        parent::__construct($credentials, $httpClient, $storage, $signature, $baseApiUri);
+        parent::__construct(
+            $credentials,
+            $httpClient,
+            $storage,
+            $signature,
+            $baseApiUri
+        );
 
         if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://api.500px.com/v1/');
@@ -67,7 +80,9 @@ class FiveHundredPx extends AbstractService
 
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
-        } elseif (!isset($data['oauth_callback_confirmed']) || $data['oauth_callback_confirmed'] !== 'true') {
+        } elseif (!isset($data['oauth_callback_confirmed'])
+            || $data['oauth_callback_confirmed'] !== 'true'
+        ) {
             throw new TokenResponseException('Error in retrieving token.');
         }
 
@@ -84,7 +99,9 @@ class FiveHundredPx extends AbstractService
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            throw new TokenResponseException(
+                'Error in retrieving token: "' . $data['error'] . '"'
+            );
         }
 
         $token = new StdOAuth1Token();

@@ -1,4 +1,11 @@
 <?php
+/**
+ * Hubic service.
+ *
+ * @author  Pedro Ammorim <contact@pamorim.fr>
+ * @license http://www.opensource.org/licenses/mit-license.html MIT License
+ * @link    https://api.hubic.com/docs/
+ */
 
 namespace OAuth\OAuth2\Service;
 
@@ -13,9 +20,9 @@ use OAuth\Common\Http\Uri\UriInterface;
 /**
  * Hubic service.
  *
- * @author      Pedro Ammorim <contact@pamorim.fr>
- * @license     http://www.opensource.org/licenses/mit-license.html  MIT License
- * @link        https://api.hubic.com/docs/
+ * @author  Pedro Ammorim <contact@pamorim.fr>
+ * @license http://www.opensource.org/licenses/mit-license.html MIT License
+ * @link    https://api.hubic.com/docs/
  */
 class Hubic extends AbstractService
 {
@@ -39,7 +46,14 @@ class Hubic extends AbstractService
         $scopes = array(),
         UriInterface $baseApiUri = null
     ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, true);
+        parent::__construct(
+            $credentials,
+            $httpClient,
+            $storage,
+            $scopes,
+            $baseApiUri,
+            true
+        );
 
         if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://api.hubic.com/');
@@ -81,8 +95,9 @@ class Hubic extends AbstractService
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            //TODO test error
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            throw new TokenResponseException(
+                'Error in retrieving token: "' . $data['error'] . '"'
+            );
         }
 
         $token = new StdOAuth2Token();
@@ -118,7 +133,8 @@ class Hubic extends AbstractService
             )
         );
 
-        // special, hubic use a param scope with comme between scope instead of spaces
+        // special, hubic use a param scope with commas
+        // between scopes instead of spaces
         $parameters['scope'] = implode(',', $this->scopes);
 
         if ($this->needsStateParameterInAuthUrl()) {

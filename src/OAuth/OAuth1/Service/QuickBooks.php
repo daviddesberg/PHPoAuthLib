@@ -35,8 +35,13 @@ class QuickBooks extends AbstractService
         SignatureInterface $signature,
         UriInterface $baseApiUri = null
     ) {
-        parent::__construct($credentials, $httpClient, $storage, $signature,
-            $baseApiUri);
+        parent::__construct(
+            $credentials,
+            $httpClient,
+            $storage,
+            $signature,
+            $baseApiUri
+        );
 
         if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://quickbooks.api.intuit.com/');
@@ -125,8 +130,12 @@ class QuickBooks extends AbstractService
     /**
      * {@inheritDoc}
      */
-    public function request($path, $method = 'GET', $body = null,
-        array $extraHeaders = array())
+    public function request(
+        $path,
+        $method = 'GET',
+        $body = null,
+        array $extraHeaders = array()
+    )
     {
         $extraHeaders['Accept'] = 'application/json';
         return parent::request($path, $method, $body, $extraHeaders);

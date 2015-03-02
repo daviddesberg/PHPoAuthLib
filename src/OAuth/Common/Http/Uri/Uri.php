@@ -118,6 +118,7 @@ class Uri implements UriInterface
         }
 
         $this->setUserInfo($userInfo);
+        return $this;
     }
 
     /**
@@ -327,6 +328,7 @@ class Uri implements UriInterface
     public function setQuery($query)
     {
         $this->query = $query;
+        return $this;
     }
 
     /**
@@ -339,6 +341,8 @@ class Uri implements UriInterface
             $this->query .= '&';
         }
         $this->query .= http_build_query(array($var => $val), '', '&');
+
+        return $this;
     }
 
     /**
@@ -347,6 +351,7 @@ class Uri implements UriInterface
     public function setFragment($fragment)
     {
         $this->fragment = $fragment;
+        return $this;
     }
 
     /**
@@ -355,6 +360,7 @@ class Uri implements UriInterface
     public function setScheme($scheme)
     {
         $this->scheme = $scheme;
+        return $this;
     }
 
 
@@ -365,6 +371,7 @@ class Uri implements UriInterface
     {
         $this->userInfo = $userInfo ? $this->protectUserInfo($userInfo) : '';
         $this->rawUserInfo = $userInfo;
+        return $this;
     }
 
 
@@ -380,6 +387,8 @@ class Uri implements UriInterface
         } else {
             $this->explicitPortSpecified = true;
         }
+
+        return $this;
     }
 
     /**
@@ -388,6 +397,7 @@ class Uri implements UriInterface
     public function setHost($host)
     {
         $this->host = $host;
+        return $this;
     }
 
     /**

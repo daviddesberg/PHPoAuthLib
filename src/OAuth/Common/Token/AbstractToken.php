@@ -87,6 +87,7 @@ abstract class AbstractToken implements TokenInterface
     public function setAccessToken($accessToken)
     {
         $this->accessToken = $accessToken;
+        return $this;
     }
 
     /**
@@ -95,6 +96,7 @@ abstract class AbstractToken implements TokenInterface
     public function setEndOfLife($endOfLife)
     {
         $this->endOfLife = $endOfLife;
+        return $this;
     }
 
     /**
@@ -109,6 +111,8 @@ abstract class AbstractToken implements TokenInterface
         } else {
             $this->endOfLife = static::EOL_UNKNOWN;
         }
+
+        return $this;
     }
 
     /**
@@ -117,5 +121,6 @@ abstract class AbstractToken implements TokenInterface
     public function setRefreshToken($refreshToken)
     {
         $this->refreshToken = $refreshToken;
+        return $this;
     }
 }

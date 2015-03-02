@@ -49,7 +49,8 @@ if (!empty($_GET['oauth_token'])) {
     );
 
     // Send a request now that we have access token
-    $url = "/v3/company/{$quickbooksService->realmId}/account/1";
+    $companyId = $_GET['realmId'];
+    $url = "/v3/company/$companyId/account/1";
     $result = json_decode($quickbooksService->request($url));
 
     echo 'result: <pre>' . print_r($result, true) . '</pre>';

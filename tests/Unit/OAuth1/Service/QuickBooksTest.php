@@ -157,30 +157,6 @@ class QuickBooksTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testRealmIdIsSetAsPartOfTheRequestAccessToken()
-    {
-        $token = $this->getMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
-        $service = $this->getQuickBooksForRequestingAccessToken(
-            $token,
-            'oauth_token=foo&oauth_token_secret=bar'
-        );
-        $service->requestAccessToken('foo', 'bar', $token);
-
-        $this->assertSame(123, $service->realmId);
-    }
-
-    public function testDataSourceIsSetAsPartOfTheRequestAccessToken()
-    {
-        $token = $this->getMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
-        $service = $this->getQuickBooksForRequestingAccessToken(
-            $token,
-            'oauth_token=foo&oauth_token_secret=bar'
-        );
-        $service->requestAccessToken('foo', 'bar', $token);
-
-        $this->assertSame('QBO', $service->dataSource);
-    }
-
     protected function getQuickBooks(
         ClientInterface $client = null,
         TokenStorageInterface $storage = null
@@ -197,9 +173,6 @@ class QuickBooksTest extends \PHPUnit_Framework_TestCase
                 '\\OAuth\\Common\\Storage\\TokenStorageInterface'
             );
         }
-
-        $_GET['realmId'] = 123;
-        $_GET['dataSource'] = 'QBO';
 
         return new QuickBooks(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),

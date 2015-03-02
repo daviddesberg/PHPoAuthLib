@@ -14,18 +14,6 @@ use OAuth\OAuth1\Signature\SignatureInterface;
 class QuickBooks extends AbstractService
 {
     /**
-     * The realm ID is also the company ID.
-     * @var int
-     */
-    public $realmId;
-
-    /**
-     * Expected to be 'QBO' (QuickBooks online).
-     * @var string
-     */
-    public $dataSource;
-
-    /**
      * {@inheritdoc}
      */
     public function __construct(
@@ -115,16 +103,6 @@ class QuickBooks extends AbstractService
         $token->setExtraParams($data);
 
         return $token;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function requestAccessToken($token, $verifier, $tokenSecret = null)
-    {
-        $this->realmId = $_GET['realmId'];
-        $this->dataSource = $_GET['dataSource'];
-        return parent::requestAccessToken($token, $verifier, $tokenSecret);
     }
 
     /**

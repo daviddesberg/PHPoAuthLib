@@ -16,6 +16,8 @@ use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\OAuth2\Service\Exception\MissingRefreshTokenException;
+use OAuth\Common\Token\TokenInterface;
 
 /**
  * ParrotFlowerPower service.
@@ -101,6 +103,39 @@ class ParrotFlowerPower extends AbstractService
         unset($data['expires_in']);
 
         $token->setExtraParams($data);
+
+        return $token;
+    }
+
+
+    /**
+     * Parrot use a different endpoint for refresh a token
+     *
+     * {@inheritdoc}
+     */
+    public function refreshAccessToken(TokenInterface $token)
+    {
+        $refreshToken = $token->getRefreshToken();
+
+        if (empty($refreshToken)) {
+            throw new MissingRefreshTokenException();
+        }
+
+        $parameters = array(
+            'grant_type'    => 'refresh_token',
+            'type'          => 'web_server',
+            'client_id'     => $this->credentials->getConsumerId(),
+            'client_secret' => $this->credentials->getConsumerSecret(),
+            'refresh_token' => $refreshToken,
+        );
+
+        $responseBody = $this->httpClient->retrieveResponse(
+            new Uri($this->baseApiUri.'user/v1/refresh'),
+            $parameters,
+            $this->getExtraOAuthHeaders()
+        );
+        $token = $this->parseAccessTokenResponse($responseBody);
+        $this->storage->storeAccessToken($this->service(), $token);
 
         return $token;
     }

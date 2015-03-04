@@ -93,21 +93,21 @@ class ServiceFactory
      * It will first try to build an OAuth2 service and if none found it will try to build an OAuth1 service
      *
      * @param string                $serviceName Name of service to create
-     * @param Credentials           $credentials
+     * @param CredentialsInterface  $credentials
      * @param TokenStorageInterface $storage
      * @param array|null            $scopes      If creating an oauth2 service, array of scopes
      * @param UriInterface|null     $baseApiUri
+     * @param string                $apiVersion version of the api call
      *
      * @return ServiceInterface
-     *
-     * @throws Exception
      */
     public function createService(
         $serviceName,
         CredentialsInterface $credentials,
         TokenStorageInterface $storage,
         $scopes = array(),
-        UriInterface $baseApiUri = null
+        UriInterface $baseApiUri = null,
+        $apiVersion = ""
     ) {
         if (!$this->httpClient) {
             // for backwards compatibility.
@@ -118,7 +118,7 @@ class ServiceFactory
             $fullyQualifiedServiceName = $this->getFullyQualifiedServiceName($serviceName, $version);
 
             if (class_exists($fullyQualifiedServiceName)) {
-                return $this->$buildMethod($fullyQualifiedServiceName, $credentials, $storage, $scopes, $baseApiUri);
+                return $this->$buildMethod($fullyQualifiedServiceName, $credentials, $storage, $scopes, $baseApiUri, $apiVersion);
             }
         }
 
@@ -162,21 +162,23 @@ class ServiceFactory
         CredentialsInterface $credentials,
         TokenStorageInterface $storage,
         array $scopes,
-        UriInterface $baseApiUri = null
+        UriInterface $baseApiUri = null,
+        $apiVersion = ""
     ) {
         return new $serviceName(
             $credentials,
             $this->httpClient,
             $storage,
             $this->resolveScopes($serviceName, $scopes),
-            $baseApiUri
+            $baseApiUri,
+            $apiVersion
         );
     }
 
     /**
      * Resolves scopes for v2 services
      *
-     * @param $string $serviceName The fully qualified service name
+     * @param string  $serviceName The fully qualified service name
      * @param array   $scopes      List of scopes for the service
      *
      * @return array List of resolved scopes
@@ -206,6 +208,8 @@ class ServiceFactory
      * @param string                $serviceName The fully qualified service name
      * @param CredentialsInterface  $credentials
      * @param TokenStorageInterface $storage
+     * @param array                 $scopes
+     * @param UriInterface          $baseApiUri
      *
      * @return ServiceInterface
      *

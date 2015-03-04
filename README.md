@@ -18,7 +18,7 @@ Edit your `composer.json` and add:
 ```json
 {
     "require": {
-        "lusitanian/oauth": "~0.2"
+        "lusitanian/oauth": "~0.3"
     }
 }
 ```
@@ -49,8 +49,11 @@ Included service implementations
     - Etsy
     - FitBit
     - Flickr
+    - Scoop.it!
     - Tumblr
     - Twitter
+    - Xing
+    - Yahoo
 - OAuth2
     - Amazon
     - BitLy
@@ -61,17 +64,22 @@ Included service implementations
     - Foursquare
     - GitHub
     - Google
+    - Harvest
     - Heroku
     - Instagram
+    - Jawbone UP
     - LinkedIn
     - Mailchimp
     - Microsoft
     - PayPal
+    - Pocket
+    - Reddit
     - RunKeeper
     - SoundCloud
+    - Spotify
+    - Ustream
     - Vkontakte
     - Yammer
-    - Reddit
 - more to come!
 
 Examples
@@ -86,6 +94,10 @@ Framework Integration
 ---------------------
 * Lithium: Sébastien Charrier has written [an adapter](https://github.com/scharrier/li3_socialauth) for the library.
 * Laravel 4: Dariusz Prząda has written [a service provider](https://github.com/artdarek/oauth-4-laravel) for the library.
+
+Extensions
+----------
+* Extract normalized user data from OAuth Services with the library [PHPoAuthUserData](https://github.com/Oryzone/PHPoAuthUserData) by Luciano Mammino
 
 Tests
 ------

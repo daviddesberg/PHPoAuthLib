@@ -86,10 +86,6 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         }
         $this->signature->setTokenSecret($tokenSecret);
 
-        $extraAuthenticationHeaders = array(
-            'oauth_token' => $token,
-        );
-
         $bodyParams = array(
             'oauth_verifier' => $verifier,
         );
@@ -209,21 +205,20 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $bodyParams = null
     ) {
         $this->signature->setTokenSecret($token->getAccessTokenSecret());
-        $parameters = $this->getBasicAuthorizationHeaderInfo();
-        if (isset($parameters['oauth_callback'])) {
-            unset($parameters['oauth_callback']);
+        $authParameters = $this->getBasicAuthorizationHeaderInfo();
+        if (isset($authParameters['oauth_callback'])) {
+            unset($authParameters['oauth_callback']);
         }
 
-        $parameters = array_merge($parameters, array('oauth_token' => $token->getAccessToken()));
+        $authParameters = array_merge($authParameters, array('oauth_token' => $token->getAccessToken()));
 
-        $mergedParams = (is_array($bodyParams)) ? array_merge($parameters, $bodyParams) : $parameters;
-
-        $parameters['oauth_signature'] = $this->signature->getSignature($uri, $mergedParams, $method);
+        $signatureParams = (is_array($bodyParams)) ? array_merge($authParameters, $bodyParams) : $authParameters;
+        $authParameters['oauth_signature'] = $this->signature->getSignature($uri, $signatureParams, $method);
 
         $authorizationHeader = 'OAuth ';
         $delimiter = '';
 
-        foreach ($parameters as $key => $value) {
+        foreach ($authParameters as $key => $value) {
             $authorizationHeader .= $delimiter . rawurlencode($key) . '="' . rawurlencode($value) . '"';
             $delimiter = ', ';
         }

@@ -33,7 +33,7 @@ abstract class AbstractClient implements ClientInterface
     }
 
     /**
-     * @param int $maxRedirects Maximum redirects for client
+     * @param int $redirects Maximum redirects for client
      *
      * @return ClientInterface
      */

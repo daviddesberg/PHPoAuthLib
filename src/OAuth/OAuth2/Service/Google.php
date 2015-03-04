@@ -4,6 +4,7 @@ namespace OAuth\OAuth2\Service;
 
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
+use OAuth\OAuth2\Service\Exception\InvalidAccessTypeException;
 use OAuth\Common\Http\Uri\Uri;
 
 class Google extends AbstractService
@@ -14,7 +15,7 @@ class Google extends AbstractService
      *
      * Make a pull request if you need more scopes.
      */
-    
+
     // Basic
     const SCOPE_EMAIL                       = 'email';
     const SCOPE_PROFILE                     = 'profile';
@@ -25,6 +26,11 @@ class Google extends AbstractService
     // Google+
     const SCOPE_GPLUS_ME                    = 'https://www.googleapis.com/auth/plus.me';
     const SCOPE_GPLUS_LOGIN                 = 'https://www.googleapis.com/auth/plus.login';
+    const SCOPE_GPLUS_CIRCLES_READ          = 'https://www.googleapis.com/auth/plus.circles.read';
+    const SCOPE_GPLUS_CIRCLES_WRITE         = 'https://www.googleapis.com/auth/plus.circles.write';
+    const SCOPE_GPLUS_STREAM_READ           = 'https://www.googleapis.com/auth/plus.stream.read';
+    const SCOPE_GPLUS_STREAM_WRITE          = 'https://www.googleapis.com/auth/plus.stream.write';
+    const SCOPE_GPLUS_MEDIA                 = 'https://www.googleapis.com/auth/plus.media.upload';
 
     // Google Drive
     const SCOPE_DOCUMENTSLIST               = 'https://docs.google.com/feeds/';
@@ -52,15 +58,17 @@ class Google extends AbstractService
     const SCOPE_BOOKS                       = 'https://www.googleapis.com/auth/books';
     const SCOPE_BLOGGER                     = 'https://www.googleapis.com/auth/blogger';
     const SCOPE_CALENDAR                    = 'https://www.googleapis.com/auth/calendar';
+    const SCOPE_CALENDAR_READ_ONLY          = 'https://www.googleapis.com/auth/calendar.readonly';
     const SCOPE_CONTACT                     = 'https://www.google.com/m8/feeds/';
     const SCOPE_CHROMEWEBSTORE              = 'https://www.googleapis.com/auth/chromewebstore.readonly';
     const SCOPE_GMAIL                       = 'https://mail.google.com/mail/feed/atom';
+    const SCOPE_GMAIL_IMAP_SMTP             = 'https://mail.google.com';
     const SCOPE_PICASAWEB                   = 'https://picasaweb.google.com/data/';
     const SCOPE_SITES                       = 'https://sites.google.com/feeds/';
     const SCOPE_URLSHORTENER                = 'https://www.googleapis.com/auth/urlshortener';
     const SCOPE_WEBMASTERTOOLS              = 'https://www.google.com/webmasters/tools/feeds/';
     const SCOPE_TASKS                       = 'https://www.googleapis.com/auth/tasks';
-    
+
     // Cloud services
     const SCOPE_CLOUDSTORAGE                = 'https://www.googleapis.com/auth/devstorage.read_write';
     const SCOPE_CONTENTFORSHOPPING          = 'https://www.googleapis.com/auth/structuredcontent'; // what even is this
@@ -81,21 +89,33 @@ class Google extends AbstractService
     const SCOPE_YOUTUBE                     = 'https://www.googleapis.com/auth/youtube';
     const SCOPE_YOUTUBE_READ_ONLY           = 'https://www.googleapis.com/auth/youtube.readonly';
     const SCOPE_YOUTUBE_UPLOAD              = 'https://www.googleapis.com/auth/youtube.upload';
-    const SCOPE_YOUTUBE_PATNER              = 'https://www.googleapis.com/auth/youtubepartner';
-    const SCOPE_YOUTUBE_PARTNER_EDIT        = 'https://www.googleapis.com/auth/youtubepartner-channel-edit';
+    const SCOPE_YOUTUBE_PARTNER             = 'https://www.googleapis.com/auth/youtubepartner';
+    const SCOPE_YOUTUBE_PARTNER_AUDIT       = 'https://www.googleapis.com/auth/youtubepartner-channel-audit';
 
     // Google Glass
     const SCOPE_GLASS_TIMELINE              = 'https://www.googleapis.com/auth/glass.timeline';
     const SCOPE_GLASS_LOCATION              = 'https://www.googleapis.com/auth/glass.location';
 
+    // Android Publisher
+    const SCOPE_ANDROID_PUBLISHER           = 'https://www.googleapis.com/auth/androidpublisher';
 
+    protected $accessType = 'online';
+
+
+    public function setAccessType($accessType)
+    {
+        if (!in_array($accessType, array('online', 'offline'), true)) {
+            throw new InvalidAccessTypeException('Invalid accessType, expected either online or offline');
+        }
+        $this->accessType = $accessType;
+    }
 
     /**
      * {@inheritdoc}
      */
     public function getAuthorizationEndpoint()
     {
-        return new Uri('https://accounts.google.com/o/oauth2/auth');
+        return new Uri('https://accounts.google.com/o/oauth2/auth?access_type=' . $this->accessType);
     }
 
     /**

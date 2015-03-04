@@ -36,6 +36,19 @@ class Microsoft extends AbstractService
     const SCOPE_APPLICATIONS = 'wl.applications';
     const SCOPE_APPLICATIONS_CREATE = 'wl.applications_create';
 
+    /**
+     * MS uses some magical not officialy supported scope to get even moar info like full emailaddresses.
+     * They agree that giving 3rd party apps access to 3rd party emailaddresses is a pretty lame thing to do so in all
+     * their wisdom they added this scope because fuck you that's why.
+     *
+     * https://github.com/Lusitanian/PHPoAuthLib/issues/214
+     * http://social.msdn.microsoft.com/Forums/live/en-US/c6dcb9ab-aed4-400a-99fb-5650c393a95d/how-retrieve-users-
+     *                                  contacts-email-address?forum=messengerconnect
+     *
+     * Considering this scope is not officially supported: use with care
+     */
+    const SCOPE_CONTACTS_EMAILS = 'wl.contacts_emails';
+
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,

@@ -4,6 +4,7 @@ namespace OAuth\Common\Storage;
 
 use OAuth\Common\Token\TokenInterface;
 use OAuth\Common\Storage\Exception\TokenNotFoundException;
+use OAuth\Common\Storage\Exception\AuthorizationStateNotFoundException;
 
 /*
  * Stores a token in-memory only (destroyed at end of script execution).
@@ -15,9 +16,15 @@ class Memory implements TokenStorageInterface
      */
     protected $tokens;
 
+    /**
+     * @var array
+     */
+    protected $states;
+
     public function __construct()
     {
         $this->tokens = array();
+        $this->states = array();
     }
 
     /**
@@ -70,6 +77,61 @@ class Memory implements TokenStorageInterface
     public function clearAllTokens()
     {
         $this->tokens = array();
+
+        // allow chaining
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function retrieveAuthorizationState($service)
+    {
+        if ($this->hasAuthorizationState($service)) {
+            return $this->states[$service];
+        }
+
+        throw new AuthorizationStateNotFoundException('State not stored');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function storeAuthorizationState($service, $state)
+    {
+        $this->states[$service] = $state;
+
+        // allow chaining
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function hasAuthorizationState($service)
+    {
+        return isset($this->states[$service]) && null !== $this->states[$service];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function clearAuthorizationState($service)
+    {
+        if (array_key_exists($service, $this->states)) {
+            unset($this->states[$service]);
+        }
+
+        // allow chaining
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function clearAllAuthorizationStates()
+    {
+        $this->states = array();
 
         // allow chaining
         return $this;

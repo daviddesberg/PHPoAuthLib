@@ -50,4 +50,49 @@ interface TokenStorageInterface
      * @return TokenStorageInterface
      */
     public function clearAllTokens();
+
+    /**
+     * Store the authorization state related to a given service
+     *
+     * @param string $service
+     * @param string $state
+     *
+     * @return TokenStorageInterface
+     */
+    public function storeAuthorizationState($service, $state);
+
+    /**
+     * Check if an authorization state for a given service exists
+     *
+     * @param string $service
+     *
+     * @return bool
+     */
+    public function hasAuthorizationState($service);
+
+    /**
+     * Retrieve the authorization state for a given service
+     *
+     * @param string $service
+     *
+     * @return string
+     */
+    public function retrieveAuthorizationState($service);
+
+    /**
+     * Clear the authorization state of a given service
+     *
+     * @param string $service
+     *
+     * @return TokenStorageInterface
+     */
+    public function clearAuthorizationState($service);
+
+    /**
+     * Delete *ALL* user authorization states. Use with care. Most of the time you will likely
+     * want to use clearAuthorization() instead.
+     *
+     * @return TokenStorageInterface
+     */
+    public function clearAllAuthorizationStates();
 }

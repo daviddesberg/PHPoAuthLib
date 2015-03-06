@@ -2,7 +2,7 @@
 /**
  * 500px service.
  *
- * @author  Pedro Ammorim <contact@pamorim.fr>
+ * @author  Pedro Amorim <contact@pamorim.fr>
  * @license http://www.opensource.org/licenses/mit-license.html MIT License
  * @link    https://developers.500px.com/
  */
@@ -21,7 +21,7 @@ use OAuth\Common\Http\Client\ClientInterface;
 /**
  * 500px service.
  *
- * @author  Pedro Ammorim <contact@pamorim.fr>
+ * @author  Pedro Amorim <contact@pamorim.fr>
  * @license http://www.opensource.org/licenses/mit-license.html MIT License
  * @link    https://developers.500px.com/
  */

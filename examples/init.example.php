@@ -87,6 +87,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'nest' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'paypal' => array(
         'key'       => '',
         'secret'    => '',

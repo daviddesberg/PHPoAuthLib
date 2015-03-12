@@ -67,6 +67,14 @@ class Nest extends AbstractService
     /**
      * {@inheritdoc}
      */
+    protected function getAuthorizationMethod()
+    {
+        return static::AUTHORIZATION_METHOD_QUERY_STRING_V4;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function parseAccessTokenResponse($responseBody)
     {
         $data = json_decode($responseBody, true);

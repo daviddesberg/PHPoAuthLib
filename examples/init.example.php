@@ -99,11 +99,11 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
-<<<<<<< HEAD
     'nest' => array(
-=======
+        'key'       => '',
+        'secret'    => '',
+    ),
     'parrotFlowerPower' => array(
->>>>>>> 27f8733d3113d46bc6391504b2114d4e99e01f17
         'key'       => '',
         'secret'    => '',
     ),

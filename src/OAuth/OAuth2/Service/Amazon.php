@@ -23,6 +23,7 @@ class Amazon extends AbstractService
      * @link https://images-na.ssl-images-amazon.com/images/G/01/lwa/dev/docs/website-developer-guide._TTH_.pdf
      */
     const SCOPE_PROFILE     = 'profile';
+    const SCOPE_PROFILE_ID  = 'profile:user_id';
     const SCOPE_POSTAL_CODE = 'postal_code';
 
     public function __construct(

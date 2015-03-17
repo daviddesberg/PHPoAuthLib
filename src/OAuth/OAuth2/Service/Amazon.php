@@ -25,6 +25,12 @@ class Amazon extends AbstractService
     const SCOPE_PROFILE     = 'profile';
     const SCOPE_PROFILE_ID  = 'profile:user_id';
     const SCOPE_POSTAL_CODE = 'postal_code';
+    /**
+     * Defined scopes with Pay with Amazon service.
+     * @link https://images-na.ssl-images-amazon.com/images/G/01/mwsportal/doc/en_US/offamazonpayments/LoginAndPayWithAmazonIntegrationGuide._V335378063_.pdf
+     */
+    const SCOPE_PAYMENTS_WIDGET = 'payments:widget';
+    const SCOPE_PAYMENTS_SHIPPING_ADDRESS = 'payments:shipping_address';
 
     public function __construct(
         CredentialsInterface $credentials,

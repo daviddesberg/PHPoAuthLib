@@ -28,7 +28,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
 
     /** @var bool */
     protected $stateParameterInAuthUrl;
-    
+
     /** @var string */
     protected $apiVersion;
 
@@ -64,7 +64,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $this->scopes = $scopes;
 
         $this->baseApiUri = $baseApiUri;
-        
+
         $this->apiVersion = $apiVersion;
     }
 
@@ -337,10 +337,10 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     {
         return static::AUTHORIZATION_METHOD_HEADER_OAUTH;
     }
-    
+
     /**
      * Returns api version string if is set else retrun empty string
-     * 
+     *
      * @return string
      */
     protected function getApiVersionString()

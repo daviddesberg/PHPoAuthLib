@@ -39,6 +39,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'deviantart' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'dropbox' => array(
         'key'       => '',
         'secret'    => '',

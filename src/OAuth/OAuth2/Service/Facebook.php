@@ -57,6 +57,7 @@ class Facebook extends AbstractService
     // Extended Profile Properties
     const SCOPE_USER_FRIENDS                  = 'user_friends';
     const SCOPE_USER_ABOUT                    = 'user_about_me';
+    const SCOPE_USER_TAGGED_PLACES            = 'user_tagged_places';
     const SCOPE_FRIENDS_ABOUT                 = 'friends_about_me';
     const SCOPE_USER_ACTIVITIES               = 'user_activities';
     const SCOPE_FRIENDS_ACTIVITIES            = 'friends_activities';

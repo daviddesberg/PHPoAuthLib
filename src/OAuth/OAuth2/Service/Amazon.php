@@ -23,7 +23,14 @@ class Amazon extends AbstractService
      * @link https://images-na.ssl-images-amazon.com/images/G/01/lwa/dev/docs/website-developer-guide._TTH_.pdf
      */
     const SCOPE_PROFILE     = 'profile';
+    const SCOPE_PROFILE_ID  = 'profile:user_id';
     const SCOPE_POSTAL_CODE = 'postal_code';
+    /**
+     * Defined scopes with Pay with Amazon service.
+     * @link https://images-na.ssl-images-amazon.com/images/G/01/mwsportal/doc/en_US/offamazonpayments/LoginAndPayWithAmazonIntegrationGuide._V335378063_.pdf
+     */
+    const SCOPE_PAYMENTS_WIDGET = 'payments:widget';
+    const SCOPE_PAYMENTS_SHIPPING_ADDRESS = 'payments:shipping_address';
 
     public function __construct(
         CredentialsInterface $credentials,
@@ -35,7 +42,11 @@ class Amazon extends AbstractService
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
 
         if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://api.amazon.com/');
+            if (DEBUG || STAGING) {
+                $this->baseApiUri = new Uri('https://api.sandbox.amazon.co.uk/');
+            } else {
+                $this->baseApiUri = new Uri('https://api.amazon.co.uk/');
+            }
         }
     }
 
@@ -44,7 +55,11 @@ class Amazon extends AbstractService
      */
     public function getAuthorizationEndpoint()
     {
-        return new Uri('https://www.amazon.com/ap/oa');
+        if (DEBUG || STAGING) {
+            return new Uri('https://api.sandbox.amazon.co.uk/ap/oa');
+        } else {
+            return new Uri('https://api.amazon.co.uk/ap/oa');
+        }
     }
 
     /**
@@ -52,7 +67,11 @@ class Amazon extends AbstractService
      */
     public function getAccessTokenEndpoint()
     {
-        return new Uri('https://www.amazon.com/ap/oatoken');
+        if (DEBUG || STAGING) {
+            return new Uri('https://api.sandbox.amazon.co.uk/ap/oatoken');
+        } else {
+            return new Uri('https://api.amazon.co.uk/ap/oatoken');
+        }
     }
 
     /**

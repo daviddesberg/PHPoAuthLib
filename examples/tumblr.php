@@ -18,7 +18,7 @@ use OAuth\Common\Consumer\Credentials;
 /**
  * Bootstrap the example
  */
-require_once __DIR__ . '/bootstrap.php';
+require_once __DIR__.'/bootstrap.php';
 
 // We need to use a persistent storage to save the token, because oauth1 requires the token secret received before'
 // the redirect (request token request) in the access token request.
@@ -46,17 +46,16 @@ if (!empty($_GET['oauth_token'])) {
     );
 
     // Send a request now that we have access token
-    $result = json_decode($tumblrService->request('user/info'));
+    $result = json_decode($tumblrService->request('user/info')->getBody());
 
-    echo 'result: <pre>' . print_r($result, true) . '</pre>';
-
+    echo 'result: <pre>'.print_r($result, true).'</pre>';
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     // extra request needed for oauth1 to request a request token :-)
     $token = $tumblrService->requestRequestToken();
 
     $url = $tumblrService->getAuthorizationUri(array('oauth_token' => $token->getRequestToken()));
-    header('Location: ' . $url);
+    header('Location: '.$url);
 } else {
-    $url = $currentUri->getRelativeUri() . '?go=go';
+    $url = $currentUri->getRelativeUri().'?go=go';
     echo "<a href='$url'>Login with Tumblr!</a>";
 }

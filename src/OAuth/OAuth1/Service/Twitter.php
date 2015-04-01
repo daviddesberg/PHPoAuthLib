@@ -9,7 +9,7 @@ use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 use OAuth\Common\Exception\Exception;
 
 class Twitter extends AbstractService
@@ -21,12 +21,12 @@ class Twitter extends AbstractService
 
     public function __construct(
         CredentialsInterface $credentials,
-        ClientInterface $httpClient,
+        HttpAdapterInterface $httpAdapter,
         TokenStorageInterface $storage,
         SignatureInterface $signature,
         UriInterface $baseApiUri = null
     ) {
-        parent::__construct($credentials, $httpClient, $storage, $signature, $baseApiUri);
+        parent::__construct($credentials, $httpAdapter, $storage, $signature, $baseApiUri);
 
         if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://api.twitter.com/1.1/');
@@ -50,6 +50,7 @@ class Twitter extends AbstractService
         && $this->authorizationEndpoint != self::ENDPOINT_AUTHORIZE) {
             $this->authorizationEndpoint = self::ENDPOINT_AUTHENTICATE;
         }
+
         return new Uri($this->authorizationEndpoint);
     }
 
@@ -102,7 +103,7 @@ class Twitter extends AbstractService
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            throw new TokenResponseException('Error in retrieving token: "'.$data['error'].'"');
         }
 
         $token = new StdOAuth1Token();

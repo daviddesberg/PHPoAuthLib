@@ -3,7 +3,7 @@
 namespace OAuth\OAuth2\Service;
 
 use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Http\Uri\UriInterface;
@@ -13,15 +13,14 @@ use OAuth\OAuth2\Token\StdOAuth2Token;
 
 class Harvest extends AbstractService
 {
-
     public function __construct(
         CredentialsInterface $credentials,
-        ClientInterface $httpClient,
+        HttpAdapterInterface $httpAdapter,
         TokenStorageInterface $storage,
         $scopes = array(),
         UriInterface $baseApiUri = null
     ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
+        parent::__construct($credentials, $httpAdapter, $storage, $scopes, $baseApiUri);
 
         if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://api.harvestapp.com/');
@@ -86,7 +85,7 @@ class Harvest extends AbstractService
         if (null === $data || ! is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            throw new TokenResponseException('Error in retrieving token: "'.$data['error'].'"');
         }
 
         $token = new StdOAuth2Token();
@@ -126,11 +125,13 @@ class Harvest extends AbstractService
             'refresh_token' => $refreshToken,
         );
 
-        $responseBody = $this->httpClient->retrieveResponse(
+        $response = $this->httpAdapter->post(
             $this->getAccessTokenEndpoint(),
-            $parameters,
-            $this->getExtraOAuthHeaders()
+            $this->getExtraOAuthHeaders(),
+            $parameters
         );
+        $responseBody = $response ? (string) $response->getBody() : "";
+
         $token = $this->parseAccessTokenResponse($responseBody);
         $this->storage->storeAccessToken($this->service(), $token);
 

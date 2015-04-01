@@ -30,7 +30,7 @@ spl_autoload_register(function ($class) {
         return;
     }
     $path = substr(str_replace('\\', '/', $class), $nslen);
-    $path = __DIR__ . $path . '.php';
+    $path = __DIR__.$path.'.php';
     if (file_exists($path)) {
         require $path;
     }
@@ -39,4 +39,4 @@ spl_autoload_register(function ($class) {
 /**
  * Fire up the autoloader
  */
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';

@@ -14,11 +14,11 @@
 
 namespace OAuth;
 
+use Ivory\HttpAdapter\FileGetContentsHttpAdapter;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 use OAuth\Common\Service\ServiceInterface;
 use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Http\Client\ClientInterface;
-use OAuth\Common\Http\Client\StreamClient;
 use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\Common\Exception\Exception;
 use OAuth\OAuth1\Signature\Signature;
@@ -26,16 +26,16 @@ use OAuth\OAuth1\Signature\Signature;
 class ServiceFactory
 {
     /**
-     *@var ClientInterface
+     * @var HttpAdapterInterface
      */
-    protected $httpClient;
+    protected $httpAdapter;
 
     /**
      * @var array
      */
     protected $serviceClassMap = array(
         'OAuth1' => array(),
-        'OAuth2' => array()
+        'OAuth2' => array(),
     );
 
     /**
@@ -47,13 +47,13 @@ class ServiceFactory
     );
 
     /**
-     * @param ClientInterface $httpClient
+     * @param HttpAdapterInterface $httpAdapter
      *
      * @return ServiceFactory
      */
-    public function setHttpClient(ClientInterface $httpClient)
+    public function setHttpAdapter(HttpAdapterInterface $httpAdapter)
     {
-        $this->httpClient = $httpClient;
+        $this->httpAdapter = $httpAdapter;
 
         return $this;
     }
@@ -77,7 +77,7 @@ class ServiceFactory
         $reflClass = new \ReflectionClass($className);
 
         foreach (array('OAuth2', 'OAuth1') as $version) {
-            if ($reflClass->implementsInterface('OAuth\\' . $version . '\\Service\\ServiceInterface')) {
+            if ($reflClass->implementsInterface('OAuth\\'.$version.'\\Service\\ServiceInterface')) {
                 $this->serviceClassMap[$version][ucfirst($serviceName)] = $className;
 
                 return $this;
@@ -97,7 +97,7 @@ class ServiceFactory
      * @param TokenStorageInterface $storage
      * @param array|null            $scopes      If creating an oauth2 service, array of scopes
      * @param UriInterface|null     $baseApiUri
-     * @param string                $apiVersion version of the api call
+     * @param string                $apiVersion  version of the api call
      *
      * @return ServiceInterface
      */
@@ -109,20 +109,27 @@ class ServiceFactory
         UriInterface $baseApiUri = null,
         $apiVersion = ""
     ) {
-        if (!$this->httpClient) {
+        if (!$this->httpAdapter) {
             // for backwards compatibility.
-            $this->httpClient = new StreamClient();
+            $this->httpAdapter = new FileGetContentsHttpAdapter();
         }
 
         foreach ($this->serviceBuilders as $version => $buildMethod) {
             $fullyQualifiedServiceName = $this->getFullyQualifiedServiceName($serviceName, $version);
 
             if (class_exists($fullyQualifiedServiceName)) {
-                return $this->$buildMethod($fullyQualifiedServiceName, $credentials, $storage, $scopes, $baseApiUri, $apiVersion);
+                return $this->$buildMethod(
+                    $fullyQualifiedServiceName,
+                    $credentials,
+                    $storage,
+                    $scopes,
+                    $baseApiUri,
+                    $apiVersion
+                );
             }
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -141,7 +148,7 @@ class ServiceFactory
             return $this->serviceClassMap[$type][$serviceName];
         }
 
-        return '\\OAuth\\' . $type . '\\Service\\' . $serviceName;
+        return '\\OAuth\\'.$type.'\\Service\\'.$serviceName;
     }
 
     /**
@@ -167,7 +174,7 @@ class ServiceFactory
     ) {
         return new $serviceName(
             $credentials,
-            $this->httpClient,
+            $this->httpAdapter,
             $storage,
             $this->resolveScopes($serviceName, $scopes),
             $baseApiUri,
@@ -178,8 +185,8 @@ class ServiceFactory
     /**
      * Resolves scopes for v2 services
      *
-     * @param string  $serviceName The fully qualified service name
-     * @param array   $scopes      List of scopes for the service
+     * @param string $serviceName The fully qualified service name
+     * @param array  $scopes      List of scopes for the service
      *
      * @return array List of resolved scopes
      */
@@ -190,7 +197,7 @@ class ServiceFactory
 
         $resolvedScopes = array();
         foreach ($scopes as $scope) {
-            $key = strtoupper('SCOPE_' . $scope);
+            $key = strtoupper('SCOPE_'.$scope);
 
             if (array_key_exists($key, $constants)) {
                 $resolvedScopes[] = $constants[$key];
@@ -228,6 +235,6 @@ class ServiceFactory
             );
         }
 
-        return new $serviceName($credentials, $this->httpClient, $storage, new Signature($credentials), $baseApiUri);
+        return new $serviceName($credentials, $this->httpAdapter, $storage, new Signature($credentials), $baseApiUri);
     }
 }

@@ -18,7 +18,7 @@ use OAuth\Common\Consumer\Credentials;
 /**
  * Bootstrap the example
  */
-require_once __DIR__ . '/bootstrap.php';
+require_once __DIR__.'/bootstrap.php';
 
 // Session storage
 $storage = new Session();
@@ -39,15 +39,14 @@ if (!empty($_GET['code'])) {
     $foursquareService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = json_decode($foursquareService->request('users/self'), true);
+    $result = json_decode($foursquareService->request('users/self')->getBody(), true);
 
     // Show some of the resultant data
-    echo 'Your unique foursquare user id is: ' . $result['response']['user']['id'] . ' and your name is ' . $result['response']['user']['firstName'] . $result['response']['user']['lastName'];
-
+    echo 'Your unique foursquare user id is: '.$result['response']['user']['id'].' and your name is '.$result['response']['user']['firstName'].$result['response']['user']['lastName'];
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $foursquareService->getAuthorizationUri();
-    header('Location: ' . $url);
+    header('Location: '.$url);
 } else {
-    $url = $currentUri->getRelativeUri() . '?go=go';
+    $url = $currentUri->getRelativeUri().'?go=go';
     echo "<a href='$url'>Login with Foursquare!</a>";
 }

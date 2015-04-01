@@ -27,7 +27,7 @@ class Session implements TokenStorageInterface
     protected $stateVariableName;
 
     /**
-     * @param bool $startSession Whether or not to start the session upon construction.
+     * @param bool   $startSession        Whether or not to start the session upon construction.
      * @param string $sessionVariableName the variable name to use within the _SESSION superglobal
      * @param string $stateVariableName
      */

@@ -19,7 +19,7 @@ use OAuth\Common\Consumer\Credentials;
 /**
  * Bootstrap the example
  */
-require_once __DIR__ . '/bootstrap.php';
+require_once __DIR__.'/bootstrap.php';
 
 // Session storage
 $storage = new Session();
@@ -43,16 +43,15 @@ if (!empty($_GET['code'])) {
     $token = $boxService->requestAccessToken($_GET['code'], $state);
 
     // Send a request with it
-    $result = json_decode($boxService->request('/users/me'), true);
+    $result = json_decode($boxService->request('/users/me')->getBody(), true);
 
     // Show some of the resultant data
-    echo 'Your Box name is ' . $result['name'] . ' and your email is ' . $result['login'];
-
+    echo 'Your Box name is '.$result['name'].' and your email is '.$result['login'];
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $boxService->getAuthorizationUri();
     // var_dump($url);
-    header('Location: ' . $url);
+    header('Location: '.$url);
 } else {
-    $url = $currentUri->getRelativeUri() . '?go=go';
+    $url = $currentUri->getRelativeUri().'?go=go';
     echo "<a href='$url'>Login with Box!</a>";
 }

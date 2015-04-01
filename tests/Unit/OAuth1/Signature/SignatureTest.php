@@ -54,7 +54,6 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
             ->method('getConsumerSecret')
             ->will($this->returnValue('foo'));
 
-
         $signature = new Signature($credentials);
 
         $signature->setHashingAlgorithm('HMAC-SHA1');
@@ -92,7 +91,6 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
         $credentials->expects($this->any())
             ->method('getConsumerSecret')
             ->will($this->returnValue('foo'));
-
 
         $signature = new Signature($credentials);
 
@@ -132,7 +130,6 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
             ->method('getConsumerSecret')
             ->will($this->returnValue('foo'));
 
-
         $signature = new Signature($credentials);
 
         $signature->setHashingAlgorithm('HMAC-SHA1');
@@ -170,7 +167,6 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
         $credentials->expects($this->any())
             ->method('getConsumerSecret')
             ->will($this->returnValue('foo'));
-
 
         $signature = new Signature($credentials);
 
@@ -213,7 +209,6 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
             ->method('getConsumerSecret')
             ->will($this->returnValue('foo'));
 
-
         $signature = new Signature($credentials);
 
         $signature->setHashingAlgorithm('HMAC-SHA1');
@@ -254,7 +249,6 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
         $credentials->expects($this->any())
             ->method('getConsumerSecret')
             ->will($this->returnValue('foo'));
-
 
         $signature = new Signature($credentials);
 
@@ -297,7 +291,6 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
         $credentials->expects($this->any())
             ->method('getConsumerSecret')
             ->will($this->returnValue('foo'));
-
 
         $signature = new Signature($credentials);
 

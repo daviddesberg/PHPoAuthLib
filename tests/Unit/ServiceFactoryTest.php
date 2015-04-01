@@ -15,15 +15,15 @@ use OAuth\ServiceFactory;
 class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers OAuth\ServiceFactory::setHttpClient
+     * @covers OAuth\ServiceFactory::sethttpAdapter
      */
-    public function testSetHttpClient()
+    public function testSethttpAdapter()
     {
         $factory = new ServiceFactory();
 
         $this->assertInstanceOf(
             '\\OAuth\\ServiceFactory',
-            $factory->setHttpClient($this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'))
+            $factory->sethttpAdapter($this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'))
         );
     }
 

@@ -3,6 +3,7 @@
 namespace OAuthTest\Unit\OAuth1\Service;
 
 use OAuthTest\Mocks\OAuth1\Service\Mock;
+use OAuthTest\Unit\Common\TestHelper;
 
 class AbstractServiceTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,7 +16,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
             '\\OAuth\\OAuth1\\Service\\AbstractService',
             array(
                 $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-                $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+                $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
                 $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
                 $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
                 $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface'),
@@ -34,7 +35,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
             '\\OAuth\\OAuth1\\Service\\AbstractService',
             array(
                 $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-                $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+                $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
                 $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
                 $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
                 $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface'),
@@ -56,9 +57,11 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testRequestRequestTokenBuildAuthHeaderTokenRequestWithoutParams()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnCallback(function($endpoint, $array, $headers) {
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('post')->will($this->returnCallback(function ($endpoint, $array, $headers) {
             \PHPUnit_Framework_Assert::assertSame('http://pieterhordijk.com/token', $endpoint->getAbsoluteUri());
+
+            return TestHelper::createStringResponse(null);
         }));
 
         $service = new Mock(
@@ -80,7 +83,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Mock(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
             $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
             $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
@@ -97,7 +100,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Mock(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
             $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
             $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
@@ -123,9 +126,11 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testRequestAccessTokenWithoutSecret()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnCallback(function($endpoint, $array, $headers) {
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('post')->will($this->returnCallback(function ($endpoint, $array, $headers) {
             \PHPUnit_Framework_Assert::assertSame('http://pieterhordijk.com/access', $endpoint->getAbsoluteUri());
+
+            return TestHelper::createStringResponse("");
         }));
 
         $token = $this->getMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
@@ -159,9 +164,11 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testRequestAccessTokenWithSecret()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnCallback(function($endpoint, $array, $headers) {
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('post')->will($this->returnCallback(function ($endpoint, $array, $headers) {
             \PHPUnit_Framework_Assert::assertSame('http://pieterhordijk.com/access', $endpoint->getAbsoluteUri());
+
+            return TestHelper::createStringResponse("");
         }));
 
         $token = $this->getMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
@@ -193,8 +200,8 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
      */
     public function testRequest()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('response!'));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('send')->will($this->returnValue(TestHelper::createStringResponse('response!')));
 
         $token = $this->getMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
         //$token->expects($this->once())->method('getRequestTokenSecret')->will($this->returnValue('baz'));
@@ -210,6 +217,6 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
             $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
 
-        $this->assertSame('response!', $service->request('/my/awesome/path'));
+        $this->assertSame('response!', (string) $service->request('/my/awesome/path')->getBody());
     }
 }

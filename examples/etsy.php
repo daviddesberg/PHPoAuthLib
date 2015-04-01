@@ -17,7 +17,7 @@ use OAuth\Common\Consumer\Credentials;
 /**
  * Bootstrap the example
  */
-require_once __DIR__ . '/bootstrap.php';
+require_once __DIR__.'/bootstrap.php';
 
 // Session storage
 $storage = new Session();
@@ -44,16 +44,15 @@ if (!empty($_GET['oauth_token'])) {
     );
 
     // Send a request now that we have access token
-    $result = json_decode($etsyService->request('/private/users/__SELF__'));
+    $result = json_decode($etsyService->request('/private/users/__SELF__')->getBody());
 
-    echo 'result: <pre>' . print_r($result, true) . '</pre>';
-
+    echo 'result: <pre>'.print_r($result, true).'</pre>';
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $response = $etsyService->requestRequestToken();
     $extra = $response->getExtraParams();
     $url = $extra['login_url'];
-    header('Location: ' . $url);
+    header('Location: '.$url);
 } else {
-    $url = $currentUri->getRelativeUri() . '?go=go';
+    $url = $currentUri->getRelativeUri().'?go=go';
     echo "<a href='$url'>Login with Etsy!</a>";
 }

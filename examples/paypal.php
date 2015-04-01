@@ -17,7 +17,7 @@ use OAuth\Common\Consumer\Credentials;
 /**
  * Bootstrap the example
  */
-require_once __DIR__ . '/bootstrap.php';
+require_once __DIR__.'/bootstrap.php';
 
 // Session storage
 $storage = new Session();
@@ -38,15 +38,14 @@ if (!empty($_GET['code'])) {
     $token = $paypalService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = json_decode($paypalService->request('/identity/openidconnect/userinfo/?schema=openid'), true);
+    $result = json_decode($paypalService->request('/identity/openidconnect/userinfo/?schema=openid')->getBody(), true);
 
     // Show some of the resultant data
-    echo 'Your unique PayPal user id is: ' . $result['user_id'] . ' and your name is ' . $result['name'];
-
+    echo 'Your unique PayPal user id is: '.$result['user_id'].' and your name is '.$result['name'];
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $paypalService->getAuthorizationUri();
-    header('Location: ' . $url);
+    header('Location: '.$url);
 } else {
-    $url = $currentUri->getRelativeUri() . '?go=go';
+    $url = $currentUri->getRelativeUri().'?go=go';
     echo "<a href='$url'>Login with PayPal!</a>";
 }

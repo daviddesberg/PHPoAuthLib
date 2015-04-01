@@ -19,7 +19,7 @@ use OAuth\Common\Consumer\Credentials;
 /**
  * Bootstrap the example
  */
-require_once __DIR__ . '/bootstrap.php';
+require_once __DIR__.'/bootstrap.php';
 
 // Session storage
 $storage = new Session();
@@ -42,15 +42,14 @@ if (!empty($_GET['code'])) {
     $instagramService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = json_decode($instagramService->request('users/self'), true);
+    $result = json_decode($instagramService->request('users/self')->getBody(), true);
 
     // Show some of the resultant data
-    echo 'Your unique instagram user id is: ' . $result['data']['id'] . ' and your name is ' . $result['data']['full_name'];
-
+    echo 'Your unique instagram user id is: '.$result['data']['id'].' and your name is '.$result['data']['full_name'];
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $instagramService->getAuthorizationUri();
-    header('Location: ' . $url);
+    header('Location: '.$url);
 } else {
-    $url = $currentUri->getRelativeUri() . '?go=go';
+    $url = $currentUri->getRelativeUri().'?go=go';
     echo "<a href='$url'>Login with Instagram!</a>";
 }

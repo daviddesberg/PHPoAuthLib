@@ -3,6 +3,7 @@
 namespace OAuthTest\Unit\OAuth1\Service;
 
 use OAuth\OAuth1\Service\Etsy;
+use OAuthTest\Unit\Common\TestHelper;
 
 class EtsyTest extends \PHPUnit_Framework_TestCase
 {
@@ -13,7 +14,7 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Etsy(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
             $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
         );
@@ -28,7 +29,7 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Etsy(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
             $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
         );
@@ -43,7 +44,7 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Etsy(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
             $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
             $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
@@ -60,7 +61,7 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Etsy(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
             $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
         );
@@ -70,13 +71,12 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
             $service->getRequestTokenEndpoint()->getAbsoluteUri()
         );
 
-		$service->setScopes(array('email_r', 'cart_rw'));
+        $service->setScopes(array('email_r', 'cart_rw'));
 
         $this->assertSame(
             'https://openapi.etsy.com/v2/oauth/request_token?scope=email_r%20cart_rw',
             $service->getRequestTokenEndpoint()->getAbsoluteUri()
         );
-
     }
 
     /**
@@ -87,7 +87,7 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Etsy(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
             $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
         );
@@ -106,7 +106,7 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Etsy(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
             $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
         );
@@ -124,8 +124,8 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseRequestTokenResponseThrowsExceptionOnNulledResponse()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue(null));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('post')->will($this->returnValue(TestHelper::createStringResponse(null)));
 
         $service = new Etsy(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -146,8 +146,8 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseRequestTokenResponseThrowsExceptionOnResponseNotAnArray()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('notanarray'));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('post')->will($this->returnValue(TestHelper::createStringResponse('notanarray')));
 
         $service = new Etsy(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -168,8 +168,8 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseRequestTokenResponseThrowsExceptionOnResponseCallbackNotSet()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('foo=bar'));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('post')->will($this->returnValue(TestHelper::createStringResponse('foo=bar')));
 
         $service = new Etsy(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -190,9 +190,9 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseRequestTokenResponseThrowsExceptionOnResponseCallbackNotTrue()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue(
-            'oauth_callback_confirmed=false'
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('post')->will($this->returnValue(
+            TestHelper::createStringResponse('oauth_callback_confirmed=false')
         ));
 
         $service = new Etsy(
@@ -215,9 +215,9 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseRequestTokenResponseValid()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue(
-            'oauth_callback_confirmed=true&oauth_token=foo&oauth_token_secret=bar'
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('post')->will($this->returnValue(
+            TestHelper::createStringResponse('oauth_callback_confirmed=true&oauth_token=foo&oauth_token_secret=bar')
         ));
 
         $service = new Etsy(
@@ -237,8 +237,8 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseAccessTokenResponseThrowsExceptionOnError()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('error=bar'));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('post')->will($this->returnValue(TestHelper::createStringResponse('error=bar')));
 
         $token = $this->getMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
 
@@ -264,9 +264,9 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseAccessTokenResponseValid()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue(
-            'oauth_token=foo&oauth_token_secret=bar'
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('post')->will($this->returnValue(
+            TestHelper::createStringResponse('oauth_token=foo&oauth_token_secret=bar')
         ));
 
         $token = $this->getMock('\\OAuth\\OAuth1\\Token\\TokenInterface');

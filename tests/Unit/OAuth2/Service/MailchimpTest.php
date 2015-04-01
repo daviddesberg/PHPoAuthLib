@@ -5,6 +5,7 @@ namespace OAuthTest\Unit\OAuth2\Service;
 use OAuth\OAuth2\Service\Mailchimp;
 use OAuth\Common\Token\TokenInterface;
 use OAuth\Common\Http\Uri\Uri;
+use OAuthTest\Unit\Common\TestHelper;
 
 class MailchimpTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,7 +16,7 @@ class MailchimpTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Mailchimp(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -29,7 +30,7 @@ class MailchimpTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Mailchimp(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -43,7 +44,7 @@ class MailchimpTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Mailchimp(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
             array(),
             $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
@@ -60,7 +61,7 @@ class MailchimpTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Mailchimp(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -78,7 +79,7 @@ class MailchimpTest extends \PHPUnit_Framework_TestCase
     {
         $service = new Mailchimp(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
@@ -94,8 +95,8 @@ class MailchimpTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAuthorizationMethod()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(0));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('send')->will($this->returnArgument(0));
 
         $token = $this->getMock('\\OAuth\\OAuth2\\Token\\StdOAuth2Token');
         $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
@@ -124,8 +125,8 @@ class MailchimpTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseAccessTokenResponseThrowsExceptionOnNulledResponse()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue(null));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('post')->will($this->returnValue(TestHelper::createStringResponse(null)));
 
         $service = new Mailchimp(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -144,8 +145,8 @@ class MailchimpTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseAccessTokenResponseThrowsExceptionOnError()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('error=some_error'));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->once())->method('post')->will($this->returnValue(TestHelper::createStringResponse('error=some_error')));
 
         $service = new Mailchimp(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -164,9 +165,9 @@ class MailchimpTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseAccessTokenResponseValid()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->at(0))->method('retrieveResponse')->will($this->returnValue('{"access_token":"foo","expires_in":"bar"}'));
-        $client->expects($this->at(1))->method('retrieveResponse')->will($this->returnValue('{"dc": "us7"}'));
+        $client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
+        $client->expects($this->at(0))->method('post')->will($this->returnValue(TestHelper::createStringResponse('{"access_token":"foo","expires_in":"bar"}')));
+        $client->expects($this->at(1))->method('post')->will($this->returnValue(TestHelper::createStringResponse('{"dc": "us7"}')));
 
         $service = new Mailchimp(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),

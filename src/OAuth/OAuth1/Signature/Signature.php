@@ -65,7 +65,7 @@ class Signature implements SignatureInterface
         ksort($signatureData);
 
         // determine base uri
-        $baseUri = $uri->getScheme() . '://' . $uri->getRawAuthority();
+        $baseUri = $uri->getScheme().'://'.$uri->getRawAuthority();
 
         if ('/' === $uri->getPath()) {
             $baseUri .= $uri->hasExplicitTrailingHostSlash() ? '/' : '';
@@ -73,8 +73,8 @@ class Signature implements SignatureInterface
             $baseUri .= $uri->getPath();
         }
 
-        $baseString = strtoupper($method) . '&';
-        $baseString .= rawurlencode($baseUri) . '&';
+        $baseString = strtoupper($method).'&';
+        $baseString .= rawurlencode($baseUri).'&';
         $baseString .= rawurlencode($this->buildSignatureDataString($signatureData));
 
         return base64_encode($this->hash($baseString));
@@ -90,7 +90,7 @@ class Signature implements SignatureInterface
         $signatureString = '';
         $delimiter = '';
         foreach ($signatureData as $key => $value) {
-            $signatureString .= $delimiter . $key . '=' . $value;
+            $signatureString .= $delimiter.$key.'='.$value;
 
             $delimiter = '&';
         }
@@ -103,7 +103,7 @@ class Signature implements SignatureInterface
      */
     protected function getSigningKey()
     {
-        $signingKey = rawurlencode($this->credentials->getConsumerSecret()) . '&';
+        $signingKey = rawurlencode($this->credentials->getConsumerSecret()).'&';
         if ($this->tokenSecret !== null) {
             $signingKey .= rawurlencode($this->tokenSecret);
         }
@@ -125,7 +125,7 @@ class Signature implements SignatureInterface
                 return hash_hmac('sha1', $data, $this->getSigningKey(), true);
             default:
                 throw new UnsupportedHashAlgorithmException(
-                    'Unsupported hashing algorithm (' . $this->algorithm . ') used.'
+                    'Unsupported hashing algorithm ('.$this->algorithm.') used.'
                 );
         }
     }

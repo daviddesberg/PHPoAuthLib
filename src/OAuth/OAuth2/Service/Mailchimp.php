@@ -6,21 +6,20 @@ use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 
 class Mailchimp extends AbstractService
 {
-
     public function __construct(
         CredentialsInterface $credentials,
-        ClientInterface $httpClient,
+        HttpAdapterInterface $httpAdapter,
         TokenStorageInterface $storage,
         $scopes = array(),
         UriInterface $baseApiUri = null
     ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
+        parent::__construct($credentials, $httpAdapter, $storage, $scopes, $baseApiUri);
 
         if (is_null($this->baseApiUri) && $storage->hasAccessToken($this->service())) {
             $this->setBaseApiUri($storage->retrieveAccessToken($this->service()));
@@ -63,7 +62,7 @@ class Mailchimp extends AbstractService
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            throw new TokenResponseException('Error in retrieving token: "'.$data['error'].'"');
         }
 
         // Create token object.
@@ -81,7 +80,7 @@ class Mailchimp extends AbstractService
     /**
      * {@inheritdoc}
      */
-    public function request($path, $method = 'GET', $body = null, array $extraHeaders = array())
+    public function request($path, $method = 'GET', $body = array(), array $extraHeaders = array())
     {
         if (is_null($this->baseApiUri)) {
             $this->setBaseApiUri($this->storage->retrieveAccessToken($this->service()));
@@ -92,22 +91,23 @@ class Mailchimp extends AbstractService
 
     /**
      * Set the right base endpoint.
-     * 
+     *
      * @param StdOAuth2Token $token
      */
     protected function setBaseApiUri(StdOAuth2Token $token)
     {
         // Make request uri.
-        $endpoint = 'https://login.mailchimp.com/oauth2/metadata?oauth_token='. $token->getAccessToken();
+        $endpoint = 'https://login.mailchimp.com/oauth2/metadata?oauth_token='.$token->getAccessToken();
 
         // Grab meta data about the token.
-        $response = $this->httpClient->retrieveResponse(new Uri($endpoint), array(), array(), 'GET');
+        $response = $this->httpAdapter->get(new Uri($endpoint));
+        $responseBody = $response ? (string) $response->getBody() : "";
 
         // Parse JSON.
-        $meta = json_decode($response, true);
+        $meta = json_decode($responseBody, true);
 
         // Set base api uri.
-        $this->baseApiUri = new Uri('https://'. $meta['dc'] .'.api.mailchimp.com/2.0/');
+        $this->baseApiUri = new Uri('https://'.$meta['dc'].'.api.mailchimp.com/2.0/');
 
         // Allow chaining.
         return $this;

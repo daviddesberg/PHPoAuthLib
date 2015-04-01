@@ -17,7 +17,7 @@ use OAuth\Common\Consumer\Credentials;
 /**
  * Bootstrap the example
  */
-require_once __DIR__ . '/bootstrap.php';
+require_once __DIR__.'/bootstrap.php';
 
 // Session storage
 $storage = new Session();
@@ -38,15 +38,14 @@ if (!empty($_GET['code'])) {
     $token = $jawboneService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = json_decode($jawboneService->request('/users/@me'), true);
+    $result = json_decode($jawboneService->request('/users/@me')->getBody(), true);
 
     // Show some of the resultant data
-    echo 'Your unique Jawbone UP user id is: ' . $result['data']['xid'];
-
+    echo 'Your unique Jawbone UP user id is: '.$result['data']['xid'];
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $jawboneService->getAuthorizationUri();
-    header('Location: ' . $url);
+    header('Location: '.$url);
 } else {
-    $url = $currentUri->getRelativeUri() . '?go=go';
+    $url = $currentUri->getRelativeUri().'?go=go';
     echo "<a href='$url'>Login with Jawbone UP!</a>";
 }

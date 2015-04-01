@@ -18,7 +18,7 @@ use OAuth\Common\Consumer\Credentials;
 /**
  * Bootstrap the example
  */
-require_once __DIR__ . '/bootstrap.php';
+require_once __DIR__.'/bootstrap.php';
 
 // Session storage
 $storage = new Session();
@@ -39,15 +39,14 @@ if (!empty($_GET['code'])) {
     $googleService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = json_decode($googleService->request('https://www.googleapis.com/oauth2/v1/userinfo'), true);
+    $result = json_decode($googleService->request('https://www.googleapis.com/oauth2/v1/userinfo')->getBody(), true);
 
     // Show some of the resultant data
-    echo 'Your unique google user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
-
+    echo 'Your unique google user id is: '.$result['id'].' and your name is '.$result['name'];
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $googleService->getAuthorizationUri();
-    header('Location: ' . $url);
+    header('Location: '.$url);
 } else {
-    $url = $currentUri->getRelativeUri() . '?go=go';
+    $url = $currentUri->getRelativeUri().'?go=go';
     echo "<a href='$url'>Login with Google!</a>";
 }

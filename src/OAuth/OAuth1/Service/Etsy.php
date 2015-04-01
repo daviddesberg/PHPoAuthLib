@@ -9,21 +9,20 @@ use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 
 class Etsy extends AbstractService
 {
-
     protected $scopes = array();
 
     public function __construct(
         CredentialsInterface $credentials,
-        ClientInterface $httpClient,
+        HttpAdapterInterface $httpAdapter,
         TokenStorageInterface $storage,
         SignatureInterface $signature,
         UriInterface $baseApiUri = null
     ) {
-        parent::__construct($credentials, $httpClient, $storage, $signature, $baseApiUri);
+        parent::__construct($credentials, $httpAdapter, $storage, $signature, $baseApiUri);
 
         if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://openapi.etsy.com/v2/');
@@ -35,11 +34,11 @@ class Etsy extends AbstractService
      */
     public function getRequestTokenEndpoint()
     {
-        $uri = new Uri($this->baseApiUri . 'oauth/request_token');
+        $uri = new Uri($this->baseApiUri.'oauth/request_token');
         $scopes = $this->getScopes();
 
         if (count($scopes)) {
-            $uri->setQuery('scope=' . implode('%20', $scopes));
+            $uri->setQuery('scope='.implode('%20', $scopes));
         }
 
         return $uri;
@@ -58,7 +57,7 @@ class Etsy extends AbstractService
      */
     public function getAccessTokenEndpoint()
     {
-        return new Uri($this->baseApiUri . 'oauth/access_token');
+        return new Uri($this->baseApiUri.'oauth/access_token');
     }
 
     /**
@@ -87,7 +86,7 @@ class Etsy extends AbstractService
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            throw new TokenResponseException('Error in retrieving token: "'.$data['error'].'"');
         }
 
         $token = new StdOAuth1Token();
@@ -118,6 +117,7 @@ class Etsy extends AbstractService
         }
 
         $this->scopes = $scopes;
+
         return $this;
     }
 

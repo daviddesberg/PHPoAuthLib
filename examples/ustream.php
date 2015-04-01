@@ -17,7 +17,7 @@ use OAuth\Common\Consumer\Credentials;
 /**
  * Bootstrap the example
  */
-require_once __DIR__ . '/bootstrap.php';
+require_once __DIR__.'/bootstrap.php';
 
 // Session storage
 $storage = new Session();
@@ -40,15 +40,13 @@ if (!empty($_GET['code'])) {
     // This was a callback request from Ustream, get the token
     $ustream->requestAccessToken($_GET['code'], $state);
 
-    $result = json_decode($ustream->request('users/self.json'), true);
+    $result = json_decode($ustream->request('users/self.json')->getBody(), true);
 
-    echo 'Your unique Ustream user id is: ' . $result['id'] . ' and your username is ' . $result['username'];
-
+    echo 'Your unique Ustream user id is: '.$result['id'].' and your username is '.$result['username'];
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $ustream->getAuthorizationUri();
-    header('Location: ' . $url);
-
+    header('Location: '.$url);
 } else {
-    $url = $currentUri->getRelativeUri() . '?go=go';
+    $url = $currentUri->getRelativeUri().'?go=go';
     echo "<a href='$url'>Login with Ustream!</a>";
 }

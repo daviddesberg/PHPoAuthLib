@@ -17,7 +17,7 @@ use OAuth\Common\Consumer\Credentials;
 /**
  * Bootstrap the example
  */
-require_once __DIR__ . '/bootstrap.php';
+require_once __DIR__.'/bootstrap.php';
 
 // Session storage
 $storage = new Session();
@@ -38,15 +38,14 @@ if (!empty($_GET['code'])) {
     $token = $dailymotionService->requestAccessToken($_GET['code']);
 
     // Send a request with it
-    $result = json_decode($dailymotionService->request('/me?fields=email,id'), true);
+    $result = json_decode($dailymotionService->request('/me?fields=email,id')->getBody(), true);
 
     // Show some of the resultant data
-    echo 'Your unique Dailymotion user id is: ' . $result['id'] . ' and your email is ' . $result['email'];
-
+    echo 'Your unique Dailymotion user id is: '.$result['id'].' and your email is '.$result['email'];
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $dailymotionService->getAuthorizationUri();
-    header('Location: ' . $url);
+    header('Location: '.$url);
 } else {
-    $url = $currentUri->getRelativeUri() . '?go=go';
+    $url = $currentUri->getRelativeUri().'?go=go';
     echo "<a href='$url'>Login with Dailymotion!</a>";
 }

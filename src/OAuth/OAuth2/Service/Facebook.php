@@ -7,7 +7,7 @@ use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use Ivory\HttpAdapter\HttpAdapterInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 
@@ -118,13 +118,13 @@ class Facebook extends AbstractService
 
     public function __construct(
         CredentialsInterface $credentials,
-        ClientInterface $httpClient,
+        HttpAdapterInterface $httpAdapter,
         TokenStorageInterface $storage,
         $scopes = array(),
         UriInterface $baseApiUri = null,
         $apiVersion = ""
     ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, false, $apiVersion);
+        parent::__construct($credentials, $httpAdapter, $storage, $scopes, $baseApiUri, false, $apiVersion);
 
         if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://graph.facebook.com'.$this->getApiVersionString().'/');
@@ -153,17 +153,25 @@ class Facebook extends AbstractService
     protected function parseAccessTokenResponse($responseBody)
     {
         // Facebook gives us a query string ... Oh wait. JSON is too simple, understand ?
-        parse_str($responseBody, $data);
+        if (version_compare(str_replace("v", "", $this->apiVersion), "2.3", ">=")) {
+            $data = json_decode($responseBody, true);
+        } else {
+            parse_str($responseBody, $data);
+        }
 
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            if (version_compare(str_replace("v", "", $this->apiVersion), "2.3", ">=")) {
+                throw new TokenResponseException('Error in retrieving token: "' . $data['error']['message'] . '"');
+            } else {
+                throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            }
         }
 
         $token = new StdOAuth2Token();
         $token->setAccessToken($data['access_token']);
-        
+
         if (isset($data['expires'])) {
             $token->setLifeTime($data['expires']);
         }
@@ -187,8 +195,9 @@ class Facebook extends AbstractService
             throw new Exception("Redirect uri is mandatory for this request");
         }
         $parameters['app_id'] = $this->credentials->getConsumerId();
-        $baseUrl = self::WWW_URL .$this->getApiVersionString(). '/dialog/' . $dialogPath;
+        $baseUrl = self::WWW_URL.$this->getApiVersionString().'/dialog/'.$dialogPath;
         $query = http_build_query($parameters);
-        return new Uri($baseUrl . '?' . $query);
+
+        return new Uri($baseUrl.'?'.$query);
     }
 }

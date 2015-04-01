@@ -3,6 +3,7 @@
 namespace OAuthTest\Unit\OAuth1\Service;
 
 use OAuth\OAuth1\Service\Xing;
+use OAuthTest\Unit\Common\TestHelper;
 
 class XingTest extends \PHPUnit_Framework_TestCase
 {
@@ -10,12 +11,11 @@ class XingTest extends \PHPUnit_Framework_TestCase
     private $storage;
     private $xing;
 
-
     protected function setUp()
     {
         parent::setUp();
 
-        $this->client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $this->client = $this->getMock('\\Ivory\\HttpAdapter\\HttpAdapterInterface');
         $this->storage = $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
 
         $this->xing = new Xing(
@@ -107,8 +107,8 @@ class XingTest extends \PHPUnit_Framework_TestCase
     {
         $this->client
             ->expects($this->once())
-            ->method('retrieveResponse')
-            ->will($this->returnValue(null));
+            ->method('post')
+            ->will($this->returnValue(TestHelper::createStringResponse(null)));
 
         $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
@@ -124,8 +124,8 @@ class XingTest extends \PHPUnit_Framework_TestCase
     {
         $this->client
             ->expects($this->once())
-            ->method('retrieveResponse')
-            ->will($this->returnValue('notanarray'));
+            ->method('post')
+            ->will($this->returnValue(TestHelper::createStringResponse('notanarray')));
 
         $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
@@ -141,8 +141,8 @@ class XingTest extends \PHPUnit_Framework_TestCase
     {
         $this->client
             ->expects($this->once())
-            ->method('retrieveResponse')
-            ->will($this->returnValue('foo=bar'));
+            ->method('post')
+            ->will($this->returnValue(TestHelper::createStringResponse('foo=bar')));
 
         $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
@@ -158,8 +158,8 @@ class XingTest extends \PHPUnit_Framework_TestCase
     {
         $this->client
             ->expects($this->once())
-            ->method('retrieveResponse')
-            ->will($this->returnValue('oauth_callback_confirmed=false'));
+            ->method('post')
+            ->will($this->returnValue(TestHelper::createStringResponse('oauth_callback_confirmed=false')));
 
         $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
@@ -176,9 +176,9 @@ class XingTest extends \PHPUnit_Framework_TestCase
     {
         $this->client
             ->expects($this->once())
-            ->method('retrieveResponse')
+            ->method('post')
             ->will($this->returnValue(
-                'oauth_callback_confirmed=true&oauth_token=foo&oauth_token_secret=bar'
+                TestHelper::createStringResponse('oauth_callback_confirmed=true&oauth_token=foo&oauth_token_secret=bar')
             ));
 
         $this->assertInstanceOf(
@@ -196,8 +196,8 @@ class XingTest extends \PHPUnit_Framework_TestCase
     {
         $this->client
             ->expects($this->once())
-            ->method('retrieveResponse')
-            ->will($this->returnValue('error=bar'));
+            ->method('post')
+            ->will($this->returnValue(TestHelper::createStringResponse('error=bar')));
 
         $token = $this->getMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
 
@@ -220,8 +220,8 @@ class XingTest extends \PHPUnit_Framework_TestCase
     {
         $this->client
             ->expects($this->once())
-            ->method('retrieveResponse')
-            ->will($this->returnValue('oauth_token=foo&oauth_token_secret=bar'));
+            ->method('post')
+            ->will($this->returnValue(TestHelper::createStringResponse('oauth_token=foo&oauth_token_secret=bar')));
 
         $token = $this->getMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
 
@@ -229,7 +229,6 @@ class XingTest extends \PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('retrieveAccessToken')
             ->will($this->returnValue($token));
-
 
         $this->assertInstanceOf(
             '\\OAuth\\OAuth1\\Token\\StdOAuth1Token',

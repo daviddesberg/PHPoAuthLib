@@ -42,7 +42,7 @@ class Mock extends AbstractService
      */
     protected function getAuthorizationMethod()
     {
-        switch($this->authorizationMethod) {
+        switch ($this->authorizationMethod) {
             case 'querystring':
                 return static::AUTHORIZATION_METHOD_QUERY_STRING;
 

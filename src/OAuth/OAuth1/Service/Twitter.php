@@ -17,7 +17,7 @@ class Twitter extends AbstractService
     const ENDPOINT_AUTHENTICATE = "https://api.twitter.com/oauth/authenticate";
     const ENDPOINT_AUTHORIZE    = "https://api.twitter.com/oauth/authorize";
 
-    protected $authorizationEndpoint   = self::ENDPOINT_AUTHENTICATE;
+    protected $authorizationEndpoint   = self::ENDPOINT_AUTHORIZE;
 
     public function __construct(
         CredentialsInterface $credentials,

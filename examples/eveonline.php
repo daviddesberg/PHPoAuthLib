@@ -29,7 +29,7 @@ $credentials = new Credentials(
 
 // Instantiate the Eve Online service using the credentials, http client, storage mechanism for the token and profile scope
 /** @var EveOnline $eveService */
-$eveService = $serviceFactory->createService('eveonline', $credentials, $storage, array(''));
+$eveService = $serviceFactory->createService('EveOnline', $credentials, $storage, array(''));
 
 if (!empty($_GET['code'])) {
     // This was a callback request from Eve Online, get the token

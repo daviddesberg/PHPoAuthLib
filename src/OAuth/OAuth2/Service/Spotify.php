@@ -106,5 +106,4 @@ class Spotify extends AbstractService
         return array('Authorization' => 'Basic ' .
             base64_encode($this->credentials->getConsumerId() . ':' . $this->credentials->getConsumerSecret()));
     }
-
 }

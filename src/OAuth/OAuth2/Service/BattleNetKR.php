@@ -9,10 +9,10 @@ use OAuth\Common\Http\Uri\UriInterface;
 
 class BattleNetKR extends BattleNetBase
 {
-	public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
-   	{
-  	    parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-		$this->region = 'kr';
-		$this->baseApiUri = new Uri('https://' . $this->region . '.api.battle.net/');
+    public function __construct(Credentials $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, $scopes = array(), UriInterface $baseApiUri = null)
+    {
+        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
+        $this->region = 'kr';
+        $this->baseApiUri = new Uri('https://' . $this->region . '.api.battle.net/');
 	}
 }

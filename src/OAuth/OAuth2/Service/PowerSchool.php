@@ -21,7 +21,7 @@ class PowerSchool extends AbstractService
     ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, true);
 
-        if (null === $baseApiUri) {
+        if (empty($baseApiUri)) {
             throw new \Exception('URI required');
         }
     }

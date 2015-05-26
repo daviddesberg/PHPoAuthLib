@@ -28,6 +28,9 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
 
     /** @var bool */
     protected $stateParameterInAuthUrl;
+    
+    /** @var string */
+    protected $apiVersion;
 
     /**
      * @param CredentialsInterface  $credentials
@@ -36,6 +39,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * @param array                 $scopes
      * @param UriInterface|null     $baseApiUri
      * @param bool $stateParameterInAutUrl
+     * @param string                $apiVersion
      *
      * @throws InvalidScopeException
      */
@@ -45,7 +49,8 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         TokenStorageInterface $storage,
         $scopes = array(),
         UriInterface $baseApiUri = null,
-        $stateParameterInAutUrl = false
+        $stateParameterInAutUrl = false,
+        $apiVersion = ""
     ) {
         parent::__construct($credentials, $httpClient, $storage);
         $this->stateParameterInAuthUrl = $stateParameterInAutUrl;
@@ -59,6 +64,8 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $this->scopes = $scopes;
 
         $this->baseApiUri = $baseApiUri;
+        
+        $this->apiVersion = $apiVersion;
     }
 
     /**
@@ -329,5 +336,15 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     protected function getAuthorizationMethod()
     {
         return static::AUTHORIZATION_METHOD_HEADER_OAUTH;
+    }
+    
+    /**
+     * Returns api version string if is set else retrun empty string
+     * 
+     * @return string
+     */
+    protected function getApiVersionString()
+    {
+        return !(empty($this->apiVersion)) ? "/".$this->apiVersion : "" ;
     }
 }

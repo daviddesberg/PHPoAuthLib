@@ -73,6 +73,7 @@ Included service implementations
     - Microsoft
     - PayPal
     - Pocket
+    - PowerSchool
     - Reddit
     - RunKeeper
     - SoundCloud

@@ -54,6 +54,35 @@ class Yahoo extends AbstractService
     /**
      * {@inheritdoc}
      */
+    public function refreshAccessToken($token)
+    {   
+        $extraParams = $token->getExtraParams();
+        $bodyParams = array('oauth_session_handle' => $extraParams['oauth_session_handle']);
+
+        $authorizationHeader = array(
+            'Authorization' => $this->buildAuthorizationHeaderForAPIRequest(
+                'POST',
+                $this->getAccessTokenEndpoint(),
+                $this->storage->retrieveAccessToken($this->service()),
+                $bodyParams
+            )
+        );
+
+
+        
+        $headers = array_merge($authorizationHeader, $this->getExtraOAuthHeaders(), array());
+
+        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $bodyParams, $headers);
+
+        $token = $this->parseAccessTokenResponse($responseBody);
+        $this->storage->storeAccessToken($this->service(), $token);
+
+        return $token;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function parseRequestTokenResponse($responseBody)
     {
         parse_str($responseBody, $data);

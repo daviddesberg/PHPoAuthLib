@@ -116,7 +116,12 @@ class Yahoo extends AbstractService
         $token->setAccessToken($data['oauth_token']);
         $token->setAccessTokenSecret($data['oauth_token_secret']);
 
-        $token->setEndOfLife(StdOAuth1Token::EOL_NEVER_EXPIRES);
+        if (isset($data['oauth_expires_in'])) {
+            $token->setLifetime($data['oauth_expires_in']);
+        } else {
+            $token->setEndOfLife(StdOAuth1Token::EOL_NEVER_EXPIRES);
+        }
+
         unset($data['oauth_token'], $data['oauth_token_secret']);
         $token->setExtraParams($data);
 

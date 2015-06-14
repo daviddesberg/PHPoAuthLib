@@ -10,6 +10,7 @@ use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\OAuth1\Token\TokenInterface;
 
 class Yahoo extends AbstractService
 {
@@ -54,7 +55,7 @@ class Yahoo extends AbstractService
     /**
      * {@inheritdoc}
      */
-    public function refreshAccessToken($token)
+    public function refreshAccessToken(TokenInterface $token)
     {   
         $extraParams = $token->getExtraParams();
         $bodyParams = array('oauth_session_handle' => $extraParams['oauth_session_handle']);

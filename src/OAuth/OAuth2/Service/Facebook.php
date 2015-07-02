@@ -55,6 +55,7 @@ class Facebook extends AbstractService
     const SCOPE_SMS                           = 'sms';
     const SCOPE_STATUS_UPDATE                 = 'status_update';
     // Extended Profile Properties
+    const SCOPE_USER_POSTS                    = 'user_posts';
     const SCOPE_USER_FRIENDS                  = 'user_friends';
     const SCOPE_USER_ABOUT                    = 'user_about_me';
     const SCOPE_FRIENDS_ABOUT                 = 'friends_about_me';

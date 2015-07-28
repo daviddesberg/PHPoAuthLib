@@ -10,6 +10,7 @@ use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Uri\UriInterface;
+use RC\Modules\DebugModule\DebugComponent;
 
 class Facebook extends AbstractService
 {
@@ -160,6 +161,13 @@ class Facebook extends AbstractService
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
             throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+        }
+
+        $json = json_decode($responseBody);
+
+        if (json_last_error() == JSON_ERROR_NONE)
+        {
+            DebugComponent::get()->alert(json_encode($json));
         }
 
         $token = new StdOAuth2Token();

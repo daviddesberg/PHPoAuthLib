@@ -340,7 +340,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     
     /**
      * Returns api version string if is set else retrun empty string
-     * 
+     *
      * @return string
      */
     protected function getApiVersionString()

@@ -94,6 +94,10 @@ $servicesCredentials = array(
     'pocket' => array(
         'key'       => '',
     ),
+    'quickbooks' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'reddit' => array(
         'key'       => '',
         'secret'    => '',

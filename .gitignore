@@ -4,3 +4,4 @@ vendor
 composer.lock
 examples/init.php
 atlassian-ide-plugin.xml
+nbproject/

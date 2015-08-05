@@ -118,6 +118,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'strava' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'tumblr' => array(
         'key'       => '',
         'secret'    => '',

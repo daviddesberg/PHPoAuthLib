@@ -53,6 +53,12 @@ class Google extends AbstractService
     const SCOPE_ANALYTICS_EDIT              = 'https://www.googleapis.com/auth/analytics.edit';
     const SCOPE_ANALYTICS_MANAGE_USERS      = 'https://www.googleapis.com/auth/analytics.manage.users';
     const SCOPE_ANALYTICS_READ_ONLY         = 'https://www.googleapis.com/auth/analytics.readonly';
+    
+    //Gmail
+    const SCOPE_GMAIL_MODIFY                = 'https://www.googleapis.com/auth/gmail.modify';
+    const SCOPE_GMAIL_READONLY              = 'https://www.googleapis.com/auth/gmail.readonly';
+    const SCOPE_GMAIL_COMPOSE               = 'https://www.googleapis.com/auth/gmail.compose';
+    const SCOPE_GMAIL_FULL                  = 'https://mail.google.com/';
 
     // Other services
     const SCOPE_BOOKS                       = 'https://www.googleapis.com/auth/books';

@@ -63,6 +63,7 @@ Included service implementations
     - BitLy
     - Box
     - Dailymotion
+    - DeviantArt
     - Dropbox
     - Facebook
     - Foursquare

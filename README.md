@@ -1,6 +1,6 @@
 PHPoAuthLib
 ===========
-**NOTE: This library is essentially abandoned right now because I'm really too busy with other things to constantly maintain it. However, there are several good forks which are still actively maintained, and I recommend you check them out. I will soon have a list below! Additionally, if anyone wants to take over as a maintainer of this repository, please contact me!**
+**NOTE: I'm looking for someone who could help to maintain this package alongside me, just because I don't have a ton of time to devote to it. However, I'm still going to keep trying to pay attention to PRs, etc.**
 
 PHPoAuthLib provides oAuth support in PHP 5.3+ and is very easy to integrate with any project which requires an oAuth client.
 

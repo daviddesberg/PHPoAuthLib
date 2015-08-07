@@ -69,6 +69,7 @@ Included service implementations
     - Google
     - Harvest
     - Heroku
+    - Hubic
     - Instagram
     - Jawbone UP
     - LinkedIn

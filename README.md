@@ -77,6 +77,7 @@ Included service implementations
     - Mailchimp
     - Microsoft
     - Nest
+    - Parrot Flower Power
     - PayPal
     - Pocket
     - Reddit

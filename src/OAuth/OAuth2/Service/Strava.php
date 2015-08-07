@@ -137,37 +137,11 @@ class Strava extends AbstractService
         $this->approvalPrompt = $prompt;
     }
 
-    // @todo remove this if we can define scopes delimiter in the service class
     /**
      * {@inheritdoc}
      */
-    public function getAuthorizationUri(array $additionalParameters = array())
+    protected function getScopesDelimiter()
     {
-        $parameters = array_merge(
-            $additionalParameters,
-            array(
-                'type'          => 'web_server',
-                'client_id'     => $this->credentials->getConsumerId(),
-                'redirect_uri'  => $this->credentials->getCallbackUrl(),
-                'response_type' => 'code',
-            )
-        );
-
-        $parameters['scope'] = implode(',', $this->scopes);
-
-        if ($this->needsStateParameterInAuthUrl()) {
-            if (!isset($parameters['state'])) {
-                $parameters['state'] = $this->generateAuthorizationState();
-            }
-            $this->storeAuthorizationState($parameters['state']);
-        }
-
-        // Build the url
-        $url = clone $this->getAuthorizationEndpoint();
-        foreach ($parameters as $key => $val) {
-            $url->addToQuery($key, $val);
-        }
-
-        return $url;
+        return ',';
     }
 }

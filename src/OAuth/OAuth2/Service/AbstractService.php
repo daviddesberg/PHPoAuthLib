@@ -83,7 +83,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
             )
         );
 
-        $parameters['scope'] = implode(' ', $this->scopes);
+        $parameters['scope'] = implode($this->getScopesDelimiter(), $this->scopes);
 
         if ($this->needsStateParameterInAuthUrl()) {
             if (!isset($parameters['state'])) {
@@ -348,5 +348,17 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     protected function getApiVersionString()
     {
         return !(empty($this->apiVersion)) ? "/".$this->apiVersion : "" ;
+    }
+
+    /**
+     * Returns delimiter to scopes in getAuthorizationUri
+     * For services that do not fully respect the Oauth's RFC,
+     * and use scopes with commas as delimiter
+     *
+     * @return string
+     */
+    protected function getScopesDelimiter()
+    {
+        return ' ';
     }
 }

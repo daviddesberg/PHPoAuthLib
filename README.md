@@ -74,6 +74,7 @@ Included service implementations
     - LinkedIn
     - Mailchimp
     - Microsoft
+    - Nest
     - PayPal
     - Pocket
     - Reddit

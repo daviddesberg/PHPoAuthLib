@@ -70,6 +70,7 @@ class Facebook extends AbstractService
     const SCOPE_USER_EVENTS                   = 'user_events';
     const SCOPE_FRIENDS_EVENTS                = 'friends_events';
     const SCOPE_USER_GROUPS                   = 'user_groups';
+    const SCOPE_USER_MANAGED_GROUPS           = 'user_managed_groups';
     const SCOPE_FRIENDS_GROUPS                = 'friends_groups';
     const SCOPE_USER_HOMETOWN                 = 'user_hometown';
     const SCOPE_FRIENDS_HOMETOWN              = 'friends_hometown';

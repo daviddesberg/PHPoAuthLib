@@ -31,6 +31,7 @@ class Linkedin extends AbstractService
     const SCOPE_RW_COMPANY_ADMIN    = 'rw_company_admin';
     const SCOPE_RW_GROUPS           = 'rw_groups';
     const SCOPE_W_MESSAGES          = 'w_messages';
+    const SCOPE_W_SHARE             = 'w_share';
 
     public function __construct(
         CredentialsInterface $credentials,

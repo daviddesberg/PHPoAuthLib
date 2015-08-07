@@ -84,6 +84,7 @@ Included service implementations
     - Spotify
     - Strava
     - Ustream
+    - Vimeo
     - Vkontakte
     - Yammer
 - more to come!

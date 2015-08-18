@@ -122,6 +122,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'redmine' => array(
+        'key'       => '',
+        'secret'    => ''
+    ),
     'runkeeper' => array(
         'key'       => '',
         'secret'    => '',

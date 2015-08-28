@@ -103,6 +103,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'netatmo' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'parrotFlowerPower' => array(
         'key'       => '',
         'secret'    => '',

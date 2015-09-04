@@ -88,6 +88,16 @@ abstract class AbstractService implements ServiceInterface
     }
 
     /**
+     * Accessor to the http client
+     *
+     * @return TokenStorageInterface
+     */
+    public function getHttpClient()
+    {
+        return $this->httpClient;
+    }
+
+    /**
      * @return string
      */
     public function service()

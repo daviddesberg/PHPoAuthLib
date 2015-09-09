@@ -51,6 +51,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'eveonline' => array(
+        'key' => '',
+        'secret' => '',
+    ),
     'facebook' => array(
         'key'       => '',
         'secret'    => '',

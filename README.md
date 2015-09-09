@@ -65,6 +65,7 @@ Included service implementations
     - Dailymotion
     - DeviantArt
     - Dropbox
+    - Eve Online
     - Facebook
     - Foursquare
     - GitHub

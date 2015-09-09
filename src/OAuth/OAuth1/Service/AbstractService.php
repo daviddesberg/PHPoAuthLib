@@ -110,7 +110,9 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * @param  TokenInterface $token
      * @return TokenInterface $token
      */
-    public function refreshAccessToken(TokenInterface $token){}
+    public function refreshAccessToken(TokenInterface $token)
+    {
+    }
 
     /**
      * Sends an authenticated API request to the path provided.

@@ -56,7 +56,7 @@ class Yahoo extends AbstractService
      * {@inheritdoc}
      */
     public function refreshAccessToken(TokenInterface $token)
-    {   
+    {
         $extraParams = $token->getExtraParams();
         $bodyParams = array('oauth_session_handle' => $extraParams['oauth_session_handle']);
 

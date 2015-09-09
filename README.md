@@ -1,5 +1,7 @@
 PHPoAuthLib
 ===========
+**NOTE: I'm looking for someone who could help to maintain this package alongside me, just because I don't have a ton of time to devote to it. However, I'm still going to keep trying to pay attention to PRs, etc.**
+
 PHPoAuthLib provides oAuth support in PHP 5.3+ and is very easy to integrate with any project which requires an oAuth client.
 
 [![Build Status](https://travis-ci.org/Lusitanian/PHPoAuthLib.png?branch=master)](https://travis-ci.org/Lusitanian/PHPoAuthLib)
@@ -40,15 +42,17 @@ Features
 
 Service support
 ---------------
-The library supports both oAuth 1.x and oAuth 2.0 compliant services. A list of currently implemented services can be found below. 
+The library supports both oAuth 1.x and oAuth 2.0 compliant services. A list of currently implemented services can be found below.
 
 Included service implementations
 --------------------------------
 - OAuth1
+    - 500px
     - BitBucket
     - Etsy
     - FitBit
     - Flickr
+    - QuickBooks
     - Scoop.it!
     - Tumblr
     - Twitter
@@ -59,22 +63,33 @@ Included service implementations
     - BitLy
     - Box
     - Dailymotion
+    - DeviantArt
     - Dropbox
+    - Eve Online
     - Facebook
     - Foursquare
     - GitHub
     - Google
     - Harvest
     - Heroku
+    - Hubic
     - Instagram
+    - Jawbone UP
     - LinkedIn
     - Mailchimp
     - Microsoft
+    - Nest
+    - Netatmo
+    - Parrot Flower Power
     - PayPal
     - Pocket
     - Reddit
     - RunKeeper
     - SoundCloud
+    - Spotify
+    - Strava
+    - Ustream
+    - Vimeo
     - Vkontakte
     - Yammer
 - more to come!

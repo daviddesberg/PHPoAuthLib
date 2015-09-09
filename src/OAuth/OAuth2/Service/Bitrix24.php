@@ -78,7 +78,7 @@ class Bitrix24 extends AbstractService
         $parameters['scope'] = implode(' ', $this->scopes);
 
         // Build the url
-        $url = clone $this->getAccessTokenEndpoint();
+        $url = $this->getAccessTokenEndpoint();
         foreach ($parameters as $key => $val) {
             $url->addToQuery($key, $val);
         }

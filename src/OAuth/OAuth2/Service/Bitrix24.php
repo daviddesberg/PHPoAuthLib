@@ -23,16 +23,6 @@ class Bitrix24 extends AbstractService
     const SCOPE_LOG = 'log';
     const SCOPE_SONET_GROUP = 'sonet_group';
 
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        array $scopes,
-        UriInterface $baseApiUri
-    ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-    }
-
     /**
      * {@inheritdoc}
      */

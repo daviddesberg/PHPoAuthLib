@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Example of retrieving an authentication token of the Github service
+ * Example of retrieving an authentication token of the Bitrix24 service
  *
  * PHP version 5.4
  *

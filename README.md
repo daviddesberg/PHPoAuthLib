@@ -52,6 +52,7 @@ Included service implementations
     - Etsy
     - FitBit
     - Flickr
+    - Geocaching
     - QuickBooks
     - Scoop.it!
     - Tumblr

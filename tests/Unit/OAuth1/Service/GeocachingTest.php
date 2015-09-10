@@ -7,13 +7,24 @@ use OAuth\OAuth1\Service\Geocaching;
 class GeocachingTest extends \PHPUnit_Framework_TestCase
 {
 
+    // EndPoints
+    const ENDPOINT_STAGING = 'http://staging.geocaching.com/OAuth/oauth.ashx';
+    const ENDPOINT_LIVE = 'https://www.geocaching.com/OAuth/oauth.ashx';
+    const ENDPOINT_LIVE_MOBILE = 'https://www.geocaching.com/oauth/mobileoauth.ashx';
+
+    // BaseApi
+    const BASEAPI_STAGING = 'https://staging.api.groundspeak.com/Live/V6Beta/geocaching.svc/';
+    const BASEAPI_LIVE = 'https://api.groundspeak.com/LiveV6/geocaching.svc/';
+
+
     protected function getGeocachingInstance() {
 
         return new Geocaching(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
+            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
+            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
     }
 
@@ -23,6 +34,7 @@ class GeocachingTest extends \PHPUnit_Framework_TestCase
     public function testConstructCorrectInterfaceWithoutCustomUri()
     {
         $service = $this->getGeocachingInstance();
+        $service->setEndPoint(self::ENDPOINT_LIVE);
 
         $this->assertInstanceOf('\\OAuth\\OAuth1\\Service\\ServiceInterface', $service);
     }
@@ -33,6 +45,7 @@ class GeocachingTest extends \PHPUnit_Framework_TestCase
     public function testConstructCorrectInstanceWithoutCustomUri()
     {
         $service = $this->getGeocachingInstance();
+        $service->setEndPoint(self::ENDPOINT_LIVE);
 
         $this->assertInstanceOf('\\OAuth\\OAuth1\\Service\\AbstractService', $service);
     }
@@ -43,6 +56,7 @@ class GeocachingTest extends \PHPUnit_Framework_TestCase
     public function testConstructCorrectInstanceWithCustomUri()
     {
         $service = $this->getGeocachingInstance();
+        $service->setEndPoint(self::ENDPOINT_LIVE);
 
         $this->assertInstanceOf('\\OAuth\\OAuth1\\Service\\AbstractService', $service);
     }
@@ -54,9 +68,9 @@ class GeocachingTest extends \PHPUnit_Framework_TestCase
     public function testGetRequestTokenEndpoint()
     {
         $service = $this->getGeocachingInstance();
+        $service->setEndPoint(self::ENDPOINT_LIVE);
 
-        $this->assertSame(
-            'https://www.geocaching.com/OAuth/oauth.ashx',
+        $this->assertSame(self::ENDPOINT_LIVE,
             $service->getRequestTokenEndpoint()->getAbsoluteUri()
         );
     }
@@ -68,9 +82,9 @@ class GeocachingTest extends \PHPUnit_Framework_TestCase
     public function testGetAuthorizationEndpoint()
     {
         $service = $this->getGeocachingInstance();
+        $service->setEndPoint(self::ENDPOINT_LIVE);
 
-        $this->assertSame(
-            'https://www.geocaching.com/OAuth/oauth.ashx',
+        $this->assertSame(self::ENDPOINT_LIVE,
             $service->getAuthorizationEndpoint()->getAbsoluteUri()
         );
     }
@@ -82,9 +96,9 @@ class GeocachingTest extends \PHPUnit_Framework_TestCase
     public function testGetAccessTokenEndpoint()
     {
         $service = $this->getGeocachingInstance();
+        $service->setEndPoint(self::ENDPOINT_LIVE);
 
-        $this->assertSame(
-            'https://www.geocaching.com/OAuth/oauth.ashx',
+        $this->assertSame(self::ENDPOINT_LIVE,
             $service->getAccessTokenEndpoint()->getAbsoluteUri()
         );
     }
@@ -103,8 +117,10 @@ class GeocachingTest extends \PHPUnit_Framework_TestCase
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
+            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
+            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
+        $service->setEndPoint(self::ENDPOINT_LIVE);
 
         $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
@@ -125,8 +141,10 @@ class GeocachingTest extends \PHPUnit_Framework_TestCase
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
+            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
+            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
+        $service->setEndPoint(self::ENDPOINT_LIVE);
 
         $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
@@ -147,8 +165,10 @@ class GeocachingTest extends \PHPUnit_Framework_TestCase
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
+            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
+            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
+        $service->setEndPoint(self::ENDPOINT_LIVE);
 
         $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
@@ -171,8 +191,10 @@ class GeocachingTest extends \PHPUnit_Framework_TestCase
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
+            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
+            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
+        $service->setEndPoint(self::ENDPOINT_LIVE);
 
         $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
@@ -196,8 +218,10 @@ class GeocachingTest extends \PHPUnit_Framework_TestCase
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
+            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
+            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
+        $service->setEndPoint(self::ENDPOINT_LIVE);
 
         $this->assertInstanceOf('\\OAuth\\OAuth1\\Token\\StdOAuth1Token', $service->requestRequestToken());
     }
@@ -221,8 +245,10 @@ class GeocachingTest extends \PHPUnit_Framework_TestCase
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $storage,
-            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
+            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
+            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
+        $service->setEndPoint(self::ENDPOINT_LIVE);
 
         $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
@@ -250,8 +276,10 @@ class GeocachingTest extends \PHPUnit_Framework_TestCase
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $storage,
-            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
+            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
+            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
+        $service->setEndPoint(self::ENDPOINT_LIVE);
 
         $this->assertInstanceOf('\\OAuth\\OAuth1\\Token\\StdOAuth1Token', $service->requestAccessToken('foo', 'bar', $token));
     }

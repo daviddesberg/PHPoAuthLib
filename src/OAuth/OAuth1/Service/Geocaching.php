@@ -79,8 +79,8 @@ class Geocaching extends AbstractService
         parse_str($responseBody, $data);
         if ($data === null || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
-        } elseif (isset($data['oauth_error_message'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['oauth_error_message'] . '"');
+        } elseif (isset($data['error'])) {
+            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
         }
 
         $token = new StdOAuth1Token();

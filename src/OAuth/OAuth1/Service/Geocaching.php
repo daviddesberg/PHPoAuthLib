@@ -15,15 +15,7 @@ use OAuth\Common\Exception\Exception;
 class Geocaching extends AbstractService
 {
 
-    const ENDPOINT_STAGING = 'http://staging.geocaching.com/OAuth/oauth.ashx';
-
-    const ENDPOINT_LIVE = 'https://www.geocaching.com/OAuth/oauth.ashx';
-
-    const ENDPOINT_LIVE_MOBILE = 'https://www.geocaching.com/oauth/mobileoauth.ashx';
-
-    const BASEAPI_STAGING = 'https://staging.api.groundspeak.com/Live/V6Beta/geocaching.svc/';
-
-    const BASEAPI_LIVE = 'https://api.groundspeak.com/LiveV6/geocaching.svc/';
+    public $endPoint = null;
 
     public function __construct(
         CredentialsInterface $credentials,
@@ -33,10 +25,9 @@ class Geocaching extends AbstractService
         UriInterface $baseApiUri = null
     ) {
         parent::__construct($credentials, $httpClient, $storage, $signature, $baseApiUri);
-        if ($baseApiUri === null) {
-            $this->setBaseApiUri();
+        if (null === $baseApiUri) {
+            throw new \Exception('baseApiUri is a required argument.');
         }
-        $this->setEndPoint();
     }
 
     public function getRequestTokenEndpoint()
@@ -59,31 +50,9 @@ class Geocaching extends AbstractService
         return new Uri($this->endPoint);
     }
 
-    public function setEndPoint($endPoint = 'live')
+    public function setEndPoint($endPoint)
     {
-        switch($endPoint) {
-            case 'staging':
-                $this->endPoint = self::ENDPOINT_STAGING;
-                break;
-            case 'live_mobile':
-                $this->endPoint = self::ENDPOINT_LIVE_MOBILE;
-                break;
-            case 'live':
-            default:
-                $this->endPoint = self::ENDPOINT_LIVE;
-        }
-    }
-
-    public function setBaseApiUri($platform = 'live')
-    {
-        switch($platform) {
-            case 'staging':
-                $this->baseApiUri = new Uri(self::BASEAPI_STAGING);
-                break;
-            case 'live':
-            default:
-                $this->baseApiUri = new Uri(self::BASEAPI_LIVE);
-        }
+        $this->endPoint = $endPoint;
     }
 
     /**
@@ -110,8 +79,8 @@ class Geocaching extends AbstractService
         parse_str($responseBody, $data);
         if ($data === null || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
-        } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+        } elseif (isset($data['oauth_error_message'])) {
+            throw new TokenResponseException('Error in retrieving token: "' . $data['oauth_error_message'] . '"');
         }
 
         $token = new StdOAuth1Token();

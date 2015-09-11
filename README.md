@@ -61,6 +61,7 @@ Included service implementations
 - OAuth2
     - Amazon
     - BitLy
+    - Bitrix24
     - Box
     - Dailymotion
     - DeviantArt

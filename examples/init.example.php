@@ -79,6 +79,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'geocaching' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'github' => array(
         'key'       => '',
         'secret'    => '',

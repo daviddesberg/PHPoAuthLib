@@ -52,6 +52,41 @@ class FitBit extends AbstractService
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function requestAccessToken($token, $verifier, $tokenSecret = null)
+    {
+        if (is_null($tokenSecret)) {
+            $storedRequestToken = $this->storage->retrieveAccessToken($this->service());
+            $tokenSecret = $storedRequestToken->getRequestTokenSecret();
+        }
+        $this->signature->setTokenSecret($tokenSecret);
+
+        $bodyParams = array(
+            'oauth_verifier' => $verifier,
+        );
+
+        $authorizationHeader = array(
+            'Authorization' => $this->buildAuthorizationHeaderForAPIRequest(
+                'POST',
+                $this->getAccessTokenEndpoint(),
+                $this->storage->retrieveAccessToken($this->service()),
+                $bodyParams
+            )
+        );
+
+        $headers = array_merge($authorizationHeader, $this->getExtraOAuthHeaders());
+
+        //Only change
+        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), [], $headers);
+
+        $token = $this->parseAccessTokenResponse($responseBody);
+        $this->storage->storeAccessToken($this->service(), $token);
+
+        return $token;
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function parseRequestTokenResponse($responseBody)

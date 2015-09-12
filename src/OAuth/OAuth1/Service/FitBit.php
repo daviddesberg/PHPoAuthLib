@@ -78,7 +78,7 @@ class FitBit extends AbstractService
         $headers = array_merge($authorizationHeader, $this->getExtraOAuthHeaders());
 
         //Only change
-        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), [], $headers);
+        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), array(), $headers);
 
         $token = $this->parseAccessTokenResponse($responseBody);
         $this->storage->storeAccessToken($this->service(), $token);

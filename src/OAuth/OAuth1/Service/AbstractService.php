@@ -11,6 +11,7 @@ use OAuth\OAuth1\Signature\SignatureInterface;
 use OAuth\OAuth1\Token\TokenInterface;
 use OAuth\OAuth1\Token\StdOAuth1Token;
 use OAuth\Common\Service\AbstractService as BaseAbstractService;
+use OAuth\OAuth1\Token\StdOAuth1TokenResponseParser;
 
 abstract class AbstractService extends BaseAbstractService implements ServiceInterface
 {
@@ -295,26 +296,32 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * This is only needed to verify the `oauth_callback_confirmed` parameter. The actual
      * parsing logic is contained in the access token parser.
      *
-     * @abstract
-     *
      * @param string $responseBody
      *
      * @return TokenInterface
      *
      * @throws TokenResponseException
      */
-    abstract protected function parseRequestTokenResponse($responseBody);
+    protected function parseRequestTokenResponse($responseBody)
+    {
+        $parser = new StdOauth1TokenResponseParser();
+
+        return $parser->parseRequestTokenResponse($responseBody);
+    }
 
     /**
      * Parses the access token response and returns a TokenInterface.
      *
-     * @abstract
-     *
      * @param string $responseBody
      *
      * @return TokenInterface
      *
      * @throws TokenResponseException
      */
-    abstract protected function parseAccessTokenResponse($responseBody);
+    protected function parseAccessTokenResponse($responseBody)
+    {
+        $parser = new StdOauth1TokenResponseParser();
+
+        return $parser->parseAccessTokenResponse($responseBody);
+    }
 }

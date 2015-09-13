@@ -109,10 +109,18 @@ class FitBit extends AbstractService
     {
         parse_str($responseBody, $data);
 
-        if (null === $data || !is_array($data)) {
+        if (null === $data || !is_array($data) || !isset($data['oauth_token']) || !isset($data['oauth_token_secret'])) {
+            if (isset($data['error'])) {
+                throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            }
+
+            $data = json_decode($responseBody, true);
+
+            if (isset($data['errors'])) {
+                throw new TokenResponseException('Error in retrieving token: "' . $data['errors'][0]['message'] . '"');
+            }
+
             throw new TokenResponseException('Unable to parse response.');
-        } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
         }
 
         $token = new StdOAuth1Token();

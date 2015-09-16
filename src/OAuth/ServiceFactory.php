@@ -117,7 +117,7 @@ class ServiceFactory
         foreach ($this->serviceBuilders as $version => $buildMethod) {
             $fullyQualifiedServiceName = $this->getFullyQualifiedServiceName($serviceName, $version);
 
-            if (class_exists($fullyQualifiedServiceName, false)) {
+            if (class_exists($fullyQualifiedServiceName)) {
                 return $this->$buildMethod(
                     $fullyQualifiedServiceName,
                     $credentials,

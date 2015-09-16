@@ -35,6 +35,7 @@ class Microsoft extends AbstractService
     const SCOPE_WORK_PROFILE = 'wl.work_profile';
     const SCOPE_APPLICATIONS = 'wl.applications';
     const SCOPE_APPLICATIONS_CREATE = 'wl.applications_create';
+    const SCOPE_IMAP = 'wl.imap';
 
     /**
      * MS uses some magical not officialy supported scope to get even moar info like full emailaddresses.

@@ -205,4 +205,12 @@ class GitHub extends AbstractService
     {
         return array('Accept' => 'application/vnd.github.beta+json');
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getScopesDelimiter()
+    {
+        return ',';
+    }
 }

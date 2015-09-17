@@ -197,6 +197,7 @@ class Facebook extends AbstractService
         $query = http_build_query($parameters);
         return new Uri($baseUrl . '?' . $query);
     }
+
     /**
      * {@inheritdoc}
      */

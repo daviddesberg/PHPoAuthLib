@@ -31,7 +31,7 @@ class Envato extends AbstractService
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
 
         if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://api.envato.com/v1');
+            $this->baseApiUri = new Uri('https://api.envato.com/v1/market');
         }
     }
 

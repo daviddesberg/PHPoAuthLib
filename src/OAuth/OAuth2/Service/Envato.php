@@ -80,7 +80,7 @@ class Envato extends AbstractService
 
     }
 
-    
+
     /**
      * {@inheritdoc}
      */

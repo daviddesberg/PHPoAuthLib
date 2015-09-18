@@ -84,4 +84,13 @@ class Envato extends AbstractService
 
         return parent::request($uri, $method, $body, $extraHeaders);
     }
+
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getAuthorizationMethod()
+    {
+        return static::AUTHORIZATION_METHOD_HEADER_BEARER;
+    }
 }

@@ -66,26 +66,21 @@ class Envato extends AbstractService
 
         $token = new StdOAuth2Token();
         $token->setAccessToken($data['access_token']);
-        // Foursquare tokens evidently never expire...
-        $token->setEndOfLife(StdOAuth2Token::EOL_NEVER_EXPIRES);
+        $token->setLifeTime($data['expires_in']);
+        if (isset($data['refresh_token'])) {
+            $token->setRefreshToken($data['refresh_token']);
+            unset($data['refresh_token']);
+        }
         unset($data['access_token']);
+        unset($data['expires_in']);
 
         $token->setExtraParams($data);
 
         return $token;
+
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function request($path, $method = 'GET', $body = null, array $extraHeaders = array())
-    {
-        $uri = $this->determineRequestUriFromPath($path, $this->baseApiUri);
-
-        return parent::request($uri, $method, $body, $extraHeaders);
-    }
-
-
+    
     /**
      * {@inheritdoc}
      */

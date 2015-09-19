@@ -17,6 +17,7 @@ class Vkontakte extends AbstractService
      *
      * @link http://vk.com/dev/permissions
      */
+    const SCOPE_EMAIL         = 'email';
     const SCOPE_NOTIFY        = 'notify';
     const SCOPE_FRIENDS       = 'friends';
     const SCOPE_PHOTOS        = 'photos';

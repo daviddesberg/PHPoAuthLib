@@ -12,7 +12,6 @@ use OAuth\Common\Http\Uri\UriInterface;
 
 class Mailchimp extends AbstractService
 {
-
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
@@ -92,7 +91,7 @@ class Mailchimp extends AbstractService
 
     /**
      * Set the right base endpoint.
-     * 
+     *
      * @param StdOAuth2Token $token
      */
     protected function setBaseApiUri(StdOAuth2Token $token)

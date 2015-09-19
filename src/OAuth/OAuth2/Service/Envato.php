@@ -67,6 +67,7 @@ class Envato extends AbstractService
         $token = new StdOAuth2Token();
         $token->setAccessToken($data['access_token']);
         $token->setLifeTime($data['expires_in']);
+
         if (isset($data['refresh_token'])) {
             $token->setRefreshToken($data['refresh_token']);
             unset($data['refresh_token']);
@@ -75,6 +76,7 @@ class Envato extends AbstractService
         unset($data['expires_in']);
 
         $token->setExtraParams($data);
+
 
         return $token;
 

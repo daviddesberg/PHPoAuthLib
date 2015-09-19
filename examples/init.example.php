@@ -51,6 +51,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'envato' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'etsy' => array(
         'key'       => '',
         'secret'    => '',

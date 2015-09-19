@@ -54,6 +54,36 @@ class Envato extends AbstractService
     /**
      * {@inheritdoc}
      */
+    public function getAuthorizationUri(array $additionalParameters = array())
+    {
+        $parameters = array_merge(
+            $additionalParameters,
+            array(
+                'client_id'     => $this->credentials->getConsumerId(),
+                'redirect_uri'  => $this->credentials->getCallbackUrl(),
+                'response_type' => 'code',
+            )
+        );
+
+        if ($this->needsStateParameterInAuthUrl()) {
+            if (!isset($parameters['state'])) {
+                $parameters['state'] = $this->generateAuthorizationState();
+            }
+            $this->storeAuthorizationState($parameters['state']);
+        }
+
+        // Build the url
+        $url = clone $this->getAuthorizationEndpoint();
+        foreach ($parameters as $key => $val) {
+            $url->addToQuery($key, $val);
+        }
+
+        return $url;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function parseAccessTokenResponse($responseBody)
     {
         $data = json_decode($responseBody, true);

@@ -130,7 +130,7 @@ class Facebook extends AbstractService
         UriInterface $baseApiUri = null,
         $apiVersion = ""
     ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, false, $apiVersion);
+        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, true, $apiVersion);
 
         if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://graph.facebook.com'.$this->getApiVersionString().'/');

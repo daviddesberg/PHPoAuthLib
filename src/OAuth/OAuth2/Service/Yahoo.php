@@ -72,7 +72,7 @@ class Yahoo extends AbstractService
     protected function getExtraOAuthHeaders()
     {
         $encodedCredentials = base64_encode($this->credentials->getConsumerId() . ':' . $this->credentials->getConsumerSecret());
-        return ['Authorization' => 'Basic ' . $encodedCredentials];
+        return array('Authorization' => 'Basic ' . $encodedCredentials);
     }
 
 }

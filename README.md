@@ -83,6 +83,7 @@ Included service implementations
     - Netatmo
     - Parrot Flower Power
     - PayPal
+    - Pinterest
     - Pocket
     - Reddit
     - RunKeeper

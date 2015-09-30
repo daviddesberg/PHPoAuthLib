@@ -123,6 +123,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'pinterest' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'pocket' => array(
         'key'       => '',
     ),

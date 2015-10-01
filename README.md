@@ -53,6 +53,7 @@ Included service implementations
     - FitBit
     - Flickr
     - QuickBooks
+    - Redmine
     - Scoop.it!
     - Tumblr
     - Twitter
@@ -63,9 +64,12 @@ Included service implementations
     - BitLy
     - Bitrix24
     - Box
+    - Buffer
     - Dailymotion
+    - Delicious
     - DeviantArt
     - Dropbox
+    - Envato
     - Eve Online
     - Facebook
     - Foursquare
@@ -86,6 +90,7 @@ Included service implementations
     - Pocket
     - Reddit
     - RunKeeper
+    - Salesforce
     - SoundCloud
     - Spotify
     - Strava

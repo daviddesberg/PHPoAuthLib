@@ -10,7 +10,6 @@ use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Uri\UriInterface;
-use RC\Modules\DebugModule\DebugComponent;
 
 class Facebook extends AbstractService
 {

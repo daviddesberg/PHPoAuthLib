@@ -85,7 +85,6 @@ class Facebook extends AbstractService
     const SCOPE_FRIENDS_LOCATION              = 'friends_location';
     const SCOPE_USER_NOTES                    = 'user_notes';
     const SCOPE_FRIENDS_NOTES                 = 'friends_notes';
-    const SCOPE_USER_POSTS                    = 'user_posts';
     const SCOPE_USER_PHOTOS                   = 'user_photos';
     const SCOPE_USER_PHOTO_VIDEO_TAGS         = 'user_photo_video_tags';
     const SCOPE_FRIENDS_PHOTOS                = 'friends_photos';

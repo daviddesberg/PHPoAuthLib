@@ -162,14 +162,6 @@ class Facebook extends AbstractService
         } elseif (isset($data['error'])) {
             throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
         }
-        DebugComponent::get()->notice(json_encode($responseBody));
-
-        $json = json_decode($responseBody);
-
-        if (json_last_error() == JSON_ERROR_NONE)
-        {
-            DebugComponent::get()->alert(json_encode($json));
-        }
 
         $token = new StdOAuth2Token();
         $token->setAccessToken($data['access_token']);

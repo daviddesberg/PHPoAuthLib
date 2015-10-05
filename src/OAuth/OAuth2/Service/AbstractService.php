@@ -28,7 +28,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
 
     /** @var bool */
     protected $stateParameterInAuthUrl;
-    
+
     /** @var string */
     protected $apiVersion;
 
@@ -64,7 +64,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $this->scopes = $scopes;
 
         $this->baseApiUri = $baseApiUri;
-        
+
         $this->apiVersion = $apiVersion;
     }
 
@@ -83,7 +83,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
             )
         );
 
-        $parameters['scope'] = implode(' ', $this->scopes);
+        $parameters['scope'] = implode($this->getScopesDelimiter(), $this->scopes);
 
         if ($this->needsStateParameterInAuthUrl()) {
             if (!isset($parameters['state'])) {
@@ -172,6 +172,8 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
             $uri->addToQuery('oauth2_access_token', $token->getAccessToken());
         } elseif (static::AUTHORIZATION_METHOD_QUERY_STRING_V3 === $this->getAuthorizationMethod()) {
             $uri->addToQuery('apikey', $token->getAccessToken());
+        } elseif (static::AUTHORIZATION_METHOD_QUERY_STRING_V4 === $this->getAuthorizationMethod()) {
+            $uri->addToQuery('auth', $token->getAccessToken());
         } elseif (static::AUTHORIZATION_METHOD_HEADER_BEARER === $this->getAuthorizationMethod()) {
             $extraHeaders = array_merge(array('Authorization' => 'Bearer ' . $token->getAccessToken()), $extraHeaders);
         }
@@ -337,14 +339,26 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     {
         return static::AUTHORIZATION_METHOD_HEADER_OAUTH;
     }
-    
+
     /**
      * Returns api version string if is set else retrun empty string
-     * 
+     *
      * @return string
      */
     protected function getApiVersionString()
     {
         return !(empty($this->apiVersion)) ? "/".$this->apiVersion : "" ;
+    }
+
+    /**
+     * Returns delimiter to scopes in getAuthorizationUri
+     * For services that do not fully respect the Oauth's RFC,
+     * and use scopes with commas as delimiter
+     *
+     * @return string
+     */
+    protected function getScopesDelimiter()
+    {
+        return ' ';
     }
 }

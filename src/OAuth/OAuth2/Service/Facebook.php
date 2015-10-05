@@ -26,9 +26,11 @@ class Facebook extends AbstractService
      * @link https://developers.facebook.com/docs/reference/login/
      * @link https://developers.facebook.com/tools/explorer For a list of permissions use 'Get Access Token'
      */
-    // email scopes
+    // Default scope
+    const SCOPE_PUBLIC_PROFILE                = 'public_profile';
+    // Email scopes
     const SCOPE_EMAIL                         = 'email';
-    // extended permissions
+    // Extended permissions
     const SCOPE_READ_FRIENDLIST               = 'read_friendlists';
     const SCOPE_READ_INSIGHTS                 = 'read_insights';
     const SCOPE_READ_MAILBOX                  = 'read_mailbox';
@@ -55,8 +57,10 @@ class Facebook extends AbstractService
     const SCOPE_SMS                           = 'sms';
     const SCOPE_STATUS_UPDATE                 = 'status_update';
     // Extended Profile Properties
+    const SCOPE_USER_POSTS                    = 'user_posts';
     const SCOPE_USER_FRIENDS                  = 'user_friends';
     const SCOPE_USER_ABOUT                    = 'user_about_me';
+    const SCOPE_USER_TAGGED_PLACES            = 'user_tagged_places';
     const SCOPE_FRIENDS_ABOUT                 = 'friends_about_me';
     const SCOPE_USER_ACTIVITIES               = 'user_activities';
     const SCOPE_FRIENDS_ACTIVITIES            = 'friends_activities';
@@ -69,6 +73,7 @@ class Facebook extends AbstractService
     const SCOPE_USER_EVENTS                   = 'user_events';
     const SCOPE_FRIENDS_EVENTS                = 'friends_events';
     const SCOPE_USER_GROUPS                   = 'user_groups';
+    const SCOPE_USER_MANAGED_GROUPS           = 'user_managed_groups';
     const SCOPE_FRIENDS_GROUPS                = 'friends_groups';
     const SCOPE_USER_HOMETOWN                 = 'user_hometown';
     const SCOPE_FRIENDS_HOMETOWN              = 'friends_hometown';
@@ -126,7 +131,7 @@ class Facebook extends AbstractService
         UriInterface $baseApiUri = null,
         $apiVersion = ""
     ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, false, $apiVersion);
+        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, true, $apiVersion);
 
         if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://graph.facebook.com'.$this->getApiVersionString().'/');
@@ -192,5 +197,13 @@ class Facebook extends AbstractService
         $baseUrl = self::WWW_URL .$this->getApiVersionString(). '/dialog/' . $dialogPath;
         $query = http_build_query($parameters);
         return new Uri($baseUrl . '?' . $query);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getScopesDelimiter()
+    {
+        return ',';
     }
 }

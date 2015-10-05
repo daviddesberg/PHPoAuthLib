@@ -304,4 +304,80 @@ class TwitterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('\\OAuth\\OAuth1\\Token\\StdOAuth1Token', $service->requestAccessToken('foo', 'bar', $token));
     }
+    
+    /**
+     * @covers OAuth\OAuth1\Service\Twitter::parseAccessTokenResponse
+     */
+    public function testParseAccessTokenErrorTotalBullshit()
+    {
+        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $service = new Twitter(
+            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $client,
+            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
+            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
+        );
+        
+        $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
+        $method = new \ReflectionMethod(get_class($service), 'parseAccessTokenResponse');
+        $method->setAccessible(true);
+        $method->invokeArgs($service, array("hoho"));
+    }
+    
+    /**
+     * @covers OAuth\OAuth1\Service\Twitter::parseAccessTokenResponse
+     */
+    public function testParseAccessTokenErrorItsAnError()
+    {
+        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $service = new Twitter(
+            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $client,
+            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
+            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
+        );
+        
+        $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
+        $method = new \ReflectionMethod(get_class($service), 'parseAccessTokenResponse');
+        $method->setAccessible(true);
+        $method->invokeArgs($service, array("error=hihihaha"));
+    }
+    
+    /**
+     * @covers OAuth\OAuth1\Service\Twitter::parseAccessTokenResponse
+     */
+    public function testParseAccessTokenErrorItsMissingOauthToken()
+    {
+        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $service = new Twitter(
+            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $client,
+            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
+            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
+        );
+        
+        $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
+        $method = new \ReflectionMethod(get_class($service), 'parseAccessTokenResponse');
+        $method->setAccessible(true);
+        $method->invokeArgs($service, array("oauth_token_secret=1"));
+    }
+    
+    /**
+     * @covers OAuth\OAuth1\Service\Twitter::parseAccessTokenResponse
+     */
+    public function testParseAccessTokenErrorItsMissingOauthTokenSecret()
+    {
+        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $service = new Twitter(
+            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $client,
+            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
+            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
+        );
+        
+        $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
+        $method = new \ReflectionMethod(get_class($service), 'parseAccessTokenResponse');
+        $method->setAccessible(true);
+        $method->invokeArgs($service, array("oauth_token=1"));
+    }
 }

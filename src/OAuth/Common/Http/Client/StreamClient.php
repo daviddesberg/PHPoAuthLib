@@ -65,7 +65,10 @@ class StreamClient extends AbstractClient
         if (false === $response) {
             $lastError = error_get_last();
             if (is_null($lastError)) {
-                throw new TokenResponseException('Failed to request resource.');
+                throw new TokenResponseException(
+                    'Failed to request resource. HTTP Code: ' .
+                    ((isset($http_response_header[0]))?$http_response_header[0]:'No response')
+                );
             }
             throw new TokenResponseException($lastError['message']);
         }

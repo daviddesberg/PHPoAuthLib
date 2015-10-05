@@ -109,10 +109,9 @@ class LinkedinTest extends \PHPUnit_Framework_TestCase
             $storage
         );
 
-        $uri         = $service->request('https://pieterhordijk.com/my/awesome/path');
-        $absoluteUri = parse_url($uri->getAbsoluteUri());
-
-        $this->assertSame('oauth2_access_token=foo', $absoluteUri['query']);
+        $headers = $service->request('https://pieterhordijk.com/my/awesome/path');
+        $this->assertTrue(array_key_exists('Authorization', $headers));
+        $this->assertTrue(in_array('Bearer foo', $headers, true));
     }
 
     /**

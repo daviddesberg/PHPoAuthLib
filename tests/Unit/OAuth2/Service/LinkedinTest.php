@@ -94,7 +94,7 @@ class LinkedinTest extends \PHPUnit_Framework_TestCase
     public function testGetAuthorizationMethod()
     {
         $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(0));
+        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(2));
 
         $token = $this->getMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
         $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));

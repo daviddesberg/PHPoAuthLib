@@ -63,7 +63,9 @@ Included service implementations
     - BitLy
     - Bitrix24
     - Box
+    - Buffer
     - Dailymotion
+    - Delicious
     - DeviantArt
     - Dropbox
     - Eve Online
@@ -87,12 +89,14 @@ Included service implementations
     - Pocket
     - Reddit
     - RunKeeper
+    - Salesforce
     - SoundCloud
     - Spotify
     - Strava
     - Ustream
     - Vimeo
     - Vkontakte
+    - Yahoo
     - Yammer
 - more to come!
 

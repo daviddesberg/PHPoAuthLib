@@ -40,11 +40,9 @@ class Yahoo extends AbstractService
     {
         $data = json_decode($responseBody, true);
 
-        if (null === $data || !is_array($data))
-        {
+        if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
-        } elseif (isset($data['error']))
-        {
+        } elseif (isset($data['error'])) {
             throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
         }
 
@@ -52,8 +50,7 @@ class Yahoo extends AbstractService
         $token->setAccessToken($data['access_token']);
         $token->setLifetime($data['expires_in']);
 
-        if (isset($data['refresh_token']))
-        {
+        if (isset($data['refresh_token'])) {
             $token->setRefreshToken($data['refresh_token']);
             unset($data['refresh_token']);
         }
@@ -74,5 +71,4 @@ class Yahoo extends AbstractService
         $encodedCredentials = base64_encode($this->credentials->getConsumerId() . ':' . $this->credentials->getConsumerSecret());
         return array('Authorization' => 'Basic ' . $encodedCredentials);
     }
-
 }

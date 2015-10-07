@@ -36,7 +36,7 @@ class Session implements TokenStorageInterface
         $sessionVariableName = 'lusitanian-oauth-token',
         $stateVariableName = 'lusitanian-oauth-state'
     ) {
-        if ($startSession && !isset($_SESSION)) {
+        if ($startSession && !$this->sessionHasStarted()) {
             session_start();
         }
 
@@ -184,5 +184,21 @@ class Session implements TokenStorageInterface
         if ($this->startSession) {
             session_write_close();
         }
+    }
+
+    /**
+     * Determine if the session has started.
+     * @url http://stackoverflow.com/a/18542272/1470961
+     * @return bool
+     */
+    protected function sessionHasStarted()
+    {
+        // For more modern PHP versions we use a more reliable method.
+        if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
+            return session_status() != PHP_SESSION_NONE;
+        }
+
+        // Below PHP 5.4 we should test for the current session ID.
+        return session_id() !== '';
     }
 }

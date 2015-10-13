@@ -47,6 +47,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'deezer' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'deviantart' => array(
         'key'       => '',
         'secret'    => '',

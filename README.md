@@ -66,6 +66,7 @@ Included service implementations
     - Buffer
     - Dailymotion
     - Delicious
+    - Deezer
     - DeviantArt
     - Dropbox
     - Eve Online

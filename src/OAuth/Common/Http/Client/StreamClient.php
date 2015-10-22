@@ -62,15 +62,21 @@ class StreamClient extends AbstractClient
         $level = error_reporting(0);
         $response = file_get_contents($endpoint->getAbsoluteUri(), false, $context);
         error_reporting($level);
-        if (false === $response) {
+
+        // Check if the response was successful, construct an appropriate
+        // exception if not.
+        if (strpos($http_response_header[0], 200) === false) {
             $lastError = error_get_last();
             if (is_null($lastError)) {
-                throw new TokenResponseException(
-                    'Failed to request resource. HTTP Code: ' .
-                    ((isset($http_response_header[0]))?$http_response_header[0]:'No response')
-                );
+                $message = 'Failed to request resource. HTTP Code: ' .
+                    ((isset($http_response_header[0])) ? $http_response_header[0] : 'No response');
+            } else {
+                $message = $lastError['message'];
             }
-            throw new TokenResponseException($lastError['message']);
+
+            $tokenResponseException = new TokenResponseException($message);
+            $tokenResponseException->setBody((string)$response);
+            throw $tokenResponseException;
         }
 
         return $response;
@@ -87,7 +93,13 @@ class StreamClient extends AbstractClient
                     'protocol_version' => '1.1',
                     'user_agent'       => $this->userAgent,
                     'max_redirects'    => $this->maxRedirects,
-                    'timeout'          => $this->timeout
+                    'timeout'          => $this->timeout,
+
+                    // This is important because we need to get the body
+                    // response regardless of error. Otherwise
+                    // file_get_contents() would return false and we would not
+                    // be able to capture that response body.
+                    'ignore_errors'    => true,
                 ),
             )
         );

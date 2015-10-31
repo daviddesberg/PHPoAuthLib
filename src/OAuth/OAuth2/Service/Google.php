@@ -49,7 +49,8 @@ class Google extends AbstractService
 
     // Adwords
     const SCOPE_ADSENSE                     = 'https://www.googleapis.com/auth/adsense';
-    const SCOPE_ADWORDS                     = 'https://www.googleapis.com/auth/adwords/';
+    const SCOPE_ADWORDS                     = 'https://www.googleapis.com/auth/adwords';
+    const SCOPE_ADWORDS_DEPRECATED          = 'https://www.googleapis.com/auth/adwords/'; //deprecated in v201406 API version
     const SCOPE_GAN                         = 'https://www.googleapis.com/auth/gan'; // google affiliate network...?
 
     //Doubleclick for Publishers

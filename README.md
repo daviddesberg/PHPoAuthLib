@@ -58,6 +58,7 @@ Included service implementations
     - Twitter
     - Xing
     - Yahoo
+	- Open Bank Project
 - OAuth2
     - Amazon
     - BitLy

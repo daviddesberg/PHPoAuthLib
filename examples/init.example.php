@@ -198,6 +198,11 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => ''
     ),
+    'openBankProject' => array(
+        'key'       => '',
+        'secret'    => ''
+		
+    ),
 );
 
 /** @var $serviceFactory \OAuth\ServiceFactory An OAuth service factory. */

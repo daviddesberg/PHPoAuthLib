@@ -16,7 +16,12 @@ use OAuth\OAuth1\Token\StdOAuth1Token;
  */
 class OpenBankProject extends AbstractService {
 
-    public function __construct(CredentialsInterface $credentials, ClientInterface $httpClient, TokenStorageInterface $storage, SignatureInterface $signature, UriInterface $baseApiUri = null) {
+    public function __construct(
+            CredentialsInterface $credentials, 
+            ClientInterface $httpClient, 
+            TokenStorageInterface $storage, 
+            SignatureInterface $signature, 
+            UriInterface $baseApiUri = null) {
         parent::__construct($credentials, $httpClient, $storage, $signature, $baseApiUri);
         if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://apisandbox.openbankproject.com');
@@ -97,7 +102,10 @@ class OpenBankProject extends AbstractService {
      * @param type $bodyParams
      * @return string
      */
-    protected function buildAuthorizationHeaderForAPIRequest($method, UriInterface $uri, \OAuth\OAuth1\Token\TokenInterface $token, $bodyParams = null) {
+    protected function buildAuthorizationHeaderForAPIRequest($method, 
+            UriInterface $uri, 
+            \OAuth\OAuth1\Token\TokenInterface $token, 
+            $bodyParams = null) {
         $this->signature->setTokenSecret($token->getAccessTokenSecret());
         $authParameters = $this->getBasicAuthorizationHeaderInfo();
         if (isset($authParameters['oauth_callback'])) {

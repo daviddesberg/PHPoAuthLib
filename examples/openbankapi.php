@@ -26,15 +26,22 @@ $storage = new Session();
 $credentials = new Credentials(
     $servicesCredentials['openBankProject']['key'],
     $servicesCredentials['openBankProject']['secret'],
-    'http://localhost/oauth/oAuthPHPLibrary/examples/openbankapi.php'
+    'PUT YOUR LOCAL URL TO THE FILE'
 );
-$openBankProjectService = new OpenBankProject($credentials, new \OAuth\Common\Http\Client\CurlClient(), $storage, new Signature($credentials));
+$openBankProjectService = new OpenBankProject(
+        $credentials, 
+        new \OAuth\Common\Http\Client\CurlClient(), 
+        $storage, 
+        new Signature($credentials));
 
 if (!empty($_GET['oauth_token'])) {
     var_dump($_SESSION);
     $token = $storage->retrieveAccessToken('OpenBankProject');
     // Get access token
-    $openBankProjectService->requestAccessToken($_GET['oauth_token'],$_GET['oauth_verifier'],$token->getRequestTokenSecret());
+    $openBankProjectService->requestAccessToken(
+            $_GET['oauth_token'],
+            $_GET['oauth_verifier'],
+            $token->getRequestTokenSecret());
     
     var_dump(json_decode($openBankProjectService->request('https://apisandbox.openbankproject.com/obp/v1.2.1/banks'), true));//Call some standard API
     exit;
@@ -42,7 +49,9 @@ if (!empty($_GET['oauth_token'])) {
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     // Obtain request token
     $token = $openBankProjectService->requestRequestToken();
-    $url = $openBankProjectService->getAuthorizationUri(array('oauth_token' => $token->getRequestToken()));
+    $url = $openBankProjectService->getAuthorizationUri(array(
+        'oauth_token' => $token->getRequestToken())
+    );
     sleep(5);//Session sometimes remains empty if you don't wait few secs
     header('Location: ' . $url);//Redirect to the Authentification server
 } else {

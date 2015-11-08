@@ -26,4 +26,4 @@ $currentUri->setQuery('');
 /**
  * Load the credential for the different services
  */
-require_once __DIR__ . '/init.example.php';
+require_once __DIR__ . '/init.php';

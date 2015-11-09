@@ -179,6 +179,10 @@ class Session implements TokenStorageInterface
         return $this;
     }
 
+    public function __destruct()
+    {
+    }
+
     /**
      * Determine if the session has started.
      * @url http://stackoverflow.com/a/18542272/1470961

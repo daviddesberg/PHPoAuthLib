@@ -179,13 +179,6 @@ class Session implements TokenStorageInterface
         return $this;
     }
 
-    public function __destruct()
-    {
-        if ($this->startSession) {
-            session_write_close();
-        }
-    }
-
     /**
      * Determine if the session has started.
      * @url http://stackoverflow.com/a/18542272/1470961

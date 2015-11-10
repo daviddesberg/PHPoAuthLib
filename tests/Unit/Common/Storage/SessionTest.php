@@ -211,19 +211,6 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Storage\Session::__construct
-     * @covers OAuth\Common\Storage\Session::__destruct
-     *
-     * @runInSeparateProcess
-     */
-    public function testDestruct()
-    {
-        $storage = new Session();
-
-        unset($storage);
-    }
-
-    /**
      * @covers OAuth\Common\Storage\Session::storeAccessToken
      * @covers OAuth\Common\Storage\Session::retrieveAccessToken
      *

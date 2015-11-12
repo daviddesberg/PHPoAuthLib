@@ -94,7 +94,7 @@ class LinkedinTest extends \PHPUnit_Framework_TestCase
     public function testGetAuthorizationMethod()
     {
         $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(0));
+        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(2));
 
         $token = $this->getMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
         $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
@@ -109,10 +109,9 @@ class LinkedinTest extends \PHPUnit_Framework_TestCase
             $storage
         );
 
-        $uri         = $service->request('https://pieterhordijk.com/my/awesome/path');
-        $absoluteUri = parse_url($uri->getAbsoluteUri());
-
-        $this->assertSame('oauth2_access_token=foo', $absoluteUri['query']);
+        $headers = $service->request('https://pieterhordijk.com/my/awesome/path');
+        $this->assertTrue(array_key_exists('Authorization', $headers));
+        $this->assertTrue(in_array('Bearer foo', $headers, true));
     }
 
     /**

@@ -35,11 +35,14 @@ $credentials = new Credentials(
 $googleService = $serviceFactory->createService('google', $credentials, $storage, array('userinfo_email', 'userinfo_profile'));
 
 if (!empty($_GET['code'])) {
+    // retrieve the CSRF state parameter
+    $state = isset($_GET['state']) ? $_GET['state'] : null;
+
     // This was a callback request from google, get the token
-    $googleService->requestAccessToken($_GET['code']);
+    $googleService->requestAccessToken($_GET['code'], $state);
 
     // Send a request with it
-    $result = json_decode($googleService->request('https://www.googleapis.com/oauth2/v1/userinfo'), true);
+    $result = json_decode($googleService->request('userinfo'), true);
 
     // Show some of the resultant data
     echo 'Your unique google user id is: ' . $result['id'] . ' and your name is ' . $result['name'];

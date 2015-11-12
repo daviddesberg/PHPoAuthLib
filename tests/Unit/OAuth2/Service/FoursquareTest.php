@@ -190,8 +190,36 @@ class FoursquareTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertSame(
-            'https://api.foursquare.com/v2/https://pieterhordijk.com/my/awesome/path?v=20130829',
+            'https://pieterhordijk.com/my/awesome/path?v=20130829',
             $service->request('https://pieterhordijk.com/my/awesome/path')->getAbsoluteUri()
+        );
+    }
+
+    /**
+     * @covers OAuth\OAuth2\Service\Foursquare::__construct
+     * @covers OAuth\OAuth2\Service\Foursquare::request
+     */
+    public function testRequestShortPath()
+    {
+        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(0));
+
+        $token = $this->getMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
+        $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
+        $token->expects($this->once())->method('getAccessToken')->will($this->returnValue('foo'));
+
+        $storage = $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
+        $storage->expects($this->once())->method('retrieveAccessToken')->will($this->returnValue($token));
+
+        $service = new Foursquare(
+            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $client,
+            $storage
+        );
+
+        $this->assertSame(
+            'https://api.foursquare.com/v2/my/awesome/path?v=20130829',
+            $service->request('my/awesome/path')->getAbsoluteUri()
         );
     }
 }

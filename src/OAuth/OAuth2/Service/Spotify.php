@@ -20,11 +20,14 @@ class Spotify extends AbstractService
     const SCOPE_PLAYLIST_MODIFY_PUBLIC = 'playlist-modify-public';
     const SCOPE_PLAYLIST_MODIFY_PRIVATE = 'playlist-modify-private';
     const SCOPE_PLAYLIST_READ_PRIVATE = 'playlist-read-private';
+    const SCOPE_PLAYLIST_READ_COLABORATIVE = 'playlist-read-collaborative';
     const SCOPE_STREAMING = 'streaming';
     const SCOPE_USER_LIBRARY_MODIFY = 'user-library-modify';
     const SCOPE_USER_LIBRARY_READ = 'user-library-read';
     const SCOPE_USER_READ_PRIVATE = 'user-read-private';
     const SCOPE_USER_READ_EMAIL = 'user-read-email';
+    const SCOPE_USER_READ_BIRTHDAY = 'user-read-birthdate';
+    const SCOPE_USER_READ_FOLLOW = 'user-follow-read';
 
     public function __construct(
         CredentialsInterface $credentials,

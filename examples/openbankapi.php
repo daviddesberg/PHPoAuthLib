@@ -26,7 +26,7 @@ $storage = new Session();
 $credentials = new Credentials(
     $servicesCredentials['openBankProject']['key'],
     $servicesCredentials['openBankProject']['secret'],
-    'PUT YOUR LOCAL URL TO THE FILE'
+    $currentUri->getAbsoluteUri()
 );
 $openBankProjectService = new OpenBankProject(
         $credentials, 
@@ -52,8 +52,8 @@ if (!empty($_GET['oauth_token'])) {
     $url = $openBankProjectService->getAuthorizationUri(array(
         'oauth_token' => $token->getRequestToken())
     );
-    sleep(5);//Session sometimes remains empty if you don't wait few secs
     header('Location: ' . $url);//Redirect to the Authentification server
+    exit;
 } else {
     $url = $currentUri->getRelativeUri() . '?go=go';
     echo "<a href='$url'>Login with Open Project API!</a>";

@@ -52,13 +52,13 @@ Included service implementations
     - Etsy
     - FitBit
     - Flickr
+    - Open Bank Project
     - QuickBooks
     - Scoop.it!
     - Tumblr
     - Twitter
     - Xing
     - Yahoo
-    - Open Bank Project
 - OAuth2
     - Amazon
     - BitLy

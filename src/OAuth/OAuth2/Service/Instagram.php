@@ -17,6 +17,7 @@ class Instagram extends AbstractService
      * @link http://instagram.com/developer/authentication/#scope
      */
     const SCOPE_BASIC         = 'basic';
+    const SCOPE_PUBLIC_CONTENT = 'public_content';
     const SCOPE_COMMENTS      = 'comments';
     const SCOPE_RELATIONSHIPS = 'relationships';
     const SCOPE_LIKES         = 'likes';

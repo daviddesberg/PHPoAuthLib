@@ -113,6 +113,7 @@ Framework Integration
 ---------------------
 * Lithium: Sébastien Charrier has written [an adapter](https://github.com/scharrier/li3_socialauth) for the library.
 * Laravel 4: Dariusz Prząda has written [a service provider](https://github.com/artdarek/oauth-4-laravel) for the library.
+* Symfony: Alexander Pinnecke has written [a Symfony Bundle](https://github.com/apinnecke/OAuthBundle) for the library.
 
 Extensions
 ----------

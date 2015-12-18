@@ -212,4 +212,31 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame('response!', $service->request('/my/awesome/path'));
     }
+
+    /**
+     * This test only captures a regression in php 5.3.
+     *
+     * @covers OAuth\OAuth1\Service\AbstractService::request
+     */
+    public function testRequestNonArrayBody()
+    {
+        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('response!'));
+
+        $token = $this->getMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
+
+        $storage = $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
+        $storage->expects($this->any())->method('retrieveAccessToken')->will($this->returnValue($token));
+
+        $service = new Mock(
+            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $client,
+            $storage,
+            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
+            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
+        );
+
+        $this->assertSame('response!', $service->request('/my/awesome/path', 'GET', 'A text body'));
+    }
+
 }

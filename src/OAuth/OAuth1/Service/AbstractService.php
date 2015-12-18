@@ -216,7 +216,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $signatureParams = (is_array($bodyParams)) ? array_merge($authParameters, $bodyParams) : $authParameters;
         $authParameters['oauth_signature'] = $this->signature->getSignature($uri, $signatureParams, $method);
 
-        if (isset($bodyParams['oauth_session_handle'])) {
+        if (is_array($bodyParams) && isset($bodyParams['oauth_session_handle'])) {
             $authParameters['oauth_session_handle'] = $bodyParams['oauth_session_handle'];
             unset($bodyParams['oauth_session_handle']);
         }

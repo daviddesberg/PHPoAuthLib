@@ -91,6 +91,7 @@ Included service implementations
     - Reddit
     - RunKeeper
     - Salesforce
+    - Slack
     - SoundCloud
     - Spotify
     - Strava

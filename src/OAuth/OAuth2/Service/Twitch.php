@@ -134,8 +134,8 @@ class Twitch extends AbstractService
     protected function getExtraApiHeaders()
     {
         return array(
-            'Accept' => 'application/vnd.twitchtv.'.$this->apiVersion.'+json'.
+            'Accept' => 'application/vnd.twitchtv.'.$this->apiVersion.'+json',
             'Client-ID' => $this->credentials->getConsumerId()
-        ));
+        );
     }
 }

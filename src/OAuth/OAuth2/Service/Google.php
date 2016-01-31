@@ -118,6 +118,14 @@ class Google extends AbstractService
     // Android Publisher
     const SCOPE_ANDROID_PUBLISHER           = 'https://www.googleapis.com/auth/androidpublisher';
 
+    // Google Classroom
+    const SCOPE_CLASSROOM_COURSES           = 'https://www.googleapis.com/auth/classroom.courses';
+    const SCOPE_CLASSROOM_COURSES_READONLY  = 'https://www.googleapis.com/auth/classroom.courses.readonly';
+    const SCOPE_CLASSROOM_PROFILE_EMAILS    = 'https://www.googleapis.com/auth/classroom.profile.emails';
+    const SCOPE_CLASSROOM_PROFILE_PHOTOS    = 'https://www.googleapis.com/auth/classroom.profile.photos';
+    const SCOPE_CLASSROOM_ROSTERS           = 'https://www.googleapis.com/auth/classroom.rosters';
+    const SCOPE_CLASSROOM_ROSTERS_READONLY  = 'https://www.googleapis.com/auth/classroom.rosters.readonly';
+
     protected $accessType = 'online';
 
     public function __construct(

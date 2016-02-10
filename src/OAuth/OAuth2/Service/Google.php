@@ -48,7 +48,7 @@ class Google extends AbstractService
     const SCOPE_DRIVE_SCRIPTS               = 'https://www.googleapis.com/auth/drive.scripts';
 
     // Cloud Print
-    const SCOPE_CLOUD_PRINT                 = 'https://www.googleapis.com/auth/cloudprint';
+    const SCOPE_CLOUDPRINT                 = 'https://www.googleapis.com/auth/cloudprint';
 
     // Adwords
     const SCOPE_ADSENSE                     = 'https://www.googleapis.com/auth/adsense';

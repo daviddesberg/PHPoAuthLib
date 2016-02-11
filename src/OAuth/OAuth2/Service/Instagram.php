@@ -21,7 +21,7 @@ class Instagram extends AbstractService
     const SCOPE_COMMENTS      = 'comments';
     const SCOPE_RELATIONSHIPS = 'relationships';
     const SCOPE_LIKES         = 'likes';
-    const SCOPE_FRIEND_LISTS    = 'follower_list';
+    const SCOPE_FOLLOWER_LIST = 'follower_list';
 
     public function __construct(
         CredentialsInterface $credentials,

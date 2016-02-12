@@ -81,7 +81,15 @@ class Twitch extends AbstractService
         $stateParameterInAutUrl = true,
         $apiVersion = "v3"
     ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, $stateParameterInAutUrl, $apiVersion);
+        parent::__construct(
+            $credentials,
+            $httpClient,
+            $storage,
+            $scopes,
+            $baseApiUri,
+            $stateParameterInAutUrl,
+            $apiVersion
+        );
 
         if (null === $baseApiUri) {
             $this->baseApiUri = new Uri('https://api.twitch.tv/kraken/');
@@ -119,7 +127,6 @@ class Twitch extends AbstractService
 
         $token = new StdOAuth2Token();
         $token->setAccessToken($data['access_token']);
-        // Github tokens evidently never expire...
         $token->setEndOfLife(StdOAuth2Token::EOL_NEVER_EXPIRES);
         unset($data['access_token']);
 

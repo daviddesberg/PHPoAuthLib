@@ -30,14 +30,14 @@ abstract class AbstractToken implements TokenInterface
     /**
      * @param string $accessToken
      * @param string $refreshToken
-     * @param int    $lifetime
+     * @param int    $endOfLife
      * @param array  $extraParams
      */
-    public function __construct($accessToken = null, $refreshToken = null, $lifetime = null, $extraParams = array())
+    public function __construct($accessToken = null, $refreshToken = null, $endOfLife = null, $extraParams = array())
     {
         $this->accessToken = $accessToken;
         $this->refreshToken = $refreshToken;
-        $this->setLifetime($lifetime);
+        $this->setEndOfLife($endOfLife);
         $this->extraParams = $extraParams;
     }
 

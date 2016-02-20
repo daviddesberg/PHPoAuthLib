@@ -11,7 +11,7 @@ use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Client\ClientInterface;
 
-class FitBit extends AbstractService
+class Goodreads extends AbstractService
 {
     public function __construct(
         CredentialsInterface $credentials,
@@ -40,7 +40,7 @@ class FitBit extends AbstractService
      */
     public function getAuthorizationEndpoint()
     {
-        return new Uri('https://www.goodreads.com/oauth/authoriz');
+        return new Uri('https://www.goodreads.com/oauth/authorize');
     }
 
     /**
@@ -48,7 +48,7 @@ class FitBit extends AbstractService
      */
     public function getAccessTokenEndpoint()
     {
-        return new Uri('https://api.fitbit.com/oauth/access_token');
+        return new Uri('https://www.goodreads.com/oauth/access_token');
     }
 
     /**

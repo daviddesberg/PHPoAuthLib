@@ -57,12 +57,13 @@ class Goodreads extends AbstractService
     protected function parseRequestTokenResponse($responseBody)
     {
         parse_str($responseBody, $data);
-
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
-        } elseif (!isset($data['oauth_callback_confirmed']) || $data['oauth_callback_confirmed'] !== 'true') {
-            throw new TokenResponseException('Error in retrieving token.');
         }
+        //Goodreads currently isn't adhering to this standard. See ticket here: https://www.goodreads.com/topic/show/18023905-oauth1-standards-not-met
+        // elseif (!isset($data['oauth_callback_confirmed']) || $data['oauth_callback_confirmed'] !== 'true') {
+        //     throw new TokenResponseException('Error in retrieving token.');
+        // }
 
         return $this->parseAccessTokenResponse($responseBody);
     }

@@ -113,6 +113,7 @@ class CurlClient extends AbstractClient
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $extraHeaders);
         curl_setopt($ch, CURLOPT_USERAGENT, $this->userAgent);
+        curl_setopt($ch, CURLOPT_FAILONERROR, true);
 
         foreach ($this->parameters as $key => $value) {
             curl_setopt($ch, $key, $value);

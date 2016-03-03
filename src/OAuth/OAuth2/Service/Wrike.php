@@ -63,7 +63,7 @@ class Wrike extends AbstractService
 		);
 
 		if (null === $baseApiUri) {
-			$this->baseApiUri = new Uri('https://www.wrike.com/api'.$this->getApiVersionString());
+			$this->baseApiUri = new Uri('https://www.wrike.com/api'.$this->getApiVersionString().'/');
 		}
 	}
 
@@ -127,5 +127,13 @@ class Wrike extends AbstractService
 	protected function getScopesDelimiter()
 	{
 		return ',';
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	protected function getAuthorizationMethod()
+	{
+		return static::AUTHORIZATION_METHOD_HEADER_BEARER;
 	}
 }

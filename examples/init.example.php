@@ -190,6 +190,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'wrike' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'yahoo' => array(
         'key'       => '',
         'secret'    => ''

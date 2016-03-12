@@ -82,6 +82,7 @@ Included service implementations
     - LinkedIn
     - Mailchimp
     - Microsoft
+    - Mondo
     - Nest
     - Netatmo
     - Parrot Flower Power

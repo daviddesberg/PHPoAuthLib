@@ -22,7 +22,7 @@ class Mondo extends AbstractService
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, true);
 
         if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://api.getmondo.co.uk/');
+            $this->baseApiUri = new Uri('https://api.getmondo.co.uk');
         }
     }
 
@@ -31,7 +31,7 @@ class Mondo extends AbstractService
      */
     public function getAuthorizationEndpoint()
     {
-        return new Uri('https://auth.getmondo.co.uk/');
+        return new Uri('https://auth.getmondo.co.uk');
     }
 
     /**

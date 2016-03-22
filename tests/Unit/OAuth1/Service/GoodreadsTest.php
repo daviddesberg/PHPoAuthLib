@@ -2,16 +2,16 @@
 
 namespace OAuthTest\Unit\OAuth1\Service;
 
-use OAuth\OAuth1\Service\Etsy;
+use OAuth\OAuth1\Service\Goodreads;
 
-class EtsyTest extends \PHPUnit_Framework_TestCase
+class GoodreadsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers OAuth\OAuth1\Service\Etsy::__construct
+     * @covers OAuth\OAuth1\Service\Goodreads::__construct
      */
     public function testConstructCorrectInterfaceWithoutCustomUri()
     {
-        $service = new Etsy(
+        $service = new Goodreads(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -22,11 +22,11 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\Etsy::__construct
+     * @covers OAuth\OAuth1\Service\Goodreads::__construct
      */
     public function testConstructCorrectInstanceWithoutCustomUri()
     {
-        $service = new Etsy(
+        $service = new Goodreads(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -37,11 +37,11 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\Etsy::__construct
+     * @covers OAuth\OAuth1\Service\Goodreads::__construct
      */
     public function testConstructCorrectInstanceWithCustomUri()
     {
-        $service = new Etsy(
+        $service = new Goodreads(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -53,12 +53,12 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\Etsy::__construct
-     * @covers OAuth\OAuth1\Service\Etsy::getRequestTokenEndpoint
+     * @covers OAuth\OAuth1\Service\Goodreads::__construct
+     * @covers OAuth\OAuth1\Service\Goodreads::getRequestTokenEndpoint
      */
     public function testGetRequestTokenEndpoint()
     {
-        $service = new Etsy(
+        $service = new Goodreads(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -66,26 +66,18 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertSame(
-            'https://openapi.etsy.com/v2/oauth/request_token',
+            'https://www.goodreads.com/oauth/request_token',
             $service->getRequestTokenEndpoint()->getAbsoluteUri()
         );
-
-		$service->setScopes(array('email_r', 'cart_rw'));
-
-        $this->assertSame(
-            'https://openapi.etsy.com/v2/oauth/request_token?scope=email_r%20cart_rw',
-            $service->getRequestTokenEndpoint()->getAbsoluteUri()
-        );
-
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\Etsy::__construct
-     * @covers OAuth\OAuth1\Service\Etsy::getAuthorizationEndpoint
+     * @covers OAuth\OAuth1\Service\Goodreads::__construct
+     * @covers OAuth\OAuth1\Service\Goodreads::getAuthorizationEndpoint
      */
     public function testGetAuthorizationEndpoint()
     {
-        $service = new Etsy(
+        $service = new Goodreads(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -93,18 +85,18 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertSame(
-            'https://openapi.etsy.com/v2/',
+            'https://www.goodreads.com/oauth/authorize',
             $service->getAuthorizationEndpoint()->getAbsoluteUri()
         );
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\Etsy::__construct
-     * @covers OAuth\OAuth1\Service\Etsy::getAccessTokenEndpoint
+     * @covers OAuth\OAuth1\Service\Goodreads::__construct
+     * @covers OAuth\OAuth1\Service\Goodreads::getAccessTokenEndpoint
      */
     public function testGetAccessTokenEndpoint()
     {
-        $service = new Etsy(
+        $service = new Goodreads(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -112,22 +104,22 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertSame(
-            'https://openapi.etsy.com/v2/oauth/access_token',
+            'https://www.goodreads.com/oauth/access_token',
             $service->getAccessTokenEndpoint()->getAbsoluteUri()
         );
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\Etsy::__construct
-     * @covers OAuth\OAuth1\Service\Etsy::getRequestTokenEndpoint
-     * @covers OAuth\OAuth1\Service\Etsy::parseRequestTokenResponse
+     * @covers OAuth\OAuth1\Service\Goodreads::__construct
+     * @covers OAuth\OAuth1\Service\Goodreads::getRequestTokenEndpoint
+     * @covers OAuth\OAuth1\Service\Goodreads::parseRequestTokenResponse
      */
     public function testParseRequestTokenResponseThrowsExceptionOnNulledResponse()
     {
         $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
         $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue(null));
 
-        $service = new Etsy(
+        $service = new Goodreads(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -140,16 +132,16 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\Etsy::__construct
-     * @covers OAuth\OAuth1\Service\Etsy::getRequestTokenEndpoint
-     * @covers OAuth\OAuth1\Service\Etsy::parseRequestTokenResponse
+     * @covers OAuth\OAuth1\Service\Goodreads::__construct
+     * @covers OAuth\OAuth1\Service\Goodreads::getRequestTokenEndpoint
+     * @covers OAuth\OAuth1\Service\Goodreads::parseRequestTokenResponse
      */
     public function testParseRequestTokenResponseThrowsExceptionOnResponseNotAnArray()
     {
         $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
         $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('notanarray'));
 
-        $service = new Etsy(
+        $service = new Goodreads(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -162,16 +154,16 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\Etsy::__construct
-     * @covers OAuth\OAuth1\Service\Etsy::getRequestTokenEndpoint
-     * @covers OAuth\OAuth1\Service\Etsy::parseRequestTokenResponse
+     * @covers OAuth\OAuth1\Service\Goodreads::__construct
+     * @covers OAuth\OAuth1\Service\Goodreads::getRequestTokenEndpoint
+     * @covers OAuth\OAuth1\Service\Goodreads::parseRequestTokenResponse
      */
     public function testParseRequestTokenResponseThrowsExceptionOnResponseCallbackNotSet()
     {
         $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
         $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('foo=bar'));
 
-        $service = new Etsy(
+        $service = new Goodreads(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -184,9 +176,9 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\Etsy::__construct
-     * @covers OAuth\OAuth1\Service\Etsy::getRequestTokenEndpoint
-     * @covers OAuth\OAuth1\Service\Etsy::parseRequestTokenResponse
+     * @covers OAuth\OAuth1\Service\Goodreads::__construct
+     * @covers OAuth\OAuth1\Service\Goodreads::getRequestTokenEndpoint
+     * @covers OAuth\OAuth1\Service\Goodreads::parseRequestTokenResponse
      */
     public function testParseRequestTokenResponseThrowsExceptionOnResponseCallbackNotTrue()
     {
@@ -195,7 +187,7 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
             'oauth_callback_confirmed=false'
         ));
 
-        $service = new Etsy(
+        $service = new Goodreads(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -208,10 +200,10 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\Etsy::__construct
-     * @covers OAuth\OAuth1\Service\Etsy::getRequestTokenEndpoint
-     * @covers OAuth\OAuth1\Service\Etsy::parseRequestTokenResponse
-     * @covers OAuth\OAuth1\Service\Etsy::parseAccessTokenResponse
+     * @covers OAuth\OAuth1\Service\Goodreads::__construct
+     * @covers OAuth\OAuth1\Service\Goodreads::getRequestTokenEndpoint
+     * @covers OAuth\OAuth1\Service\Goodreads::parseRequestTokenResponse
+     * @covers OAuth\OAuth1\Service\Goodreads::parseAccessTokenResponse
      */
     public function testParseRequestTokenResponseValid()
     {
@@ -220,7 +212,7 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
             'oauth_callback_confirmed=true&oauth_token=foo&oauth_token_secret=bar'
         ));
 
-        $service = new Etsy(
+        $service = new Goodreads(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -231,9 +223,9 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\Etsy::__construct
-     * @covers OAuth\OAuth1\Service\Etsy::getRequestTokenEndpoint
-     * @covers OAuth\OAuth1\Service\Etsy::parseAccessTokenResponse
+     * @covers OAuth\OAuth1\Service\Goodreads::__construct
+     * @covers OAuth\OAuth1\Service\Goodreads::getRequestTokenEndpoint
+     * @covers OAuth\OAuth1\Service\Goodreads::parseAccessTokenResponse
      */
     public function testParseAccessTokenResponseThrowsExceptionOnError()
     {
@@ -245,7 +237,7 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
         $storage = $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
         $storage->expects($this->any())->method('retrieveAccessToken')->will($this->returnValue($token));
 
-        $service = new Etsy(
+        $service = new Goodreads(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $storage,
@@ -258,9 +250,9 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\Etsy::__construct
-     * @covers OAuth\OAuth1\Service\Etsy::getRequestTokenEndpoint
-     * @covers OAuth\OAuth1\Service\Etsy::parseAccessTokenResponse
+     * @covers OAuth\OAuth1\Service\Goodreads::__construct
+     * @covers OAuth\OAuth1\Service\Goodreads::getRequestTokenEndpoint
+     * @covers OAuth\OAuth1\Service\Goodreads::parseAccessTokenResponse
      */
     public function testParseAccessTokenResponseValid()
     {
@@ -274,7 +266,7 @@ class EtsyTest extends \PHPUnit_Framework_TestCase
         $storage = $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
         $storage->expects($this->any())->method('retrieveAccessToken')->will($this->returnValue($token));
 
-        $service = new Etsy(
+        $service = new Goodreads(
             $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $storage,

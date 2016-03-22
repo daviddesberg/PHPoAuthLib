@@ -65,6 +65,10 @@ class Goodreads extends AbstractService
         //     throw new TokenResponseException('Error in retrieving token.');
         // }
 
+        elseif (!isset($data['oauth_token'])) {
+          throw new TokenResponseException('Error in retrieving token.');
+        }
+
         return $this->parseAccessTokenResponse($responseBody);
     }
 

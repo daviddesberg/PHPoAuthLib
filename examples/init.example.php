@@ -91,10 +91,6 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
-    'goodreads' => array(
-        'key'       => '',
-        'secret'    => ''
-    ),
     'google' => array(
         'key'       => '',
         'secret'    => '',

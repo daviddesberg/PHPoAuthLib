@@ -38,7 +38,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * @param TokenStorageInterface $storage
      * @param array                 $scopes
      * @param UriInterface|null     $baseApiUri
-     * @param bool $stateParameterInAutUrl
+     * @param bool $stateParameterInAuthUrl
      * @param string                $apiVersion
      *
      * @throws InvalidScopeException
@@ -49,11 +49,11 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         TokenStorageInterface $storage,
         $scopes = array(),
         UriInterface $baseApiUri = null,
-        $stateParameterInAutUrl = false,
+        $stateParameterInAuthUrl = false,
         $apiVersion = ""
     ) {
         parent::__construct($credentials, $httpClient, $storage);
-        $this->stateParameterInAuthUrl = $stateParameterInAutUrl;
+        $this->stateParameterInAuthUrl = $stateParameterInAuthUrl;
 
         foreach ($scopes as $scope) {
             if (!$this->isValidScope($scope)) {

@@ -43,6 +43,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'dataporten' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'delicious' => array(
         'key'       => '',
         'secret'    => '',

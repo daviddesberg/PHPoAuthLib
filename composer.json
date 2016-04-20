@@ -15,6 +15,10 @@
         {
             "name": "Elliot Chance",
             "email": "elliotchance@gmail.com"
+        },
+        {
+            "name": "Jørgen Birkhaug",
+            "email": "jorgen.birkhaug@uib.no"
         }
     ],
     "require": {

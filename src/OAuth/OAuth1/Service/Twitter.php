@@ -76,48 +76,4 @@ class Twitter extends AbstractService
         return new Uri('https://api.twitter.com/oauth/access_token');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function parseRequestTokenResponse($responseBody)
-    {
-        parse_str($responseBody, $data);
-
-        if (null === $data || !is_array($data)) {
-            throw new TokenResponseException('Unable to parse response.');
-        } elseif (!isset($data['oauth_callback_confirmed']) || $data['oauth_callback_confirmed'] !== 'true') {
-            throw new TokenResponseException('Error in retrieving token.');
-        }
-
-        return $this->parseAccessTokenResponse($responseBody);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function parseAccessTokenResponse($responseBody)
-    {
-        parse_str($responseBody, $data);
-
-        if (null === $data || !is_array($data)) {
-            throw new TokenResponseException('Unable to parse response: ' . $responseBody);
-        } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
-        } elseif (!isset($data["oauth_token"]) || !isset($data["oauth_token_secret"])) {
-            throw new TokenResponseException('Invalid response. OAuth Token data not set: ' . $responseBody);
-        }
-
-        $token = new StdOAuth1Token();
-
-        $token->setRequestToken($data['oauth_token']);
-        $token->setRequestTokenSecret($data['oauth_token_secret']);
-        $token->setAccessToken($data['oauth_token']);
-        $token->setAccessTokenSecret($data['oauth_token_secret']);
-
-        $token->setEndOfLife(StdOAuth1Token::EOL_NEVER_EXPIRES);
-        unset($data['oauth_token'], $data['oauth_token_secret']);
-        $token->setExtraParams($data);
-
-        return $token;
-    }
 }

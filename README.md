@@ -1,7 +1,5 @@
 PHPoAuthLib
 ===========
-**NOTE: I'm looking for someone who could help to maintain this package alongside me, just because I don't have a ton of time to devote to it. However, I'm still going to keep trying to pay attention to PRs, etc.**
-
 PHPoAuthLib provides oAuth support in PHP 5.3+ and is very easy to integrate with any project which requires an oAuth client.
 
 [![Build Status](https://travis-ci.org/Lusitanian/PHPoAuthLib.png?branch=master)](https://travis-ci.org/Lusitanian/PHPoAuthLib)

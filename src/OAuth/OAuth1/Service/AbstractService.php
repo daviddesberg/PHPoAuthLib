@@ -11,6 +11,7 @@ use OAuth\OAuth1\Signature\SignatureInterface;
 use OAuth\OAuth1\Token\TokenInterface;
 use OAuth\OAuth1\Token\StdOAuth1Token;
 use OAuth\Common\Service\AbstractService as BaseAbstractService;
+use OAuth\Common\Storage\Exception\TokenNotFoundException;
 
 abstract class AbstractService extends BaseAbstractService implements ServiceInterface
 {
@@ -87,7 +88,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         );
 
         $authorizationHeader = array(
-            'Authorization' => $this->buildAuthorizationHeaderForAPIRequest(
+            'Authorization' => $this->buildAuthorizationHeaderForAccessRequest(
                 'POST',
                 $this->getAccessTokenEndpoint(),
                 $this->storage->retrieveAccessToken($this->service()),
@@ -188,6 +189,28 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
 
         return $authorizationHeader;
     }
+    
+    /**
+     * Builds the authorization header to get an access token.
+     *
+     * @param string         $method
+     * @param UriInterface   $uri        The uri the request is headed
+     * @param TokenInterface $token
+     * @param array          $bodyParams Request body if applicable (key/value pairs)
+     *
+     * @return string
+     */
+    protected function buildAuthorizationHeaderForAccessRequest(
+        $method,
+        UriInterface $uri,
+        TokenInterface $token,
+        $bodyParams = null
+    ) {
+        $token->setAccessToken($token->getRequestToken());
+        $token->setAccessTokenSecret($token->getRequestTokenSecret());
+        
+        return $this->buildAuthorizationHeaderForAPIRequest($method, $uri, $token, $bodyParams);
+    }
 
     /**
      * Builds the authorization header for an authenticated API request
@@ -205,6 +228,14 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         TokenInterface $token,
         $bodyParams = null
     ) {
+        /*
+         * The storage won't send an TokenNotFoundException by itself,
+         * even if only a request token is saved in the storage.
+         */
+        if (empty($token->getAccessToken())) {
+            throw new TokenNotFoundException('No access token found.');
+        }
+        
         $this->signature->setTokenSecret($token->getAccessTokenSecret());
         $authParameters = $this->getBasicAuthorizationHeaderInfo();
         if (isset($authParameters['oauth_callback'])) {
@@ -292,10 +323,6 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
 
     /**
      * Parses the request token response and returns a TokenInterface.
-     * This is only needed to verify the `oauth_callback_confirmed` parameter. The actual
-     * parsing logic is contained in the access token parser.
-     *
-     * @abstract
      *
      * @param string $responseBody
      *
@@ -303,18 +330,72 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      *
      * @throws TokenResponseException
      */
-    abstract protected function parseRequestTokenResponse($responseBody);
+    protected function parseRequestTokenResponse($responseBody)
+    {
+        $data = $this->validateTokenResponse($responseBody);
+        
+        if (!isset($data['oauth_callback_confirmed'])
+            || $data['oauth_callback_confirmed'] !== 'true'
+        ) {
+            throw new TokenResponseException('Error in retrieving token.');
+        }
+        
+        $token = new StdOAuth1Token();
+
+        $token->setRequestToken($data['oauth_token']);
+        $token->setRequestTokenSecret($data['oauth_token_secret']);
+
+        $token->setEndOfLife(StdOAuth1Token::EOL_NEVER_EXPIRES);
+        unset($data['oauth_token'], $data['oauth_token_secret']);
+        $token->setExtraParams($data);
+
+        return $token;
+    }
 
     /**
      * Parses the access token response and returns a TokenInterface.
      *
-     * @abstract
-     *
      * @param string $responseBody
      *
      * @return TokenInterface
      *
      * @throws TokenResponseException
      */
-    abstract protected function parseAccessTokenResponse($responseBody);
+    protected function parseAccessTokenResponse($responseBody)
+    {
+        $data = $this->validateTokenResponse($responseBody);
+        
+        $token = new StdOAuth1Token();
+
+        $token->setAccessToken($data['oauth_token']);
+        $token->setAccessTokenSecret($data['oauth_token_secret']);
+
+        $token->setEndOfLife(StdOAuth1Token::EOL_NEVER_EXPIRES);
+        unset($data['oauth_token'], $data['oauth_token_secret']);
+        $token->setExtraParams($data);
+
+        return $token;
+    }
+    
+    /**
+     * General validation of the response body.
+     * 
+     * @param string $responseBody
+     * @return array
+     * @throws TokenResponseException
+     */
+    protected function validateTokenResponse($responseBody)
+    {
+        parse_str($responseBody, $data);
+        
+        if (null === $data || !is_array($data)) {
+            throw new TokenResponseException('Unable to parse response: ' . $responseBody);
+        } elseif (isset($data['error'])) {
+            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+        } elseif (!isset($data["oauth_token"]) || !isset($data["oauth_token_secret"])) {
+            throw new TokenResponseException('Invalid response. OAuth Token data not set: ' . $responseBody);
+        }
+        
+        return $data;
+    }
 }

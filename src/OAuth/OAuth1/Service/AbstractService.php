@@ -232,11 +232,12 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
          * The storage won't send an TokenNotFoundException by itself,
          * even if only a request token is saved in the storage.
          */
-        if (empty($token->getAccessToken())) {
+        $accessTokenSecret = $token->getAccessTokenSecret();
+        if (empty($accessTokenSecret)) {
             throw new TokenNotFoundException('No access token found.');
         }
         
-        $this->signature->setTokenSecret($token->getAccessTokenSecret());
+        $this->signature->setTokenSecret($accessTokenSecret);
         $authParameters = $this->getBasicAuthorizationHeaderInfo();
         if (isset($authParameters['oauth_callback'])) {
             unset($authParameters['oauth_callback']);

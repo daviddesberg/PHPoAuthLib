@@ -158,13 +158,23 @@ class Facebook extends AbstractService
      */
     protected function parseAccessTokenResponse($responseBody)
     {
+        // omg... if error, $responseBody contains JSON
+        // e.g: {"error":{"message":"Missing redirect_uri parameter.","type":"OAuthException","code":191}}
+        // but not sure that it is always
+        $data = @json_decode($responseBody, true);
+
         // Facebook gives us a query string ... Oh wait. JSON is too simple, understand ?
-        parse_str($responseBody, $data);
+        if(!$data){
+            parse_str($responseBody, $data);
+        }
 
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
+            $messageError = !empty($data['error']['message'])
+                ? $data['error']['message'] // response is json
+                : $data['error']; // response is query string
+            throw new TokenResponseException('Error in retrieving token: "' . $messageError . '"');
         }
 
         $token = new StdOAuth2Token();

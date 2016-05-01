@@ -1,4 +1,4 @@
-PHPoAuthLib
+﻿PHPoAuthLib
 ===========
 
 PHPoAuthLib provides oAuth support in PHP 5.3+ and is easy to integrate with any project which requires an oAuth client.
@@ -19,7 +19,7 @@ Edit your `composer.json` and add:
 ```json
 {
     "require": {
-        "jlueke/oauth": "~0.3"
+        "jlueke/oauth": "dev-master"
     }
 }
 ```

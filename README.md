@@ -121,6 +121,7 @@ Extensions
 Tests
 ------
 To run the tests, you must install dependencies with `composer install --dev`
+and PHPUnit (global or with composer).
 
 
 Variation from the original library

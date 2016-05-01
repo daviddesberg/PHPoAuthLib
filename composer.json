@@ -1,6 +1,6 @@
 {
-    "name": "lusitanian/oauth",
-    "description": "PHP 5.3+ oAuth 1/2 Library",
+    "name": "jlueke/oauth",
+    "description": "PHP 5.3+ oAuth 1/2 Library. Branch of [lusitanian/oauth (PHPoAuthLib)](https://github.com/Lusitanian/PHPoAuthLib).",
     "keywords": ["oauth", "authentication", "authorization", "security"],
     "license": "MIT",
     "authors": [
@@ -15,6 +15,10 @@
         {
             "name": "Elliot Chance",
             "email": "elliotchance@gmail.com"
+        },
+        {
+            "name": "Jacqueline Lüken",
+            "email": "jac_lueken@live.de"
         }
     ],
     "require": {
@@ -35,11 +39,6 @@
         "psr-0": {
             "OAuth": "src",
             "OAuth\\Unit": "tests"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.1-dev"
         }
     }
 }

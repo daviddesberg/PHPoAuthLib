@@ -11,7 +11,7 @@ PHPoAuthLib provides oAuth support in PHP 5.3+ and is easy to integrate with any
 
 Installation
 ------------
-This branch of the original library can be found on [Packagist](https://packagist.org/packages/jlueke/oauth).
+This branch of ([lusitanian/oauth (PHPoAuthLib)](https://github.com/Lusitanian/PHPoAuthLib)) can be found on [Packagist](https://packagist.org/packages/jlueke/oauth).
 The recommended way to install this is through [composer](http://getcomposer.org).
 
 Edit your `composer.json` and add:
@@ -123,7 +123,7 @@ Tests
 To run the tests, you must install dependencies with `composer install --dev`
 
 
-Variation from the original library ([lusitanian/oauth (PHPoAuthLib)](https://github.com/Lusitanian/PHPoAuthLib))
+Variation from the original library
 ------
 + Requests will fail, if only a request token exists.
 + Some refactoring.

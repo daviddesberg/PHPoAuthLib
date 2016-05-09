@@ -1,15 +1,5 @@
 <?php
 
-/**
- * This file is part of Boozt Platform
- * and belongs to Boozt Fashion AB.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- *
- */
-
-
 namespace OAuth\OAuth2\Service;
 
 use OAuth\OAuth2\Token\StdOAuth2Token;
@@ -22,7 +12,7 @@ use OAuth\Common\Http\Uri\UriInterface;
 
 class Todoist extends AbstractService
 {
-    /**
+    /*
      * Defined scopes, see https://developer.todoist.com/#oauth for definitions.
      */
 
@@ -108,7 +98,7 @@ class Todoist extends AbstractService
 
         $token = new StdOAuth2Token();
         $token->setAccessToken($data['access_token']);
-        // Github tokens evidently never expire...
+        // Todoist tokens evidently never expire...
         $token->setEndOfLife(StdOAuth2Token::EOL_NEVER_EXPIRES);
         unset($data['access_token']);
 

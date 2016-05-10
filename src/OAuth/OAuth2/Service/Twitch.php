@@ -72,13 +72,23 @@ class Twitch extends AbstractService
      */
     const SCOPE_CHAT_LOGIN = 'chat_login';
 
+    /**
+     * Ability to read the channel feed interactions of a user.
+     */
+    const SCOPE_CHANNEL_FEED_READ = 'channel_feed_read';
+
+    /**
+     * Add new posts or delete existing ones to the channel feed of a user.
+     * Alows write acces to reactions in the name of the user.
+     */
+    const SCOPE_CHANNEL_FEED_WRITE = 'channel_feed_write';
+
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
         $scopes = array(),
         UriInterface $baseApiUri = null,
-        $stateParameterInAutUrl = true,
         $apiVersion = "v3"
     ) {
         parent::__construct(
@@ -87,7 +97,7 @@ class Twitch extends AbstractService
             $storage,
             $scopes,
             $baseApiUri,
-            $stateParameterInAutUrl,
+            true,
             $apiVersion
         );
 

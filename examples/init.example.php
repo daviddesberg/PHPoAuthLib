@@ -198,6 +198,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => ''
     ),
+    'yandex' => array(
+        'key'       => '',
+        'secret'    => ''
+    ),
 );
 
 /** @var $serviceFactory \OAuth\ServiceFactory An OAuth service factory. */

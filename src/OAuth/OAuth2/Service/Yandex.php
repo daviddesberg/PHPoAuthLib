@@ -131,5 +131,13 @@ class Yandex extends AbstractService {
         return $token;
     }
 
-
+    /**
+     * @not-implemented
+     * @param $accessType
+     * @return bool
+     */
+    public function setAccessType($accessType)
+    {
+        return true;
+    }
 }

@@ -34,7 +34,7 @@ class Salesforce extends AbstractService
      */
     public function getAccessTokenEndpoint()
     {
-        return new Uri('https://na1.salesforce.com/services/oauth2/token');
+        return new Uri('https://login.salesforce.com/services/oauth2/token');
     }
 
     /**

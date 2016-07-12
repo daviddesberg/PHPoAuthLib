@@ -115,6 +115,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'mondo' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'nest' => array(
         'key'       => '',
         'secret'    => '',

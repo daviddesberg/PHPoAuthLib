@@ -35,6 +35,7 @@ class Google extends AbstractService
     const SCOPE_GPLUS_STREAM_READ           = 'https://www.googleapis.com/auth/plus.stream.read';
     const SCOPE_GPLUS_STREAM_WRITE          = 'https://www.googleapis.com/auth/plus.stream.write';
     const SCOPE_GPLUS_MEDIA                 = 'https://www.googleapis.com/auth/plus.media.upload';
+    const SCOPE_EMAIL_PLUS                  = 'https://www.googleapis.com/auth/plus.profile.emails.read';
 
     // Google Drive
     const SCOPE_DOCUMENTSLIST               = 'https://docs.google.com/feeds/';

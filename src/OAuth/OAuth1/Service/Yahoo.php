@@ -4,7 +4,6 @@ namespace OAuth\OAuth1\Service;
 
 use OAuth\OAuth1\Signature\SignatureInterface;
 use OAuth\OAuth1\Token\StdOAuth1Token;
-use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Uri\UriInterface;
@@ -84,36 +83,12 @@ class Yahoo extends AbstractService
     /**
      * {@inheritdoc}
      */
-    protected function parseRequestTokenResponse($responseBody)
-    {
-        parse_str($responseBody, $data);
-
-        if (null === $data || !is_array($data)) {
-            throw new TokenResponseException('Unable to parse response.');
-        } elseif (!isset($data['oauth_callback_confirmed']) || $data['oauth_callback_confirmed'] !== 'true') {
-            throw new TokenResponseException('Error in retrieving token.');
-        }
-
-        return $this->parseAccessTokenResponse($responseBody);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     protected function parseAccessTokenResponse($responseBody)
     {
-        parse_str($responseBody, $data);
-
-        if (null === $data || !is_array($data)) {
-            throw new TokenResponseException('Unable to parse response.');
-        } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
-        }
-
+        $data = $this->validateTokenResponse($responseBody);
+        
         $token = new StdOAuth1Token();
 
-        $token->setRequestToken($data['oauth_token']);
-        $token->setRequestTokenSecret($data['oauth_token_secret']);
         $token->setAccessToken($data['oauth_token']);
         $token->setAccessTokenSecret($data['oauth_token_secret']);
 

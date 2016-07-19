@@ -46,6 +46,8 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     public function requestRequestToken()
     {
+        $this->signature->setTokenSecret(null);
+        
         $authorizationHeader = array('Authorization' => $this->buildAuthorizationHeaderForTokenRequest());
         $headers = array_merge($authorizationHeader, $this->getExtraOAuthHeaders());
 

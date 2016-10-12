@@ -41,7 +41,7 @@ class Line extends AbstractService
      */
     public function getAuthorizationEndpoint()
     {
-        return new Uri('https://access.line.me'.$this->getApiVersionString().'/dialog/oauth/weblogin');
+        return new Uri('https://access.line.me/dialog/oauth/weblogin');
     }
 
     /**

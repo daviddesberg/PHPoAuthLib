@@ -5,10 +5,6 @@ namespace OAuth\OAuth2\Service;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
-use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Http\Uri\UriInterface;
 
 class Ustream extends AbstractService
 {
@@ -19,17 +15,15 @@ class Ustream extends AbstractService
      */
     const SCOPE_OFFLINE     = 'offline';
     const SCOPE_BROADCASTER = 'broadcaster';
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected function init()
+    {
+        $this->stateParameterInAuthUrl = true;
 
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
-    ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, true);
-
-        if (null === $baseApiUri) {
+        if( $this->baseApiUri === null ) {
             $this->baseApiUri = new Uri('https://api.ustream.tv/');
         }
     }

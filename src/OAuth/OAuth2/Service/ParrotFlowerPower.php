@@ -12,10 +12,6 @@ namespace OAuth\OAuth2\Service;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
-use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\OAuth2\Service\Exception\MissingRefreshTokenException;
 use OAuth\Common\Token\TokenInterface;
 
@@ -28,24 +24,14 @@ use OAuth\Common\Token\TokenInterface;
  */
 class ParrotFlowerPower extends AbstractService
 {
+    /**
+     * {@inheritdoc}
+     */
+    protected function init()
+    {
+        $this->stateParameterInAuthUrl = true;
 
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
-    ) {
-        parent::__construct(
-            $credentials,
-            $httpClient,
-            $storage,
-            $scopes,
-            $baseApiUri,
-            true
-        );
-
-        if (null === $baseApiUri) {
+        if( $this->baseApiUri === null ) {
             $this->baseApiUri = new Uri('https://apiflowerpower.parrot.com/');
         }
     }
@@ -135,7 +121,7 @@ class ParrotFlowerPower extends AbstractService
             $this->getExtraOAuthHeaders()
         );
         $token = $this->parseAccessTokenResponse($responseBody);
-        $this->storage->storeAccessToken($this->service(), $token);
+        $this->storage->storeAccessToken($this->service(), $this->account(), $token);
 
         return $token;
     }

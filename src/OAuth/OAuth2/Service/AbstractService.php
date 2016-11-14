@@ -40,6 +40,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * @param UriInterface|null     $baseApiUri
      * @param bool $stateParameterInAutUrl
      * @param string                $apiVersion
+     * @param string                $account
      *
      * @throws InvalidScopeException
      */
@@ -50,9 +51,10 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $scopes = array(),
         UriInterface $baseApiUri = null,
         $stateParameterInAutUrl = false,
-        $apiVersion = ""
+        $apiVersion = "",
+        $account = null
     ) {
-        parent::__construct($credentials, $httpClient, $storage);
+        parent::__construct($credentials, $httpClient, $storage, $account);
         $this->stateParameterInAuthUrl = $stateParameterInAutUrl;
 
         foreach ($scopes as $scope) {
@@ -66,8 +68,17 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $this->baseApiUri = $baseApiUri;
 
         $this->apiVersion = $apiVersion;
+        
+        $this->init();
     }
 
+    /**
+     * Constructor extended initialization
+     */
+    protected function init() {
+        
+    }
+    
     /**
      * {@inheritdoc}
      */
@@ -125,7 +136,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         );
 
         $token = $this->parseAccessTokenResponse($responseBody);
-        $this->storage->storeAccessToken($this->service(), $token);
+        $this->storage->storeAccessToken($this->service(), $this->account(), $token);
 
         return $token;
     }
@@ -148,7 +159,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     public function request($path, $method = 'GET', $body = null, array $extraHeaders = array())
     {
         $uri = $this->determineRequestUriFromPath($path, $this->baseApiUri);
-        $token = $this->storage->retrieveAccessToken($this->service());
+        $token = $this->storage->retrieveAccessToken($this->service(), $this->account());
 
         if ($token->getEndOfLife() !== TokenInterface::EOL_NEVER_EXPIRES
             && $token->getEndOfLife() !== TokenInterface::EOL_UNKNOWN
@@ -224,7 +235,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
             $this->getExtraOAuthHeaders()
         );
         $token = $this->parseAccessTokenResponse($responseBody);
-        $this->storage->storeAccessToken($this->service(), $token);
+        $this->storage->storeAccessToken($this->service(), $this->account(), $token);
 
         return $token;
     }
@@ -283,7 +294,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     protected function retrieveAuthorizationState()
     {
-        return $this->storage->retrieveAuthorizationState($this->service());
+        return $this->storage->retrieveAuthorizationState($this->service(), $this->account());
     }
 
     /**
@@ -293,7 +304,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     protected function storeAuthorizationState($state)
     {
-        $this->storage->storeAuthorizationState($this->service(), $state);
+        $this->storage->storeAuthorizationState($this->service(), $this->account(), $state);
     }
 
     /**

@@ -5,10 +5,6 @@ namespace OAuth\OAuth2\Service;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
-use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Http\Uri\UriInterface;
 
 /**
  * PayPal service.
@@ -31,16 +27,12 @@ class Paypal extends AbstractService
     const SCOPE_PHONE            = 'phone';
     const SCOPE_EXPRESSCHECKOUT  = 'https://uri.paypal.com/services/expresscheckout';
 
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
-    ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-
-        if (null === $baseApiUri) {
+    /**
+     * {@inheritdoc}
+     */
+    protected function init()
+    {
+        if( $this->baseApiUri === null ) {
             $this->baseApiUri = new Uri('https://api.paypal.com/v1/');
         }
     }

@@ -98,6 +98,7 @@ class ServiceFactory
      * @param array|null            $scopes      If creating an oauth2 service, array of scopes
      * @param UriInterface|null     $baseApiUri
      * @param string                $apiVersion version of the api call
+     * @param null                  $account of service to create
      *
      * @return ServiceInterface
      */
@@ -107,7 +108,8 @@ class ServiceFactory
         TokenStorageInterface $storage,
         $scopes = array(),
         UriInterface $baseApiUri = null,
-        $apiVersion = ""
+        $apiVersion = "",
+        $account = null
     ) {
         if (!$this->httpClient) {
             // for backwards compatibility.
@@ -124,7 +126,8 @@ class ServiceFactory
                     $storage,
                     $scopes,
                     $baseApiUri,
-                    $apiVersion
+                    $apiVersion,
+                    $account
                 );
             }
         }
@@ -159,6 +162,8 @@ class ServiceFactory
      * @param TokenStorageInterface $storage
      * @param array|null            $scopes      Array of scopes for the service
      * @param UriInterface|null     $baseApiUri
+     * @param string                $apiVersion version of the api call
+     * @param null                  $account of service to create
      *
      * @return ServiceInterface
      *
@@ -170,7 +175,8 @@ class ServiceFactory
         TokenStorageInterface $storage,
         array $scopes,
         UriInterface $baseApiUri = null,
-        $apiVersion = ""
+        $apiVersion = "",
+        $account = null
     ) {
         return new $serviceName(
             $credentials,
@@ -178,7 +184,8 @@ class ServiceFactory
             $storage,
             $this->resolveScopes($serviceName, $scopes),
             $baseApiUri,
-            $apiVersion
+            $apiVersion,
+            $account
         );
     }
 
@@ -217,6 +224,7 @@ class ServiceFactory
      * @param TokenStorageInterface $storage
      * @param array                 $scopes
      * @param UriInterface          $baseApiUri
+     * @param null                  $account of service to create
      *
      * @return ServiceInterface
      *
@@ -227,7 +235,8 @@ class ServiceFactory
         CredentialsInterface $credentials,
         TokenStorageInterface $storage,
         $scopes,
-        UriInterface $baseApiUri = null
+        UriInterface $baseApiUri = null,
+        $account = null
     ) {
         if (!empty($scopes)) {
             throw new Exception(
@@ -235,6 +244,6 @@ class ServiceFactory
             );
         }
 
-        return new $serviceName($credentials, $this->httpClient, $storage, new Signature($credentials), $baseApiUri);
+        return new $serviceName($credentials, $this->httpClient, $storage, new Signature($credentials), $baseApiUri, $account);
     }
 }

@@ -66,7 +66,7 @@ class Session implements TokenStorageInterface
     /**
      * {@inheritDoc}
      */
-    public function storeAccessToken($service, $account = null, TokenInterface $token)
+    public function storeAccessToken($service, TokenInterface $token, $account = null)
     {
         $serializedToken = serialize($token);
 
@@ -119,7 +119,7 @@ class Session implements TokenStorageInterface
     /**
      * {@inheritDoc}
      */
-    public function storeAuthorizationState($service, $account = null, $state)
+    public function storeAuthorizationState($service, $state, $account = null)
     {
         if (isset($_SESSION[$this->stateVariableName])
             && is_array($_SESSION[$this->stateVariableName])

@@ -62,7 +62,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $responseBody = $this->httpClient->retrieveResponse($this->getRequestTokenEndpoint(), array(), $headers);
 
         $token = $this->parseRequestTokenResponse($responseBody);
-        $this->storage->storeAccessToken($this->service(), $this->account(), $token);
+        $this->storage->storeAccessToken($this->service(), $token, $this->account());
 
         return $token;
     }
@@ -110,7 +110,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $bodyParams, $headers);
 
         $token = $this->parseAccessTokenResponse($responseBody);
-        $this->storage->storeAccessToken($this->service(), $this->account(), $token);
+        $this->storage->storeAccessToken($this->service(), $token, $this->account());
 
         return $token;
     }

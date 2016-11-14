@@ -49,7 +49,7 @@ class SymfonySession implements TokenStorageInterface
     /**
      * {@inheritDoc}
      */
-    public function storeAccessToken($service, $account = null, TokenInterface $token)
+    public function storeAccessToken($service, TokenInterface $token, $account = null)
     {
         // get previously saved tokens
         $tokens = $this->session->get($this->sessionVariableName);
@@ -129,7 +129,7 @@ class SymfonySession implements TokenStorageInterface
     /**
      * {@inheritDoc}
      */
-    public function storeAuthorizationState($service, $account = null, $state)
+    public function storeAuthorizationState($service, $state, $account = null)
     {
         // get previously saved tokens
         $states = $this->session->get($this->stateVariableName);

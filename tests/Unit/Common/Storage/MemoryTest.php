@@ -26,7 +26,7 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(
             '\\OAuth\\Common\\Storage\\Memory',
-            $storage->storeAccessToken('foo', 'bar', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'))
+            $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'))
         );
     }
 
@@ -40,9 +40,9 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
     {
         $storage = new Memory();
 
-        $storage->storeAccessToken('foo', 'bar', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
+        $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Token\\TokenInterface', $storage->retrieveAccessToken('foo', 'bar'));
+        $this->assertInstanceOf('\\OAuth\\Common\\Token\\TokenInterface', $storage->retrieveAccessToken('foo'));
     }
 
     /**
@@ -68,9 +68,9 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
     {
         $storage = new Memory();
 
-        $storage->storeAccessToken('foo', 'bar', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
+        $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
 
-        $this->assertTrue($storage->hasAccessToken('foo', 'bar'));
+        $this->assertTrue($storage->hasAccessToken('foo'));
     }
 
     /**
@@ -104,11 +104,11 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
     {
         $storage = new Memory();
 
-        $storage->storeAccessToken('foo', 'bar', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
+        $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
 
-        $this->assertTrue($storage->hasAccessToken('foo', 'bar'));
-        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\Memory', $storage->clearToken('foo', 'bar'));
-        $this->assertFalse($storage->hasAccessToken('foo', 'bar'));
+        $this->assertTrue($storage->hasAccessToken('foo'));
+        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\Memory', $storage->clearToken('foo'));
+        $this->assertFalse($storage->hasAccessToken('foo'));
     }
 
     /**
@@ -120,13 +120,13 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
     {
         $storage = new Memory();
 
-        $storage->storeAccessToken('foo', 'bar', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
-        $storage->storeAccessToken('bar', 'bar', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
+        $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
+        $storage->storeAccessToken('bar', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
 
-        $this->assertTrue($storage->hasAccessToken('foo', 'bar'));
-        $this->assertTrue($storage->hasAccessToken('bar', 'bar'));
+        $this->assertTrue($storage->hasAccessToken('foo'));
+        $this->assertTrue($storage->hasAccessToken('bar'));
         $this->assertInstanceOf('\\OAuth\\Common\\Storage\\Memory', $storage->clearAllTokens());
-        $this->assertFalse($storage->hasAccessToken('foo', 'bar'));
-        $this->assertFalse($storage->hasAccessToken('bar', 'bar'));
+        $this->assertFalse($storage->hasAccessToken('foo'));
+        $this->assertFalse($storage->hasAccessToken('bar'));
     }
 }

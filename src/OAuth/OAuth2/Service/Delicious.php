@@ -119,7 +119,7 @@ class Delicious extends AbstractService
         );
 
         $token = $this->parseAccessTokenResponse($responseBody);
-        $this->storage->storeAccessToken($this->service(), $this->account(), $token);
+        $this->storage->storeAccessToken($this->service(), $token, $this->account());
 
         return $token;
     }

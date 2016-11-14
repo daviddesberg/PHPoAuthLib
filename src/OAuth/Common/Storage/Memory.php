@@ -42,7 +42,7 @@ class Memory implements TokenStorageInterface
     /**
      * {@inheritDoc}
      */
-    public function storeAccessToken($service, $account = null, TokenInterface $token)
+    public function storeAccessToken($service, TokenInterface $token, $account = null)
     {
         $this->tokens[$service.$account] = $token;
 
@@ -97,7 +97,7 @@ class Memory implements TokenStorageInterface
     /**
      * {@inheritDoc}
      */
-    public function storeAuthorizationState($service, $account = null, $state)
+    public function storeAuthorizationState($service, $state, $account = null)
     {
         $this->states[$service.$account] = $state;
 

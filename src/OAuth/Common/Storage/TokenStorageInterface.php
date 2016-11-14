@@ -27,7 +27,7 @@ interface TokenStorageInterface
      *
      * @return TokenStorageInterface
      */
-    public function storeAccessToken($service, $account = null, TokenInterface $token);
+    public function storeAccessToken($service, TokenInterface $token, $account = null);
 
     /**
      * @param string $service
@@ -59,12 +59,12 @@ interface TokenStorageInterface
      * Store the authorization state related to a given service
      *
      * @param string $service
-     * @param string $account
      * @param string $state
+     * @param string $account
      *
      * @return TokenStorageInterface
      */
-    public function storeAuthorizationState($service, $account = null, $state);
+    public function storeAuthorizationState($service, $state, $account = null);
 
     /**
      * Check if an authorization state for a given service exists

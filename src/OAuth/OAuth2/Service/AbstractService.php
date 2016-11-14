@@ -136,7 +136,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         );
 
         $token = $this->parseAccessTokenResponse($responseBody);
-        $this->storage->storeAccessToken($this->service(), $this->account(), $token);
+        $this->storage->storeAccessToken($this->service(), $token, $this->account());
 
         return $token;
     }
@@ -235,7 +235,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
             $this->getExtraOAuthHeaders()
         );
         $token = $this->parseAccessTokenResponse($responseBody);
-        $this->storage->storeAccessToken($this->service(), $this->account(), $token);
+        $this->storage->storeAccessToken($this->service(), $token, $this->account());
 
         return $token;
     }

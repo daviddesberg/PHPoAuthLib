@@ -74,7 +74,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(
             '\\OAuth\\Common\\Storage\\Session',
-            $storage->storeAccessToken('foo', 'bar', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'))
+            $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'))
         );
     }
 
@@ -92,7 +92,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(
             '\\OAuth\\Common\\Storage\\Session',
-            $storage->storeAccessToken('foo', 'bar', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'))
+            $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'))
         );
     }
 
@@ -108,9 +108,9 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     {
         $storage = new Session();
 
-        $storage->storeAccessToken('foo', 'bar', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
+        $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Token\\TokenInterface', $storage->retrieveAccessToken('foo', 'bar'));
+        $this->assertInstanceOf('\\OAuth\\Common\\Token\\TokenInterface', $storage->retrieveAccessToken('foo'));
     }
 
     /**
@@ -140,9 +140,9 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     {
         $storage = new Session();
 
-        $storage->storeAccessToken('foo', 'bar', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
+        $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
 
-        $this->assertTrue($storage->hasAccessToken('foo', 'bar'));
+        $this->assertTrue($storage->hasAccessToken('foo'));
     }
 
     /**
@@ -182,11 +182,11 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     {
         $storage = new Session();
 
-        $storage->storeAccessToken('foo', 'bar', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
+        $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
 
-        $this->assertTrue($storage->hasAccessToken('foo', 'bar'));
-        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\Session', $storage->clearToken('foo', 'bar'));
-        $this->assertFalse($storage->hasAccessToken('foo', 'bar'));
+        $this->assertTrue($storage->hasAccessToken('foo'));
+        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\Session', $storage->clearToken('foo'));
+        $this->assertFalse($storage->hasAccessToken('foo'));
     }
 
     /**
@@ -200,14 +200,14 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     {
         $storage = new Session();
 
-        $storage->storeAccessToken('foo', 'bar', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
-        $storage->storeAccessToken('bar', 'bar', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
+        $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
+        $storage->storeAccessToken('bar', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
 
-        $this->assertTrue($storage->hasAccessToken('foo', 'bar'));
-        $this->assertTrue($storage->hasAccessToken('bar', 'bar'));
+        $this->assertTrue($storage->hasAccessToken('foo'));
+        $this->assertTrue($storage->hasAccessToken('bar'));
         $this->assertInstanceOf('\\OAuth\\Common\\Storage\\Session', $storage->clearAllTokens());
-        $this->assertFalse($storage->hasAccessToken('foo', 'bar'));
-        $this->assertFalse($storage->hasAccessToken('bar', 'bar'));
+        $this->assertFalse($storage->hasAccessToken('foo'));
+        $this->assertFalse($storage->hasAccessToken('bar'));
     }
 
     /**
@@ -237,8 +237,8 @@ class SessionTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(array('accessToken')));
 
         $storage = new Session();
-        $storage->storeAccessToken('foo', 'bar', $mock);
-        $retrievedToken = $storage->retrieveAccessToken('foo', 'bar');
+        $storage->storeAccessToken('foo', $mock);
+        $retrievedToken = $storage->retrieveAccessToken('foo');
 
         $this->assertInstanceOf('\\OAuth\\Common\\Token\\AbstractToken', $retrievedToken);
     }

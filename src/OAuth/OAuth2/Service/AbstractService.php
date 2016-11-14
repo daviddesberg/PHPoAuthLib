@@ -304,7 +304,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     protected function storeAuthorizationState($state)
     {
-        $this->storage->storeAuthorizationState($this->service(), $this->account(), $state);
+        $this->storage->storeAuthorizationState($this->service(), $state, $this->account());
     }
 
     /**

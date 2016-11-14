@@ -15,20 +15,6 @@ class Etsy extends AbstractService
 {
 
     protected $scopes = array();
-//
-//    public function __construct(
-//        CredentialsInterface $credentials,
-//        ClientInterface $httpClient,
-//        TokenStorageInterface $storage,
-//        SignatureInterface $signature,
-//        UriInterface $baseApiUri = null
-//    ) {
-//        parent::__construct($credentials, $httpClient, $storage, $signature, $baseApiUri);
-//
-//        if (null === $baseApiUri) {
-//            $this->baseApiUri = new Uri('https://openapi.etsy.com/v2/');
-//        }
-//    }
 
     /**
      * {@inheritdoc}

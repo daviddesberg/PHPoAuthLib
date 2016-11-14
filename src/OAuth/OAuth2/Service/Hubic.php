@@ -40,6 +40,8 @@ class Hubic extends AbstractService
      */
     protected function init()
     {
+        $this->stateParameterInAuthUrl = true;
+
         if( $this->baseApiUri === null ) {
             $this->baseApiUri = new Uri('https://api.hubic.com/');
         }

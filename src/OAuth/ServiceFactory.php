@@ -184,6 +184,7 @@ class ServiceFactory
             $storage,
             $this->resolveScopes($serviceName, $scopes),
             $baseApiUri,
+            false,
             $apiVersion,
             $account
         );
@@ -236,6 +237,7 @@ class ServiceFactory
         TokenStorageInterface $storage,
         $scopes,
         UriInterface $baseApiUri = null,
+        $apiVersion = "",
         $account = null
     ) {
         if (!empty($scopes)) {
@@ -244,6 +246,13 @@ class ServiceFactory
             );
         }
 
-        return new $serviceName($credentials, $this->httpClient, $storage, new Signature($credentials), $baseApiUri, $account);
+        return new $serviceName(
+            $credentials,
+            $this->httpClient,
+            $storage,
+            new Signature($credentials),
+            $baseApiUri,
+            $account
+        );
     }
 }

@@ -4,11 +4,16 @@ namespace OAuthTest\Unit\OAuth1\Service;
 
 use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Token\TokenInterface;
 use OAuth\OAuth1\Service\QuickBooks;
 
-class QuickBooksTest extends \PHPUnit_Framework_TestCase
+class QuickBooksTest extends AbstractTokenParserTest
 {
+    
+    protected function getClassName()
+    {
+        return '\OAuth\OAuth1\Service\QuickBooks';
+    }
+    
     public function testConstructCorrectInterfaceWithoutCustomUri()
     {
         $service = $this->getQuickBooks();
@@ -70,93 +75,6 @@ class QuickBooksTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @expectedException \OAuth\Common\Http\Exception\TokenResponseException
-     * @expectedExceptionMessage Error in retrieving token.
-     */
-    public function testParseRequestTokenResponseThrowsExceptionOnNulledResponse()
-    {
-        $client = $this->getClientInterfaceMockThatReturns(null);
-        $service = $this->getQuickBooks($client);
-        $service->requestRequestToken();
-    }
-
-    /**
-     * @expectedException \OAuth\Common\Http\Exception\TokenResponseException
-     * @expectedExceptionMessage Error in retrieving token.
-     */
-    public function testParseRequestTokenResponseThrowsExceptionOnResponseNotAnArray()
-    {
-        $client = $this->getClientInterfaceMockThatReturns('notanarray');
-        $service = $this->getQuickBooks($client);
-        $service->requestRequestToken();
-    }
-
-    /**
-     * @expectedException \OAuth\Common\Http\Exception\TokenResponseException
-     * @expectedExceptionMessage Error in retrieving token.
-     */
-    public function testParseRequestTokenResponseThrowsExceptionOnResponseCallbackNotSet()
-    {
-        $client = $this->getClientInterfaceMockThatReturns('foo=bar');
-        $service = $this->getQuickBooks($client);
-        $service->requestRequestToken();
-    }
-
-    /**
-     * @expectedException \OAuth\Common\Http\Exception\TokenResponseException
-     * @expectedExceptionMessage Error in retrieving token.
-     */
-    public function testParseRequestTokenResponseThrowsExceptionOnResponseCallbackNotTrue()
-    {
-        $client = $this->getClientInterfaceMockThatReturns(
-            'oauth_callback_confirmed=false'
-        );
-        $service = $this->getQuickBooks($client);
-        $service->requestRequestToken();
-    }
-
-    public function testParseRequestTokenResponseValid()
-    {
-        $client = $this->getClientInterfaceMockThatReturns(
-            'oauth_callback_confirmed=true&oauth_token=foo&oauth_token_secret=bar'
-        );
-        $service = $this->getQuickBooks($client);
-        $this->assertInstanceOf(
-            '\\OAuth\\OAuth1\\Token\\StdOAuth1Token',
-            $service->requestRequestToken()
-        );
-    }
-
-    /**
-     * @expectedException \OAuth\Common\Http\Exception\TokenResponseException
-     * @expectedExceptionMessage Error in retrieving token: "bar"
-     */
-    public function testParseAccessTokenResponseThrowsExceptionOnError()
-    {
-        $token = $this->getMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
-        $service = $this->getQuickBooksForRequestingAccessToken(
-            $token,
-            'error=bar'
-        );
-
-        $service->requestAccessToken('foo', 'bar', $token);
-    }
-
-    public function testParseAccessTokenResponseValid()
-    {
-        $token = $this->getMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
-        $service = $this->getQuickBooksForRequestingAccessToken(
-            $token,
-            'oauth_token=foo&oauth_token_secret=bar'
-        );
-
-        $this->assertInstanceOf(
-            '\\OAuth\\OAuth1\\Token\\StdOAuth1Token',
-            $service->requestAccessToken('foo', 'bar', $token)
-        );
-    }
-
     protected function getQuickBooks(
         ClientInterface $client = null,
         TokenStorageInterface $storage = null
@@ -180,33 +98,5 @@ class QuickBooksTest extends \PHPUnit_Framework_TestCase
             $storage,
             $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
         );
-    }
-
-    protected function getQuickBooksForRequestingAccessToken(
-        TokenInterface $token,
-        $response
-    )
-    {
-        $client = $this->getClientInterfaceMockThatReturns($response);
-        $storage = $this->getMock(
-            '\\OAuth\\Common\\Storage\\TokenStorageInterface'
-        );
-        $storage->expects($this->any())
-            ->method('retrieveAccessToken')
-            ->will($this->returnValue($token));
-
-        return $this->getQuickBooks($client, $storage);
-    }
-
-    protected function getClientInterfaceMockThatReturns($returnValue)
-    {
-        $client = $this->getMock(
-            '\\OAuth\\Common\\Http\\Client\\ClientInterface'
-        );
-        $client->expects($this->once())
-            ->method('retrieveResponse')
-            ->will($this->returnValue($returnValue));
-
-        return $client;
     }
 }

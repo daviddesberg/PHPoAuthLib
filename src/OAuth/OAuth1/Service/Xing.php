@@ -3,7 +3,6 @@
 namespace OAuth\OAuth1\Service;
 
 use OAuth\OAuth1\Signature\SignatureInterface;
-use OAuth\OAuth1\Token\StdOAuth1Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Consumer\CredentialsInterface;
@@ -50,48 +49,22 @@ class Xing extends AbstractService
     {
         return new Uri('https://api.xing.com/v1/request_token');
     }
-
+    
     /**
      * {@inheritdoc}
      */
-    protected function parseRequestTokenResponse($responseBody)
-    {
-        parse_str($responseBody, $data);
-
-        if (null === $data || !is_array($data)) {
-            throw new TokenResponseException('Unable to parse response.');
-        } elseif (!isset($data['oauth_callback_confirmed']) || $data['oauth_callback_confirmed'] !== 'true') {
-            throw new TokenResponseException('Error in retrieving token.');
-        }
-
-        return $this->parseAccessTokenResponse($responseBody);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function parseAccessTokenResponse($responseBody)
+    protected function validateTokenResponse($responseBody)
     {
         parse_str($responseBody, $data);
         $errors = json_decode($responseBody);
-
+        
         if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif ($errors) {
             throw new TokenResponseException('Error in retrieving token: "' . $errors->error_name . '"');
         }
-
-        $token = new StdOAuth1Token();
-
-        $token->setRequestToken($data['oauth_token']);
-        $token->setRequestTokenSecret($data['oauth_token_secret']);
-        $token->setAccessToken($data['oauth_token']);
-        $token->setAccessTokenSecret($data['oauth_token_secret']);
-
-        $token->setEndOfLife(StdOAuth1Token::EOL_NEVER_EXPIRES);
-        unset($data['oauth_token'], $data['oauth_token_secret']);
-        $token->setExtraParams($data);
-
-        return $token;
+        
+        return $data;
     }
+    
 }

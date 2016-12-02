@@ -129,7 +129,8 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
         }));
 
         $token = $this->getMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
-        $token->expects($this->once())->method('getRequestTokenSecret')->will($this->returnValue('baz'));
+        $token->expects($this->exactly(2))->method('getRequestTokenSecret')->will($this->returnValue('baz'));
+        $token->expects($this->once())->method('getAccessTokenSecret')->willReturn('baz');
 
         $storage = $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
         $storage->expects($this->any())->method('retrieveAccessToken')->will($this->returnValue($token));
@@ -165,6 +166,8 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
         }));
 
         $token = $this->getMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
+        $token->expects($this->once())->method('getRequestTokenSecret')->will($this->returnValue('baz'));
+        $token->expects($this->once())->method('getAccessTokenSecret')->willReturn('baz');
 
         $storage = $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
         $storage->expects($this->any())->method('retrieveAccessToken')->will($this->returnValue($token));
@@ -197,8 +200,10 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
         $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('response!'));
 
         $token = $this->getMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
-        //$token->expects($this->once())->method('getRequestTokenSecret')->will($this->returnValue('baz'));
-
+        $token->expects($this->once())
+                ->method('getAccessTokenSecret')
+                ->willReturn('accessTokenSecret');
+        
         $storage = $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
         $storage->expects($this->any())->method('retrieveAccessToken')->will($this->returnValue($token));
 
@@ -224,6 +229,9 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
         $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('response!'));
 
         $token = $this->getMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
+        $token->expects($this->once())
+                ->method('getAccessTokenSecret')
+                ->willReturn('accessTokenSecret');
 
         $storage = $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
         $storage->expects($this->any())->method('retrieveAccessToken')->will($this->returnValue($token));

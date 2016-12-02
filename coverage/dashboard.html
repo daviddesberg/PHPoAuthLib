@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for /srv/www/default/repoTests/PHPoAuthLib/src/OAuth</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/nv.d3.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.min.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+ </head>
+ <body>
+  <header>
+   <div class="container">
+    <div class="row">
+     <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="index.html">/srv/www/default/repoTests/PHPoAuthLib/src/OAuth</a></li>
+        <li class="active">(Dashboard)</li>
+
+      </ol>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="OAuth1/Service/FiveHundredPx.php.html#26">FiveHundredPx</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Redis.php.html#13">Redis</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth1/Service/Redmine.php.html#12">Redmine</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Bitrix24.php.html#13">Bitrix24</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Harvest.php.html#14">Harvest</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Pocket.php.html#13">Pocket</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Salesforce.php.html#14">Salesforce</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/SymfonySession.php.html#10">SymfonySession</a></td><td class="text-right">51%</td></tr>
+       <tr><td><a href="Common/Storage/Memory.php.html#12">Memory</a></td><td class="text-right">56%</td></tr>
+       <tr><td><a href="Common/Storage/Session.php.html#12">Session</a></td><td class="text-right">57%</td></tr>
+       <tr><td><a href="OAuth2/Service/AbstractService.php.html#18">AbstractService</a></td><td class="text-right">80%</td></tr>
+       <tr><td><a href="Common/Token/AbstractToken.php.html#8">AbstractToken</a></td><td class="text-right">88%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Common/Storage/Redis.php.html#13">Redis</a></td><td class="text-right">650</td></tr>
+       <tr><td><a href="OAuth2/Service/Pocket.php.html#13">Pocket</a></td><td class="text-right">306</td></tr>
+       <tr><td><a href="OAuth2/Service/Harvest.php.html#14">Harvest</a></td><td class="text-right">240</td></tr>
+       <tr><td><a href="OAuth2/Service/Salesforce.php.html#14">Salesforce</a></td><td class="text-right">182</td></tr>
+       <tr><td><a href="OAuth2/Service/Bitrix24.php.html#13">Bitrix24</a></td><td class="text-right">132</td></tr>
+       <tr><td><a href="Common/Storage/SymfonySession.php.html#10">SymfonySession</a></td><td class="text-right">91</td></tr>
+       <tr><td><a href="Common/Storage/Session.php.html#12">Session</a></td><td class="text-right">83</td></tr>
+       <tr><td><a href="OAuth2/Service/AbstractService.php.html#18">AbstractService</a></td><td class="text-right">45</td></tr>
+       <tr><td><a href="Common/Storage/Memory.php.html#12">Memory</a></td><td class="text-right">41</td></tr>
+       <tr><td><a href="OAuth1/Service/FiveHundredPx.php.html#26">FiveHundredPx</a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="OAuth1/Service/Redmine.php.html#12">Redmine</a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Common/Token/AbstractToken.php.html#8">AbstractToken</a></td><td class="text-right">16</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="OAuth2/Service/Salesforce.php.html#88"><abbr title="Salesforce::getExtraOAuthHeaders">getExtraOAuthHeaders</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Bitrix24.php.html#37"><abbr title="Bitrix24::getAccessTokenEndpoint">getAccessTokenEndpoint</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Harvest.php.html#34"><abbr title="Harvest::getAuthorizationUri">getAuthorizationUri</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Harvest.php.html#17"><abbr title="Harvest::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Facebook.php.html#204"><abbr title="Facebook::getApiVersionString">getApiVersionString</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Bitrix24.php.html#92"><abbr title="Bitrix24::parseAccessTokenResponse">parseAccessTokenResponse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Bitrix24.php.html#67"><abbr title="Bitrix24::getAccessTokenUri">getAccessTokenUri</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Bitrix24.php.html#45"><abbr title="Bitrix24::requestAccessToken">requestAccessToken</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Bitrix24.php.html#29"><abbr title="Bitrix24::getAuthorizationEndpoint">getAuthorizationEndpoint</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Harvest.php.html#66"><abbr title="Harvest::getAccessTokenEndpoint">getAccessTokenEndpoint</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth1/Service/Redmine.php.html#47"><abbr title="Redmine::getAccessTokenEndpoint">getAccessTokenEndpoint</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth1/Service/Redmine.php.html#39"><abbr title="Redmine::getAuthorizationEndpoint">getAuthorizationEndpoint</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth1/Service/Redmine.php.html#31"><abbr title="Redmine::getRequestTokenEndpoint">getRequestTokenEndpoint</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth1/Service/Redmine.php.html#14"><abbr title="Redmine::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth1/Service/FiveHundredPx.php.html#67"><abbr title="FiveHundredPx::getAccessTokenEndpoint">getAccessTokenEndpoint</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth1/Service/FiveHundredPx.php.html#59"><abbr title="FiveHundredPx::getAuthorizationEndpoint">getAuthorizationEndpoint</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth1/Service/FiveHundredPx.php.html#51"><abbr title="FiveHundredPx::getRequestTokenEndpoint">getRequestTokenEndpoint</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Harvest.php.html#58"><abbr title="Harvest::getAuthorizationEndpoint">getAuthorizationEndpoint</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Harvest.php.html#74"><abbr title="Harvest::getAuthorizationMethod">getAuthorizationMethod</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Token/AbstractToken.php.html#122"><abbr title="AbstractToken::isExpired">isExpired</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Pocket.php.html#61"><abbr title="Pocket::requestRequestToken">requestRequestToken</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Salesforce.php.html#59"><abbr title="Salesforce::parseAccessTokenResponse">parseAccessTokenResponse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Salesforce.php.html#43"><abbr title="Salesforce::parseRequestTokenResponse">parseRequestTokenResponse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Salesforce.php.html#35"><abbr title="Salesforce::getAccessTokenEndpoint">getAccessTokenEndpoint</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Salesforce.php.html#27"><abbr title="Salesforce::getAuthorizationEndpoint">getAuthorizationEndpoint</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Pocket.php.html#106"><abbr title="Pocket::parseAccessTokenResponse">parseAccessTokenResponse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Pocket.php.html#88"><abbr title="Pocket::requestAccessToken">requestAccessToken</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Pocket.php.html#76"><abbr title="Pocket::parseRequestTokenResponse">parseRequestTokenResponse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Pocket.php.html#43"><abbr title="Pocket::getAuthorizationUri">getAuthorizationUri</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Harvest.php.html#82"><abbr title="Harvest::parseAccessTokenResponse">parseAccessTokenResponse</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Pocket.php.html#38"><abbr title="Pocket::getAccessTokenEndpoint">getAccessTokenEndpoint</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Pocket.php.html#33"><abbr title="Pocket::getAuthorizationEndpoint">getAuthorizationEndpoint</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Pocket.php.html#28"><abbr title="Pocket::getRequestTokenEndpoint">getRequestTokenEndpoint</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Pocket.php.html#15"><abbr title="Pocket::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Harvest.php.html#153"><abbr title="Harvest::getExtraApiHeaders">getExtraApiHeaders</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Harvest.php.html#143"><abbr title="Harvest::getExtraOAuthHeaders">getExtraOAuthHeaders</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/Harvest.php.html#113"><abbr title="Harvest::refreshAccessToken">refreshAccessToken</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth1/Service/FiveHundredPx.php.html#28"><abbr title="FiveHundredPx::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/SymfonySession.php.html#185"><abbr title="SymfonySession::clearAllAuthorizationStates">clearAllAuthorizationStates</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/SymfonySession.php.html#166"><abbr title="SymfonySession::clearAuthorizationState">clearAuthorizationState</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Memory.php.html#100"><abbr title="Memory::storeAuthorizationState">storeAuthorizationState</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Redis.php.html#85"><abbr title="Redis::hasAccessToken">hasAccessToken</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Redis.php.html#72"><abbr title="Redis::storeAccessToken">storeAccessToken</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Redis.php.html#54"><abbr title="Redis::retrieveAccessToken">retrieveAccessToken</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Redis.php.html#42"><abbr title="Redis::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Memory.php.html#132"><abbr title="Memory::clearAllAuthorizationStates">clearAllAuthorizationStates</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Memory.php.html#119"><abbr title="Memory::clearAuthorizationState">clearAuthorizationState</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Memory.php.html#111"><abbr title="Memory::hasAuthorizationState">hasAuthorizationState</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Memory.php.html#88"><abbr title="Memory::retrieveAuthorizationState">retrieveAuthorizationState</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Redis.php.html#111"><abbr title="Redis::clearAllTokens">clearAllTokens</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/AbstractService.php.html#360"><abbr title="AbstractService::getScopesDelimiter">getScopesDelimiter</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/AbstractService.php.html#348"><abbr title="AbstractService::getApiVersionString">getApiVersionString</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/AbstractService.php.html#294"><abbr title="AbstractService::storeAuthorizationState">storeAuthorizationState</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/AbstractService.php.html#284"><abbr title="AbstractService::retrieveAuthorizationState">retrieveAuthorizationState</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/AbstractService.php.html#274"><abbr title="AbstractService::generateAuthorizationState">generateAuthorizationState</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/AbstractService.php.html#262"><abbr title="AbstractService::validateAuthorizationState">validateAuthorizationState</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="OAuth2/Service/AbstractService.php.html#251"><abbr title="AbstractService::needsStateParameterInAuthUrl">needsStateParameterInAuthUrl</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Redis.php.html#99"><abbr title="Redis::clearToken">clearToken</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Redis.php.html#204"><abbr title="Redis::anonymous function">anonymous function</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Session.php.html#122"><abbr title="Session::storeAuthorizationState">storeAuthorizationState</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Redis.php.html#136"><abbr title="Redis::retrieveAuthorizationState">retrieveAuthorizationState</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/SymfonySession.php.html#116"><abbr title="SymfonySession::retrieveAuthorizationState">retrieveAuthorizationState</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/SymfonySession.php.html#105"><abbr title="SymfonySession::clearAllTokens">clearAllTokens</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Session.php.html#194"><abbr title="Session::sessionHasStarted">sessionHasStarted</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Session.php.html#174"><abbr title="Session::clearAllAuthorizationStates">clearAllAuthorizationStates</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Session.php.html#161"><abbr title="Session::clearAuthorizationState">clearAuthorizationState</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Session.php.html#149"><abbr title="Session::retrieveAuthorizationState">retrieveAuthorizationState</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Session.php.html#141"><abbr title="Session::hasAuthorizationState">hasAuthorizationState</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/SymfonySession.php.html#132"><abbr title="SymfonySession::storeAuthorizationState">storeAuthorizationState</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/SymfonySession.php.html#153"><abbr title="SymfonySession::hasAuthorizationState">hasAuthorizationState</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Redis.php.html#226"><abbr title="Redis::getKey">getKey</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Redis.php.html#218"><abbr title="Redis::getRedis">getRedis</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Redis.php.html#193"><abbr title="Redis::clearAllAuthorizationStates">clearAllAuthorizationStates</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Redis.php.html#181"><abbr title="Redis::clearAuthorizationState">clearAuthorizationState</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Redis.php.html#167"><abbr title="Redis::hasAuthorizationState">hasAuthorizationState</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Redis.php.html#154"><abbr title="Redis::storeAuthorizationState">storeAuthorizationState</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Common/Storage/Session.php.html#69"><abbr title="Session::storeAccessToken">storeAccessToken</abbr></a></td><td class="text-right">71%</td></tr>
+       <tr><td><a href="OAuth2/Service/Mailchimp.php.html#15"><abbr title="Mailchimp::__construct">__construct</abbr></a></td><td class="text-right">75%</td></tr>
+       <tr><td><a href="OAuth2/Service/AbstractService.php.html#74"><abbr title="AbstractService::getAuthorizationUri">getAuthorizationUri</abbr></a></td><td class="text-right">78%</td></tr>
+       <tr><td><a href="Common/Http/Client/StreamClient.php.html#27"><abbr title="StreamClient::retrieveResponse">retrieveResponse</abbr></a></td><td class="text-right">88%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="OAuth2/Service/Salesforce.php.html#59"><abbr title="Salesforce::parseAccessTokenResponse">parseAccessTokenResponse</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="OAuth2/Service/Salesforce.php.html#43"><abbr title="Salesforce::parseRequestTokenResponse">parseRequestTokenResponse</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="OAuth2/Service/Bitrix24.php.html#92"><abbr title="Bitrix24::parseAccessTokenResponse">parseAccessTokenResponse</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="OAuth2/Service/Pocket.php.html#106"><abbr title="Pocket::parseAccessTokenResponse">parseAccessTokenResponse</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="OAuth2/Service/Pocket.php.html#76"><abbr title="Pocket::parseRequestTokenResponse">parseRequestTokenResponse</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="OAuth2/Service/Harvest.php.html#82"><abbr title="Harvest::parseAccessTokenResponse">parseAccessTokenResponse</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="Common/Storage/Session.php.html#122"><abbr title="Session::storeAuthorizationState">storeAuthorizationState</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Common/Storage/Redis.php.html#54"><abbr title="Redis::retrieveAccessToken">retrieveAccessToken</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Common/Storage/Redis.php.html#85"><abbr title="Redis::hasAccessToken">hasAccessToken</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Common/Token/AbstractToken.php.html#122"><abbr title="AbstractToken::isExpired">isExpired</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Common/Storage/SymfonySession.php.html#166"><abbr title="SymfonySession::clearAuthorizationState">clearAuthorizationState</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Common/Storage/Redis.php.html#136"><abbr title="Redis::retrieveAuthorizationState">retrieveAuthorizationState</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Common/Storage/Redis.php.html#167"><abbr title="Redis::hasAuthorizationState">hasAuthorizationState</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Common/Storage/SymfonySession.php.html#153"><abbr title="SymfonySession::hasAuthorizationState">hasAuthorizationState</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Common/Http/Client/StreamClient.php.html#27"><abbr title="StreamClient::retrieveResponse">retrieveResponse</abbr></a></td><td class="text-right">11</td></tr>
+       <tr><td><a href="Common/Storage/SymfonySession.php.html#132"><abbr title="SymfonySession::storeAuthorizationState">storeAuthorizationState</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Common/Storage/Session.php.html#149"><abbr title="Session::retrieveAuthorizationState">retrieveAuthorizationState</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="OAuth2/Service/AbstractService.php.html#262"><abbr title="AbstractService::validateAuthorizationState">validateAuthorizationState</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="OAuth2/Service/AbstractService.php.html#348"><abbr title="AbstractService::getApiVersionString">getApiVersionString</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Common/Storage/Memory.php.html#88"><abbr title="Memory::retrieveAuthorizationState">retrieveAuthorizationState</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="OAuth2/Service/Pocket.php.html#43"><abbr title="Pocket::getAuthorizationUri">getAuthorizationUri</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="OAuth2/Service/Pocket.php.html#15"><abbr title="Pocket::__construct">__construct</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="OAuth2/Service/Harvest.php.html#113"><abbr title="Harvest::refreshAccessToken">refreshAccessToken</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Common/Storage/Memory.php.html#111"><abbr title="Memory::hasAuthorizationState">hasAuthorizationState</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="OAuth2/Service/Harvest.php.html#34"><abbr title="Harvest::getAuthorizationUri">getAuthorizationUri</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="OAuth2/Service/Harvest.php.html#17"><abbr title="Harvest::__construct">__construct</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="OAuth2/Service/Facebook.php.html#204"><abbr title="Facebook::getApiVersionString">getApiVersionString</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Common/Storage/Memory.php.html#119"><abbr title="Memory::clearAuthorizationState">clearAuthorizationState</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="OAuth2/Service/Bitrix24.php.html#67"><abbr title="Bitrix24::getAccessTokenUri">getAccessTokenUri</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="OAuth2/Service/Bitrix24.php.html#45"><abbr title="Bitrix24::requestAccessToken">requestAccessToken</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="OAuth1/Service/Redmine.php.html#14"><abbr title="Redmine::__construct">__construct</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="OAuth1/Service/FiveHundredPx.php.html#28"><abbr title="FiveHundredPx::__construct">__construct</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Common/Storage/Redis.php.html#111"><abbr title="Redis::clearAllTokens">clearAllTokens</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Common/Storage/Redis.php.html#204"><abbr title="Redis::anonymous function">anonymous function</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Common/Storage/Redis.php.html#193"><abbr title="Redis::clearAllAuthorizationStates">clearAllAuthorizationStates</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Common/Storage/SymfonySession.php.html#116"><abbr title="SymfonySession::retrieveAuthorizationState">retrieveAuthorizationState</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Common/Storage/Session.php.html#194"><abbr title="Session::sessionHasStarted">sessionHasStarted</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Common/Storage/Session.php.html#161"><abbr title="Session::clearAuthorizationState">clearAuthorizationState</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="OAuth2/Service/AbstractService.php.html#74"><abbr title="AbstractService::getAuthorizationUri">getAuthorizationUri</abbr></a></td><td class="text-right">4</td></tr>
+       <tr><td><a href="Common/Storage/Session.php.html#69"><abbr title="Session::storeAccessToken">storeAccessToken</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="OAuth2/Service/Mailchimp.php.html#15"><abbr title="Mailchimp::__construct">__construct</abbr></a></td><td class="text-right">3</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="http://github.com/sebastianbergmann/php-code-coverage" target="_top">PHP_CodeCoverage 2.2.4</a> using <a href="http://php.net/" target="_top">PHP 7.0.5-3+donate.sury.org~trusty+1</a> and <a href="https://phpunit.de/">PHPUnit 4.8.24</a> at Sun May 1 22:28:46 CEST 2016.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="js/jquery.min.js" type="text/javascript"></script>
+  <script src="js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="js/holder.min.js" type="text/javascript"></script>
+  <script src="js/d3.min.js" type="text/javascript"></script>
+  <script src="js/nv.d3.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([7,0,0,0,0,0,3,0,0,2,4,54], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([76,0,0,0,0,0,0,0,3,1,4,357], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(key, y, e, graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[100,6,"<a href=\"Common\/AutoLoader.php.html#10\">AutoLoader<\/a>"],[100,4,"<a href=\"Common\/Consumer\/Credentials.php.html#8\">Credentials<\/a>"],[100,5,"<a href=\"Common\/Http\/Client\/AbstractClient.php.html#8\">AbstractClient<\/a>"],[97.777777777778,18,"<a href=\"Common\/Http\/Client\/CurlClient.php.html#11\">CurlClient<\/a>"],[90.909090909091,12,"<a href=\"Common\/Http\/Client\/StreamClient.php.html#11\">StreamClient<\/a>"],[100,62,"<a href=\"Common\/Http\/Uri\/Uri.php.html#10\">Uri<\/a>"],[100,21,"<a href=\"Common\/Http\/Uri\/UriFactory.php.html#10\">UriFactory<\/a>"],[80.898876404494,36,"<a href=\"OAuth2\/Service\/AbstractService.php.html#18\">AbstractService<\/a>"],[100,0,"<a href=\"Common\/Storage\/Exception\/AuthorizationStateNotFoundException.php.html#8\">AuthorizationStateNotFoundException<\/a>"],[56,17,"<a href=\"Common\/Storage\/Memory.php.html#12\">Memory<\/a>"],[0,25,"<a href=\"Common\/Storage\/Redis.php.html#13\">Redis<\/a>"],[57.446808510638,27,"<a href=\"Common\/Storage\/Session.php.html#12\">Session<\/a>"],[51.063829787234,24,"<a href=\"Common\/Storage\/SymfonySession.php.html#10\">SymfonySession<\/a>"],[88.461538461538,16,"<a href=\"Common\/Token\/AbstractToken.php.html#8\">AbstractToken<\/a>"],[100,5,"<a href=\"OAuth1\/Service\/BitBucket.php.html#12\">BitBucket<\/a>"],[100,9,"<a href=\"OAuth1\/Service\/Etsy.php.html#12\">Etsy<\/a>"],[100,5,"<a href=\"OAuth1\/Service\/FitBit.php.html#12\">FitBit<\/a>"],[0,5,"<a href=\"OAuth1\/Service\/FiveHundredPx.php.html#26\">FiveHundredPx<\/a>"],[100,13,"<a href=\"OAuth1\/Service\/Flickr.php.html#12\">Flickr<\/a>"],[100,6,"<a href=\"OAuth1\/Service\/QuickBooks.php.html#12\">QuickBooks<\/a>"],[0,5,"<a href=\"OAuth1\/Service\/Redmine.php.html#12\">Redmine<\/a>"],[100,5,"<a href=\"OAuth1\/Service\/ScoopIt.php.html#12\">ScoopIt<\/a>"],[100,5,"<a href=\"OAuth1\/Service\/Tumblr.php.html#12\">Tumblr<\/a>"],[100,10,"<a href=\"OAuth1\/Service\/Twitter.php.html#13\">Twitter<\/a>"],[100,9,"<a href=\"OAuth1\/Service\/Xing.php.html#13\">Xing<\/a>"],[100,9,"<a href=\"OAuth2\/Service\/Yahoo.php.html#9\">Yahoo<\/a>"],[100,13,"<a href=\"OAuth1\/Signature\/Signature.php.html#9\">Signature<\/a>"],[100,6,"<a href=\"OAuth1\/Token\/StdOAuth1Token.php.html#11\">StdOAuth1Token<\/a>"],[100,11,"<a href=\"OAuth2\/Service\/Amazon.php.html#19\">Amazon<\/a>"],[100,11,"<a href=\"OAuth2\/Service\/Bitly.php.html#13\">Bitly<\/a>"],[0,11,"<a href=\"OAuth2\/Service\/Bitrix24.php.html#13\">Bitrix24<\/a>"],[100,10,"<a href=\"OAuth2\/Service\/Box.php.html#19\">Box<\/a>"],[100,17,"<a href=\"OAuth2\/Service\/Buffer.php.html#18\">Buffer<\/a>"],[100,13,"<a href=\"OAuth2\/Service\/Dailymotion.php.html#19\">Dailymotion<\/a>"],[100,12,"<a href=\"OAuth2\/Service\/Deezer.php.html#27\">Deezer<\/a>"],[100,13,"<a href=\"OAuth2\/Service\/Delicious.php.html#27\">Delicious<\/a>"],[100,10,"<a href=\"OAuth2\/Service\/DeviantArt.php.html#14\">DeviantArt<\/a>"],[100,12,"<a href=\"OAuth2\/Service\/Dropbox.php.html#19\">Dropbox<\/a>"],[100,11,"<a href=\"OAuth2\/Service\/EveOnline.php.html#22\">EveOnline<\/a>"],[100,0,"<a href=\"OAuth2\/Service\/Exception\/InvalidAccessTypeException.php.html#10\">InvalidAccessTypeException<\/a>"],[100,0,"<a href=\"OAuth2\/Service\/Exception\/InvalidAuthorizationStateException.php.html#8\">InvalidAuthorizationStateException<\/a>"],[96.428571428571,15,"<a href=\"OAuth2\/Service\/Facebook.php.html#14\">Facebook<\/a>"],[100,9,"<a href=\"OAuth2\/Service\/Foursquare.php.html#13\">Foursquare<\/a>"],[100,12,"<a href=\"OAuth2\/Service\/GitHub.php.html#13\">GitHub<\/a>"],[100,11,"<a href=\"OAuth2\/Service\/Google.php.html#14\">Google<\/a>"],[0,15,"<a href=\"OAuth2\/Service\/Harvest.php.html#14\">Harvest<\/a>"],[100,14,"<a href=\"OAuth2\/Service\/Heroku.php.html#19\">Heroku<\/a>"],[100,14,"<a href=\"OAuth2\/Service\/Hubic.php.html#27\">Hubic<\/a>"],[100,9,"<a href=\"OAuth2\/Service\/Instagram.php.html#13\">Instagram<\/a>"],[100,12,"<a href=\"OAuth2\/Service\/JawboneUP.php.html#19\">JawboneUP<\/a>"],[100,10,"<a href=\"OAuth2\/Service\/Linkedin.php.html#19\">Linkedin<\/a>"],[93.333333333333,13,"<a href=\"OAuth2\/Service\/Mailchimp.php.html#13\">Mailchimp<\/a>"],[100,10,"<a href=\"OAuth2\/Service\/Microsoft.php.html#13\">Microsoft<\/a>"],[100,10,"<a href=\"OAuth2\/Service\/Nest.php.html#27\">Nest<\/a>"],[100,10,"<a href=\"OAuth2\/Service\/Netatmo.php.html#27\">Netatmo<\/a>"],[100,12,"<a href=\"OAuth2\/Service\/ParrotFlowerPower.php.html#29\">ParrotFlowerPower<\/a>"],[100,11,"<a href=\"OAuth2\/Service\/Paypal.php.html#19\">Paypal<\/a>"],[100,11,"<a href=\"OAuth2\/Service\/Pinterest.php.html#27\">Pinterest<\/a>"],[0,17,"<a href=\"OAuth2\/Service\/Pocket.php.html#13\">Pocket<\/a>"],[100,11,"<a href=\"OAuth2\/Service\/Reddit.php.html#13\">Reddit<\/a>"],[100,11,"<a href=\"OAuth2\/Service\/RunKeeper.php.html#18\">RunKeeper<\/a>"],[0,13,"<a href=\"OAuth2\/Service\/Salesforce.php.html#14\">Salesforce<\/a>"],[100,10,"<a href=\"OAuth2\/Service\/SoundCloud.php.html#13\">SoundCloud<\/a>"],[100,12,"<a href=\"OAuth2\/Service\/Spotify.php.html#13\">Spotify<\/a>"],[100,16,"<a href=\"OAuth2\/Service\/Strava.php.html#30\">Strava<\/a>"],[100,11,"<a href=\"OAuth2\/Service\/Ustream.php.html#13\">Ustream<\/a>"],[100,14,"<a href=\"OAuth2\/Service\/Vimeo.php.html#29\">Vimeo<\/a>"],[100,10,"<a href=\"OAuth2\/Service\/Vkontakte.php.html#13\">Vkontakte<\/a>"],[100,10,"<a href=\"OAuth2\/Service\/Yammer.php.html#13\">Yammer<\/a>"],[100,17,"<a href=\"ServiceFactory.php.html#26\">ServiceFactory<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(key, y, e, graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[100,1,"<a href=\"Common\/AutoLoader.php.html#28\">AutoLoader::__construct<\/a>"],[100,3,"<a href=\"Common\/AutoLoader.php.html#41\">AutoLoader::load<\/a>"],[100,1,"<a href=\"Common\/AutoLoader.php.html#67\">AutoLoader::register<\/a>"],[100,1,"<a href=\"Common\/AutoLoader.php.html#77\">AutoLoader::unregister<\/a>"],[100,1,"<a href=\"Common\/Consumer\/Credentials.php.html#30\">Credentials::__construct<\/a>"],[100,1,"<a href=\"Common\/Consumer\/Credentials.php.html#40\">Credentials::getCallbackUrl<\/a>"],[100,1,"<a href=\"Common\/Consumer\/Credentials.php.html#48\">Credentials::getConsumerId<\/a>"],[100,1,"<a href=\"Common\/Consumer\/Credentials.php.html#56\">Credentials::getConsumerSecret<\/a>"],[100,1,"<a href=\"Common\/Http\/Client\/AbstractClient.php.html#30\">AbstractClient::__construct<\/a>"],[100,1,"<a href=\"Common\/Http\/Client\/AbstractClient.php.html#40\">AbstractClient::setMaxRedirects<\/a>"],[100,1,"<a href=\"Common\/Http\/Client\/AbstractClient.php.html#52\">AbstractClient::setTimeout<\/a>"],[100,1,"<a href=\"Common\/Http\/Client\/AbstractClient.php.html#62\">AbstractClient::normalizeHeaders<\/a>"],[100,1,"<a href=\"Common\/Http\/Client\/AbstractClient.php.html#67\">AbstractClient::anonymous function<\/a>"],[100,1,"<a href=\"Common\/Http\/Client\/CurlClient.php.html#33\">CurlClient::setCurlParameters<\/a>"],[100,1,"<a href=\"Common\/Http\/Client\/CurlClient.php.html#43\">CurlClient::setForceSSL3<\/a>"],[97.560975609756,16,"<a href=\"Common\/Http\/Client\/CurlClient.php.html#64\">CurlClient::retrieveResponse<\/a>"],[88,11,"<a href=\"Common\/Http\/Client\/StreamClient.php.html#27\">StreamClient::retrieveResponse<\/a>"],[100,1,"<a href=\"Common\/Http\/Client\/StreamClient.php.html#79\">StreamClient::generateStreamContext<\/a>"],[100,2,"<a href=\"Common\/Http\/Uri\/Uri.php.html#65\">Uri::__construct<\/a>"],[100,12,"<a href=\"Common\/Http\/Uri\/Uri.php.html#77\">Uri::parseUri<\/a>"],[100,3,"<a href=\"Common\/Http\/Uri\/Uri.php.html#128\">Uri::protectUserInfo<\/a>"],[100,1,"<a href=\"Common\/Http\/Uri\/Uri.php.html#147\">Uri::getScheme<\/a>"],[100,1,"<a href=\"Common\/Http\/Uri\/Uri.php.html#155\">Uri::getUserInfo<\/a>"],[100,1,"<a href=\"Common\/Http\/Uri\/Uri.php.html#163\">Uri::getRawUserInfo<\/a>"],[100,1,"<a href=\"Common\/Http\/Uri\/Uri.php.html#171\">Uri::getHost<\/a>"],[100,1,"<a href=\"Common\/Http\/Uri\/Uri.php.html#179\">Uri::getPort<\/a>"],[100,1,"<a href=\"Common\/Http\/Uri\/Uri.php.html#187\">Uri::getPath<\/a>"],[100,1,"<a href=\"Common\/Http\/Uri\/Uri.php.html#195\">Uri::getQuery<\/a>"],[100,1,"<a href=\"Common\/Http\/Uri\/Uri.php.html#203\">Uri::getFragment<\/a>"],[100,3,"<a href=\"Common\/Http\/Uri\/Uri.php.html#214\">Uri::getAuthority<\/a>"],[100,3,"<a href=\"Common\/Http\/Uri\/Uri.php.html#229\">Uri::getRawAuthority<\/a>"],[100,5,"<a href=\"Common\/Http\/Uri\/Uri.php.html#244\">Uri::getAbsoluteUri<\/a>"],[100,3,"<a href=\"Common\/Http\/Uri\/Uri.php.html#268\">Uri::getRelativeUri<\/a>"],[100,5,"<a href=\"Common\/Http\/Uri\/Uri.php.html#287\">Uri::__toString<\/a>"],[100,3,"<a href=\"Common\/Http\/Uri\/Uri.php.html#311\">Uri::setPath<\/a>"],[100,1,"<a href=\"Common\/Http\/Uri\/Uri.php.html#327\">Uri::setQuery<\/a>"],[100,2,"<a href=\"Common\/Http\/Uri\/Uri.php.html#336\">Uri::addToQuery<\/a>"],[100,1,"<a href=\"Common\/Http\/Uri\/Uri.php.html#347\">Uri::setFragment<\/a>"],[100,1,"<a href=\"Common\/Http\/Uri\/Uri.php.html#355\">Uri::setScheme<\/a>"],[100,2,"<a href=\"Common\/Http\/Uri\/Uri.php.html#364\">Uri::setUserInfo<\/a>"],[100,5,"<a href=\"Common\/Http\/Uri\/Uri.php.html#374\">Uri::setPort<\/a>"],[100,1,"<a href=\"Common\/Http\/Uri\/Uri.php.html#388\">Uri::setHost<\/a>"],[100,1,"<a href=\"Common\/Http\/Uri\/Uri.php.html#396\">Uri::hasExplicitTrailingHostSlash<\/a>"],[100,1,"<a href=\"Common\/Http\/Uri\/Uri.php.html#404\">Uri::hasExplicitPortSpecified<\/a>"],[100,2,"<a href=\"Common\/Http\/Uri\/UriFactory.php.html#19\">UriFactory::createFromSuperGlobalArray<\/a>"],[100,1,"<a href=\"Common\/Http\/Uri\/UriFactory.php.html#39\">UriFactory::createFromAbsolute<\/a>"],[100,1,"<a href=\"Common\/Http\/Uri\/UriFactory.php.html#57\">UriFactory::createFromParts<\/a>"],[100,3,"<a href=\"Common\/Http\/Uri\/UriFactory.php.html#76\">UriFactory::attemptProxyStyleParse<\/a>"],[100,4,"<a href=\"Common\/Http\/Uri\/UriFactory.php.html#95\">UriFactory::detectPath<\/a>"],[100,3,"<a href=\"Common\/Http\/Uri\/UriFactory.php.html#118\">UriFactory::detectHost<\/a>"],[100,2,"<a href=\"Common\/Http\/Uri\/UriFactory.php.html#134\">UriFactory::detectPort<\/a>"],[100,2,"<a href=\"Common\/Http\/Uri\/UriFactory.php.html#144\">UriFactory::detectQuery<\/a>"],[100,3,"<a href=\"Common\/Http\/Uri\/UriFactory.php.html#160\">UriFactory::detectScheme<\/a>"],[100,3,"<a href=\"OAuth2\/Service\/AbstractService.php.html#46\">AbstractService::__construct<\/a>"],[78.571428571429,4,"<a href=\"OAuth2\/Service\/AbstractService.php.html#74\">AbstractService::getAuthorizationUri<\/a>"],[92.307692307692,2,"<a href=\"OAuth2\/Service\/AbstractService.php.html#107\">AbstractService::requestAccessToken<\/a>"],[91.304347826087,10,"<a href=\"OAuth2\/Service\/AbstractService.php.html#148\">AbstractService::request<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/AbstractService.php.html#191\">AbstractService::getStorage<\/a>"],[92.857142857143,2,"<a href=\"OAuth2\/Service\/AbstractService.php.html#205\">AbstractService::refreshAccessToken<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/AbstractService.php.html#239\">AbstractService::isValidScope<\/a>"],[0,1,"<a href=\"OAuth2\/Service\/AbstractService.php.html#251\">AbstractService::needsStateParameterInAuthUrl<\/a>"],[0,2,"<a href=\"OAuth2\/Service\/AbstractService.php.html#262\">AbstractService::validateAuthorizationState<\/a>"],[0,1,"<a href=\"OAuth2\/Service\/AbstractService.php.html#274\">AbstractService::generateAuthorizationState<\/a>"],[0,1,"<a href=\"OAuth2\/Service\/AbstractService.php.html#284\">AbstractService::retrieveAuthorizationState<\/a>"],[0,1,"<a href=\"OAuth2\/Service\/AbstractService.php.html#294\">AbstractService::storeAuthorizationState<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/AbstractService.php.html#304\">AbstractService::getExtraOAuthHeaders<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/AbstractService.php.html#314\">AbstractService::getExtraApiHeaders<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/AbstractService.php.html#330\">AbstractService::parseAccessTokenResponse<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/AbstractService.php.html#338\">AbstractService::getAuthorizationMethod<\/a>"],[0,2,"<a href=\"OAuth2\/Service\/AbstractService.php.html#348\">AbstractService::getApiVersionString<\/a>"],[0,1,"<a href=\"OAuth2\/Service\/AbstractService.php.html#360\">AbstractService::getScopesDelimiter<\/a>"],[100,1,"<a href=\"Common\/Storage\/Memory.php.html#24\">Memory::__construct<\/a>"],[100,2,"<a href=\"Common\/Storage\/Memory.php.html#33\">Memory::retrieveAccessToken<\/a>"],[100,1,"<a href=\"Common\/Storage\/Memory.php.html#45\">Memory::storeAccessToken<\/a>"],[100,2,"<a href=\"Common\/Storage\/Memory.php.html#56\">Memory::hasAccessToken<\/a>"],[100,2,"<a href=\"Common\/Storage\/Memory.php.html#64\">Memory::clearToken<\/a>"],[100,1,"<a href=\"Common\/Storage\/Memory.php.html#77\">Memory::clearAllTokens<\/a>"],[0,2,"<a href=\"Common\/Storage\/Memory.php.html#88\">Memory::retrieveAuthorizationState<\/a>"],[0,1,"<a href=\"Common\/Storage\/Memory.php.html#100\">Memory::storeAuthorizationState<\/a>"],[0,2,"<a href=\"Common\/Storage\/Memory.php.html#111\">Memory::hasAuthorizationState<\/a>"],[0,2,"<a href=\"Common\/Storage\/Memory.php.html#119\">Memory::clearAuthorizationState<\/a>"],[0,1,"<a href=\"Common\/Storage\/Memory.php.html#132\">Memory::clearAllAuthorizationStates<\/a>"],[0,1,"<a href=\"Common\/Storage\/Redis.php.html#42\">Redis::__construct<\/a>"],[0,3,"<a href=\"Common\/Storage\/Redis.php.html#54\">Redis::retrieveAccessToken<\/a>"],[0,1,"<a href=\"Common\/Storage\/Redis.php.html#72\">Redis::storeAccessToken<\/a>"],[0,3,"<a href=\"Common\/Storage\/Redis.php.html#85\">Redis::hasAccessToken<\/a>"],[0,1,"<a href=\"Common\/Storage\/Redis.php.html#99\">Redis::clearToken<\/a>"],[0,2,"<a href=\"Common\/Storage\/Redis.php.html#111\">Redis::clearAllTokens<\/a>"],[0,2,"<a href=\"Common\/Storage\/Redis.php.html#204\">Redis::anonymous function<\/a>"],[0,3,"<a href=\"Common\/Storage\/Redis.php.html#136\">Redis::retrieveAuthorizationState<\/a>"],[0,1,"<a href=\"Common\/Storage\/Redis.php.html#154\">Redis::storeAuthorizationState<\/a>"],[0,3,"<a href=\"Common\/Storage\/Redis.php.html#167\">Redis::hasAuthorizationState<\/a>"],[0,1,"<a href=\"Common\/Storage\/Redis.php.html#181\">Redis::clearAuthorizationState<\/a>"],[0,2,"<a href=\"Common\/Storage\/Redis.php.html#193\">Redis::clearAllAuthorizationStates<\/a>"],[0,1,"<a href=\"Common\/Storage\/Redis.php.html#218\">Redis::getRedis<\/a>"],[0,1,"<a href=\"Common\/Storage\/Redis.php.html#226\">Redis::getKey<\/a>"],[100,5,"<a href=\"Common\/Storage\/Session.php.html#34\">Session::__construct<\/a>"],[100,2,"<a href=\"Common\/Storage\/Session.php.html#57\">Session::retrieveAccessToken<\/a>"],[71.428571428571,3,"<a href=\"Common\/Storage\/Session.php.html#69\">Session::storeAccessToken<\/a>"],[100,1,"<a href=\"Common\/Storage\/Session.php.html#90\">Session::hasAccessToken<\/a>"],[100,2,"<a href=\"Common\/Storage\/Session.php.html#98\">Session::clearToken<\/a>"],[100,1,"<a href=\"Common\/Storage\/Session.php.html#111\">Session::clearAllTokens<\/a>"],[0,3,"<a href=\"Common\/Storage\/Session.php.html#122\">Session::storeAuthorizationState<\/a>"],[0,1,"<a href=\"Common\/Storage\/Session.php.html#141\">Session::hasAuthorizationState<\/a>"],[0,2,"<a href=\"Common\/Storage\/Session.php.html#149\">Session::retrieveAuthorizationState<\/a>"],[0,2,"<a href=\"Common\/Storage\/Session.php.html#161\">Session::clearAuthorizationState<\/a>"],[0,1,"<a href=\"Common\/Storage\/Session.php.html#174\">Session::clearAllAuthorizationStates<\/a>"],[100,2,"<a href=\"Common\/Storage\/Session.php.html#182\">Session::__destruct<\/a>"],[0,2,"<a href=\"Common\/Storage\/Session.php.html#194\">Session::sessionHasStarted<\/a>"],[100,1,"<a href=\"Common\/Storage\/SymfonySession.php.html#22\">SymfonySession::__construct<\/a>"],[100,2,"<a href=\"Common\/Storage\/SymfonySession.php.html#36\">SymfonySession::retrieveAccessToken<\/a>"],[100,2,"<a href=\"Common\/Storage\/SymfonySession.php.html#52\">SymfonySession::storeAccessToken<\/a>"],[100,3,"<a href=\"Common\/Storage\/SymfonySession.php.html#73\">SymfonySession::hasAccessToken<\/a>"],[100,3,"<a href=\"Common\/Storage\/SymfonySession.php.html#86\">SymfonySession::clearToken<\/a>"],[0,1,"<a href=\"Common\/Storage\/SymfonySession.php.html#105\">SymfonySession::clearAllTokens<\/a>"],[0,2,"<a href=\"Common\/Storage\/SymfonySession.php.html#116\">SymfonySession::retrieveAuthorizationState<\/a>"],[0,2,"<a href=\"Common\/Storage\/SymfonySession.php.html#132\">SymfonySession::storeAuthorizationState<\/a>"],[0,3,"<a href=\"Common\/Storage\/SymfonySession.php.html#153\">SymfonySession::hasAuthorizationState<\/a>"],[0,3,"<a href=\"Common\/Storage\/SymfonySession.php.html#166\">SymfonySession::clearAuthorizationState<\/a>"],[0,1,"<a href=\"Common\/Storage\/SymfonySession.php.html#185\">SymfonySession::clearAllAuthorizationStates<\/a>"],[100,1,"<a href=\"Common\/Storage\/SymfonySession.php.html#196\">SymfonySession::getSession<\/a>"],[100,1,"<a href=\"Common\/Token\/AbstractToken.php.html#36\">AbstractToken::__construct<\/a>"],[100,1,"<a href=\"Common\/Token\/AbstractToken.php.html#47\">AbstractToken::getAccessToken<\/a>"],[100,1,"<a href=\"Common\/Token\/AbstractToken.php.html#55\">AbstractToken::getRefreshToken<\/a>"],[100,1,"<a href=\"Common\/Token\/AbstractToken.php.html#63\">AbstractToken::getEndOfLife<\/a>"],[100,1,"<a href=\"Common\/Token\/AbstractToken.php.html#71\">AbstractToken::setExtraParams<\/a>"],[100,1,"<a href=\"Common\/Token\/AbstractToken.php.html#79\">AbstractToken::getExtraParams<\/a>"],[100,1,"<a href=\"Common\/Token\/AbstractToken.php.html#87\">AbstractToken::setAccessToken<\/a>"],[100,1,"<a href=\"Common\/Token\/AbstractToken.php.html#95\">AbstractToken::setEndOfLife<\/a>"],[100,4,"<a href=\"Common\/Token\/AbstractToken.php.html#103\">AbstractToken::setLifetime<\/a>"],[100,1,"<a href=\"Common\/Token\/AbstractToken.php.html#117\">AbstractToken::setRefreshToken<\/a>"],[0,3,"<a href=\"Common\/Token\/AbstractToken.php.html#122\">AbstractToken::isExpired<\/a>"],[100,2,"<a href=\"OAuth1\/Service\/BitBucket.php.html#14\">BitBucket::__construct<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/BitBucket.php.html#31\">BitBucket::getRequestTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/BitBucket.php.html#39\">BitBucket::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/BitBucket.php.html#47\">BitBucket::getAccessTokenEndpoint<\/a>"],[100,2,"<a href=\"OAuth1\/Service\/Etsy.php.html#17\">Etsy::__construct<\/a>"],[100,2,"<a href=\"OAuth1\/Service\/Etsy.php.html#34\">Etsy::getRequestTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/Etsy.php.html#49\">Etsy::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/Etsy.php.html#57\">Etsy::getAccessTokenEndpoint<\/a>"],[100,2,"<a href=\"OAuth1\/Service\/Etsy.php.html#69\">Etsy::setScopes<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/Etsy.php.html#83\">Etsy::getScopes<\/a>"],[100,2,"<a href=\"OAuth1\/Service\/FitBit.php.html#14\">FitBit::__construct<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/FitBit.php.html#31\">FitBit::getRequestTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/FitBit.php.html#39\">FitBit::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/FitBit.php.html#47\">FitBit::getAccessTokenEndpoint<\/a>"],[0,2,"<a href=\"OAuth1\/Service\/FiveHundredPx.php.html#28\">FiveHundredPx::__construct<\/a>"],[0,1,"<a href=\"OAuth1\/Service\/FiveHundredPx.php.html#51\">FiveHundredPx::getRequestTokenEndpoint<\/a>"],[0,1,"<a href=\"OAuth1\/Service\/FiveHundredPx.php.html#59\">FiveHundredPx::getAuthorizationEndpoint<\/a>"],[0,1,"<a href=\"OAuth1\/Service\/FiveHundredPx.php.html#67\">FiveHundredPx::getAccessTokenEndpoint<\/a>"],[100,2,"<a href=\"OAuth1\/Service\/Flickr.php.html#16\">Flickr::__construct<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/Flickr.php.html#29\">Flickr::getRequestTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/Flickr.php.html#34\">Flickr::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/Flickr.php.html#39\">Flickr::getAccessTokenEndpoint<\/a>"],[100,3,"<a href=\"OAuth1\/Service\/Flickr.php.html#44\">Flickr::request<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/Flickr.php.html#67\">Flickr::requestRest<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/Flickr.php.html#72\">Flickr::requestXmlrpc<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/Flickr.php.html#79\">Flickr::requestSoap<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/Flickr.php.html#86\">Flickr::requestJson<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/Flickr.php.html#93\">Flickr::requestPhp<\/a>"],[100,2,"<a href=\"OAuth1\/Service\/QuickBooks.php.html#17\">QuickBooks::__construct<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/QuickBooks.php.html#40\">QuickBooks::getRequestTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/QuickBooks.php.html#48\">QuickBooks::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/QuickBooks.php.html#56\">QuickBooks::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/QuickBooks.php.html#64\">QuickBooks::request<\/a>"],[0,2,"<a href=\"OAuth1\/Service\/Redmine.php.html#14\">Redmine::__construct<\/a>"],[0,1,"<a href=\"OAuth1\/Service\/Redmine.php.html#31\">Redmine::getRequestTokenEndpoint<\/a>"],[0,1,"<a href=\"OAuth1\/Service\/Redmine.php.html#39\">Redmine::getAuthorizationEndpoint<\/a>"],[0,1,"<a href=\"OAuth1\/Service\/Redmine.php.html#47\">Redmine::getAccessTokenEndpoint<\/a>"],[100,2,"<a href=\"OAuth1\/Service\/ScoopIt.php.html#14\">ScoopIt::__construct<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/ScoopIt.php.html#31\">ScoopIt::getRequestTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/ScoopIt.php.html#39\">ScoopIt::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/ScoopIt.php.html#47\">ScoopIt::getAccessTokenEndpoint<\/a>"],[100,2,"<a href=\"OAuth1\/Service\/Tumblr.php.html#14\">Tumblr::__construct<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/Tumblr.php.html#31\">Tumblr::getRequestTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/Tumblr.php.html#39\">Tumblr::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/Tumblr.php.html#47\">Tumblr::getAccessTokenEndpoint<\/a>"],[100,2,"<a href=\"OAuth1\/Service\/Twitter.php.html#20\">Twitter::__construct<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/Twitter.php.html#37\">Twitter::getRequestTokenEndpoint<\/a>"],[100,3,"<a href=\"OAuth1\/Service\/Twitter.php.html#45\">Twitter::getAuthorizationEndpoint<\/a>"],[100,3,"<a href=\"OAuth1\/Service\/Twitter.php.html#59\">Twitter::setAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/Twitter.php.html#72\">Twitter::getAccessTokenEndpoint<\/a>"],[100,2,"<a href=\"OAuth1\/Service\/Xing.php.html#15\">Xing::__construct<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/Xing.php.html#32\">Xing::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/Xing.php.html#40\">Xing::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth1\/Service\/Xing.php.html#48\">Xing::getRequestTokenEndpoint<\/a>"],[100,4,"<a href=\"OAuth1\/Service\/Xing.php.html#56\">Xing::validateTokenResponse<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Yahoo.php.html#15\">Yahoo::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Yahoo.php.html#23\">Yahoo::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Yahoo.php.html#31\">Yahoo::getAuthorizationMethod<\/a>"],[100,5,"<a href=\"OAuth2\/Service\/Yahoo.php.html#39\">Yahoo::parseAccessTokenResponse<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Yahoo.php.html#69\">Yahoo::getExtraOAuthHeaders<\/a>"],[100,1,"<a href=\"OAuth1\/Signature\/Signature.php.html#29\">Signature::__construct<\/a>"],[100,1,"<a href=\"OAuth1\/Signature\/Signature.php.html#37\">Signature::setHashingAlgorithm<\/a>"],[100,1,"<a href=\"OAuth1\/Signature\/Signature.php.html#45\">Signature::setTokenSecret<\/a>"],[100,4,"<a href=\"OAuth1\/Signature\/Signature.php.html#57\">Signature::getSignature<\/a>"],[100,2,"<a href=\"OAuth1\/Signature\/Signature.php.html#88\">Signature::buildSignatureDataString<\/a>"],[100,2,"<a href=\"OAuth1\/Signature\/Signature.php.html#104\">Signature::getSigningKey<\/a>"],[100,2,"<a href=\"OAuth1\/Signature\/Signature.php.html#121\">Signature::hash<\/a>"],[100,1,"<a href=\"OAuth1\/Token\/StdOAuth1Token.php.html#31\">StdOAuth1Token::setRequestToken<\/a>"],[100,1,"<a href=\"OAuth1\/Token\/StdOAuth1Token.php.html#39\">StdOAuth1Token::getRequestToken<\/a>"],[100,1,"<a href=\"OAuth1\/Token\/StdOAuth1Token.php.html#47\">StdOAuth1Token::setRequestTokenSecret<\/a>"],[100,1,"<a href=\"OAuth1\/Token\/StdOAuth1Token.php.html#55\">StdOAuth1Token::getRequestTokenSecret<\/a>"],[100,1,"<a href=\"OAuth1\/Token\/StdOAuth1Token.php.html#63\">StdOAuth1Token::setAccessTokenSecret<\/a>"],[100,1,"<a href=\"OAuth1\/Token\/StdOAuth1Token.php.html#71\">StdOAuth1Token::getAccessTokenSecret<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Amazon.php.html#28\">Amazon::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Amazon.php.html#45\">Amazon::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Amazon.php.html#53\">Amazon::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Amazon.php.html#61\">Amazon::getAuthorizationMethod<\/a>"],[100,6,"<a href=\"OAuth2\/Service\/Amazon.php.html#69\">Amazon::parseAccessTokenResponse<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Bitly.php.html#15\">Bitly::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Bitly.php.html#32\">Bitly::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Bitly.php.html#40\">Bitly::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Bitly.php.html#48\">Bitly::getAuthorizationMethod<\/a>"],[100,4,"<a href=\"OAuth2\/Service\/Bitly.php.html#56\">Bitly::parseAccessTokenResponse<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Bitly.php.html#80\">Bitly::requestAccessToken<\/a>"],[0,1,"<a href=\"OAuth2\/Service\/Bitrix24.php.html#29\">Bitrix24::getAuthorizationEndpoint<\/a>"],[0,1,"<a href=\"OAuth2\/Service\/Bitrix24.php.html#37\">Bitrix24::getAccessTokenEndpoint<\/a>"],[0,2,"<a href=\"OAuth2\/Service\/Bitrix24.php.html#45\">Bitrix24::requestAccessToken<\/a>"],[0,2,"<a href=\"OAuth2\/Service\/Bitrix24.php.html#67\">Bitrix24::getAccessTokenUri<\/a>"],[0,5,"<a href=\"OAuth2\/Service\/Bitrix24.php.html#92\">Bitrix24::parseAccessTokenResponse<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Box.php.html#21\">Box::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Box.php.html#38\">Box::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Box.php.html#46\">Box::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Box.php.html#54\">Box::getAuthorizationMethod<\/a>"],[100,5,"<a href=\"OAuth2\/Service\/Box.php.html#62\">Box::parseAccessTokenResponse<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Buffer.php.html#20\">Buffer::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Buffer.php.html#36\">Buffer::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Buffer.php.html#44\">Buffer::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Buffer.php.html#52\">Buffer::getAuthorizationMethod<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Buffer.php.html#60\">Buffer::getAuthorizationUri<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Buffer.php.html#83\">Buffer::requestRequestToken<\/a>"],[100,4,"<a href=\"OAuth2\/Service\/Buffer.php.html#99\">Buffer::parseRequestTokenResponse<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Buffer.php.html#111\">Buffer::requestAccessToken<\/a>"],[100,4,"<a href=\"OAuth2\/Service\/Buffer.php.html#132\">Buffer::parseAccessTokenResponse<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Dailymotion.php.html#49\">Dailymotion::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Dailymotion.php.html#66\">Dailymotion::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Dailymotion.php.html#74\">Dailymotion::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Dailymotion.php.html#82\">Dailymotion::getAuthorizationMethod<\/a>"],[100,7,"<a href=\"OAuth2\/Service\/Dailymotion.php.html#90\">Dailymotion::parseAccessTokenResponse<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Dailymotion.php.html#125\">Dailymotion::getExtraOAuthHeaders<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Deezer.php.html#41\">Deezer::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Deezer.php.html#65\">Deezer::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Deezer.php.html#73\">Deezer::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Deezer.php.html#81\">Deezer::getAuthorizationMethod<\/a>"],[100,7,"<a href=\"OAuth2\/Service\/Deezer.php.html#89\">Deezer::parseAccessTokenResponse<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Delicious.php.html#29\">Delicious::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Delicious.php.html#53\">Delicious::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Delicious.php.html#62\">Delicious::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Delicious.php.html#70\">Delicious::getAuthorizationMethod<\/a>"],[100,6,"<a href=\"OAuth2\/Service\/Delicious.php.html#78\">Delicious::parseAccessTokenResponse<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Delicious.php.html#114\">Delicious::requestAccessToken<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/DeviantArt.php.html#36\">DeviantArt::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/DeviantArt.php.html#53\">DeviantArt::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/DeviantArt.php.html#61\">DeviantArt::getAccessTokenEndpoint<\/a>"],[100,6,"<a href=\"OAuth2\/Service\/DeviantArt.php.html#69\">DeviantArt::parseAccessTokenResponse<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Dropbox.php.html#21\">Dropbox::__construct<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Dropbox.php.html#38\">Dropbox::getAuthorizationUri<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Dropbox.php.html#63\">Dropbox::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Dropbox.php.html#71\">Dropbox::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Dropbox.php.html#79\">Dropbox::getAuthorizationMethod<\/a>"],[100,5,"<a href=\"OAuth2\/Service\/Dropbox.php.html#87\">Dropbox::parseAccessTokenResponse<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/EveOnline.php.html#24\">EveOnline::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/EveOnline.php.html#42\">EveOnline::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/EveOnline.php.html#51\">EveOnline::getAccessTokenEndpoint<\/a>"],[100,6,"<a href=\"OAuth2\/Service\/EveOnline.php.html#64\">EveOnline::parseAccessTokenResponse<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/EveOnline.php.html#96\">EveOnline::getAuthorizationMethod<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Facebook.php.html#125\">Facebook::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Facebook.php.html#143\">Facebook::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Facebook.php.html#151\">Facebook::getAccessTokenEndpoint<\/a>"],[100,6,"<a href=\"OAuth2\/Service\/Facebook.php.html#159\">Facebook::parseAccessTokenResponse<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Facebook.php.html#190\">Facebook::getDialogUri<\/a>"],[0,2,"<a href=\"OAuth2\/Service\/Facebook.php.html#204\">Facebook::getApiVersionString<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Facebook.php.html#212\">Facebook::getScopesDelimiter<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Foursquare.php.html#17\">Foursquare::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Foursquare.php.html#34\">Foursquare::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Foursquare.php.html#42\">Foursquare::getAccessTokenEndpoint<\/a>"],[100,4,"<a href=\"OAuth2\/Service\/Foursquare.php.html#50\">Foursquare::parseAccessTokenResponse<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Foursquare.php.html#74\">Foursquare::request<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/GitHub.php.html#127\">GitHub::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/GitHub.php.html#144\">GitHub::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/GitHub.php.html#152\">GitHub::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/GitHub.php.html#160\">GitHub::getAuthorizationMethod<\/a>"],[100,4,"<a href=\"OAuth2\/Service\/GitHub.php.html#168\">GitHub::parseAccessTokenResponse<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/GitHub.php.html#194\">GitHub::getExtraOAuthHeaders<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/GitHub.php.html#204\">GitHub::getExtraApiHeaders<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/GitHub.php.html#212\">GitHub::getScopesDelimiter<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Google.php.html#131\">Google::__construct<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Google.php.html#145\">Google::setAccessType<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Google.php.html#156\">Google::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Google.php.html#164\">Google::getAccessTokenEndpoint<\/a>"],[100,5,"<a href=\"OAuth2\/Service\/Google.php.html#172\">Google::parseAccessTokenResponse<\/a>"],[0,2,"<a href=\"OAuth2\/Service\/Harvest.php.html#17\">Harvest::__construct<\/a>"],[0,2,"<a href=\"OAuth2\/Service\/Harvest.php.html#34\">Harvest::getAuthorizationUri<\/a>"],[0,1,"<a href=\"OAuth2\/Service\/Harvest.php.html#58\">Harvest::getAuthorizationEndpoint<\/a>"],[0,1,"<a href=\"OAuth2\/Service\/Harvest.php.html#66\">Harvest::getAccessTokenEndpoint<\/a>"],[0,1,"<a href=\"OAuth2\/Service\/Harvest.php.html#74\">Harvest::getAuthorizationMethod<\/a>"],[0,4,"<a href=\"OAuth2\/Service\/Harvest.php.html#82\">Harvest::parseAccessTokenResponse<\/a>"],[0,2,"<a href=\"OAuth2\/Service\/Harvest.php.html#113\">Harvest::refreshAccessToken<\/a>"],[0,1,"<a href=\"OAuth2\/Service\/Harvest.php.html#143\">Harvest::getExtraOAuthHeaders<\/a>"],[0,1,"<a href=\"OAuth2\/Service\/Harvest.php.html#153\">Harvest::getExtraApiHeaders<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Heroku.php.html#35\">Heroku::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Heroku.php.html#52\">Heroku::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Heroku.php.html#60\">Heroku::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Heroku.php.html#68\">Heroku::getAuthorizationMethod<\/a>"],[100,7,"<a href=\"OAuth2\/Service\/Heroku.php.html#76\">Heroku::parseAccessTokenResponse<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Heroku.php.html#111\">Heroku::getExtraOAuthHeaders<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Heroku.php.html#119\">Heroku::getExtraApiHeaders<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Hubic.php.html#42\">Hubic::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Hubic.php.html#66\">Hubic::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Hubic.php.html#75\">Hubic::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Hubic.php.html#83\">Hubic::getAuthorizationMethod<\/a>"],[100,5,"<a href=\"OAuth2\/Service\/Hubic.php.html#91\">Hubic::parseAccessTokenResponse<\/a>"],[100,4,"<a href=\"OAuth2\/Service\/Hubic.php.html#124\">Hubic::getAuthorizationUri<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Instagram.php.html#26\">Instagram::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Instagram.php.html#43\">Instagram::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Instagram.php.html#51\">Instagram::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Instagram.php.html#59\">Instagram::getAuthorizationMethod<\/a>"],[100,4,"<a href=\"OAuth2\/Service\/Instagram.php.html#67\">Instagram::parseAccessTokenResponse<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/JawboneUP.php.html#52\">JawboneUP::__construct<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/JawboneUP.php.html#69\">JawboneUP::getAuthorizationUri<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/JawboneUP.php.html#94\">JawboneUP::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/JawboneUP.php.html#102\">JawboneUP::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/JawboneUP.php.html#110\">JawboneUP::getAuthorizationMethod<\/a>"],[100,5,"<a href=\"OAuth2\/Service\/JawboneUP.php.html#118\">JawboneUP::parseAccessTokenResponse<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Linkedin.php.html#36\">Linkedin::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Linkedin.php.html#53\">Linkedin::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Linkedin.php.html#61\">Linkedin::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Linkedin.php.html#69\">Linkedin::getAuthorizationMethod<\/a>"],[100,5,"<a href=\"OAuth2\/Service\/Linkedin.php.html#77\">Linkedin::parseAccessTokenResponse<\/a>"],[75,3,"<a href=\"OAuth2\/Service\/Mailchimp.php.html#15\">Mailchimp::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Mailchimp.php.html#32\">Mailchimp::getAuthorizationMethod<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Mailchimp.php.html#40\">Mailchimp::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Mailchimp.php.html#48\">Mailchimp::getAccessTokenEndpoint<\/a>"],[100,4,"<a href=\"OAuth2\/Service\/Mailchimp.php.html#56\">Mailchimp::parseAccessTokenResponse<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Mailchimp.php.html#83\">Mailchimp::request<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Mailchimp.php.html#97\">Mailchimp::setBaseApiUri<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Microsoft.php.html#53\">Microsoft::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Microsoft.php.html#70\">Microsoft::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Microsoft.php.html#78\">Microsoft::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Microsoft.php.html#86\">Microsoft::getAuthorizationMethod<\/a>"],[100,5,"<a href=\"OAuth2\/Service\/Microsoft.php.html#94\">Microsoft::parseAccessTokenResponse<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Nest.php.html#30\">Nest::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Nest.php.html#54\">Nest::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Nest.php.html#62\">Nest::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Nest.php.html#70\">Nest::getAuthorizationMethod<\/a>"],[100,5,"<a href=\"OAuth2\/Service\/Nest.php.html#78\">Nest::parseAccessTokenResponse<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Netatmo.php.html#40\">Netatmo::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Netatmo.php.html#64\">Netatmo::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Netatmo.php.html#73\">Netatmo::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Netatmo.php.html#81\">Netatmo::getAuthorizationMethod<\/a>"],[100,5,"<a href=\"OAuth2\/Service\/Netatmo.php.html#89\">Netatmo::parseAccessTokenResponse<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/ParrotFlowerPower.php.html#32\">ParrotFlowerPower::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/ParrotFlowerPower.php.html#56\">ParrotFlowerPower::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/ParrotFlowerPower.php.html#65\">ParrotFlowerPower::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/ParrotFlowerPower.php.html#73\">ParrotFlowerPower::getAuthorizationMethod<\/a>"],[100,5,"<a href=\"OAuth2\/Service\/ParrotFlowerPower.php.html#81\">ParrotFlowerPower::parseAccessTokenResponse<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/ParrotFlowerPower.php.html#116\">ParrotFlowerPower::refreshAccessToken<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Paypal.php.html#34\">Paypal::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Paypal.php.html#51\">Paypal::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Paypal.php.html#59\">Paypal::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Paypal.php.html#67\">Paypal::getAuthorizationMethod<\/a>"],[100,6,"<a href=\"OAuth2\/Service\/Paypal.php.html#75\">Paypal::parseAccessTokenResponse<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Pinterest.php.html#38\">Pinterest::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Pinterest.php.html#62\">Pinterest::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Pinterest.php.html#70\">Pinterest::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Pinterest.php.html#78\">Pinterest::getAuthorizationMethod<\/a>"],[100,6,"<a href=\"OAuth2\/Service\/Pinterest.php.html#86\">Pinterest::parseAccessTokenResponse<\/a>"],[0,2,"<a href=\"OAuth2\/Service\/Pocket.php.html#15\">Pocket::__construct<\/a>"],[0,1,"<a href=\"OAuth2\/Service\/Pocket.php.html#28\">Pocket::getRequestTokenEndpoint<\/a>"],[0,1,"<a href=\"OAuth2\/Service\/Pocket.php.html#33\">Pocket::getAuthorizationEndpoint<\/a>"],[0,1,"<a href=\"OAuth2\/Service\/Pocket.php.html#38\">Pocket::getAccessTokenEndpoint<\/a>"],[0,2,"<a href=\"OAuth2\/Service\/Pocket.php.html#43\">Pocket::getAuthorizationUri<\/a>"],[0,1,"<a href=\"OAuth2\/Service\/Pocket.php.html#61\">Pocket::requestRequestToken<\/a>"],[0,4,"<a href=\"OAuth2\/Service\/Pocket.php.html#76\">Pocket::parseRequestTokenResponse<\/a>"],[0,1,"<a href=\"OAuth2\/Service\/Pocket.php.html#88\">Pocket::requestAccessToken<\/a>"],[0,4,"<a href=\"OAuth2\/Service\/Pocket.php.html#106\">Pocket::parseAccessTokenResponse<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Reddit.php.html#37\">Reddit::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Reddit.php.html#54\">Reddit::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Reddit.php.html#62\">Reddit::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Reddit.php.html#70\">Reddit::getAuthorizationMethod<\/a>"],[100,5,"<a href=\"OAuth2\/Service\/Reddit.php.html#78\">Reddit::parseAccessTokenResponse<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Reddit.php.html#108\">Reddit::getExtraOAuthHeaders<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/RunKeeper.php.html#20\">RunKeeper::__construct<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/RunKeeper.php.html#37\">RunKeeper::getAuthorizationUri<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/RunKeeper.php.html#62\">RunKeeper::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/RunKeeper.php.html#70\">RunKeeper::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/RunKeeper.php.html#78\">RunKeeper::getAuthorizationMethod<\/a>"],[100,4,"<a href=\"OAuth2\/Service\/RunKeeper.php.html#86\">RunKeeper::parseAccessTokenResponse<\/a>"],[0,1,"<a href=\"OAuth2\/Service\/Salesforce.php.html#27\">Salesforce::getAuthorizationEndpoint<\/a>"],[0,1,"<a href=\"OAuth2\/Service\/Salesforce.php.html#35\">Salesforce::getAccessTokenEndpoint<\/a>"],[0,5,"<a href=\"OAuth2\/Service\/Salesforce.php.html#43\">Salesforce::parseRequestTokenResponse<\/a>"],[0,5,"<a href=\"OAuth2\/Service\/Salesforce.php.html#59\">Salesforce::parseAccessTokenResponse<\/a>"],[0,1,"<a href=\"OAuth2\/Service\/Salesforce.php.html#88\">Salesforce::getExtraOAuthHeaders<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/SoundCloud.php.html#15\">SoundCloud::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/SoundCloud.php.html#32\">SoundCloud::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/SoundCloud.php.html#40\">SoundCloud::getAccessTokenEndpoint<\/a>"],[100,6,"<a href=\"OAuth2\/Service\/SoundCloud.php.html#48\">SoundCloud::parseAccessTokenResponse<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Spotify.php.html#32\">Spotify::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Spotify.php.html#49\">Spotify::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Spotify.php.html#57\">Spotify::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Spotify.php.html#65\">Spotify::getAuthorizationMethod<\/a>"],[100,6,"<a href=\"OAuth2\/Service\/Spotify.php.html#73\">Spotify::parseAccessTokenResponse<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Spotify.php.html#107\">Spotify::getExtraOAuthHeaders<\/a>"],[100,3,"<a href=\"OAuth2\/Service\/Strava.php.html#44\">Strava::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Strava.php.html#72\">Strava::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Strava.php.html#80\">Strava::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Strava.php.html#88\">Strava::getAuthorizationMethod<\/a>"],[100,7,"<a href=\"OAuth2\/Service\/Strava.php.html#96\">Strava::parseAccessTokenResponse<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Strava.php.html#131\">Strava::setApprouvalPrompt<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Strava.php.html#143\">Strava::getScopesDelimiter<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Ustream.php.html#23\">Ustream::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Ustream.php.html#40\">Ustream::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Ustream.php.html#48\">Ustream::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Ustream.php.html#56\">Ustream::getAuthorizationMethod<\/a>"],[100,5,"<a href=\"OAuth2\/Service\/Ustream.php.html#64\">Ustream::parseAccessTokenResponse<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Ustream.php.html#94\">Ustream::getExtraOAuthHeaders<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Vimeo.php.html#58\">Vimeo::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Vimeo.php.html#82\">Vimeo::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Vimeo.php.html#90\">Vimeo::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Vimeo.php.html#98\">Vimeo::getAuthorizationMethod<\/a>"],[100,7,"<a href=\"OAuth2\/Service\/Vimeo.php.html#106\">Vimeo::parseAccessTokenResponse<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Vimeo.php.html#144\">Vimeo::getExtraOAuthHeaders<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Vimeo.php.html#152\">Vimeo::getExtraApiHeaders<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Vkontakte.php.html#42\">Vkontakte::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Vkontakte.php.html#59\">Vkontakte::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Vkontakte.php.html#67\">Vkontakte::getAccessTokenEndpoint<\/a>"],[100,5,"<a href=\"OAuth2\/Service\/Vkontakte.php.html#75\">Vkontakte::parseAccessTokenResponse<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Vkontakte.php.html#105\">Vkontakte::getAuthorizationMethod<\/a>"],[100,2,"<a href=\"OAuth2\/Service\/Yammer.php.html#15\">Yammer::__construct<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Yammer.php.html#32\">Yammer::getAuthorizationEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Yammer.php.html#40\">Yammer::getAccessTokenEndpoint<\/a>"],[100,1,"<a href=\"OAuth2\/Service\/Yammer.php.html#48\">Yammer::getAuthorizationMethod<\/a>"],[100,5,"<a href=\"OAuth2\/Service\/Yammer.php.html#56\">Yammer::parseAccessTokenResponse<\/a>"],[100,1,"<a href=\"ServiceFactory.php.html#54\">ServiceFactory::setHttpClient<\/a>"],[100,4,"<a href=\"ServiceFactory.php.html#71\">ServiceFactory::registerService<\/a>"],[100,4,"<a href=\"ServiceFactory.php.html#104\">ServiceFactory::createService<\/a>"],[100,2,"<a href=\"ServiceFactory.php.html#143\">ServiceFactory::getFullyQualifiedServiceName<\/a>"],[100,1,"<a href=\"ServiceFactory.php.html#167\">ServiceFactory::buildV2Service<\/a>"],[100,3,"<a href=\"ServiceFactory.php.html#193\">ServiceFactory::resolveScopes<\/a>"],[100,2,"<a href=\"ServiceFactory.php.html#225\">ServiceFactory::buildV1Service<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>

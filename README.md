@@ -1,8 +1,7 @@
-PHPoAuthLib
+﻿PHPoAuthLib
 ===========
-**NOTE: I'm looking for someone who could help to maintain this package alongside me, just because I don't have a ton of time to devote to it. However, I'm still going to keep trying to pay attention to PRs, etc.**
 
-PHPoAuthLib provides oAuth support in PHP 5.3+ and is very easy to integrate with any project which requires an oAuth client.
+PHPoAuthLib provides oAuth support in PHP 5.3+ and is easy to integrate with any project which requires an oAuth client.
 
 [![Build Status](https://travis-ci.org/Lusitanian/PHPoAuthLib.png?branch=master)](https://travis-ci.org/Lusitanian/PHPoAuthLib)
 [![Code Coverage](https://scrutinizer-ci.com/g/Lusitanian/PHPoAuthLib/badges/coverage.png?s=a0a15bebfda49e79f9ce289b00c6dfebd18fc98e)](https://scrutinizer-ci.com/g/Lusitanian/PHPoAuthLib/)
@@ -12,7 +11,7 @@ PHPoAuthLib provides oAuth support in PHP 5.3+ and is very easy to integrate wit
 
 Installation
 ------------
-This library can be found on [Packagist](https://packagist.org/packages/lusitanian/oauth).
+This branch of ([lusitanian/oauth (PHPoAuthLib)](https://github.com/Lusitanian/PHPoAuthLib)) can be found on [Packagist](https://packagist.org/packages/jlueke/oauth).
 The recommended way to install this is through [composer](http://getcomposer.org).
 
 Edit your `composer.json` and add:
@@ -20,7 +19,7 @@ Edit your `composer.json` and add:
 ```json
 {
     "require": {
-        "lusitanian/oauth": "~0.3"
+        "jlueke/oauth": "dev-master"
     }
 }
 ```
@@ -124,3 +123,10 @@ Extensions
 Tests
 ------
 To run the tests, you must install dependencies with `composer install --dev`
+and PHPUnit (global or with composer).
+
+
+Variation from the original library
+------
++ Requests will fail, if only a request token exists.
++ Some refactoring.

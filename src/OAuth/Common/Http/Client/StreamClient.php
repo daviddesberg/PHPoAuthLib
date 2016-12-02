@@ -90,7 +90,7 @@ class StreamClient extends AbstractClient
 
         // Set proxy if proxy setting exists on default
         $defaults = stream_context_get_options(stream_context_get_default());
-        if ($defaults['http']['proxy']) {
+        if (isset($defaults['http']) && $defaults['http']['proxy']) {
             $http['proxy'] = $defaults['http']['proxy'];
         }
 

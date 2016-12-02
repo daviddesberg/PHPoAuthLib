@@ -78,18 +78,22 @@ class StreamClient extends AbstractClient
 
     private function generateStreamContext($body, $headers, $method)
     {
-        return stream_context_create(
-            array(
-                'http' => array(
-                    'method'           => $method,
-                    'header'           => implode("\r\n", array_values($headers)),
-                    'content'          => $body,
-                    'protocol_version' => '1.1',
-                    'user_agent'       => $this->userAgent,
-                    'max_redirects'    => $this->maxRedirects,
-                    'timeout'          => $this->timeout
-                ),
-            )
+        $http = array(
+            'method'           => $method,
+            'header'           => implode("\r\n", array_values($headers)),
+            'content'          => $body,
+            'protocol_version' => '1.1',
+            'user_agent'       => $this->userAgent,
+            'max_redirects'    => $this->maxRedirects,
+            'timeout'          => $this->timeout
         );
+
+        // Set proxy if proxy setting exists on default
+        $defaults = stream_context_get_options(stream_context_get_default());
+        if ($defaults['http']['proxy']) {
+            $http['proxy'] = $defaults['http']['proxy'];
+        }
+
+        return stream_context_create(array('http' => $http));
     }
 }

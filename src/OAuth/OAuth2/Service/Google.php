@@ -182,6 +182,11 @@ class Google extends AbstractService
         if (isset($data['refresh_token'])) {
             $token->setRefreshToken($data['refresh_token']);
             unset($data['refresh_token']);
+        } else {
+            # Keep old refresh token when we use offline access type
+            if($oldToken = $this->storage->retrieveAccessToken($this->service(), $this->account())) {
+                $token->setRefreshToken($oldToken->getRefreshToken());
+            }
         }
 
         unset($data['access_token']);

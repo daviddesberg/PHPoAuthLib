@@ -60,7 +60,6 @@ class Signature implements SignatureInterface
 
         $params = array_merge($queryStringData, $params);
         uksort($params, 'strcmp');
-        print_R($params);
 
         $signatureData = $this->prepareParameters($params);
 

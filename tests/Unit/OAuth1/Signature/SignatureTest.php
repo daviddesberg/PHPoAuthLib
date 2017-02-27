@@ -124,6 +124,46 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
      * @covers OAuth\OAuth1\Signature\Signature::buildSignatureDataString
      * @covers OAuth\OAuth1\Signature\Signature::hash
      * @covers OAuth\OAuth1\Signature\Signature::getSigningKey
+     * @covers OAuth\OAuth1\Signature\Signature::prepareParameters
+     */
+    public function testGetSignatureWithQueryStringAndBrackets()
+    {
+        $credentials = $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
+        $credentials->expects($this->any())
+            ->method('getConsumerSecret')
+            ->will($this->returnValue('foo'));
+
+
+        $signature = new Signature($credentials);
+
+        $signature->setHashingAlgorithm('HMAC-SHA1');
+        $signature->setTokenSecret('foo');
+
+        $uri = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $uri->expects($this->any())
+            ->method('getQuery')
+            ->will($this->returnValue('filter[0][attribute]=value1&filter[0][gt]=1'));
+        $uri->expects($this->any())
+            ->method('getScheme')
+            ->will($this->returnValue('http'));
+        $uri->expects($this->any())
+            ->method('getRawAuthority')
+            ->will($this->returnValue(''));
+        $uri->expects($this->any())
+            ->method('getPath')
+            ->will($this->returnValue('/foo'));
+
+        $this->assertSame('yPiUORaBLEcLBcbOoqQqktcYtlw=', $signature->getSignature($uri, array('pee' => 'haa')));
+    }
+
+    /**
+     * @covers OAuth\OAuth1\Signature\Signature::__construct
+     * @covers OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
+     * @covers OAuth\OAuth1\Signature\Signature::setTokenSecret
+     * @covers OAuth\OAuth1\Signature\Signature::getSignature
+     * @covers OAuth\OAuth1\Signature\Signature::buildSignatureDataString
+     * @covers OAuth\OAuth1\Signature\Signature::hash
+     * @covers OAuth\OAuth1\Signature\Signature::getSigningKey
      */
     public function testGetSignatureWithAuthority()
     {

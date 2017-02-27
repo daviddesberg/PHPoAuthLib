@@ -77,7 +77,11 @@ class Signature implements SignatureInterface
         $baseString .= rawurlencode($baseUri) . '&';
         $baseString .= rawurlencode($this->buildSignatureDataString($signatureData));
 
-        return base64_encode($this->hash($baseString));
+        if (strtoupper($this->algorithm) == 'PLAINTEXT') {
+            return $this->getSigningKey();
+        } else {
+            return base64_encode($this->hash($baseString));
+        }
     }
 
     /**

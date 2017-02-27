@@ -58,10 +58,7 @@ class Signature implements SignatureInterface
     {
         parse_str($uri->getQuery(), $queryStringData);
 
-        $params = array_merge($queryStringData, $params);
-        uksort($params, 'strcmp');
-
-        $signatureData = $this->prepareParameters($params);
+        $signatureData = $this->prepareParameters(array_merge($queryStringData, $params));
 
         // determine base uri
         $baseUri = $uri->getScheme() . '://' . $uri->getRawAuthority();
@@ -98,7 +95,7 @@ class Signature implements SignatureInterface
      */
     public function prepareParameters($data)
     {
-        ksort($data);
+        uksort($data, 'strcmp');
         foreach ($data as $key => &$value) {
             switch (gettype($value)) {
                 case 'NULL':

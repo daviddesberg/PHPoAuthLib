@@ -11,7 +11,7 @@ use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 
-class SalesforceService extends AbstractService
+class Salesforce extends AbstractService
 {
     /**
      * Scopes
@@ -34,7 +34,7 @@ class SalesforceService extends AbstractService
      */
     public function getAccessTokenEndpoint()
     {
-        return new Uri('https://na1.salesforce.com/services/oauth2/token');
+        return new Uri('https://login.salesforce.com/services/oauth2/token');
     }
 
     /**

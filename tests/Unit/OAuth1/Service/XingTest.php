@@ -197,7 +197,7 @@ class XingTest extends \PHPUnit_Framework_TestCase
         $this->client
             ->expects($this->once())
             ->method('retrieveResponse')
-            ->will($this->returnValue('error=bar'));
+            ->will($this->returnValue('{"message":"Invalid OAuth signature","error_name":"INVALID_OAUTH_SIGNATURE"}'));
 
         $token = $this->getMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
 

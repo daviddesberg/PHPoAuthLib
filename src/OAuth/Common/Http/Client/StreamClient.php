@@ -10,6 +10,8 @@ use OAuth\Common\Http\Uri\UriInterface;
  */
 class StreamClient extends AbstractClient
 {
+    public static $lastHeaders;
+
     /**
      * Any implementing HTTP providers should send a request to the provided endpoint with the parameters.
      * They should return, in string form, the response body and throw an exception on error.
@@ -72,6 +74,8 @@ class StreamClient extends AbstractClient
             }
             throw new TokenResponseException($lastError['message']);
         }
+        
+        self::$lastHeaders = $http_response_header;
 
         return $response;
     }

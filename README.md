@@ -89,6 +89,7 @@ Included service implementations
     - PayPal
     - Pinterest
     - Pocket
+    - Odnoklassniki
     - Reddit
     - RunKeeper
     - Salesforce

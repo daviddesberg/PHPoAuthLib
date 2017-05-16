@@ -8,6 +8,39 @@ use OAuth\Common\Http\Uri\Uri;
 
 class Yahoo extends AbstractService
 {
+    /**
+     * Defined scopes
+     *
+     * @link https://developer.yahoo.com/oauth2/guide/yahoo_scopes/
+     */
+
+    // OpenId
+    const SCOPE_OPENID = 'openid';
+    // Contacts
+    const SCOPE_CONTACTS_READ = 'sdct-r';
+    const SCOPE_CONTACTS_READ_WRITE = 'sdct-w';
+    // Fantasy Sports
+    const SCOPE_FANTASY_READ = 'fspt-r';
+    const SCOPE_FANTASY_READ_WRITE = 'fspt-w';
+    // Finance
+    const SCOPE_FINANCE_READ = 'yfin-r';
+    const SCOPE_FINANCE_READ_WRITE = 'yfin-w';
+    // Yahoo Gemini Advertising
+    const SCOPE_GEMINIADS_READ_WRITE = 'admg-w';
+    // Gemini Publishers
+    const SCOPE_GEMINIPUBLISHERS_READ = 'gpub-r';
+    // Mail
+    const SCOPE_MAIL_READ = 'openid mail-r';
+    const SCOPE_MAIL_READ_WRITE = 'mail-w';
+    const SCOPE_MAIL_FULL = 'mail-x';
+    // Messenger
+    const SCOPE_MESSENGER_READ_WRITE = 'msgr-w';
+    // Profiles (Social Directory)
+    const SCOPE_PROFILES_PUBLIC_READ = 'sdps-r';
+    const SCOPE_PROFILES_PUBLIC_READ_WRITE = 'sdps-w';
+    const SCOPE_PROFILES_PRIVATE_READ_WRITE = 'sdpp-w';
+    // Relationships (Social Directory)
+    const SCOPE_RELATIONSHIPS_READ_WRITE = 'sdrl-w';
 
     /**
     * {@inheritdoc}

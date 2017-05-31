@@ -106,7 +106,7 @@ class Mailchimp extends AbstractService
         $meta = json_decode($response, true);
 
         // Set base api uri.
-        $this->baseApiUri = new Uri('https://'. $meta['dc'] .'.api.mailchimp.com/2.0/');
+        $this->baseApiUri = new Uri('https://'. $meta['dc'] .'.api.mailchimp.com/3.0/');
 
         // Allow chaining.
         return $this;

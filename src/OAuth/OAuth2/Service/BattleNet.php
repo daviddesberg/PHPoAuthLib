@@ -26,13 +26,18 @@ class BattleNet extends AbstractService {
      * Defined API URIs.
      *
      * @link https://dev.battle.net/docs
+     * @link https://dev.battle.net/docs/read/oauth OAuth URIs section contains new URIs - TW and KR were merged
+     *       SEA data is located under US API. Old URI names are therefor left here with updated URIs, APAC is added
      */
     const API_URI_US  = 'https://us.api.battle.net/';
     const API_URI_EU  = 'https://eu.api.battle.net/';
-    const API_URI_KR  = 'https://kr.api.battle.net/';
-    const API_URI_TW  = 'https://tw.api.battle.net/';
+    const API_URI_APAC  = 'https://apac.api.battle.net/';
     const API_URI_CN  = 'https://api.battlenet.com.cn/';
-    const API_URI_SEA = 'https://sea.api.battle.net/';
+    
+    // old API names, KR and TW should use APAC, SEA should use US
+    const API_URI_KR  = 'https://apac.api.battle.net/';
+    const API_URI_TW  = 'https://apac.api.battle.net/';
+    const API_URI_SEA  = 'https://us.api.battle.net/';
     
     public function __construct( CredentialsInterface $credentials,
                                  ClientInterface $httpClient,
@@ -59,10 +64,11 @@ class BattleNet extends AbstractService {
         switch( $this->baseApiUri ) {
             case self::API_URI_US:  return 'https://us.battle.net/oauth/';
             case self::API_URI_EU:  return 'https://eu.battle.net/oauth/';
-            case self::API_URI_KR:  return 'https://kr.battle.net/oauth/';
-            case self::API_URI_TW:  return 'https://tw.battle.net/oauth/';
+            case self::API_URI_KR:  return 'https://apac.battle.net/oauth/';
+            case self::API_URI_TW:  return 'https://apac.battle.net/oauth/';
+            case self::API_URI_APAC:  return 'https://apac.battle.net/oauth/';
             case self::API_URI_CN:  return 'https://www.battlenet.com.cn/oauth/';
-            case self::API_URI_SEA: return 'https://sea.battle.net/oauth/'; 
+            case self::API_URI_SEA: return 'https://us.battle.net/oauth/';
         }
         
     }

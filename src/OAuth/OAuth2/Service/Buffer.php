@@ -108,7 +108,7 @@ class Buffer extends AbstractService
         return $data['code'];
     }
 
-    public function requestAccessToken($code)
+    public function requestAccessToken($code, $state = null)
     {
         $bodyParams = array(
             'client_id'     => $this->credentials->getConsumerId(),

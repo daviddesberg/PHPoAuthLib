@@ -85,7 +85,7 @@ class Pocket extends AbstractService
         return $data['code'];
     }
     
-    public function requestAccessToken($code)
+    public function requestAccessToken($code, $state = null)
     {
         $bodyParams = array(
             'consumer_key'     => $this->credentials->getConsumerId(),

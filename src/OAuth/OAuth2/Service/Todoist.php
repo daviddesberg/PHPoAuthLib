@@ -55,7 +55,7 @@ class Todoist extends AbstractService
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
 
         if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://todoist.com/API/v6/');
+            $this->baseApiUri = new Uri('https://todoist.com/API/v7/');
         }
     }
 

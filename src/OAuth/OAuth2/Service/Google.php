@@ -96,6 +96,7 @@ class Google extends AbstractService
     const SCOPE_USER_PROVISIONING           = 'https://apps-apis.google.com/a/feeds/user/';
     const SCOPE_GROUPS_PROVISIONING         = 'https://apps-apis.google.com/a/feeds/groups/';
     const SCOPE_NICKNAME_PROVISIONING       = 'https://apps-apis.google.com/a/feeds/alias/';
+    const SCOPE_CLOUDPRINT                  = 'https://www.googleapis.com/auth/cloudprint';
 
     // Old
     const SCOPE_ORKUT                       = 'https://www.googleapis.com/auth/orkut';

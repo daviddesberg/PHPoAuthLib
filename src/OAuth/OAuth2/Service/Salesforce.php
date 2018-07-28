@@ -68,8 +68,7 @@ class Salesforce extends AbstractService
 
         $token = new StdOAuth2Token();
         $token->setAccessToken($data['access_token']);
-        // Salesforce tokens evidently never expire...
-        $token->setEndOfLife(StdOAuth2Token::EOL_NEVER_EXPIRES);
+        $token->setEndOfLife(StdOAuth2Token::EOL_UNKNOWN);
         unset($data['access_token']);
 
         if (isset($data['refresh_token'])) {

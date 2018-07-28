@@ -6,10 +6,6 @@ use OAuth\Common\Exception\Exception;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
-use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Http\Uri\UriInterface;
 
 class Facebook extends AbstractService
 {
@@ -123,17 +119,14 @@ class Facebook extends AbstractService
     const SCOPE_PAGES_MESSAGING               = 'pages_messaging';
     const SCOPE_PUBLISH_PAGES                 = 'publish_pages';
 
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null,
-        $apiVersion = ""
-    ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, true, $apiVersion);
+    /**
+     * {@inheritdoc}
+     */
+    protected function init()
+    {
+        $this->stateParameterInAuthUrl = true;
 
-        if (null === $baseApiUri) {
+        if( $this->baseApiUri === null ) {
             $this->baseApiUri = new Uri('https://graph.facebook.com'.$this->getApiVersionString().'/');
         }
     }

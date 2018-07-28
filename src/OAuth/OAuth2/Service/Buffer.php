@@ -5,10 +5,6 @@ namespace OAuth\OAuth2\Service;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Uri\UriInterface;
-use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Http\Client\ClientInterface;
 
 /**
  * Buffer API.
@@ -17,15 +13,12 @@ use OAuth\Common\Http\Client\ClientInterface;
  */
 class Buffer extends AbstractService
 {
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
-    ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-        if ($baseApiUri === null) {
+    /**
+     * {@inheritdoc}
+     */
+    protected function init()
+    {
+        if( $this->baseApiUri === null ) {
             $this->baseApiUri = new Uri('https://api.bufferapp.com/1/');
         }
     }
@@ -124,7 +117,7 @@ class Buffer extends AbstractService
             $this->getExtraOAuthHeaders()
         );
         $token = $this->parseAccessTokenResponse($responseBody);
-        $this->storage->storeAccessToken($this->service(), $token);
+        $this->storage->storeAccessToken($this->service(), $token, $this->account());
 
         return $token;
     }

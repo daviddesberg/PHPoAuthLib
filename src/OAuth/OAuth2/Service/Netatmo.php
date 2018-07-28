@@ -12,10 +12,6 @@ namespace OAuth\OAuth2\Service;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
-use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Http\Uri\UriInterface;
 
 /**
  * Netatmo service.
@@ -36,24 +32,15 @@ class Netatmo extends AbstractService
     const SCOPE_THERMOSTAT_READ     = 'read_thermostat';
     // Used to configure the thermostat (syncschedule, setthermpoint)
     const SCOPE_THERMOSTAT_WRITE    = 'write_thermostat';
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected function init()
+    {
+        $this->stateParameterInAuthUrl = true;
 
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
-    ) {
-        parent::__construct(
-            $credentials,
-            $httpClient,
-            $storage,
-            $scopes,
-            $baseApiUri,
-            true // use parameter state
-        );
-
-        if (null === $baseApiUri) {
+        if( $this->baseApiUri === null ) {
             $this->baseApiUri = new Uri('https://api.netatmo.net/');
         }
     }

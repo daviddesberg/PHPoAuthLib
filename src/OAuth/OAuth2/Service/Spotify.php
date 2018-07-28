@@ -5,10 +5,6 @@ namespace OAuth\OAuth2\Service;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
-use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Http\Uri\UriInterface;
 
 class Spotify extends AbstractService
 {
@@ -29,16 +25,14 @@ class Spotify extends AbstractService
     const SCOPE_USER_READ_BIRTHDAY = 'user-read-birthdate';
     const SCOPE_USER_READ_FOLLOW = 'user-follow-read';
 
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
-    ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, true);
+    /**
+     * {@inheritdoc}
+     */
+    protected function init()
+    {
+        $this->stateParameterInAuthUrl = true;
 
-        if (null === $baseApiUri) {
+        if( $this->baseApiUri === null ) {
             $this->baseApiUri = new Uri('https://api.spotify.com/v1/');
         }
     }

@@ -5,33 +5,15 @@ namespace OAuth\OAuth1\Service;
 use OAuth\OAuth1\Token\StdOAuth1Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Http\Client\ClientInterface;
-use OAuth\Common\Http\Uri\UriInterface;
-use OAuth\OAuth1\Signature\SignatureInterface;
 
 class QuickBooks extends AbstractService
 {
     /**
      * {@inheritdoc}
      */
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        SignatureInterface $signature,
-        UriInterface $baseApiUri = null
-    ) {
-        parent::__construct(
-            $credentials,
-            $httpClient,
-            $storage,
-            $signature,
-            $baseApiUri
-        );
-
-        if (null === $baseApiUri) {
+    public function init()
+    {
+        if (null === $this->baseApiUri) {
             $this->baseApiUri = new Uri('https://quickbooks.api.intuit.com/');
         }
     }

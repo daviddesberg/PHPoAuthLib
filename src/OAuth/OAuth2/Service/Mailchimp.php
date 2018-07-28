@@ -5,24 +5,16 @@ namespace OAuth\OAuth2\Service;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
-use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Http\Uri\UriInterface;
 
 class Mailchimp extends AbstractService
 {
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
-    ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-
-        if (is_null($this->baseApiUri) && $storage->hasAccessToken($this->service())) {
-            $this->setBaseApiUri($storage->retrieveAccessToken($this->service()));
+    /**
+     * {@inheritdoc}
+     */
+    protected function init()
+    {
+        if (is_null($this->baseApiUri) && $this->getStorage()->hasAccessToken($this->service(), $this->account())) {
+            $this->setBaseApiUri($this->getStorage()->retrieveAccessToken($this->service(), $this->account()));
         }
     }
 
@@ -83,7 +75,7 @@ class Mailchimp extends AbstractService
     public function request($path, $method = 'GET', $body = null, array $extraHeaders = array())
     {
         if (is_null($this->baseApiUri)) {
-            $this->setBaseApiUri($this->storage->retrieveAccessToken($this->service()));
+            $this->setBaseApiUri($this->storage->retrieveAccessToken($this->service(), $this->account()));
         }
 
         return parent::request($path, $method, $body, $extraHeaders);

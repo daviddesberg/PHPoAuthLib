@@ -120,6 +120,7 @@ class Facebook extends AbstractService
     const SCOPE_FRIENDS_GAMES                 = 'friends_games_activity';
     //Page Permissions
     const SCOPE_PAGES                         = 'manage_pages';
+    const SCOPE_PAGES_MESSAGING               = 'pages_messaging';
     const SCOPE_PUBLISH_PAGES                 = 'publish_pages';
 
     public function __construct(

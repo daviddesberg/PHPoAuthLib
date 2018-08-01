@@ -59,6 +59,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'docusign' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'dropbox' => array(
         'key'       => '',
         'secret'    => '',

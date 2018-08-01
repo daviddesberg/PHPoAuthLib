@@ -68,6 +68,7 @@ Included service implementations
     - Delicious
     - Deezer
     - DeviantArt
+    - Docusign
     - Dropbox
     - Eve Online
     - Facebook

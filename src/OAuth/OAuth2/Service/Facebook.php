@@ -23,7 +23,7 @@ class Facebook extends AbstractService
      *
      * If you don't think this is scary you should not be allowed on the web at all
      *
-     * @link https://developers.facebook.com/docs/reference/login/
+     * @link https://developers.facebook.com/docs/facebook-login/permissions
      * @link https://developers.facebook.com/tools/explorer For a list of permissions use 'Get Access Token'
      */
     // Default scope
@@ -33,10 +33,12 @@ class Facebook extends AbstractService
     // Extended permissions
     const SCOPE_READ_FRIENDLIST               = 'read_friendlists';
     const SCOPE_READ_INSIGHTS                 = 'read_insights';
-    const SCOPE_READ_MAILBOX                  = 'read_mailbox';
+    const SCOPE_READ_MAILBOX                  = 'read_mailbox'; // deprecated
     const SCOPE_READ_PAGE_MAILBOXES           = 'read_page_mailboxes';
     const SCOPE_READ_REQUESTS                 = 'read_requests';
-    const SCOPE_READ_STREAM                   = 'read_stream';
+    const SCOPE_READ_STREAM                   = 'read_stream'; // deprecated
+    const SCOPE_READ_AUDIENCE_NETWORK_INSIGHTS = 'read_audience_network_insights';
+    const SCOPE_READ_CUSTOM_FRIENDLISTS       = 'read_custom_friendlists';
     const SCOPE_VIDEO_UPLOAD                  = 'video_upload';
     const SCOPE_XMPP_LOGIN                    = 'xmpp_login';
     const SCOPE_USER_ONLINE_PRESENCE          = 'user_online_presence';
@@ -47,7 +49,7 @@ class Facebook extends AbstractService
     const SCOPE_CREATE_NOTE                   = 'create_note';
     const SCOPE_EXPORT_STREAM                 = 'export_stream';
     const SCOPE_MANAGE_FRIENDLIST             = 'manage_friendlists';
-    const SCOPE_MANAGE_NOTIFICATIONS          = 'manage_notifications';
+    const SCOPE_MANAGE_NOTIFICATIONS          = 'manage_notifications'; // deprecated
     const SCOPE_PHOTO_UPLOAD                  = 'photo_upload';
     const SCOPE_PUBLISH_ACTIONS               = 'publish_actions';
     const SCOPE_PUBLISH_CHECKINS              = 'publish_checkins';
@@ -56,6 +58,7 @@ class Facebook extends AbstractService
     const SCOPE_SHARE_ITEM                    = 'share_item';
     const SCOPE_SMS                           = 'sms';
     const SCOPE_STATUS_UPDATE                 = 'status_update';
+    const SCOPE_BUSINESS_MANAGEMENT           = 'business_management';
     // Extended Profile Properties
     const SCOPE_USER_POSTS                    = 'user_posts';
     const SCOPE_USER_FRIENDS                  = 'user_friends';
@@ -72,7 +75,7 @@ class Facebook extends AbstractService
     const SCOPE_FRIENDS_EDUCATION             = 'friends_education_history';
     const SCOPE_USER_EVENTS                   = 'user_events';
     const SCOPE_FRIENDS_EVENTS                = 'friends_events';
-    const SCOPE_USER_GROUPS                   = 'user_groups';
+    const SCOPE_USER_GROUPS                   = 'user_groups'; // deprecated
     const SCOPE_USER_MANAGED_GROUPS           = 'user_managed_groups';
     const SCOPE_FRIENDS_GROUPS                = 'friends_groups';
     const SCOPE_USER_HOMETOWN                 = 'user_hometown';
@@ -97,7 +100,7 @@ class Facebook extends AbstractService
     const SCOPE_FRIENDS_RELATIONSHIPS_DETAILS = 'friends_relationship_details';
     const SCOPE_USER_RELIGION                 = 'user_religion_politics';
     const SCOPE_FRIENDS_RELIGION              = 'friends_religion_politics';
-    const SCOPE_USER_STATUS                   = 'user_status';
+    const SCOPE_USER_STATUS                   = 'user_status'; // deprecated
     const SCOPE_FRIENDS_STATUS                = 'friends_status';
     const SCOPE_USER_SUBSCRIPTIONS            = 'user_subscriptions';
     const SCOPE_FRIENDS_SUBSCRIPTIONS         = 'friends_subscriptions';
@@ -118,10 +121,23 @@ class Facebook extends AbstractService
     const SCOPE_FRIENDS_APP                   = 'friends_actions:APP_NAMESPACE';
     const SCOPE_USER_GAMES                    = 'user_games_activity';
     const SCOPE_FRIENDS_GAMES                 = 'friends_games_activity';
+    const SCOPE_USER_BOOKS                    = 'user_actions.books';
+    const SCOPE_USER_FITNESS                  = 'user_actions.fitness';
     //Page Permissions
     const SCOPE_PAGES                         = 'manage_pages';
     const SCOPE_PAGES_MESSAGING               = 'pages_messaging';
     const SCOPE_PUBLISH_PAGES                 = 'publish_pages';
+    const SCOPE_PAGES_SHOW_LIST               = 'pages_show_list';
+    const SCOPE_PAGES_MANAGE_CTA              = 'pages_manage_cta';
+    const SCOPE_PAGES_MANAGE_INSTANT_ARTICLES = 'pages_manage_instant_articles';
+    const SCOPE_PAGES_MESSAGING               = 'pages_messaging';
+    const SCOPE_PAGES_MESSAGING_SUBSCRIPTIONS = 'pages_messaging_subscriptions';
+    const SCOPE_PAGES_MESSAGING_PAYMENTS      = 'pages_messaging_payments';
+    const SCOPE_PAGES_MESSAGING_PHONE_NUMBER  = 'pages_messaging_phone_number';
+    // Instagram Permissions
+    const SCOPE_INSTAGRAM_BASIC               = 'instagram_basic';
+    const SCOPE_INSTAGRAM_MANAGE_COMMENTS     = 'instagram_manage_comments';
+    const SCOPE_INSTAGRAM_MANAGE_INSIGHTS     = 'instagram_manage_insights';
 
     public function __construct(
         CredentialsInterface $credentials,

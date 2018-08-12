@@ -69,5 +69,7 @@ abstract class AbstractClient implements ClientInterface
                 $val = ucfirst(strtolower($key)) . ': ' . $val;
             }
         );
+
+        return $this;
     }
 }

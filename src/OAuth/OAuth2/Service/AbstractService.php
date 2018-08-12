@@ -264,6 +264,8 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         if ($this->retrieveAuthorizationState() !== $state) {
             throw new InvalidAuthorizationStateException();
         }
+
+        return $this;
     }
 
     /**

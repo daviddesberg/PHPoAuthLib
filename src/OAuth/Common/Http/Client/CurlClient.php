@@ -33,6 +33,7 @@ class CurlClient extends AbstractClient
     public function setCurlParameters(array $parameters)
     {
         $this->parameters = $parameters;
+        return $this;
     }
 
     /**

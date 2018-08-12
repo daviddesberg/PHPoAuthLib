@@ -37,6 +37,7 @@ class Signature implements SignatureInterface
     public function setHashingAlgorithm($algorithm)
     {
         $this->algorithm = $algorithm;
+        return $this;
     }
 
     /**
@@ -45,6 +46,7 @@ class Signature implements SignatureInterface
     public function setTokenSecret($token)
     {
         $this->tokenSecret = $token;
+        return $this;
     }
 
     /**

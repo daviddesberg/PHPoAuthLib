@@ -66,6 +66,7 @@ class Twitter extends AbstractService
             );
         }
         $this->authorizationEndpoint = $endpoint;
+        return $this;
     }
 
     /**

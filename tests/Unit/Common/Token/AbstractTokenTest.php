@@ -126,7 +126,6 @@ class AbstractTokenTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers OAuth\Common\Token\AbstractToken::__construct
-     * @covers OAuth\Common\Token\AbstractToken::setLifetime
      * @covers OAuth\Common\Token\AbstractToken::getEndOfLife
      */
     public function testGetEndOfLifeNotSet()
@@ -138,7 +137,7 @@ class AbstractTokenTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers OAuth\Common\Token\AbstractToken::__construct
-     * @covers OAuth\Common\Token\AbstractToken::setLifetime
+     * @covers OAuth\Common\Token\AbstractToken::setEndOfLife
      * @covers OAuth\Common\Token\AbstractToken::getEndOfLife
      */
     public function testGetEndOfLifeZero()
@@ -150,7 +149,7 @@ class AbstractTokenTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers OAuth\Common\Token\AbstractToken::__construct
-     * @covers OAuth\Common\Token\AbstractToken::setLifetime
+     * @covers OAuth\Common\Token\AbstractToken::setEndOfLife
      * @covers OAuth\Common\Token\AbstractToken::getEndOfLife
      */
     public function testGetEndOfLifeNeverExpires()
@@ -162,28 +161,76 @@ class AbstractTokenTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers OAuth\Common\Token\AbstractToken::__construct
-     * @covers OAuth\Common\Token\AbstractToken::setLifetime
+     * @covers OAuth\Common\Token\AbstractToken::setEndOfLife
      * @covers OAuth\Common\Token\AbstractToken::getEndOfLife
      */
-    public function testGetEndOfLifeNeverExpiresFiveMinutes()
+    public function testGetEndOfLifeExpiresFiveMinutes()
     {
-        $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken', array('foo', 'bar', 5 * 60));
+        $expiration_time = time() + (5*60);
+        $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken', array('foo', 'bar', $expiration_time));
 
-        $this->assertSame(time() + (5*60), $token->getEndOfLife());
+        $this->assertSame($expiration_time, $token->getEndOfLife());
     }
 
     /**
      * @covers OAuth\Common\Token\AbstractToken::__construct
-     * @covers OAuth\Common\Token\AbstractToken::setLifetime
      * @covers OAuth\Common\Token\AbstractToken::getEndOfLife
      * @covers OAuth\Common\Token\AbstractToken::setEndOfLife
      */
     public function testSetEndOfLife()
     {
         $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken');
-
         $token->setEndOfLife(10);
 
         $this->assertSame(10, $token->getEndOfLife());
     }
+
+    /**
+     * @covers OAuth\Common\Token\AbstractToken::__construct
+     * @covers OAuth\Common\Token\AbstractToken::setLifetime
+     * @covers OAuth\Common\Token\AbstractToken::getEndOfLife
+     */
+    public function testSetLifetimeNotSet() {
+        $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken');
+        $token->setLifetime(null);
+
+        $this->assertSame(AbstractToken::EOL_UNKNOWN, $token->getEndOfLife());
+    }
+
+    /**
+     * @covers OAuth\Common\Token\AbstractToken::__construct
+     * @covers OAuth\Common\Token\AbstractToken::setLifetime
+     * @covers OAuth\Common\Token\AbstractToken::getEndOfLife
+     */
+    public function testSetLifetimeZero() {
+        $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken');
+        $token->setLifetime(0);
+
+        $this->assertSame(AbstractToken::EOL_NEVER_EXPIRES, $token->getEndOfLife());
+    }
+
+    /**
+     * @covers OAuth\Common\Token\AbstractToken::__construct
+     * @covers OAuth\Common\Token\AbstractToken::setLifetime
+     * @covers OAuth\Common\Token\AbstractToken::getEndOfLife
+     */
+    public function testSetLifetimeNeverExpires() {
+        $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken');
+        $token->setLifetime(AbstractToken::EOL_NEVER_EXPIRES);
+
+        $this->assertSame(AbstractToken::EOL_NEVER_EXPIRES, $token->getEndOfLife());
+    }
+
+    /**
+     * @covers OAuth\Common\Token\AbstractToken::__construct
+     * @covers OAuth\Common\Token\AbstractToken::setLifetime
+     * @covers OAuth\Common\Token\AbstractToken::getEndOfLife
+     */
+    public function testSetLifetimeExpiresFiveMinutes() {
+        $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken');
+        $token->setLifetime(5*60);
+
+        $this->assertSame(time() + (5*60), $token->getEndOfLife());
+    }
+
 }

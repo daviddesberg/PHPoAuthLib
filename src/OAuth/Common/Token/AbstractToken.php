@@ -30,14 +30,14 @@ abstract class AbstractToken implements TokenInterface
     /**
      * @param string $accessToken
      * @param string $refreshToken
-     * @param int    $lifetime
+     * @param int    $endOfLife
      * @param array  $extraParams
      */
-    public function __construct($accessToken = null, $refreshToken = null, $lifetime = null, $extraParams = array())
+    public function __construct($accessToken = null, $refreshToken = null, $endOfLife = null, $extraParams = array())
     {
         $this->accessToken = $accessToken;
         $this->refreshToken = $refreshToken;
-        $this->setLifetime($lifetime);
+        $this->setEndOfLife($endOfLife);
         $this->extraParams = $extraParams;
     }
 
@@ -94,7 +94,14 @@ abstract class AbstractToken implements TokenInterface
      */
     public function setEndOfLife($endOfLife)
     {
-        $this->endOfLife = $endOfLife;
+        // take an EOL constant or an expiration timestamp
+        if (0 === $endOfLife || static::EOL_NEVER_EXPIRES === $endOfLife) {
+            $this->endOfLife = static::EOL_NEVER_EXPIRES;
+        } elseif (null !== $endOfLife) {
+            $this->endOfLife = $endOfLife;
+        } else {
+            $this->endOfLife = static::EOL_UNKNOWN;
+        }
     }
 
     /**
@@ -102,6 +109,7 @@ abstract class AbstractToken implements TokenInterface
      */
     public function setLifetime($lifetime)
     {
+        // take an EOL constant or number of seconds until expiration
         if (0 === $lifetime || static::EOL_NEVER_EXPIRES === $lifetime) {
             $this->endOfLife = static::EOL_NEVER_EXPIRES;
         } elseif (null !== $lifetime) {

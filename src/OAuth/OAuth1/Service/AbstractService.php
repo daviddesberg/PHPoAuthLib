@@ -82,22 +82,20 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         }
         $this->signature->setTokenSecret($tokenSecret);
 
-        $bodyParams = array(
-            'oauth_verifier' => $verifier,
-        );
-
         $authorizationHeader = array(
             'Authorization' => $this->buildAuthorizationHeaderForAPIRequest(
                 'POST',
                 $this->getAccessTokenEndpoint(),
                 $this->storage->retrieveAccessToken($this->service()),
-                $bodyParams
+                array(
+                    'oauth_verifier' => $verifier,
+                )
             )
         );
 
         $headers = array_merge($authorizationHeader, $this->getExtraOAuthHeaders());
 
-        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $bodyParams, $headers);
+        $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), null, $headers);
 
         $token = $this->parseAccessTokenResponse($responseBody);
         $this->storage->storeAccessToken($this->service(), $token);

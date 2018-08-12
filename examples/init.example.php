@@ -170,6 +170,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => ''
     ),
+    'slack' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'soundcloud' => array(
         'key'       => '',
         'secret'    => '',

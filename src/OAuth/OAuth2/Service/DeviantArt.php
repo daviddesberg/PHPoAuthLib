@@ -2,14 +2,10 @@
 
 namespace OAuth\OAuth2\Service;
 
-use OAuth\Common\Exception\Exception;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
-use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Http\Uri\UriInterface;
+
 
 class DeviantArt extends AbstractService
 {
@@ -33,16 +29,12 @@ class DeviantArt extends AbstractService
     const SCOPE_USER                       = 'user';
     const SCOPE_USERMANAGE                 = 'user.manage';
 
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
-    ) {
-        parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
-
-        if (null === $baseApiUri) {
+    /**
+     * {@inheritdoc}
+     */
+    protected function init()
+    {
+        if( $this->baseApiUri === null ) {
             $this->baseApiUri = new Uri('https://www.deviantart.com/api/v1/oauth2/');
         }
     }

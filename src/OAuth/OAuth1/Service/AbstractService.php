@@ -31,14 +31,24 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
         SignatureInterface $signature,
-        UriInterface $baseApiUri = null
+        UriInterface $baseApiUri = null,
+        $account = null
     ) {
-        parent::__construct($credentials, $httpClient, $storage);
+        parent::__construct($credentials, $httpClient, $storage, $account);
 
         $this->signature = $signature;
         $this->baseApiUri = $baseApiUri;
 
         $this->signature->setHashingAlgorithm($this->getSignatureMethod());
+
+        $this->init();
+    }
+
+    /**
+     * Constructor extended initialization
+     */
+    protected function init() {
+
     }
 
     /**
@@ -52,7 +62,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $responseBody = $this->httpClient->retrieveResponse($this->getRequestTokenEndpoint(), array(), $headers);
 
         $token = $this->parseRequestTokenResponse($responseBody);
-        $this->storage->storeAccessToken($this->service(), $token);
+        $this->storage->storeAccessToken($this->service(), $token, $this->account());
 
         return $token;
     }
@@ -77,7 +87,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     public function requestAccessToken($token, $verifier, $tokenSecret = null)
     {
         if (is_null($tokenSecret)) {
-            $storedRequestToken = $this->storage->retrieveAccessToken($this->service());
+            $storedRequestToken = $this->storage->retrieveAccessToken($this->service(), $this->account());
             $tokenSecret = $storedRequestToken->getRequestTokenSecret();
         }
         $this->signature->setTokenSecret($tokenSecret);
@@ -90,7 +100,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
             'Authorization' => $this->buildAuthorizationHeaderForAPIRequest(
                 'POST',
                 $this->getAccessTokenEndpoint(),
-                $this->storage->retrieveAccessToken($this->service()),
+                $this->storage->retrieveAccessToken($this->service(), $this->account()),
                 $bodyParams
             )
         );
@@ -100,7 +110,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $responseBody = $this->httpClient->retrieveResponse($this->getAccessTokenEndpoint(), $bodyParams, $headers);
 
         $token = $this->parseAccessTokenResponse($responseBody);
-        $this->storage->storeAccessToken($this->service(), $token);
+        $this->storage->storeAccessToken($this->service(), $token, $this->account());
 
         return $token;
     }
@@ -131,7 +141,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $uri = $this->determineRequestUriFromPath($path, $this->baseApiUri);
 
         /** @var $token StdOAuth1Token */
-        $token = $this->storage->retrieveAccessToken($this->service());
+        $token = $this->storage->retrieveAccessToken($this->service(), $this->account());
         $extraHeaders = array_merge($this->getExtraApiHeaders(), $extraHeaders);
         $authorizationHeader = array(
             'Authorization' => $this->buildAuthorizationHeaderForAPIRequest($method, $uri, $token, $body)

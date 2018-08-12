@@ -51,29 +51,29 @@ class Redis implements TokenStorageInterface
     /**
      * {@inheritDoc}
      */
-    public function retrieveAccessToken($service)
+    public function retrieveAccessToken($service, $account = null)
     {
-        if (!$this->hasAccessToken($service)) {
+        if (!$this->hasAccessToken($service, $account)) {
             throw new TokenNotFoundException('Token not found in redis');
         }
 
-        if (isset($this->cachedTokens[$service])) {
-            return $this->cachedTokens[$service];
+        if (isset($this->cachedTokens[$service.$account])) {
+            return $this->cachedTokens[$service.$account];
         }
 
-        $val = $this->redis->hget($this->key, $service);
+        $val = $this->redis->hget($this->key, $service.$account);
 
-        return $this->cachedTokens[$service] = unserialize($val);
+        return $this->cachedTokens[$service.$account] = unserialize($val);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function storeAccessToken($service, TokenInterface $token)
+    public function storeAccessToken($service, TokenInterface $token, $account = null)
     {
         // (over)write the token
-        $this->redis->hset($this->key, $service, serialize($token));
-        $this->cachedTokens[$service] = $token;
+        $this->redis->hset($this->key, $service.$account, serialize($token));
+        $this->cachedTokens[$service.$account] = $token;
 
         // allow chaining
         return $this;
@@ -82,24 +82,24 @@ class Redis implements TokenStorageInterface
     /**
      * {@inheritDoc}
      */
-    public function hasAccessToken($service)
+    public function hasAccessToken($service, $account = null)
     {
-        if (isset($this->cachedTokens[$service])
-            && $this->cachedTokens[$service] instanceof TokenInterface
+        if (isset($this->cachedTokens[$service.$account])
+            && $this->cachedTokens[$service.$account] instanceof TokenInterface
         ) {
             return true;
         }
 
-        return $this->redis->hexists($this->key, $service);
+        return $this->redis->hexists($this->key, $service.$account);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function clearToken($service)
+    public function clearToken($service, $account = null)
     {
-        $this->redis->hdel($this->key, $service);
-        unset($this->cachedTokens[$service]);
+        $this->redis->hdel($this->key, $service.$account);
+        unset($this->cachedTokens[$service.$account]);
 
         // allow chaining
         return $this;
@@ -133,29 +133,29 @@ class Redis implements TokenStorageInterface
     /**
      * {@inheritDoc}
      */
-    public function retrieveAuthorizationState($service)
+    public function retrieveAuthorizationState($service, $account = null)
     {
-        if (!$this->hasAuthorizationState($service)) {
+        if (!$this->hasAuthorizationState($service, $account)) {
             throw new AuthorizationStateNotFoundException('State not found in redis');
         }
 
-        if (isset($this->cachedStates[$service])) {
-            return $this->cachedStates[$service];
+        if (isset($this->cachedStates[$service.$account])) {
+            return $this->cachedStates[$service.$account];
         }
 
-        $val = $this->redis->hget($this->stateKey, $service);
+        $val = $this->redis->hget($this->stateKey, $service.$account);
 
-        return $this->cachedStates[$service] = $val;
+        return $this->cachedStates[$service.$account] = $val;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function storeAuthorizationState($service, $state)
+    public function storeAuthorizationState($service, $state, $account = null)
     {
         // (over)write the token
-        $this->redis->hset($this->stateKey, $service, $state);
-        $this->cachedStates[$service] = $state;
+        $this->redis->hset($this->stateKey, $service.$account, $state);
+        $this->cachedStates[$service.$account] = $state;
 
         // allow chaining
         return $this;
@@ -164,24 +164,24 @@ class Redis implements TokenStorageInterface
     /**
      * {@inheritDoc}
      */
-    public function hasAuthorizationState($service)
+    public function hasAuthorizationState($service, $account = null)
     {
-        if (isset($this->cachedStates[$service])
-            && null !== $this->cachedStates[$service]
+        if (isset($this->cachedStates[$service.$account])
+            && null !== $this->cachedStates[$service.$account]
         ) {
             return true;
         }
 
-        return $this->redis->hexists($this->stateKey, $service);
+        return $this->redis->hexists($this->stateKey, $service.$account);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function clearAuthorizationState($service)
+    public function clearAuthorizationState($service, $account = null)
     {
-        $this->redis->hdel($this->stateKey, $service);
-        unset($this->cachedStates[$service]);
+        $this->redis->hdel($this->stateKey, $service.$account);
+        unset($this->cachedStates[$service.$account]);
 
         // allow chaining
         return $this;

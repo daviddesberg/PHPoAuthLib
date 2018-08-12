@@ -58,11 +58,7 @@ class Signature implements SignatureInterface
     {
         parse_str($uri->getQuery(), $queryStringData);
 
-        foreach (array_merge($queryStringData, $params) as $key => $value) {
-            $signatureData[rawurlencode($key)] = rawurlencode($value);
-        }
-
-        ksort($signatureData);
+        $signatureData = $this->prepareParameters(array_merge($queryStringData, $params));
 
         // determine base uri
         $baseUri = $uri->getScheme() . '://' . $uri->getRawAuthority();
@@ -87,15 +83,33 @@ class Signature implements SignatureInterface
      */
     protected function buildSignatureDataString(array $signatureData)
     {
-        $signatureString = '';
-        $delimiter = '';
-        foreach ($signatureData as $key => $value) {
-            $signatureString .= $delimiter . $key . '=' . $value;
+        return http_build_query($signatureData, null, '&', PHP_QUERY_RFC3986);
+    }
 
-            $delimiter = '&';
+    /**
+     * Convert booleans to strings, removed unset parameters, and sorts the array
+     *
+     * @param array $data Data array
+     *
+     * @return array
+     */
+    public function prepareParameters($data)
+    {
+        uksort($data, 'strcmp');
+        foreach ($data as $key => &$value) {
+            switch (gettype($value)) {
+                case 'NULL':
+                    unset($data[$key]);
+                    break;
+                case 'array':
+                    $data[$key] = self::prepareParameters($value);
+                    break;
+                case 'boolean':
+                    $data[$key] = $value ? 'true' : 'false';
+                    break;
+            }
         }
-
-        return $signatureString;
+        return $data;
     }
 
     /**

@@ -13,10 +13,6 @@ namespace OAuth\OAuth2\Service;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
-use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\OAuth2\Service\Exception\InvalidAccessTypeException;
 
 /**
@@ -41,27 +37,14 @@ class Strava extends AbstractService
 
     protected $approvalPrompt = 'auto';
 
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
-    ) {
-        if (empty($scopes)) {
-            $scopes = array(self::SCOPE_PUBLIC);
-        }
+    /**
+     * {@inheritdoc}
+     */
+    protected function init()
+    {
+        $this->stateParameterInAuthUrl = true;
 
-        parent::__construct(
-            $credentials,
-            $httpClient,
-            $storage,
-            $scopes,
-            $baseApiUri,
-            true
-        );
-
-        if (null === $baseApiUri) {
+        if( $this->baseApiUri === null ) {
             $this->baseApiUri = new Uri('https://www.strava.com/api/v3/');
         }
     }

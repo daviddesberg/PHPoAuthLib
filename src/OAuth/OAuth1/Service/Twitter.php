@@ -2,14 +2,9 @@
 
 namespace OAuth\OAuth1\Service;
 
-use OAuth\OAuth1\Signature\SignatureInterface;
 use OAuth\OAuth1\Token\StdOAuth1Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Uri\UriInterface;
-use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Exception\Exception;
 
 class Twitter extends AbstractService
@@ -19,16 +14,12 @@ class Twitter extends AbstractService
 
     protected $authorizationEndpoint   = self::ENDPOINT_AUTHENTICATE;
 
-    public function __construct(
-        CredentialsInterface $credentials,
-        ClientInterface $httpClient,
-        TokenStorageInterface $storage,
-        SignatureInterface $signature,
-        UriInterface $baseApiUri = null
-    ) {
-        parent::__construct($credentials, $httpClient, $storage, $signature, $baseApiUri);
-
-        if (null === $baseApiUri) {
+    /**
+     * {@inheritdoc}
+     */
+    public function init()
+    {
+        if (null === $this->baseApiUri) {
             $this->baseApiUri = new Uri('https://api.twitter.com/1.1/');
         }
     }

@@ -10,9 +10,9 @@ require_once __DIR__ . '/bootstrap.php';
 $storage = new Session();
 
 $credentials = new Credentials(
-    $servicesCredentials['microsoft_grapht']['CLIENT_ID'],
-    $servicesCredentials['microsoft_grapht']['SECRET_CLIENT'],
-    $servicesCredentials['microsoft_grapht']['CALLBACK_URL']
+    $servicesCredentials['microsoftgraph']['CLIENT_ID'],
+    $servicesCredentials['microsoftgraph']['SECRET_CLIENT'],
+    $servicesCredentials['microsoftgraph']['CALLBACK_URL']
 );
 
 //Se le asigna el cliente para hacer las peticiones

@@ -206,6 +206,11 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => ''
     ),
+    'microsoft_grapht' => array(
+        'CLIENT_ID'       => '',
+        'SECRET_CLIENT' => '',
+        'CALLBACK_URL'    => ''
+    )
 );
 
 /** @var $serviceFactory \OAuth\ServiceFactory An OAuth service factory. */

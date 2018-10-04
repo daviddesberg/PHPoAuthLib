@@ -28,8 +28,7 @@ Edit your `composer.json` and add:
 And install dependencies:
 
 ```bash
-$ curl -sS https://getcomposer.org/installer | php
-$ php composer.phar install
+$ composer install
 ```
 
 Features

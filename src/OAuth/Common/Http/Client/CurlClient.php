@@ -87,13 +87,13 @@ class CurlClient extends AbstractClient
 
         curl_setopt($ch, CURLOPT_URL, $endpoint->getAbsoluteUri());
 
-        if ($method === 'POST' || $method === 'PUT') {
+        if ($method === 'POST' || $method === 'PUT' || $method === 'PATCH') {
             if ($requestBody && is_array($requestBody)) {
                 $requestBody = http_build_query($requestBody, '', '&');
             }
 
-            if ($method === 'PUT') {
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            if ($method === 'PUT' || $method === 'PATCH') {
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
             } else {
                 curl_setopt($ch, CURLOPT_POST, true);
             }
@@ -102,7 +102,6 @@ class CurlClient extends AbstractClient
         } else {
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
         }
-
         if ($this->maxRedirects > 0) {
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
             curl_setopt($ch, CURLOPT_MAXREDIRS, $this->maxRedirects);

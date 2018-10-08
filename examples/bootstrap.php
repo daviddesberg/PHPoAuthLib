@@ -18,10 +18,10 @@ ini_set('date.timezone', 'Europe/Amsterdam');
 
 /**
  * Create a new instance of the URI class with the current URI, stripping the query string
- */
+
 $uriFactory = new \OAuth\Common\Http\Uri\UriFactory();
 $currentUri = $uriFactory->createFromSuperGlobalArray($_SERVER);
-$currentUri->setQuery('');
+$currentUri->setQuery('');*/
 
 /**
  * Load the credential for the different services

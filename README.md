@@ -82,6 +82,7 @@ Included service implementations
     - LinkedIn
     - Mailchimp
     - Microsoft
+    - Microsoft Graph
     - Mondo
     - Nest
     - Netatmo

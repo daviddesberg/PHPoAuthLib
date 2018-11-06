@@ -190,6 +190,11 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'typeform' => array(
+	    'key'       => '',
+	    'secret'    => '',
+	    'form_id'   => ''
+    ),
     'ustream' => array(
         'key'       => '',
         'secret'    => '',

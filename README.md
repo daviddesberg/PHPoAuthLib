@@ -95,6 +95,7 @@ Included service implementations
     - SoundCloud
     - Spotify
     - Strava
+    - Typeform
     - Ustream
     - Vimeo
     - Vkontakte

@@ -123,6 +123,10 @@ $servicesCredentials = array(
         'key'       => '',
         'secret'    => '',
     ),
+    'myob' => array(
+        'key'       => '',
+        'secret'    => '',
+    ),
     'nest' => array(
         'key'       => '',
         'secret'    => '',

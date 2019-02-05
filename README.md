@@ -83,6 +83,7 @@ Included service implementations
     - Mailchimp
     - Microsoft
     - Mondo
+    - MYOB
     - Nest
     - Netatmo
     - Parrot Flower Power

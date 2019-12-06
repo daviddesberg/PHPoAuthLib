@@ -20,9 +20,10 @@ class Linkedin extends AbstractService
 {
     /**
      * Defined scopes
-     * @link http://developer.linkedin.com/documents/authentication#granting
+     *
+     * @link https://docs.microsoft.com/en-us/linkedin/shared/authentication/authorization-code-flow?context=linkedin/context
      */
-    const SCOPE_R_BASICPROFILE      = 'r_basicprofile';
+    const SCOPE_R_LITEPROFILE       = 'r_liteprofile';
     const SCOPE_R_FULLPROFILE       = 'r_fullprofile';
     const SCOPE_R_EMAILADDRESS      = 'r_emailaddress';
     const SCOPE_R_NETWORK           = 'r_network';
@@ -31,7 +32,7 @@ class Linkedin extends AbstractService
     const SCOPE_RW_COMPANY_ADMIN    = 'rw_company_admin';
     const SCOPE_RW_GROUPS           = 'rw_groups';
     const SCOPE_W_MESSAGES          = 'w_messages';
-    const SCOPE_W_SHARE             = 'w_share';
+    const SCOPE_W_MEMBER_SOCIAL     = 'w_member_social';
 
     public function __construct(
         CredentialsInterface $credentials,

@@ -43,7 +43,7 @@ class Linkedin extends AbstractService
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, true);
 
         if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://api.linkedin.com/v1/');
+            $this->baseApiUri = new Uri('https://api.linkedin.com/v2/');
         }
     }
 
@@ -52,7 +52,7 @@ class Linkedin extends AbstractService
      */
     public function getAuthorizationEndpoint()
     {
-        return new Uri('https://www.linkedin.com/uas/oauth2/authorization');
+        return new Uri('https://www.linkedin.com/oauth/v2/authorization');
     }
 
     /**
@@ -60,7 +60,7 @@ class Linkedin extends AbstractService
      */
     public function getAccessTokenEndpoint()
     {
-        return new Uri('https://www.linkedin.com/uas/oauth2/accessToken');
+        return new Uri('https://www.linkedin.com/oauth/v2/accessToken');
     }
 
     /**

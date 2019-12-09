@@ -41,6 +41,10 @@ class Linkedin extends AbstractService
         $scopes = array(),
         UriInterface $baseApiUri = null
     ) {
+        if (count($scopes) === 0) {
+            $scopes = array(self::SCOPE_R_LITEPROFILE, self::SCOPE_R_EMAILADDRESS);
+        }
+
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, true);
 
         if (null === $baseApiUri) {

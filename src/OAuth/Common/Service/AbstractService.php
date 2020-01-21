@@ -14,7 +14,7 @@ use OAuth\Common\Storage\TokenStorageInterface;
  */
 abstract class AbstractService implements ServiceInterface
 {
-    /** @var Credentials */
+    /** @var CredentialsInterface */
     protected $credentials;
 
     /** @var ClientInterface */

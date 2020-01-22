@@ -56,13 +56,13 @@ class Signature implements SignatureInterface
      */
     public function getSignature(UriInterface $uri, array $params, $method = 'POST')
     {
-        parse_str($uri->getQuery(), $queryStringData);
+        $queryStringData = $this->parseQueryString($uri->getQuery());
 
         foreach (array_merge($queryStringData, $params) as $key => $value) {
-            $signatureData[rawurlencode($key)] = rawurlencode($value);
+            $signatureData[rawurlencode($key)] = rawurlencode(strtr($value, ' ', '+'));
         }
 
-        ksort($signatureData);
+        uksort($signatureData, 'strnatcmp');
 
         // determine base uri
         $baseUri = $uri->getScheme() . '://' . $uri->getRawAuthority();
@@ -78,6 +78,24 @@ class Signature implements SignatureInterface
         $baseString .= rawurlencode($this->buildSignatureDataString($signatureData));
 
         return base64_encode($this->hash($baseString));
+    }
+
+    /**
+     * A userland implementation of parse_str that treats arrays as string keys
+     *
+     * @param string $query
+     *
+     * @return array
+     */
+    protected function parseQueryString($query)
+    {
+        $result = [];
+        $params = explode('&', $query);
+        foreach ($params as $param) {
+            $parts = explode('=', $param, 2);
+            $result[rawurldecode($parts[0])] = urldecode($parts[1]) ?? null;
+        }
+        return $result;
     }
 
     /**

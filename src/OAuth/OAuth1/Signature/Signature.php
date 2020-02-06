@@ -92,6 +92,9 @@ class Signature implements SignatureInterface
         $result = [];
         $params = explode('&', $query);
         foreach ($params as $param) {
+            if (!$param) {
+                continue;
+            }
             $parts = explode('=', $param, 2);
             $result[rawurldecode($parts[0])] = isset($parts[1]) ? urldecode($parts[1]) : '';
         }

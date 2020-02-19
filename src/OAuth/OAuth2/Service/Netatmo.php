@@ -36,6 +36,18 @@ class Netatmo extends AbstractService
     const SCOPE_THERMOSTAT_READ     = 'read_thermostat';
     // Used to configure the thermostat (syncschedule, setthermpoint)
     const SCOPE_THERMOSTAT_WRITE    = 'write_thermostat';
+    // Used to retrieve Welcome data (Gethomedata, Getcamerapicture)
+    const SCOPE_READ_CAMERA         = 'read_camera';
+    // Used to tell Welcome a specific person or everybody has left the Home (Setpersonsaway)
+    const SCOPE_WRITE_CAMERA        = 'write_camera';
+    // Used to access the camera, the videos and the live stream.
+    const SCOPE_ACCESS_CAMERA       = 'access_camera';
+    // Used to retrieve Presence data (Gethomedata, Getcamerapicture)
+    const SCOPE_READ_PRESENCE       = 'read_presence';
+    // Used to access the camera, the videos and the live stream.
+    const SCOPE_ACCESS_PRESENCE     = 'access_presence';
+    // Used to read data coming from Healthy Home Coach (gethomecoachsdata).
+    const SCOPE_READ_HOMECOACH      = 'read_homecoach';
 
     public function __construct(
         CredentialsInterface $credentials,

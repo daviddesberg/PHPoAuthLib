@@ -11,14 +11,15 @@
 namespace OAuth\Unit\Common\Storage;
 
 use OAuth\Common\Storage\Redis;
+use PHPUnit\Framework\TestCase;
 use Predis\Client as Predis;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 
-class RedisTest extends \PHPUnit_Framework_TestCase
+class RedisTest extends TestCase
 {
     protected $storage;
 
-    public function setUp()
+    public function setUp(): void
     {
         // connect to a redis daemon
         $predis = new Predis(array(
@@ -36,7 +37,7 @@ class RedisTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         // delete
         $this->storage->clearAllTokens();
@@ -96,7 +97,7 @@ class RedisTest extends \PHPUnit_Framework_TestCase
         $this->storage->clearToken($service);
 
         // assert
-        $this->setExpectedException('OAuth\Common\Storage\Exception\TokenNotFoundException');
+        $this->expectException('OAuth\Common\Storage\Exception\TokenNotFoundException');
         $this->storage->retrieveAccessToken($service);
     }
 }

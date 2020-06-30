@@ -4,8 +4,9 @@ namespace OAuthTest\Unit\Common\Http\Uri;
 
 use OAuth\Common\Http\Uri\UriFactory;
 use OAuth\Common\Http\Uri\Uri;
+use PHPUnit\Framework\TestCase;
 
-class UriFactoryTest extends \PHPUnit_Framework_TestCase
+class UriFactoryTest extends TestCase
 {
     /**
      *
@@ -222,7 +223,7 @@ class UriFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $factory = new UriFactory();
 
-        $this->setExpectedException('\\RuntimeException');
+        $this->expectException('\\RuntimeException');
 
         $uri = $factory->createFromSuperGlobalArray(array(
             'HTTP_HOST'    => 'example.com',

@@ -3,11 +3,12 @@
 namespace OAuthTest\Unit\Common\Storage;
 
 use OAuth\Common\Storage\Session;
+use PHPUnit\Framework\TestCase;
 
-class SessionTest extends \PHPUnit_Framework_TestCase
+class SessionTest extends TestCase
 {
     /**
-     * @covers OAuth\Common\Storage\Session::__construct
+     * @covers Session::__construct
      *
      * @runInSeparateProcess
      */
@@ -19,7 +20,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Storage\Session::__construct
+     * @covers Session::__construct
      *
      * @runInSeparateProcess
      */
@@ -33,7 +34,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Storage\Session::__construct
+     * @covers Session::__construct
      *
      * @runInSeparateProcess
      */
@@ -47,7 +48,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Storage\Session::__construct
+     * @covers Session::__construct
      *
      * @runInSeparateProcess
      */
@@ -63,8 +64,8 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Storage\Session::__construct
-     * @covers OAuth\Common\Storage\Session::storeAccessToken
+     * @covers Session::__construct
+     * @covers Session::storeAccessToken
      *
      * @runInSeparateProcess
      */
@@ -74,13 +75,13 @@ class SessionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(
             '\\OAuth\\Common\\Storage\\Session',
-            $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'))
+            $storage->storeAccessToken('foo', $this->createMock('\\OAuth\\Common\\Token\\TokenInterface'))
         );
     }
 
     /**
-     * @covers OAuth\Common\Storage\Session::__construct
-     * @covers OAuth\Common\Storage\Session::storeAccessToken
+     * @covers Session::__construct
+     * @covers Session::storeAccessToken
      *
      * @runInSeparateProcess
      */
@@ -92,15 +93,15 @@ class SessionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(
             '\\OAuth\\Common\\Storage\\Session',
-            $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'))
+            $storage->storeAccessToken('foo', $this->createMock('\\OAuth\\Common\\Token\\TokenInterface'))
         );
     }
 
     /**
-     * @covers OAuth\Common\Storage\Session::__construct
-     * @covers OAuth\Common\Storage\Session::storeAccessToken
-     * @covers OAuth\Common\Storage\Session::retrieveAccessToken
-     * @covers OAuth\Common\Storage\Session::hasAccessToken
+     * @covers Session::__construct
+     * @covers Session::storeAccessToken
+     * @covers Session::retrieveAccessToken
+     * @covers Session::hasAccessToken
      *
      * @runInSeparateProcess
      */
@@ -108,21 +109,21 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     {
         $storage = new Session();
 
-        $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
+        $storage->storeAccessToken('foo', $this->createMock('\\OAuth\\Common\\Token\\TokenInterface'));
 
         $this->assertInstanceOf('\\OAuth\\Common\\Token\\TokenInterface', $storage->retrieveAccessToken('foo'));
     }
 
     /**
-     * @covers OAuth\Common\Storage\Session::__construct
-     * @covers OAuth\Common\Storage\Session::retrieveAccessToken
-     * @covers OAuth\Common\Storage\Session::hasAccessToken
+     * @covers Session::__construct
+     * @covers Session::retrieveAccessToken
+     * @covers Session::hasAccessToken
      *
      * @runInSeparateProcess
      */
     public function testRetrieveAccessTokenThrowsExceptionWhenTokenIsNotFound()
     {
-        $this->setExpectedException('\\OAuth\\Common\\Storage\\Exception\\TokenNotFoundException');
+        $this->expectException('\\OAuth\\Common\\Storage\\Exception\\TokenNotFoundException');
 
         $storage = new Session();
 
@@ -130,9 +131,9 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Storage\Session::__construct
-     * @covers OAuth\Common\Storage\Session::storeAccessToken
-     * @covers OAuth\Common\Storage\Session::hasAccessToken
+     * @covers Session::__construct
+     * @covers Session::storeAccessToken
+     * @covers Session::hasAccessToken
      *
      * @runInSeparateProcess
      */
@@ -140,14 +141,14 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     {
         $storage = new Session();
 
-        $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
+        $storage->storeAccessToken('foo', $this->createMock('\\OAuth\\Common\\Token\\TokenInterface'));
 
         $this->assertTrue($storage->hasAccessToken('foo'));
     }
 
     /**
-     * @covers OAuth\Common\Storage\Session::__construct
-     * @covers OAuth\Common\Storage\Session::hasAccessToken
+     * @covers Session::__construct
+     * @covers Session::hasAccessToken
      *
      * @runInSeparateProcess
      */
@@ -159,8 +160,8 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Storage\Session::__construct
-     * @covers OAuth\Common\Storage\Session::clearToken
+     * @covers Session::__construct
+     * @covers Session::clearToken
      *
      * @runInSeparateProcess
      */
@@ -172,9 +173,9 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Storage\Session::__construct
-     * @covers OAuth\Common\Storage\Session::storeAccessToken
-     * @covers OAuth\Common\Storage\Session::clearToken
+     * @covers Session::__construct
+     * @covers Session::storeAccessToken
+     * @covers Session::clearToken
      *
      * @runInSeparateProcess
      */
@@ -182,7 +183,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     {
         $storage = new Session();
 
-        $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
+        $storage->storeAccessToken('foo', $this->createMock('\\OAuth\\Common\\Token\\TokenInterface'));
 
         $this->assertTrue($storage->hasAccessToken('foo'));
         $this->assertInstanceOf('\\OAuth\\Common\\Storage\\Session', $storage->clearToken('foo'));
@@ -190,9 +191,9 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Storage\Session::__construct
-     * @covers OAuth\Common\Storage\Session::storeAccessToken
-     * @covers OAuth\Common\Storage\Session::clearAllTokens
+     * @covers Session::__construct
+     * @covers Session::storeAccessToken
+     * @covers Session::clearAllTokens
      *
      * @runInSeparateProcess
      */
@@ -200,8 +201,8 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     {
         $storage = new Session();
 
-        $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
-        $storage->storeAccessToken('bar', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
+        $storage->storeAccessToken('foo', $this->createMock('\\OAuth\\Common\\Token\\TokenInterface'));
+        $storage->storeAccessToken('bar', $this->createMock('\\OAuth\\Common\\Token\\TokenInterface'));
 
         $this->assertTrue($storage->hasAccessToken('foo'));
         $this->assertTrue($storage->hasAccessToken('bar'));
@@ -211,8 +212,8 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Storage\Session::__construct
-     * @covers OAuth\Common\Storage\Session::__destruct
+     * @covers Session::__construct
+     * @covers Session::__destruct
      *
      * @runInSeparateProcess
      */
@@ -224,14 +225,14 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Storage\Session::storeAccessToken
-     * @covers OAuth\Common\Storage\Session::retrieveAccessToken
+     * @covers Session::storeAccessToken
+     * @covers Session::retrieveAccessToken
      *
      * @runInSeparateProcess
      */
     public function testSerializeUnserialize()
     {
-        $mock = $this->getMock('\\OAuth\\Common\\Token\\AbstractToken', array('__sleep'));
+        $mock = $this->createMock('\\OAuth\\Common\\Token\\AbstractToken', array('__sleep'));
         $mock->expects($this->once())
             ->method('__sleep')
             ->will($this->returnValue(array('accessToken')));

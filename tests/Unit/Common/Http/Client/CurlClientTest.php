@@ -4,8 +4,9 @@ namespace OAuthTest\Unit\Common\Http\Client;
 
 use OAuth\Common\Http\Client\CurlClient;
 use OAuth\Common\Http\Exception\TokenResponseException;
+use PHPUnit\Framework\TestCase;
 
-class CurlClientTest extends \PHPUnit_Framework_TestCase
+class CurlClientTest extends TestCase
 {
     /**
      *
@@ -18,7 +19,7 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Http\Client\CurlClient::setForceSSL3
+     * @covers CurlClient::setForceSSL3
      */
     public function testSetForceSSL3()
     {
@@ -28,16 +29,16 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Http\Client\CurlClient::retrieveResponse
+     * @covers CurlClient::retrieveResponse
      */
     public function testRetrieveResponseThrowsExceptionOnGetRequestWithBody()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->expectException('\\InvalidArgumentException');
 
         $client = new CurlClient();
 
         $client->retrieveResponse(
-            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface'),
             'foo',
             array(),
             'GET'
@@ -45,16 +46,16 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Http\Client\CurlClient::retrieveResponse
+     * @covers CurlClient::retrieveResponse
      */
     public function testRetrieveResponseThrowsExceptionOnGetRequestWithBodyMethodConvertedToUpper()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->expectException('\\InvalidArgumentException');
 
         $client = new CurlClient();
 
         $client->retrieveResponse(
-            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface'),
             'foo',
             array(),
             'get'
@@ -62,12 +63,12 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Http\Client\StreamClient::retrieveResponse
-     * @covers OAuth\Common\Http\Client\StreamClient::generateStreamContext
+     * @covers StreamClient::retrieveResponse
+     * @covers StreamClient::generateStreamContext
      */
     public function testRetrieveResponseDefaultUserAgent()
     {
-        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $endPoint = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
         $endPoint->expects($this->any())
             ->method('getHost')
             ->will($this->returnValue('httpbin.org'));
@@ -90,12 +91,12 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Http\Client\StreamClient::retrieveResponse
-     * @covers OAuth\Common\Http\Client\StreamClient::generateStreamContext
+     * @covers StreamClient::retrieveResponse
+     * @covers StreamClient::generateStreamContext
      */
     public function testRetrieveResponseCustomUserAgent()
     {
-        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $endPoint = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
         $endPoint->expects($this->any())
             ->method('getHost')
             ->will($this->returnValue('httpbin.org'));
@@ -118,11 +119,11 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Http\Client\CurlClient::retrieveResponse
+     * @covers CurlClient::retrieveResponse
      */
     public function testRetrieveResponseWithCustomContentType()
     {
-        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $endPoint = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
         $endPoint->expects($this->any())
             ->method('getHost')
             ->will($this->returnValue('httpbin.org'));
@@ -145,11 +146,11 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Http\Client\CurlClient::retrieveResponse
+     * @covers CurlClient::retrieveResponse
      */
     public function testRetrieveResponseWithFormUrlEncodedContentType()
     {
-        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $endPoint = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
         $endPoint->expects($this->any())
             ->method('getHost')
             ->will($this->returnValue('httpbin.org'));
@@ -173,11 +174,11 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Http\Client\CurlClient::retrieveResponse
+     * @covers CurlClient::retrieveResponse
      */
     public function testRetrieveResponseHost()
     {
-        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $endPoint = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
         $endPoint->expects($this->any())
             ->method('getHost')
             ->will($this->returnValue('httpbin.org'));
@@ -200,11 +201,11 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Http\Client\CurlClient::retrieveResponse
+     * @covers CurlClient::retrieveResponse
      */
     public function testRetrieveResponsePostRequestWithRequestBodyAsString()
     {
-        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $endPoint = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
         $endPoint->expects($this->any())
             ->method('getHost')
             ->will($this->returnValue('httpbin.org'));
@@ -229,11 +230,11 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Http\Client\CurlClient::retrieveResponse
+     * @covers CurlClient::retrieveResponse
      */
     public function testRetrieveResponsePutRequestWithRequestBodyAsString()
     {
-        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $endPoint = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
         $endPoint->expects($this->any())
             ->method('getHost')
             ->will($this->returnValue('httpbin.org'));
@@ -258,11 +259,11 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Http\Client\CurlClient::retrieveResponse
+     * @covers CurlClient::retrieveResponse
      */
     public function testRetrieveResponsePutRequestWithRequestBodyAsStringNoRedirects()
     {
-        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $endPoint = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
         $endPoint->expects($this->any())
             ->method('getHost')
             ->will($this->returnValue('httpbin.org'));
@@ -289,11 +290,11 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Http\Client\CurlClient::retrieveResponse
+     * @covers CurlClient::retrieveResponse
      */
     public function testRetrieveResponseWithForcedSsl3()
     {
-        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $endPoint = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
         $endPoint->expects($this->any())
             ->method('getHost')
             ->will($this->returnValue('httpbin.org'));
@@ -311,7 +312,7 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
                 '',
                 array('Content-Type' => 'foo/bar'),
                 'get'
-            );            
+            );
         }
         catch (TokenResponseException $e) {
             if (strpos($e->getMessage(), 'cURL Error # 35') !== false) {
@@ -325,13 +326,13 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Http\Client\CurlClient::retrieveResponse
+     * @covers CurlClient::retrieveResponse
      */
     public function testRetrieveResponseThrowsExceptionOnInvalidUrl()
     {
-        $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
+        $this->expectException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
-        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $endPoint = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
         $endPoint->expects($this->any())
             ->method('getHost')
             ->will($this->returnValue('jkehfkefcmekjhcnkerjh'));
@@ -357,7 +358,7 @@ class CurlClientTest extends \PHPUnit_Framework_TestCase
 
     public function testAdditionalParameters()
     {
-        $endPoint = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $endPoint = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
         $endPoint->expects($this->any())
             ->method('getHost')
             ->will($this->returnValue('httpbin.org'));

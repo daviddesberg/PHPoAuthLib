@@ -3,8 +3,9 @@
 namespace OAuthTest\Unit\Common\Http\Uri;
 
 use OAuth\Common\Http\Uri\Uri;
+use PHPUnit\Framework\TestCase;
 
-class UriTest extends \PHPUnit_Framework_TestCase
+class UriTest extends TestCase
 {
     /**
      * @covers OAuth\Common\Http\Uri\Uri::__construct
@@ -22,7 +23,7 @@ class UriTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructThrowsExceptionOnInvalidUri()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->expectException('\\InvalidArgumentException');
 
         // http://lxr.php.net/xref/PHP_5_4/ext/standard/tests/url/urls.inc#92
         $uri = new Uri('http://@:/');
@@ -34,7 +35,7 @@ class UriTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructThrowsExceptionOnUriWithoutScheme()
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->expectException('\\InvalidArgumentException');
 
         $uri = new Uri('www.pieterhordijk.com');
     }

@@ -3,15 +3,16 @@
 namespace OAuthTest\Unit\OAuth1\Signature;
 
 use OAuth\OAuth1\Signature\Signature;
+use PHPUnit\Framework\TestCase;
 
-class SignatureTest extends \PHPUnit_Framework_TestCase
+class SignatureTest extends TestCase
 {
     /**
      * @covers OAuth\OAuth1\Signature\Signature::__construct
      */
     public function testConstructCorrectInterface()
     {
-        $signature = new Signature($this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'));
+        $signature = new Signature($this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'));
 
         $this->assertInstanceOf('\\OAuth\\OAuth1\\Signature\\SignatureInterface', $signature);
     }
@@ -22,7 +23,7 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetHashingAlgorithm()
     {
-        $signature = new Signature($this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'));
+        $signature = new Signature($this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'));
 
         $this->assertNull($signature->setHashingAlgorithm('foo'));
     }
@@ -33,7 +34,7 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetTokenSecret()
     {
-        $signature = new Signature($this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'));
+        $signature = new Signature($this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'));
 
         $this->assertNull($signature->setTokenSecret('foo'));
     }
@@ -49,7 +50,7 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSignatureBareUri()
     {
-        $credentials = $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
+        $credentials = $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
         $credentials->expects($this->any())
             ->method('getConsumerSecret')
             ->will($this->returnValue('foo'));
@@ -60,7 +61,7 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
         $signature->setHashingAlgorithm('HMAC-SHA1');
         $signature->setTokenSecret('foo');
 
-        $uri = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $uri = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
         $uri->expects($this->any())
             ->method('getQuery')
             ->will($this->returnValue(''));
@@ -88,7 +89,7 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSignatureWithQueryString()
     {
-        $credentials = $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
+        $credentials = $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
         $credentials->expects($this->any())
             ->method('getConsumerSecret')
             ->will($this->returnValue('foo'));
@@ -99,7 +100,7 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
         $signature->setHashingAlgorithm('HMAC-SHA1');
         $signature->setTokenSecret('foo');
 
-        $uri = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $uri = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
         $uri->expects($this->any())
             ->method('getQuery')
             ->will($this->returnValue('param1=value1'));
@@ -127,7 +128,7 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSignatureWithAuthority()
     {
-        $credentials = $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
+        $credentials = $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
         $credentials->expects($this->any())
             ->method('getConsumerSecret')
             ->will($this->returnValue('foo'));
@@ -138,7 +139,7 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
         $signature->setHashingAlgorithm('HMAC-SHA1');
         $signature->setTokenSecret('foo');
 
-        $uri = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $uri = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
         $uri->expects($this->any())
             ->method('getQuery')
             ->will($this->returnValue('param1=value1'));
@@ -166,7 +167,7 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSignatureWithBarePathNonExplicitTrailingHostSlash()
     {
-        $credentials = $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
+        $credentials = $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
         $credentials->expects($this->any())
             ->method('getConsumerSecret')
             ->will($this->returnValue('foo'));
@@ -177,7 +178,7 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
         $signature->setHashingAlgorithm('HMAC-SHA1');
         $signature->setTokenSecret('foo');
 
-        $uri = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $uri = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
         $uri->expects($this->any())
             ->method('getQuery')
             ->will($this->returnValue('param1=value1'));
@@ -208,7 +209,7 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSignatureWithBarePathWithExplicitTrailingHostSlash()
     {
-        $credentials = $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
+        $credentials = $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
         $credentials->expects($this->any())
             ->method('getConsumerSecret')
             ->will($this->returnValue('foo'));
@@ -219,7 +220,7 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
         $signature->setHashingAlgorithm('HMAC-SHA1');
         $signature->setTokenSecret('foo');
 
-        $uri = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $uri = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
         $uri->expects($this->any())
             ->method('getQuery')
             ->will($this->returnValue('param1=value1'));
@@ -250,7 +251,7 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSignatureNoTokenSecretSet()
     {
-        $credentials = $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
+        $credentials = $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
         $credentials->expects($this->any())
             ->method('getConsumerSecret')
             ->will($this->returnValue('foo'));
@@ -260,7 +261,7 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
 
         $signature->setHashingAlgorithm('HMAC-SHA1');
 
-        $uri = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $uri = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
         $uri->expects($this->any())
             ->method('getQuery')
             ->will($this->returnValue('param1=value1'));
@@ -291,9 +292,9 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetSignatureThrowsExceptionOnUnsupportedAlgo()
     {
-        $this->setExpectedException('\\OAuth\\OAuth1\\Signature\\Exception\\UnsupportedHashAlgorithmException');
+        $this->expectException('\\OAuth\\OAuth1\\Signature\\Exception\\UnsupportedHashAlgorithmException');
 
-        $credentials = $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
+        $credentials = $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
         $credentials->expects($this->any())
             ->method('getConsumerSecret')
             ->will($this->returnValue('foo'));
@@ -303,7 +304,7 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
 
         $signature->setHashingAlgorithm('UnsupportedAlgo');
 
-        $uri = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $uri = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
         $uri->expects($this->any())
             ->method('getQuery')
             ->will($this->returnValue('param1=value1'));

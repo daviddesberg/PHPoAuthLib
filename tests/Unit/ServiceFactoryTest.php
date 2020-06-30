@@ -11,8 +11,9 @@
 namespace OAuth\Unit;
 
 use OAuth\ServiceFactory;
+use PHPUnit\Framework\TestCase;
 
-class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
+class ServiceFactoryTest extends TestCase
 {
     /**
      * @covers OAuth\ServiceFactory::setHttpClient
@@ -23,7 +24,7 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(
             '\\OAuth\\ServiceFactory',
-            $factory->setHttpClient($this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'))
+            $factory->setHttpClient($this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'))
         );
     }
 
@@ -32,7 +33,7 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testRegisterServiceThrowsExceptionNonExistentClass()
     {
-        $this->setExpectedException('\\OAuth\Common\Exception\Exception');
+        $this->expectException('\\OAuth\Common\Exception\Exception');
 
         $factory = new ServiceFactory();
         $factory->registerService('foo', 'bar');
@@ -43,7 +44,7 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testRegisterServiceThrowsExceptionWithClassIncorrectImplementation()
     {
-        $this->setExpectedException('\\OAuth\Common\Exception\Exception');
+        $this->expectException('\\OAuth\Common\Exception\Exception');
 
         $factory = new ServiceFactory();
         $factory->registerService('foo', 'OAuth\\ServiceFactory');
@@ -86,8 +87,8 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
 
         $service = $factory->createService(
             'twitter',
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $this->assertInstanceOf('\\OAuth\\OAuth1\\Service\\Twitter', $service);
@@ -107,8 +108,8 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
 
         $service = $factory->createService(
             'foo',
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $this->assertInstanceOf('\\OAuth\OAuth1\Service\\ServiceInterface', $service);
@@ -129,8 +130,8 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
 
         $service = $factory->createService(
             'twitter',
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $this->assertInstanceOf('\\OAuth\OAuth1\Service\\ServiceInterface', $service);
@@ -149,8 +150,8 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
 
         $service = $factory->createService(
             'facebook',
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\Facebook', $service);
@@ -170,8 +171,8 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
 
         $service = $factory->createService(
             'foo',
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $this->assertInstanceOf('\\OAuth\OAuth2\Service\\ServiceInterface', $service);
@@ -192,8 +193,8 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
 
         $service = $factory->createService(
             'facebook',
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $this->assertInstanceOf('\\OAuth\OAuth2\Service\\ServiceInterface', $service);
@@ -208,7 +209,7 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateServiceThrowsExceptionOnPassingScopesToV1Service()
     {
-        $this->setExpectedException('\\OAuth\Common\Exception\Exception');
+        $this->expectException('\\OAuth\Common\Exception\Exception');
 
         $factory = new ServiceFactory();
 
@@ -216,8 +217,8 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
 
         $service = $factory->createService(
             'foo',
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
             array('bar')
         );
     }
@@ -232,8 +233,8 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
 
         $service = $factory->createService(
             'foo',
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $this->assertNull($service);
@@ -255,8 +256,8 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
 
         $service = $factory->createService(
             'foo',
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $this->assertInstanceOf('\\OAuth\OAuth2\Service\\ServiceInterface', $service);
@@ -277,8 +278,8 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
 
         $service = $factory->createService(
             'foo',
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
             array('FOO')
         );
 
@@ -300,8 +301,8 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase
 
         $service = $factory->createService(
             'foo',
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
             array('custom')
         );
 

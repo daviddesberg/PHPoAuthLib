@@ -12,8 +12,9 @@
 namespace OAuth\Unit\Common\Storage;
 
 use \OAuth\OAuth2\Token\StdOAuth2Token;
+use PHPUnit\Framework\TestCase;
 
-abstract class StorageTest extends \PHPUnit_Framework_TestCase
+abstract class StorageTest extends TestCase
 {
     protected $storage;
 
@@ -68,7 +69,7 @@ abstract class StorageTest extends \PHPUnit_Framework_TestCase
         $this->storage->clearToken($service);
 
         // assert
-        $this->setExpectedException('OAuth\Common\Storage\Exception\TokenNotFoundException');
+        $this->expectException('OAuth\Common\Storage\Exception\TokenNotFoundException');
         $this->storage->retrieveAccessToken($service);
     }
 }

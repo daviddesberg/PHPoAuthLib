@@ -4,8 +4,9 @@ namespace OAuthTest\Unit\OAuth2\Service;
 
 use OAuth\OAuth2\Service\Facebook;
 use OAuth\Common\Token\TokenInterface;
+use PHPUnit\Framework\TestCase;
 
-class FacebookTest extends \PHPUnit_Framework_TestCase
+class FacebookTest extends TestCase
 {
     /**
      * @covers OAuth\OAuth2\Service\Facebook::__construct
@@ -13,9 +14,9 @@ class FacebookTest extends \PHPUnit_Framework_TestCase
     public function testConstructCorrectInterfaceWithoutCustomUri()
     {
         $service = new Facebook(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\ServiceInterface', $service);
@@ -27,9 +28,9 @@ class FacebookTest extends \PHPUnit_Framework_TestCase
     public function testConstructCorrectInstanceWithoutCustomUri()
     {
         $service = new Facebook(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
@@ -41,11 +42,11 @@ class FacebookTest extends \PHPUnit_Framework_TestCase
     public function testConstructCorrectInstanceWithCustomUri()
     {
         $service = new Facebook(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
             array(),
-            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
+            $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
 
         $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
@@ -58,9 +59,9 @@ class FacebookTest extends \PHPUnit_Framework_TestCase
     public function testGetAuthorizationEndpoint()
     {
         $service = new Facebook(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $this->assertSame('https://www.facebook.com/dialog/oauth', $service->getAuthorizationEndpoint()->getAbsoluteUri());
@@ -73,9 +74,9 @@ class FacebookTest extends \PHPUnit_Framework_TestCase
     public function testGetAccessTokenEndpoint()
     {
         $service = new Facebook(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $this->assertSame('https://graph.facebook.com/oauth/access_token', $service->getAccessTokenEndpoint()->getAbsoluteUri());
@@ -86,18 +87,18 @@ class FacebookTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAuthorizationMethod()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
         $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(2));
 
-        $token = $this->getMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
+        $token = $this->createMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
         $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
         $token->expects($this->once())->method('getAccessToken')->will($this->returnValue('foo'));
 
-        $storage = $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
+        $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
         $storage->expects($this->once())->method('retrieveAccessToken')->will($this->returnValue($token));
 
         $service = new Facebook(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $storage
         );
@@ -114,16 +115,16 @@ class FacebookTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseAccessTokenResponseThrowsExceptionOnError()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
         $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('error=some_error'));
 
         $service = new Facebook(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
+        $this->expectException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
         $service->requestAccessToken('foo');
     }
@@ -134,13 +135,13 @@ class FacebookTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseAccessTokenResponseValidWithoutRefreshToken()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
         $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('access_token=foo&expires=bar'));
 
         $service = new Facebook(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $this->assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
@@ -152,13 +153,13 @@ class FacebookTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseAccessTokenResponseValidWithRefreshToken()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
         $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('access_token=foo&expires=bar&refresh_token=baz'));
 
         $service = new Facebook(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $this->assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
@@ -170,15 +171,15 @@ class FacebookTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDialogUriRedirectUriMissing()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
 
         $service = new Facebook(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->setExpectedException('\\OAuth\\Common\\Exception\\Exception');
+        $this->expectException('\\OAuth\\Common\\Exception\\Exception');
 
         $service->getDialogUri('feed', array());
     }
@@ -189,12 +190,12 @@ class FacebookTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDialogUriInstanceofUri()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
 
         $service = new Facebook(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $dialogUri = $service->getDialogUri(
@@ -213,15 +214,15 @@ class FacebookTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetDialogUriContainsAppIdAndOtherParameters()
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $credentials = $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $credentials = $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
         $credentials->expects($this->any())->method('getConsumerId')->will($this->returnValue('application_id'));
 
 
         $service = new Facebook(
             $credentials,
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $dialogUri = $service->getDialogUri(

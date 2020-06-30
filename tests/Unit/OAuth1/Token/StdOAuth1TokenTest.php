@@ -3,8 +3,9 @@
 namespace OAuthTest\Unit\OAuth1\Token;
 
 use OAuth\OAuth1\Token\StdOAuth1Token;
+use PHPUnit\Framework\TestCase;
 
-class StdOAuth1TokenTest extends \PHPUnit_Framework_TestCase
+class StdOAuth1TokenTest extends TestCase
 {
     /**
      *

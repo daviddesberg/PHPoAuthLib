@@ -2,7 +2,9 @@
 
 namespace OAuthTest\Unit\Common\Http;
 
-class AbstractClientTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class AbstractClientTest extends TestCase
 {
     /**
      * @covers OAuth\Common\Http\Client\AbstractClient::__construct

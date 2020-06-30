@@ -10,18 +10,20 @@
 
 namespace OAuth\Unit\Common\Http;
 
+use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\Common\Http\Client;
+use PHPUnit\Framework\TestCase;
 
-class HttpClientsTest extends \PHPUnit_Framework_TestCase
+class HttpClientsTest extends TestCase
 {
     /**
-     * @var object|\OAuth\Common\Http\Client\ClientInterface[]
+     * @var object|ClientInterface[]
      */
     protected $clients;
 
-    public function setUp()
+    public function setUp(): void
     {
         $streamClient = new Client\StreamClient();
         $streamClient->setTimeout(3);
@@ -33,7 +35,7 @@ class HttpClientsTest extends \PHPUnit_Framework_TestCase
         $this->clients[] = $curlClient;
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         foreach ($this->clients as $client) {
             unset($client);
@@ -64,7 +66,7 @@ class HttpClientsTest extends \PHPUnit_Framework_TestCase
         // sending a post here should get us a 405 which should trigger an exception
         $testUri = new Uri('http://httpbin.org/delete');
         foreach ($this->clients as $client) {
-            $this->setExpectedException('OAuth\Common\Http\Exception\TokenResponseException');
+            $this->expectException('OAuth\Common\Http\Exception\TokenResponseException');
             $client->retrieveResponse($testUri, array('blah' => 'blih'));
         }
     }
@@ -130,7 +132,7 @@ class HttpClientsTest extends \PHPUnit_Framework_TestCase
         $testUri =  new Uri('http://site.net');
 
         foreach ($this->clients as $client) {
-            $this->setExpectedException('InvalidArgumentException');
+            $this->expectException('InvalidArgumentException');
             $client->retrieveResponse($testUri, array('blah' => 'blih'), array(), 'GET');
         }
     }

@@ -12,23 +12,24 @@ namespace OAuth\Unit\Common\Storage;
 
 use OAuth\Common\Storage\SymfonySession;
 use OAuth\OAuth2\Token\StdOAuth2Token;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
-class SymfonySessionTest extends \PHPUnit_Framework_TestCase
+class SymfonySessionTest extends TestCase
 {
     protected $session;
 
     protected $storage;
 
-    public function setUp()
+    public function setUp(): void
     {
         // set it
         $this->session = new Session(new MockArraySessionStorage());
         $this->storage = new SymfonySession($this->session);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         // delete
         $this->storage->getSession()->clear();
@@ -105,7 +106,7 @@ class SymfonySessionTest extends \PHPUnit_Framework_TestCase
         $this->storage->clearToken($service);
 
         // assert
-        $this->setExpectedException('OAuth\Common\Storage\Exception\TokenNotFoundException');
+        $this->expectException('OAuth\Common\Storage\Exception\TokenNotFoundException');
         $this->storage->retrieveAccessToken($service);
     }
 }

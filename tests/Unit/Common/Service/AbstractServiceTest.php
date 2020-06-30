@@ -3,20 +3,21 @@
 namespace OAuthTest\Unit\Common\Service;
 
 use OAuthTest\Mocks\Common\Service\Mock;
+use PHPUnit\Framework\TestCase;
 
-class AbstractServiceTest extends \PHPUnit_Framework_TestCase
+class AbstractServiceTest extends TestCase
 {
     /**
-     * @covers OAuth\Common\Service\AbstractService::__construct
+     * @covers AbstractService::__construct
      */
     public function testConstructCorrectInterface()
     {
         $service = $this->getMockForAbstractClass(
             '\\OAuth\\Common\\Service\\AbstractService',
             array(
-                $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-                $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-                $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+                $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+                $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+                $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
             )
         );
 
@@ -24,17 +25,17 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Service\AbstractService::__construct
-     * @covers OAuth\Common\Service\AbstractService::getStorage
+     * @covers AbstractService::__construct
+     * @covers AbstractService::getStorage
      */
     public function testGetStorage()
     {
         $service = $this->getMockForAbstractClass(
             '\\OAuth\\Common\\Service\\AbstractService',
             array(
-                $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-                $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-                $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+                $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+                $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+                $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
             )
         );
 
@@ -42,48 +43,48 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Service\AbstractService::__construct
-     * @covers OAuth\Common\Service\AbstractService::service
+     * @covers AbstractService::__construct
+     * @covers AbstractService::service
      */
     public function testService()
     {
         $service = new Mock(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $this->assertSame('Mock', $service->service());
     }
 
     /**
-     * @covers OAuth\Common\Service\AbstractService::__construct
-     * @covers OAuth\Common\Service\AbstractService::determineRequestUriFromPath
+     * @covers AbstractService::__construct
+     * @covers AbstractService::determineRequestUriFromPath
      */
     public function testDetermineRequestUriFromPathUsingUriObject()
     {
         $service = new Mock(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $this->assertInstanceOf(
             '\\OAuth\\Common\\Http\\Uri\\UriInterface',
-            $service->testDetermineRequestUriFromPath($this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface'))
+            $service->testDetermineRequestUriFromPath($this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface'))
         );
     }
 
     /**
-     * @covers OAuth\Common\Service\AbstractService::__construct
-     * @covers OAuth\Common\Service\AbstractService::determineRequestUriFromPath
+     * @covers AbstractService::__construct
+     * @covers AbstractService::determineRequestUriFromPath
      */
     public function testDetermineRequestUriFromPathUsingHttpPath()
     {
         $service = new Mock(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $uri = $service->testDetermineRequestUriFromPath('http://example.com');
@@ -93,15 +94,15 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Service\AbstractService::__construct
-     * @covers OAuth\Common\Service\AbstractService::determineRequestUriFromPath
+     * @covers AbstractService::__construct
+     * @covers AbstractService::determineRequestUriFromPath
      */
     public function testDetermineRequestUriFromPathUsingHttpsPath()
     {
         $service = new Mock(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $uri = $service->testDetermineRequestUriFromPath('https://example.com');
@@ -111,32 +112,32 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Service\AbstractService::__construct
-     * @covers OAuth\Common\Service\AbstractService::determineRequestUriFromPath
+     * @covers AbstractService::__construct
+     * @covers AbstractService::determineRequestUriFromPath
      */
     public function testDetermineRequestUriFromPathThrowsExceptionOnInvalidUri()
     {
-        $this->setExpectedException('\\OAuth\\Common\\Exception\\Exception');
+        $this->expectException('\\OAuth\\Common\\Exception\\Exception');
 
         $service = new Mock(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $uri = $service->testDetermineRequestUriFromPath('example.com');
     }
 
     /**
-     * @covers OAuth\Common\Service\AbstractService::__construct
-     * @covers OAuth\Common\Service\AbstractService::determineRequestUriFromPath
+     * @covers AbstractService::__construct
+     * @covers AbstractService::determineRequestUriFromPath
      */
     public function testDetermineRequestUriFromPathWithQueryString()
     {
         $service = new Mock(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $uri = $service->testDetermineRequestUriFromPath(
@@ -149,15 +150,15 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Service\AbstractService::__construct
-     * @covers OAuth\Common\Service\AbstractService::determineRequestUriFromPath
+     * @covers AbstractService::__construct
+     * @covers AbstractService::determineRequestUriFromPath
      */
     public function testDetermineRequestUriFromPathWithLeadingSlashInPath()
     {
         $service = new Mock(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $uri = $service->testDetermineRequestUriFromPath(

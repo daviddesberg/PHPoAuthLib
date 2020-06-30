@@ -22,9 +22,9 @@ class Linkedin extends AbstractService
     /**
      * Defined scopes.
      *
-     * @see http://developer.linkedin.com/documents/authentication#granting
+     * @see https://docs.microsoft.com/en-us/linkedin/shared/authentication/authorization-code-flow?context=linkedin/context
      */
-    const SCOPE_R_BASICPROFILE = 'r_basicprofile';
+    const SCOPE_R_LITEPROFILE = 'r_liteprofile';
     const SCOPE_R_FULLPROFILE = 'r_fullprofile';
     const SCOPE_R_EMAILADDRESS = 'r_emailaddress';
     const SCOPE_R_NETWORK = 'r_network';
@@ -33,7 +33,7 @@ class Linkedin extends AbstractService
     const SCOPE_RW_COMPANY_ADMIN = 'rw_company_admin';
     const SCOPE_RW_GROUPS = 'rw_groups';
     const SCOPE_W_MESSAGES = 'w_messages';
-    const SCOPE_W_SHARE = 'w_share';
+    const SCOPE_W_MEMBER_SOCIAL = 'w_member_social';
 
     public function __construct(
         CredentialsInterface $credentials,
@@ -42,10 +42,14 @@ class Linkedin extends AbstractService
         $scopes = [],
         ?UriInterface $baseApiUri = null
     ) {
+        if (count($scopes) === 0) {
+            $scopes = [self::SCOPE_R_LITEPROFILE, self::SCOPE_R_EMAILADDRESS];
+        }
+
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, true);
 
         if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://api.linkedin.com/v1/');
+            $this->baseApiUri = new Uri('https://api.linkedin.com/v2/');
         }
     }
 
@@ -54,7 +58,7 @@ class Linkedin extends AbstractService
      */
     public function getAuthorizationEndpoint()
     {
-        return new Uri('https://www.linkedin.com/uas/oauth2/authorization');
+        return new Uri('https://www.linkedin.com/oauth/v2/authorization');
     }
 
     /**
@@ -62,7 +66,7 @@ class Linkedin extends AbstractService
      */
     public function getAccessTokenEndpoint()
     {
-        return new Uri('https://www.linkedin.com/uas/oauth2/accessToken');
+        return new Uri('https://www.linkedin.com/oauth/v2/accessToken');
     }
 
     /**

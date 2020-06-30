@@ -3,7 +3,6 @@
 namespace OAuth\Common\Storage;
 
 use OAuth\Common\Token\TokenInterface;
-use OAuth\Common\Storage\Exception\TokenNotFoundException;
 
 /**
  * All token storage providers must implement this interface.
@@ -14,14 +13,11 @@ interface TokenStorageInterface
      * @param string $service
      *
      * @return TokenInterface
-     *
-     * @throws TokenNotFoundException
      */
     public function retrieveAccessToken($service);
 
     /**
      * @param string         $service
-     * @param TokenInterface $token
      *
      * @return TokenStorageInterface
      */
@@ -52,7 +48,7 @@ interface TokenStorageInterface
     public function clearAllTokens();
 
     /**
-     * Store the authorization state related to a given service
+     * Store the authorization state related to a given service.
      *
      * @param string $service
      * @param string $state
@@ -62,7 +58,7 @@ interface TokenStorageInterface
     public function storeAuthorizationState($service, $state);
 
     /**
-     * Check if an authorization state for a given service exists
+     * Check if an authorization state for a given service exists.
      *
      * @param string $service
      *
@@ -71,7 +67,7 @@ interface TokenStorageInterface
     public function hasAuthorizationState($service);
 
     /**
-     * Retrieve the authorization state for a given service
+     * Retrieve the authorization state for a given service.
      *
      * @param string $service
      *
@@ -80,7 +76,7 @@ interface TokenStorageInterface
     public function retrieveAuthorizationState($service);
 
     /**
-     * Clear the authorization state of a given service
+     * Clear the authorization state of a given service.
      *
      * @param string $service
      *

@@ -3,896 +3,897 @@
 namespace OAuthTest\Unit\Common\Http\Uri;
 
 use OAuth\Common\Http\Uri\Uri;
+use PHPUnit\Framework\TestCase;
 
-class UriTest extends \PHPUnit_Framework_TestCase
+class UriTest extends TestCase
 {
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
      */
-    public function testConstructCorrectInterfaceWithoutUri()
+    public function testConstructCorrectInterfaceWithoutUri(): void
     {
         $uri = new Uri();
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Http\\Uri\\UriInterface', $uri);
+        self::assertInstanceOf('\\OAuth\\Common\\Http\\Uri\\UriInterface', $uri);
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testConstructThrowsExceptionOnInvalidUri()
+    public function testConstructThrowsExceptionOnInvalidUri(): void
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->expectException('\\InvalidArgumentException');
 
         // http://lxr.php.net/xref/PHP_5_4/ext/standard/tests/url/urls.inc#92
         $uri = new Uri('http://@:/');
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testConstructThrowsExceptionOnUriWithoutScheme()
+    public function testConstructThrowsExceptionOnUriWithoutScheme(): void
     {
-        $this->setExpectedException('\\InvalidArgumentException');
+        $this->expectException('\\InvalidArgumentException');
 
         $uri = new Uri('www.pieterhordijk.com');
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getScheme
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getScheme
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetScheme()
+    public function testGetScheme(): void
     {
         $uri = new Uri('http://example.com');
 
-        $this->assertSame('http', $uri->getScheme());
+        self::assertSame('http', $uri->getScheme());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::protectUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::getUserInfo
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getUserInfo
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::protectUserInfo
+     * @covers \OAuth\Common\Http\Uri\Uri::setUserInfo
      */
-    public function testGetUserInfo()
+    public function testGetUserInfo(): void
     {
         $uri = new Uri('http://peehaa@example.com');
 
-        $this->assertSame('peehaa', $uri->getUserInfo());
+        self::assertSame('peehaa', $uri->getUserInfo());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::protectUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::getUserInfo
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getUserInfo
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::protectUserInfo
+     * @covers \OAuth\Common\Http\Uri\Uri::setUserInfo
      */
-    public function testGetUserInfoWithPass()
+    public function testGetUserInfoWithPass(): void
     {
         $uri = new Uri('http://peehaa:pass@example.com');
 
-        $this->assertSame('peehaa:********', $uri->getUserInfo());
+        self::assertSame('peehaa:********', $uri->getUserInfo());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::protectUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::getRawUserInfo
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getRawUserInfo
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::protectUserInfo
+     * @covers \OAuth\Common\Http\Uri\Uri::setUserInfo
      */
-    public function testGetRawUserInfo()
+    public function testGetRawUserInfo(): void
     {
         $uri = new Uri('http://peehaa@example.com');
 
-        $this->assertSame('peehaa', $uri->getRawUserInfo());
+        self::assertSame('peehaa', $uri->getRawUserInfo());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::protectUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::getRawUserInfo
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getRawUserInfo
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::protectUserInfo
+     * @covers \OAuth\Common\Http\Uri\Uri::setUserInfo
      */
-    public function testGetRawUserInfoWithPass()
+    public function testGetRawUserInfoWithPass(): void
     {
         $uri = new Uri('http://peehaa:pass@example.com');
 
-        $this->assertSame('peehaa:pass', $uri->getRawUserInfo());
+        self::assertSame('peehaa:pass', $uri->getRawUserInfo());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getHost
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getHost
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetHost()
+    public function testGetHost(): void
     {
         $uri = new Uri('http://example.com');
 
-        $this->assertSame('example.com', $uri->getHost());
+        self::assertSame('example.com', $uri->getHost());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getPort
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getPort
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetPortImplicitHttp()
+    public function testGetPortImplicitHttp(): void
     {
         $uri = new Uri('http://example.com');
 
-        $this->assertSame(80, $uri->getPort());
+        self::assertSame(80, $uri->getPort());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getPort
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getPort
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetPortImplicitHttps()
+    public function testGetPortImplicitHttps(): void
     {
         $uri = new Uri('https://example.com');
 
-        $this->assertSame(443, $uri->getPort());
+        self::assertSame(443, $uri->getPort());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getPort
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getPort
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetPortExplicit()
+    public function testGetPortExplicit(): void
     {
         $uri = new Uri('http://example.com:21');
 
-        $this->assertSame(21, $uri->getPort());
+        self::assertSame(21, $uri->getPort());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getPath
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getPath
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetPathNotSupplied()
+    public function testGetPathNotSupplied(): void
     {
         $uri = new Uri('http://example.com');
 
-        $this->assertSame('/', $uri->getPath());
+        self::assertSame('/', $uri->getPath());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getPath
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getPath
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetPathSlash()
+    public function testGetPathSlash(): void
     {
         $uri = new Uri('http://example.com/');
 
-        $this->assertSame('/', $uri->getPath());
+        self::assertSame('/', $uri->getPath());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getPath
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getPath
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetPath()
+    public function testGetPath(): void
     {
         $uri = new Uri('http://example.com/foo');
 
-        $this->assertSame('/foo', $uri->getPath());
+        self::assertSame('/foo', $uri->getPath());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getQuery
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getQuery
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetQueryWithParams()
+    public function testGetQueryWithParams(): void
     {
         $uri = new Uri('http://example.com?param1=first&param2=second');
 
-        $this->assertSame('param1=first&param2=second', $uri->getQuery());
+        self::assertSame('param1=first&param2=second', $uri->getQuery());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getQuery
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getQuery
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetQueryWithoutParams()
+    public function testGetQueryWithoutParams(): void
     {
         $uri = new Uri('http://example.com');
 
-        $this->assertSame('', $uri->getQuery());
+        self::assertSame('', $uri->getQuery());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getFragment
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getFragment
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetFragmentExists()
+    public function testGetFragmentExists(): void
     {
         $uri = new Uri('http://example.com#foo');
 
-        $this->assertSame('foo', $uri->getFragment());
+        self::assertSame('foo', $uri->getFragment());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getFragment
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getFragment
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetFragmentNotExists()
+    public function testGetFragmentNotExists(): void
     {
         $uri = new Uri('http://example.com');
 
-        $this->assertSame('', $uri->getFragment());
+        self::assertSame('', $uri->getFragment());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getAuthority
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAuthority
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetAuthorityWithoutUserInfo()
+    public function testGetAuthorityWithoutUserInfo(): void
     {
         $uri = new Uri('http://example.com');
 
-        $this->assertSame('example.com', $uri->getAuthority());
+        self::assertSame('example.com', $uri->getAuthority());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getAuthority
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAuthority
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetAuthorityWithoutUserInfoWithExplicitPort()
+    public function testGetAuthorityWithoutUserInfoWithExplicitPort(): void
     {
         $uri = new Uri('http://example.com:21');
 
-        $this->assertSame('example.com:21', $uri->getAuthority());
+        self::assertSame('example.com:21', $uri->getAuthority());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::protectUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::getAuthority
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAuthority
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::protectUserInfo
+     * @covers \OAuth\Common\Http\Uri\Uri::setUserInfo
      */
-    public function testGetAuthorityWithUsernameWithExplicitPort()
+    public function testGetAuthorityWithUsernameWithExplicitPort(): void
     {
         $uri = new Uri('http://peehaa@example.com:21');
 
-        $this->assertSame('peehaa@example.com:21', $uri->getAuthority());
+        self::assertSame('peehaa@example.com:21', $uri->getAuthority());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::protectUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::getAuthority
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAuthority
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::protectUserInfo
+     * @covers \OAuth\Common\Http\Uri\Uri::setUserInfo
      */
-    public function testGetAuthorityWithUsernameAndPassWithExplicitPort()
+    public function testGetAuthorityWithUsernameAndPassWithExplicitPort(): void
     {
         $uri = new Uri('http://peehaa:pass@example.com:21');
 
-        $this->assertSame('peehaa:********@example.com:21', $uri->getAuthority());
+        self::assertSame('peehaa:********@example.com:21', $uri->getAuthority());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::protectUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::getAuthority
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAuthority
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::protectUserInfo
+     * @covers \OAuth\Common\Http\Uri\Uri::setUserInfo
      */
-    public function testGetAuthorityWithUsernameAndPassWithoutExplicitPort()
+    public function testGetAuthorityWithUsernameAndPassWithoutExplicitPort(): void
     {
         $uri = new Uri('http://peehaa:pass@example.com');
 
-        $this->assertSame('peehaa:********@example.com', $uri->getAuthority());
+        self::assertSame('peehaa:********@example.com', $uri->getAuthority());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getRawAuthority
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getRawAuthority
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetRawAuthorityWithoutUserInfo()
+    public function testGetRawAuthorityWithoutUserInfo(): void
     {
         $uri = new Uri('http://example.com');
 
-        $this->assertSame('example.com', $uri->getRawAuthority());
+        self::assertSame('example.com', $uri->getRawAuthority());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getRawAuthority
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getRawAuthority
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetRawAuthorityWithoutUserInfoWithExplicitPort()
+    public function testGetRawAuthorityWithoutUserInfoWithExplicitPort(): void
     {
         $uri = new Uri('http://example.com:21');
 
-        $this->assertSame('example.com:21', $uri->getRawAuthority());
+        self::assertSame('example.com:21', $uri->getRawAuthority());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::protectUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::getRawAuthority
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getRawAuthority
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::protectUserInfo
+     * @covers \OAuth\Common\Http\Uri\Uri::setUserInfo
      */
-    public function testGetRawAuthorityWithUsernameWithExplicitPort()
+    public function testGetRawAuthorityWithUsernameWithExplicitPort(): void
     {
         $uri = new Uri('http://peehaa@example.com:21');
 
-        $this->assertSame('peehaa@example.com:21', $uri->getRawAuthority());
+        self::assertSame('peehaa@example.com:21', $uri->getRawAuthority());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::protectUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::getRawAuthority
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getRawAuthority
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::protectUserInfo
+     * @covers \OAuth\Common\Http\Uri\Uri::setUserInfo
      */
-    public function testGetRawAuthorityWithUsernameAndPassWithExplicitPort()
+    public function testGetRawAuthorityWithUsernameAndPassWithExplicitPort(): void
     {
         $uri = new Uri('http://peehaa:pass@example.com:21');
 
-        $this->assertSame('peehaa:pass@example.com:21', $uri->getRawAuthority());
+        self::assertSame('peehaa:pass@example.com:21', $uri->getRawAuthority());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::protectUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::getRawAuthority
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getRawAuthority
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::protectUserInfo
+     * @covers \OAuth\Common\Http\Uri\Uri::setUserInfo
      */
-    public function testGetRawAuthorityWithUsernameAndPassWithoutExplicitPort()
+    public function testGetRawAuthorityWithUsernameAndPassWithoutExplicitPort(): void
     {
         $uri = new Uri('http://peehaa:pass@example.com');
 
-        $this->assertSame('peehaa:pass@example.com', $uri->getRawAuthority());
+        self::assertSame('peehaa:pass@example.com', $uri->getRawAuthority());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetAbsoluteUriBare()
+    public function testGetAbsoluteUriBare(): void
     {
         $uri = new Uri('http://example.com');
 
-        $this->assertSame('http://example.com', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::protectUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::getRawAuthority
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::getRawAuthority
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::protectUserInfo
+     * @covers \OAuth\Common\Http\Uri\Uri::setUserInfo
      */
-    public function testGetAbsoluteUriWithAuthority()
+    public function testGetAbsoluteUriWithAuthority(): void
     {
         $uri = new Uri('http://peehaa:pass@example.com');
 
-        $this->assertSame('http://peehaa:pass@example.com', $uri->getAbsoluteUri());
+        self::assertSame('http://peehaa:pass@example.com', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetAbsoluteUriWithPath()
+    public function testGetAbsoluteUriWithPath(): void
     {
         $uri = new Uri('http://example.com/foo');
 
-        $this->assertSame('http://example.com/foo', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com/foo', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetAbsoluteUriWithoutPath()
+    public function testGetAbsoluteUriWithoutPath(): void
     {
         $uri = new Uri('http://example.com');
 
-        $this->assertSame('http://example.com', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetAbsoluteUriWithoutPathExplicitTrailingSlash()
+    public function testGetAbsoluteUriWithoutPathExplicitTrailingSlash(): void
     {
         $uri = new Uri('http://example.com/');
 
-        $this->assertSame('http://example.com/', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com/', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetAbsoluteUriWithQuery()
+    public function testGetAbsoluteUriWithQuery(): void
     {
         $uri = new Uri('http://example.com?param1=value1');
 
-        $this->assertSame('http://example.com?param1=value1', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com?param1=value1', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetAbsoluteUriWithFragment()
+    public function testGetAbsoluteUriWithFragment(): void
     {
         $uri = new Uri('http://example.com#foo');
 
-        $this->assertSame('http://example.com#foo', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com#foo', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getRelativeUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getRelativeUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetRelativeUriWithoutPath()
+    public function testGetRelativeUriWithoutPath(): void
     {
         $uri = new Uri('http://example.com');
 
-        $this->assertSame('', $uri->getRelativeUri());
+        self::assertSame('', $uri->getRelativeUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getRelativeUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getRelativeUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetRelativeUriWithPath()
+    public function testGetRelativeUriWithPath(): void
     {
         $uri = new Uri('http://example.com/foo');
 
-        $this->assertSame('/foo', $uri->getRelativeUri());
+        self::assertSame('/foo', $uri->getRelativeUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::getRelativeUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getRelativeUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testGetRelativeUriWithExplicitTrailingSlash()
+    public function testGetRelativeUriWithExplicitTrailingSlash(): void
     {
         $uri = new Uri('http://example.com/');
 
-        $this->assertSame('/', $uri->getRelativeUri());
+        self::assertSame('/', $uri->getRelativeUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::__toString
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::__toString
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testToStringBare()
+    public function testToStringBare(): void
     {
         $uri = new Uri('http://example.com');
 
-        $this->assertSame('http://example.com', (string) $uri);
+        self::assertSame('http://example.com', (string) $uri);
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::protectUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::getRawAuthority
-     * @covers OAuth\Common\Http\Uri\Uri::__toString
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::__toString
+     * @covers \OAuth\Common\Http\Uri\Uri::getRawAuthority
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::protectUserInfo
+     * @covers \OAuth\Common\Http\Uri\Uri::setUserInfo
      */
-    public function testToStringWithAuthority()
+    public function testToStringWithAuthority(): void
     {
         $uri = new Uri('http://peehaa:pass@example.com');
 
-        $this->assertSame('http://peehaa:********@example.com', (string) $uri);
+        self::assertSame('http://peehaa:********@example.com', (string) $uri);
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::__toString
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::__toString
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testToStringWithPath()
+    public function testToStringWithPath(): void
     {
         $uri = new Uri('http://example.com/foo');
 
-        $this->assertSame('http://example.com/foo', (string) $uri);
+        self::assertSame('http://example.com/foo', (string) $uri);
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::__toString
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::__toString
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testToStringWithoutPath()
+    public function testToStringWithoutPath(): void
     {
         $uri = new Uri('http://example.com');
 
-        $this->assertSame('http://example.com', (string) $uri);
+        self::assertSame('http://example.com', (string) $uri);
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::__toString
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::__toString
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testToStringWithoutPathExplicitTrailingSlash()
+    public function testToStringWithoutPathExplicitTrailingSlash(): void
     {
         $uri = new Uri('http://example.com/');
 
-        $this->assertSame('http://example.com/', (string) $uri);
+        self::assertSame('http://example.com/', (string) $uri);
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::__toString
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::__toString
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testToStringWithQuery()
+    public function testToStringWithQuery(): void
     {
         $uri = new Uri('http://example.com?param1=value1');
 
-        $this->assertSame('http://example.com?param1=value1', (string) $uri);
+        self::assertSame('http://example.com?param1=value1', (string) $uri);
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::__toString
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::__toString
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testToStringWithFragment()
+    public function testToStringWithFragment(): void
     {
         $uri = new Uri('http://example.com#foo');
 
-        $this->assertSame('http://example.com#foo', (string) $uri);
+        self::assertSame('http://example.com#foo', (string) $uri);
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setPath
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::setPath
      */
-    public function testSetPathEmpty()
+    public function testSetPathEmpty(): void
     {
         $uri = new Uri('http://example.com');
         $uri->setPath('');
 
-        $this->assertSame('http://example.com', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setPath
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::setPath
      */
-    public function testSetPathWithPath()
+    public function testSetPathWithPath(): void
     {
         $uri = new Uri('http://example.com');
         $uri->setPath('/foo');
 
-        $this->assertSame('http://example.com/foo', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com/foo', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setPath
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::setPath
      */
-    public function testSetPathWithOnlySlash()
+    public function testSetPathWithOnlySlash(): void
     {
         $uri = new Uri('http://example.com');
         $uri->setPath('/');
 
-        $this->assertSame('http://example.com/', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com/', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setQuery
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::setQuery
      */
-    public function testSetQueryEmpty()
+    public function testSetQueryEmpty(): void
     {
         $uri = new Uri('http://example.com');
         $uri->setQuery('');
 
-        $this->assertSame('http://example.com', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setQuery
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::setQuery
      */
-    public function testSetQueryFilled()
+    public function testSetQueryFilled(): void
     {
         $uri = new Uri('http://example.com');
         $uri->setQuery('param1=value1&param2=value2');
 
-        $this->assertSame('http://example.com?param1=value1&param2=value2', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com?param1=value1&param2=value2', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::addToQuery
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::addToQuery
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testAddToQueryAppend()
+    public function testAddToQueryAppend(): void
     {
         $uri = new Uri('http://example.com?param1=value1');
         $uri->addToQuery('param2', 'value2');
 
-        $this->assertSame('http://example.com?param1=value1&param2=value2', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com?param1=value1&param2=value2', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::addToQuery
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::addToQuery
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testAddToQueryCreate()
+    public function testAddToQueryCreate(): void
     {
         $uri = new Uri('http://example.com');
         $uri->addToQuery('param1', 'value1');
 
-        $this->assertSame('http://example.com?param1=value1', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com?param1=value1', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setFragment
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::setFragment
      */
-    public function testSetFragmentEmpty()
+    public function testSetFragmentEmpty(): void
     {
         $uri = new Uri('http://example.com');
         $uri->setFragment('');
 
-        $this->assertSame('http://example.com', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setFragment
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::setFragment
      */
-    public function testSetFragmentWithData()
+    public function testSetFragmentWithData(): void
     {
         $uri = new Uri('http://example.com');
         $uri->setFragment('foo');
 
-        $this->assertSame('http://example.com#foo', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com#foo', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setScheme
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::setScheme
      */
-    public function testSetSchemeWithEmpty()
+    public function testSetSchemeWithEmpty(): void
     {
         $uri = new Uri('http://example.com');
         $uri->setScheme('');
 
-        $this->assertSame('://example.com', $uri->getAbsoluteUri());
+        self::assertSame('://example.com', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setScheme
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::setScheme
      */
-    public function testSetSchemeWithData()
+    public function testSetSchemeWithData(): void
     {
         $uri = new Uri('http://example.com');
         $uri->setScheme('foo');
 
-        $this->assertSame('foo://example.com', $uri->getAbsoluteUri());
+        self::assertSame('foo://example.com', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::setUserInfo
      */
-    public function testSetUserInfoEmpty()
+    public function testSetUserInfoEmpty(): void
     {
         $uri = new Uri('http://example.com');
         $uri->setUserInfo('');
 
-        $this->assertSame('http://example.com', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::protectUserInfo
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::protectUserInfo
+     * @covers \OAuth\Common\Http\Uri\Uri::setUserInfo
      */
-    public function testSetUserInfoWithData()
+    public function testSetUserInfoWithData(): void
     {
         $uri = new Uri('http://example.com');
         $uri->setUserInfo('foo:bar');
 
-        $this->assertSame('http://foo:bar@example.com', $uri->getAbsoluteUri());
+        self::assertSame('http://foo:bar@example.com', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setPort
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::setPort
      */
-    public function testSetPortCustom()
+    public function testSetPortCustom(): void
     {
         $uri = new Uri('http://example.com');
         $uri->setPort('21');
 
-        $this->assertSame('http://example.com:21', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com:21', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setPort
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::setPort
      */
-    public function testSetPortHttpImplicit()
+    public function testSetPortHttpImplicit(): void
     {
         $uri = new Uri('http://example.com');
         $uri->setPort(80);
 
-        $this->assertSame('http://example.com', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setPort
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::setPort
      */
-    public function testSetPortHttpsImplicit()
+    public function testSetPortHttpsImplicit(): void
     {
         $uri = new Uri('https://example.com');
         $uri->setPort(443);
 
-        $this->assertSame('https://example.com', $uri->getAbsoluteUri());
+        self::assertSame('https://example.com', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setPort
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::setPort
      */
-    public function testSetPortHttpExplicit()
+    public function testSetPortHttpExplicit(): void
     {
         $uri = new Uri('http://example.com');
         $uri->setPort(443);
 
-        $this->assertSame('http://example.com:443', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com:443', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setPort
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::setPort
      */
-    public function testSetPortHttpsExplicit()
+    public function testSetPortHttpsExplicit(): void
     {
         $uri = new Uri('https://example.com');
         $uri->setPort(80);
 
-        $this->assertSame('https://example.com:80', $uri->getAbsoluteUri());
+        self::assertSame('https://example.com:80', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::setHost
-     * @covers OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::getAbsoluteUri
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
+     * @covers \OAuth\Common\Http\Uri\Uri::setHost
      */
-    public function testSetHost()
+    public function testSetHost(): void
     {
         $uri = new Uri('http://example.com');
         $uri->setHost('pieterhordijk.com');
 
-        $this->assertSame('http://pieterhordijk.com', $uri->getAbsoluteUri());
+        self::assertSame('http://pieterhordijk.com', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::hasExplicitTrailingHostSlash
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::hasExplicitTrailingHostSlash
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testHasExplicitTrailingHostSlashTrue()
+    public function testHasExplicitTrailingHostSlashTrue(): void
     {
         $uri = new Uri('http://example.com/');
 
-        $this->assertTrue($uri->hasExplicitTrailingHostSlash());
+        self::assertTrue($uri->hasExplicitTrailingHostSlash());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::hasExplicitTrailingHostSlash
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::hasExplicitTrailingHostSlash
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testHasExplicitTrailingHostSlashFalse()
+    public function testHasExplicitTrailingHostSlashFalse(): void
     {
         $uri = new Uri('http://example.com/foo');
 
-        $this->assertFalse($uri->hasExplicitTrailingHostSlash());
+        self::assertFalse($uri->hasExplicitTrailingHostSlash());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::hasExplicitPortSpecified
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::hasExplicitPortSpecified
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testHasExplicitPortSpecifiedTrue()
+    public function testHasExplicitPortSpecifiedTrue(): void
     {
         $uri = new Uri('http://example.com:8080');
 
-        $this->assertTrue($uri->hasExplicitPortSpecified());
+        self::assertTrue($uri->hasExplicitPortSpecified());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\Uri::__construct
-     * @covers OAuth\Common\Http\Uri\Uri::parseUri
-     * @covers OAuth\Common\Http\Uri\Uri::hasExplicitPortSpecified
+     * @covers \OAuth\Common\Http\Uri\Uri::__construct
+     * @covers \OAuth\Common\Http\Uri\Uri::hasExplicitPortSpecified
+     * @covers \OAuth\Common\Http\Uri\Uri::parseUri
      */
-    public function testHasExplicitPortSpecifiedFalse()
+    public function testHasExplicitPortSpecifiedFalse(): void
     {
         $uri = new Uri('http://example.com');
 
-        $this->assertFalse($uri->hasExplicitPortSpecified());
+        self::assertFalse($uri->hasExplicitPortSpecified());
     }
 }

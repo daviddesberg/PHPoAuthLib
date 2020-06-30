@@ -7,206 +7,205 @@
  *
  * @author     David Desberg <david@daviddesberg.com>
  * @author     Pieter Hordijk <info@pieterhordijk.com>
- * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
 /**
  * @var array A list of all the credentials to be used by the different services in the examples
  */
-$servicesCredentials = array(
-    'amazon' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'battlenet' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'bitbucket' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'bitly' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'bitrix24' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'box' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'buffer' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'dailymotion' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'delicious' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'deezer' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'deviantart' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'dropbox' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'etsy' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'eveonline' => array(
+$servicesCredentials = [
+    'amazon' => [
         'key' => '',
         'secret' => '',
-    ),
-    'facebook' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'fitbit' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'fivehundredpx' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'flickr' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'foursquare' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'github' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'google' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'hubic' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'instagram' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'linkedin' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'mailchimp' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'microsoft' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'mondo' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'nest' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'netatmo' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'parrotFlowerPower' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'paypal' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'pinterest' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'pocket' => array(
-        'key'       => '',
-    ),
-    'quickbooks' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'reddit' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'redmine' => array(
-        'key'       => '',
-        'secret'    => ''
-    ),
-    'runkeeper' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'salesforce' => array(
-        'key'       => '',
-        'secret'    => ''
-    ),
-    'scoopit' => array(
-        'key'       => '',
-        'secret'    => ''
-    ),
-    'soundcloud' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'spotify' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'strava' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'tumblr' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'twitter' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'ustream' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'vimeo' => array(
-        'key'       => '',
-        'secret'    => '',
-    ),
-    'yahoo' => array(
-        'key'       => '',
-        'secret'    => ''
-    ),
-    'yammer' => array(
-        'key'       => '',
-        'secret'    => ''
-    ),
-);
+    ],
+    'battlenet' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'bitbucket' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'bitly' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'bitrix24' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'box' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'buffer' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'dailymotion' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'delicious' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'deezer' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'deviantart' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'dropbox' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'etsy' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'eveonline' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'facebook' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'fitbit' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'fivehundredpx' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'flickr' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'foursquare' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'github' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'google' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'hubic' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'instagram' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'linkedin' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'mailchimp' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'microsoft' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'mondo' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'nest' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'netatmo' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'parrotFlowerPower' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'paypal' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'pinterest' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'pocket' => [
+        'key' => '',
+    ],
+    'quickbooks' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'reddit' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'redmine' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'runkeeper' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'salesforce' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'scoopit' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'soundcloud' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'spotify' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'strava' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'tumblr' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'twitter' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'ustream' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'vimeo' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'yahoo' => [
+        'key' => '',
+        'secret' => '',
+    ],
+    'yammer' => [
+        'key' => '',
+        'secret' => '',
+    ],
+];
 
-/** @var $serviceFactory \OAuth\ServiceFactory An OAuth service factory. */
+/** @var \OAuth\ServiceFactory $serviceFactory An OAuth service factory. */
 $serviceFactory = new \OAuth\ServiceFactory();

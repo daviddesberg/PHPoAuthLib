@@ -1,20 +1,19 @@
 <?php
 
 /**
- * Example of retrieving an authentication token from the RunKeeper service
+ * Example of retrieving an authentication token from the RunKeeper service.
  *
  * PHP version 5.4
  *
- * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-use OAuth\OAuth2\Service\RunKeeper;
-use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Storage\Session;
+use OAuth\OAuth2\Service\RunKeeper;
 
 /**
- * Bootstrap the example
+ * Bootstrap the example.
  */
 require_once __DIR__ . '/bootstrap.php';
 
@@ -29,8 +28,8 @@ $credentials = new Credentials(
 );
 
 // Instantiate the Runkeeper service using the credentials, http client and storage mechanism for the token
-/** @var $runkeeperService RunKeeper */
-$runkeeperService = $serviceFactory->createService('RunKeeper', $credentials, $storage, array());
+/** @var RunKeeper $runkeeperService */
+$runkeeperService = $serviceFactory->createService('RunKeeper', $credentials, $storage, []);
 
 if (!empty($_GET['code'])) {
     // This was a callback request from RunKeeper, get the token
@@ -41,7 +40,6 @@ if (!empty($_GET['code'])) {
 
     // Show some of the resultant data
     echo 'Your unique RunKeeper user id is: ' . $result['userID'];
-
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $runkeeperService->getAuthorizationUri();
     header('Location: ' . $url);

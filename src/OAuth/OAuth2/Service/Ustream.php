@@ -2,30 +2,30 @@
 
 namespace OAuth\OAuth2\Service;
 
-use OAuth\OAuth2\Token\StdOAuth2Token;
-use OAuth\Common\Http\Exception\TokenResponseException;
-use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Client\ClientInterface;
-use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\Common\Http\Exception\TokenResponseException;
+use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\OAuth2\Token\StdOAuth2Token;
 
 class Ustream extends AbstractService
 {
     /**
-     * Scopes
+     * Scopes.
      *
      * @var string
      */
-    const SCOPE_OFFLINE     = 'offline';
+    const SCOPE_OFFLINE = 'offline';
     const SCOPE_BROADCASTER = 'broadcaster';
 
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
+        $scopes = [],
+        ?UriInterface $baseApiUri = null
     ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, true);
 
@@ -80,8 +80,7 @@ class Ustream extends AbstractService
             unset($data['refresh_token']);
         }
 
-        unset($data['access_token']);
-        unset($data['expires_in']);
+        unset($data['access_token'], $data['expires_in']);
 
         $token->setExtraParams($data);
 
@@ -93,6 +92,6 @@ class Ustream extends AbstractService
      */
     protected function getExtraOAuthHeaders()
     {
-        return array('Authorization' => 'Basic ' . $this->credentials->getConsumerSecret());
+        return ['Authorization' => 'Basic ' . $this->credentials->getConsumerSecret()];
     }
 }

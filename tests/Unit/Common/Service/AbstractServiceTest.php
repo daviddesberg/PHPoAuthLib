@@ -3,140 +3,141 @@
 namespace OAuthTest\Unit\Common\Service;
 
 use OAuthTest\Mocks\Common\Service\Mock;
+use PHPUnit\Framework\TestCase;
 
-class AbstractServiceTest extends \PHPUnit_Framework_TestCase
+class AbstractServiceTest extends TestCase
 {
     /**
-     * @covers OAuth\Common\Service\AbstractService::__construct
+     * @covers \AbstractService::__construct
      */
-    public function testConstructCorrectInterface()
+    public function testConstructCorrectInterface(): void
     {
         $service = $this->getMockForAbstractClass(
             '\\OAuth\\Common\\Service\\AbstractService',
-            array(
-                $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-                $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-                $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
-            )
+            [
+                $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+                $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+                $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
+            ]
         );
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Service\\ServiceInterface', $service);
+        self::assertInstanceOf('\\OAuth\\Common\\Service\\ServiceInterface', $service);
     }
 
     /**
-     * @covers OAuth\Common\Service\AbstractService::__construct
-     * @covers OAuth\Common\Service\AbstractService::getStorage
+     * @covers \AbstractService::__construct
+     * @covers \AbstractService::getStorage
      */
-    public function testGetStorage()
+    public function testGetStorage(): void
     {
         $service = $this->getMockForAbstractClass(
             '\\OAuth\\Common\\Service\\AbstractService',
-            array(
-                $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-                $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-                $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
-            )
+            [
+                $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+                $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+                $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
+            ]
         );
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\TokenStorageInterface', $service->getStorage());
+        self::assertInstanceOf('\\OAuth\\Common\\Storage\\TokenStorageInterface', $service->getStorage());
     }
 
     /**
-     * @covers OAuth\Common\Service\AbstractService::__construct
-     * @covers OAuth\Common\Service\AbstractService::service
+     * @covers \AbstractService::__construct
+     * @covers \AbstractService::service
      */
-    public function testService()
+    public function testService(): void
     {
         $service = new Mock(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertSame('Mock', $service->service());
+        self::assertSame('Mock', $service->service());
     }
 
     /**
-     * @covers OAuth\Common\Service\AbstractService::__construct
-     * @covers OAuth\Common\Service\AbstractService::determineRequestUriFromPath
+     * @covers \AbstractService::__construct
+     * @covers \AbstractService::determineRequestUriFromPath
      */
-    public function testDetermineRequestUriFromPathUsingUriObject()
+    public function testDetermineRequestUriFromPathUsingUriObject(): void
     {
         $service = new Mock(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\Common\\Http\\Uri\\UriInterface',
-            $service->testDetermineRequestUriFromPath($this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface'))
+            $service->testDetermineRequestUriFromPath($this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface'))
         );
     }
 
     /**
-     * @covers OAuth\Common\Service\AbstractService::__construct
-     * @covers OAuth\Common\Service\AbstractService::determineRequestUriFromPath
+     * @covers \AbstractService::__construct
+     * @covers \AbstractService::determineRequestUriFromPath
      */
-    public function testDetermineRequestUriFromPathUsingHttpPath()
+    public function testDetermineRequestUriFromPathUsingHttpPath(): void
     {
         $service = new Mock(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $uri = $service->testDetermineRequestUriFromPath('http://example.com');
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Http\\Uri\\UriInterface', $uri);
-        $this->assertSame('http://example.com', $uri->getAbsoluteUri());
+        self::assertInstanceOf('\\OAuth\\Common\\Http\\Uri\\UriInterface', $uri);
+        self::assertSame('http://example.com', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Service\AbstractService::__construct
-     * @covers OAuth\Common\Service\AbstractService::determineRequestUriFromPath
+     * @covers \AbstractService::__construct
+     * @covers \AbstractService::determineRequestUriFromPath
      */
-    public function testDetermineRequestUriFromPathUsingHttpsPath()
+    public function testDetermineRequestUriFromPathUsingHttpsPath(): void
     {
         $service = new Mock(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $uri = $service->testDetermineRequestUriFromPath('https://example.com');
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Http\\Uri\\UriInterface', $uri);
-        $this->assertSame('https://example.com', $uri->getAbsoluteUri());
+        self::assertInstanceOf('\\OAuth\\Common\\Http\\Uri\\UriInterface', $uri);
+        self::assertSame('https://example.com', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Service\AbstractService::__construct
-     * @covers OAuth\Common\Service\AbstractService::determineRequestUriFromPath
+     * @covers \AbstractService::__construct
+     * @covers \AbstractService::determineRequestUriFromPath
      */
-    public function testDetermineRequestUriFromPathThrowsExceptionOnInvalidUri()
+    public function testDetermineRequestUriFromPathThrowsExceptionOnInvalidUri(): void
     {
-        $this->setExpectedException('\\OAuth\\Common\\Exception\\Exception');
+        $this->expectException('\\OAuth\\Common\\Exception\\Exception');
 
         $service = new Mock(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $uri = $service->testDetermineRequestUriFromPath('example.com');
     }
 
     /**
-     * @covers OAuth\Common\Service\AbstractService::__construct
-     * @covers OAuth\Common\Service\AbstractService::determineRequestUriFromPath
+     * @covers \AbstractService::__construct
+     * @covers \AbstractService::determineRequestUriFromPath
      */
-    public function testDetermineRequestUriFromPathWithQueryString()
+    public function testDetermineRequestUriFromPathWithQueryString(): void
     {
         $service = new Mock(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $uri = $service->testDetermineRequestUriFromPath(
@@ -144,20 +145,20 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
             new \OAuth\Common\Http\Uri\Uri('https://example.com')
         );
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Http\\Uri\\UriInterface', $uri);
-        $this->assertSame('https://example.com/path?param1=value1', $uri->getAbsoluteUri());
+        self::assertInstanceOf('\\OAuth\\Common\\Http\\Uri\\UriInterface', $uri);
+        self::assertSame('https://example.com/path?param1=value1', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Service\AbstractService::__construct
-     * @covers OAuth\Common\Service\AbstractService::determineRequestUriFromPath
+     * @covers \AbstractService::__construct
+     * @covers \AbstractService::determineRequestUriFromPath
      */
-    public function testDetermineRequestUriFromPathWithLeadingSlashInPath()
+    public function testDetermineRequestUriFromPathWithLeadingSlashInPath(): void
     {
         $service = new Mock(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $uri = $service->testDetermineRequestUriFromPath(
@@ -165,7 +166,7 @@ class AbstractServiceTest extends \PHPUnit_Framework_TestCase
             new \OAuth\Common\Http\Uri\Uri('https://example.com')
         );
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Http\\Uri\\UriInterface', $uri);
-        $this->assertSame('https://example.com/path', $uri->getAbsoluteUri());
+        self::assertInstanceOf('\\OAuth\\Common\\Http\\Uri\\UriInterface', $uri);
+        self::assertSame('https://example.com/path', $uri->getAbsoluteUri());
     }
 }

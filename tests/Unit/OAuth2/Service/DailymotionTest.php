@@ -2,229 +2,231 @@
 
 namespace OAuthTest\Unit\OAuth2\Service;
 
-use OAuth\OAuth2\Service\Dailymotion;
 use OAuth\Common\Token\TokenInterface;
+use OAuth\OAuth2\Service\Dailymotion;
+use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\TestCase;
 
-class DailymotionTest extends \PHPUnit_Framework_TestCase
+class DailymotionTest extends TestCase
 {
     /**
-     * @covers OAuth\OAuth2\Service\Dailymotion::__construct
+     * @covers \OAuth\OAuth2\Service\Dailymotion::__construct
      */
-    public function testConstructCorrectInterfaceWithoutCustomUri()
+    public function testConstructCorrectInterfaceWithoutCustomUri(): void
     {
         $service = new Dailymotion(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\ServiceInterface', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\ServiceInterface', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Dailymotion::__construct
+     * @covers \OAuth\OAuth2\Service\Dailymotion::__construct
      */
-    public function testConstructCorrectInstanceWithoutCustomUri()
+    public function testConstructCorrectInstanceWithoutCustomUri(): void
     {
         $service = new Dailymotion(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Dailymotion::__construct
+     * @covers \OAuth\OAuth2\Service\Dailymotion::__construct
      */
-    public function testConstructCorrectInstanceWithCustomUri()
+    public function testConstructCorrectInstanceWithCustomUri(): void
     {
         $service = new Dailymotion(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-            array(),
-            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
+            [],
+            $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Dailymotion::__construct
-     * @covers OAuth\OAuth2\Service\Dailymotion::getAuthorizationEndpoint
+     * @covers \OAuth\OAuth2\Service\Dailymotion::__construct
+     * @covers \OAuth\OAuth2\Service\Dailymotion::getAuthorizationEndpoint
      */
-    public function testGetAuthorizationEndpoint()
+    public function testGetAuthorizationEndpoint(): void
     {
         $service = new Dailymotion(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertSame('https://api.dailymotion.com/oauth/authorize', $service->getAuthorizationEndpoint()->getAbsoluteUri());
+        self::assertSame('https://api.dailymotion.com/oauth/authorize', $service->getAuthorizationEndpoint()->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Dailymotion::__construct
-     * @covers OAuth\OAuth2\Service\Dailymotion::getAccessTokenEndpoint
+     * @covers \OAuth\OAuth2\Service\Dailymotion::__construct
+     * @covers \OAuth\OAuth2\Service\Dailymotion::getAccessTokenEndpoint
      */
-    public function testGetAccessTokenEndpoint()
+    public function testGetAccessTokenEndpoint(): void
     {
         $service = new Dailymotion(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertSame('https://api.dailymotion.com/oauth/token', $service->getAccessTokenEndpoint()->getAbsoluteUri());
+        self::assertSame('https://api.dailymotion.com/oauth/token', $service->getAccessTokenEndpoint()->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Dailymotion::__construct
-     * @covers OAuth\OAuth2\Service\Dailymotion::getAuthorizationMethod
+     * @covers \OAuth\OAuth2\Service\Dailymotion::__construct
+     * @covers \OAuth\OAuth2\Service\Dailymotion::getAuthorizationMethod
      */
-    public function testGetAuthorizationMethod()
+    public function testGetAuthorizationMethod(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(2));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturnArgument(2);
 
-        $token = $this->getMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
-        $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
-        $token->expects($this->once())->method('getAccessToken')->will($this->returnValue('foo'));
+        $token = $this->createMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
+        $token->expects(self::once())->method('getEndOfLife')->willReturn(TokenInterface::EOL_NEVER_EXPIRES);
+        $token->expects(self::once())->method('getAccessToken')->willReturn('foo');
 
-        $storage = $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
-        $storage->expects($this->once())->method('retrieveAccessToken')->will($this->returnValue($token));
+        $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
+        $storage->expects(self::once())->method('retrieveAccessToken')->willReturn($token);
 
         $service = new Dailymotion(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $storage
         );
 
         $headers = $service->request('https://pieterhordijk.com/my/awesome/path');
 
-        $this->assertTrue(array_key_exists('Authorization', $headers));
-        $this->assertTrue(in_array('OAuth foo', $headers, true));
+        self::assertArrayHasKey('Authorization', $headers);
+        self::assertTrue(in_array('OAuth foo', $headers, true));
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Dailymotion::__construct
-     * @covers OAuth\OAuth2\Service\Dailymotion::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Dailymotion::__construct
+     * @covers \OAuth\OAuth2\Service\Dailymotion::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseThrowsExceptionOnNulledResponse()
+    public function testParseAccessTokenResponseThrowsExceptionOnNulledResponse(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue(null));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturn(null);
 
         $service = new Dailymotion(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
+        $this->expectException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
         $service->requestAccessToken('foo');
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Dailymotion::__construct
-     * @covers OAuth\OAuth2\Service\Dailymotion::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Dailymotion::__construct
+     * @covers \OAuth\OAuth2\Service\Dailymotion::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseThrowsExceptionOnErrorDescription()
+    public function testParseAccessTokenResponseThrowsExceptionOnErrorDescription(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('error_description=some_error'));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('error_description=some_error');
 
         $service = new Dailymotion(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
+        $this->expectException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
         $service->requestAccessToken('foo');
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Dailymotion::__construct
-     * @covers OAuth\OAuth2\Service\Dailymotion::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Dailymotion::__construct
+     * @covers \OAuth\OAuth2\Service\Dailymotion::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseThrowsExceptionOnError()
+    public function testParseAccessTokenResponseThrowsExceptionOnError(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('error=some_error'));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('error=some_error');
 
         $service = new Dailymotion(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
+        $this->expectException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
         $service->requestAccessToken('foo');
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Dailymotion::__construct
-     * @covers OAuth\OAuth2\Service\Dailymotion::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Dailymotion::__construct
+     * @covers \OAuth\OAuth2\Service\Dailymotion::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseValidWithoutRefreshToken()
+    public function testParseAccessTokenResponseValidWithoutRefreshToken(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"access_token":"foo","expires_in":"bar"}'));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('{"access_token":"foo","expires_in":"bar"}');
 
         $service = new Dailymotion(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Dailymotion::__construct
-     * @covers OAuth\OAuth2\Service\Dailymotion::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Dailymotion::__construct
+     * @covers \OAuth\OAuth2\Service\Dailymotion::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseValidWithRefreshToken()
+    public function testParseAccessTokenResponseValidWithRefreshToken(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"access_token":"foo","expires_in":"bar","refresh_token":"baz"}'));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('{"access_token":"foo","expires_in":"bar","refresh_token":"baz"}');
 
         $service = new Dailymotion(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Dailymotion::__construct
-     * @covers OAuth\OAuth2\Service\Dailymotion::getExtraOAuthHeaders
+     * @covers \OAuth\OAuth2\Service\Dailymotion::__construct
+     * @covers \OAuth\OAuth2\Service\Dailymotion::getExtraOAuthHeaders
      */
-    public function testGetExtraOAuthHeaders()
+    public function testGetExtraOAuthHeaders(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnCallback(function($uri, $params, $extraHeaders) {
-            \PHPUnit_Framework_Assert::assertTrue(array_key_exists('Accept', $extraHeaders));
-            \PHPUnit_Framework_Assert::assertTrue(in_array('application/json', $extraHeaders, true));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturnCallback(function ($uri, $params, $extraHeaders) {
+            Assert::assertTrue(array_key_exists('Accept', $extraHeaders));
+            Assert::assertTrue(in_array('application/json', $extraHeaders, true));
 
             return '{"access_token":"foo","expires_in":"bar"}';
-        }));
+        });
 
         $service = new Dailymotion(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
     }
 }

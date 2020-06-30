@@ -1,33 +1,31 @@
 <?php
 
 /**
- * @category   OAuth
- * @package    Tests
  * @author     David Desberg <david@daviddesberg.com>
  * @author     Hannes Van De Vreken <vandevreken.hannes@gmail.com>
- * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
 namespace OAuth\Unit\Common\Storage;
 
-use \OAuth\OAuth2\Token\StdOAuth2Token;
+use OAuth\OAuth2\Token\StdOAuth2Token;
+use PHPUnit\Framework\TestCase;
 
-abstract class StorageTest extends \PHPUnit_Framework_TestCase
+abstract class StorageTest extends TestCase
 {
     protected $storage;
 
     /**
      * Check that the token gets properly stored.
      */
-    public function testStorage()
+    public function testStorage(): void
     {
         // arrange
         $service_1 = 'Facebook';
         $service_2 = 'Foursquare';
 
-        $token_1 = new StdOAuth2Token('access_1', 'refresh_1', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param'));
-        $token_2 = new StdOAuth2Token('access_2', 'refresh_2', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param'));
+        $token_1 = new StdOAuth2Token('access_1', 'refresh_1', StdOAuth2Token::EOL_NEVER_EXPIRES, ['extra' => 'param']);
+        $token_2 = new StdOAuth2Token('access_2', 'refresh_2', StdOAuth2Token::EOL_NEVER_EXPIRES, ['extra' => 'param']);
 
         // act
         $this->storage->storeAccessToken($service_1, $token_1);
@@ -35,15 +33,15 @@ abstract class StorageTest extends \PHPUnit_Framework_TestCase
 
         // assert
         $extraParams = $this->storage->retrieveAccessToken($service_1)->getExtraParams();
-        $this->assertEquals('param', $extraParams['extra']);
-        $this->assertEquals($token_1, $this->storage->retrieveAccessToken($service_1));
-        $this->assertEquals($token_2, $this->storage->retrieveAccessToken($service_2));
+        self::assertEquals('param', $extraParams['extra']);
+        self::assertEquals($token_1, $this->storage->retrieveAccessToken($service_1));
+        self::assertEquals($token_2, $this->storage->retrieveAccessToken($service_2));
     }
 
     /**
      * Test hasAccessToken.
      */
-    public function testHasAccessToken()
+    public function testHasAccessToken(): void
     {
         // arrange
         $service = 'Facebook';
@@ -51,24 +49,24 @@ abstract class StorageTest extends \PHPUnit_Framework_TestCase
 
         // act
         // assert
-        $this->assertFalse($this->storage->hasAccessToken($service));
+        self::assertFalse($this->storage->hasAccessToken($service));
     }
 
     /**
      * Check that the token gets properly deleted.
      */
-    public function testStorageClears()
+    public function testStorageClears(): void
     {
         // arrange
         $service = 'Facebook';
-        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param'));
+        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, ['extra' => 'param']);
 
         // act
         $this->storage->storeAccessToken($service, $token);
         $this->storage->clearToken($service);
 
         // assert
-        $this->setExpectedException('OAuth\Common\Storage\Exception\TokenNotFoundException');
+        $this->expectException('OAuth\Common\Storage\Exception\TokenNotFoundException');
         $this->storage->retrieveAccessToken($service);
     }
 }

@@ -3,329 +3,326 @@
 namespace OAuthTest\Unit\Common\Http\Uri;
 
 use OAuth\Common\Http\Uri\UriFactory;
-use OAuth\Common\Http\Uri\Uri;
+use PHPUnit\Framework\TestCase;
 
-class UriFactoryTest extends \PHPUnit_Framework_TestCase
+class UriFactoryTest extends TestCase
 {
-    /**
-     *
-     */
-    public function testConstructCorrectInterface()
+    public function testConstructCorrectInterface(): void
     {
         $factory = new UriFactory();
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Http\\Uri\\UriFactoryInterface', $factory);
+        self::assertInstanceOf('\\OAuth\\Common\\Http\\Uri\\UriFactoryInterface', $factory);
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\UriFactory::createFromSuperGlobalArray
-     * @covers OAuth\Common\Http\Uri\UriFactory::attemptProxyStyleParse
+     * @covers \OAuth\Common\Http\Uri\UriFactory::attemptProxyStyleParse
+     * @covers \OAuth\Common\Http\Uri\UriFactory::createFromSuperGlobalArray
      */
-    public function testCreateFromSuperGlobalArrayUsingProxyStyle()
+    public function testCreateFromSuperGlobalArrayUsingProxyStyle(): void
     {
         $factory = new UriFactory();
 
-        $uri = $factory->createFromSuperGlobalArray(array('REQUEST_URI' => 'http://example.com'));
+        $uri = $factory->createFromSuperGlobalArray(['REQUEST_URI' => 'http://example.com']);
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\Common\\Http\\Uri\\UriInterface',
             $uri
         );
 
-        $this->assertSame('http://example.com', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\UriFactory::createFromSuperGlobalArray
-     * @covers OAuth\Common\Http\Uri\UriFactory::attemptProxyStyleParse
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectScheme
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectHost
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectPort
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectPath
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectQuery
-     * @covers OAuth\Common\Http\Uri\UriFactory::createFromParts
+     * @covers \OAuth\Common\Http\Uri\UriFactory::attemptProxyStyleParse
+     * @covers \OAuth\Common\Http\Uri\UriFactory::createFromParts
+     * @covers \OAuth\Common\Http\Uri\UriFactory::createFromSuperGlobalArray
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectHost
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectPath
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectPort
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectQuery
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectScheme
      */
-    public function testCreateFromSuperGlobalArrayHttp()
+    public function testCreateFromSuperGlobalArrayHttp(): void
     {
         $factory = new UriFactory();
 
-        $uri = $factory->createFromSuperGlobalArray(array(
-            'HTTPS'        => 'off',
-            'HTTP_HOST'    => 'example.com',
-            'REQUEST_URI'  => '/foo',
+        $uri = $factory->createFromSuperGlobalArray([
+            'HTTPS' => 'off',
+            'HTTP_HOST' => 'example.com',
+            'REQUEST_URI' => '/foo',
             'QUERY_STRING' => 'param1=value1',
-        ));
+        ]);
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\Common\\Http\\Uri\\UriInterface',
             $uri
         );
 
-        $this->assertSame('http://example.com/foo?param1=value1', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com/foo?param1=value1', $uri->getAbsoluteUri());
     }
 
     /**
      * This looks wonky David. Should the port really fallback to 80 even when supplying https as scheme?
      *
-     * @covers OAuth\Common\Http\Uri\UriFactory::createFromSuperGlobalArray
-     * @covers OAuth\Common\Http\Uri\UriFactory::attemptProxyStyleParse
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectScheme
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectHost
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectPort
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectPath
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectQuery
-     * @covers OAuth\Common\Http\Uri\UriFactory::createFromParts
+     * @covers \OAuth\Common\Http\Uri\UriFactory::attemptProxyStyleParse
+     * @covers \OAuth\Common\Http\Uri\UriFactory::createFromParts
+     * @covers \OAuth\Common\Http\Uri\UriFactory::createFromSuperGlobalArray
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectHost
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectPath
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectPort
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectQuery
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectScheme
      */
-    public function testCreateFromSuperGlobalArrayHttps()
+    public function testCreateFromSuperGlobalArrayHttps(): void
     {
         $factory = new UriFactory();
 
-        $uri = $factory->createFromSuperGlobalArray(array(
-            'HTTPS'        => 'on',
-            'HTTP_HOST'    => 'example.com',
-            'REQUEST_URI'  => '/foo',
+        $uri = $factory->createFromSuperGlobalArray([
+            'HTTPS' => 'on',
+            'HTTP_HOST' => 'example.com',
+            'REQUEST_URI' => '/foo',
             'QUERY_STRING' => 'param1=value1',
-        ));
+        ]);
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\Common\\Http\\Uri\\UriInterface',
             $uri
         );
 
-        $this->assertSame('https://example.com:80/foo?param1=value1', $uri->getAbsoluteUri());
+        self::assertSame('https://example.com:80/foo?param1=value1', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\UriFactory::createFromSuperGlobalArray
-     * @covers OAuth\Common\Http\Uri\UriFactory::attemptProxyStyleParse
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectScheme
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectHost
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectPort
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectPath
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectQuery
-     * @covers OAuth\Common\Http\Uri\UriFactory::createFromParts
+     * @covers \OAuth\Common\Http\Uri\UriFactory::attemptProxyStyleParse
+     * @covers \OAuth\Common\Http\Uri\UriFactory::createFromParts
+     * @covers \OAuth\Common\Http\Uri\UriFactory::createFromSuperGlobalArray
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectHost
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectPath
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectPort
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectQuery
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectScheme
      */
-    public function testCreateFromSuperGlobalArrayPortSupplied()
+    public function testCreateFromSuperGlobalArrayPortSupplied(): void
     {
         $factory = new UriFactory();
 
-        $uri = $factory->createFromSuperGlobalArray(array(
-            'HTTP_HOST'    => 'example.com',
-            'SERVER_PORT'  => 21,
-            'REQUEST_URI'  => '/foo',
+        $uri = $factory->createFromSuperGlobalArray([
+            'HTTP_HOST' => 'example.com',
+            'SERVER_PORT' => 21,
+            'REQUEST_URI' => '/foo',
             'QUERY_STRING' => 'param1=value1',
-        ));
+        ]);
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\Common\\Http\\Uri\\UriInterface',
             $uri
         );
 
-        $this->assertSame('http://example.com:21/foo?param1=value1', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com:21/foo?param1=value1', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\UriFactory::createFromSuperGlobalArray
-     * @covers OAuth\Common\Http\Uri\UriFactory::attemptProxyStyleParse
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectScheme
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectHost
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectPort
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectPath
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectQuery
-     * @covers OAuth\Common\Http\Uri\UriFactory::createFromParts
+     * @covers \OAuth\Common\Http\Uri\UriFactory::attemptProxyStyleParse
+     * @covers \OAuth\Common\Http\Uri\UriFactory::createFromParts
+     * @covers \OAuth\Common\Http\Uri\UriFactory::createFromSuperGlobalArray
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectHost
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectPath
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectPort
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectQuery
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectScheme
      */
-    public function testCreateFromSuperGlobalArrayPortNotSet()
+    public function testCreateFromSuperGlobalArrayPortNotSet(): void
     {
         $factory = new UriFactory();
 
-        $uri = $factory->createFromSuperGlobalArray(array(
-            'HTTP_HOST'    => 'example.com',
-            'REQUEST_URI'  => '/foo',
+        $uri = $factory->createFromSuperGlobalArray([
+            'HTTP_HOST' => 'example.com',
+            'REQUEST_URI' => '/foo',
             'QUERY_STRING' => 'param1=value1',
-        ));
+        ]);
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\Common\\Http\\Uri\\UriInterface',
             $uri
         );
 
-        $this->assertSame('http://example.com/foo?param1=value1', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com/foo?param1=value1', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\UriFactory::createFromSuperGlobalArray
-     * @covers OAuth\Common\Http\Uri\UriFactory::attemptProxyStyleParse
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectScheme
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectHost
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectPort
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectPath
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectQuery
-     * @covers OAuth\Common\Http\Uri\UriFactory::createFromParts
+     * @covers \OAuth\Common\Http\Uri\UriFactory::attemptProxyStyleParse
+     * @covers \OAuth\Common\Http\Uri\UriFactory::createFromParts
+     * @covers \OAuth\Common\Http\Uri\UriFactory::createFromSuperGlobalArray
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectHost
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectPath
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectPort
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectQuery
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectScheme
      */
-    public function testCreateFromSuperGlobalArrayRequestUriSet()
+    public function testCreateFromSuperGlobalArrayRequestUriSet(): void
     {
         $factory = new UriFactory();
 
-        $uri = $factory->createFromSuperGlobalArray(array(
-            'HTTP_HOST'    => 'example.com',
-            'REQUEST_URI'  => '/foo',
+        $uri = $factory->createFromSuperGlobalArray([
+            'HTTP_HOST' => 'example.com',
+            'REQUEST_URI' => '/foo',
             'QUERY_STRING' => 'param1=value1',
-        ));
+        ]);
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\Common\\Http\\Uri\\UriInterface',
             $uri
         );
 
-        $this->assertSame('http://example.com/foo?param1=value1', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com/foo?param1=value1', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\UriFactory::createFromSuperGlobalArray
-     * @covers OAuth\Common\Http\Uri\UriFactory::attemptProxyStyleParse
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectScheme
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectHost
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectPort
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectPath
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectQuery
-     * @covers OAuth\Common\Http\Uri\UriFactory::createFromParts
+     * @covers \OAuth\Common\Http\Uri\UriFactory::attemptProxyStyleParse
+     * @covers \OAuth\Common\Http\Uri\UriFactory::createFromParts
+     * @covers \OAuth\Common\Http\Uri\UriFactory::createFromSuperGlobalArray
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectHost
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectPath
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectPort
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectQuery
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectScheme
      */
-    public function testCreateFromSuperGlobalArrayRedirectUrlSet()
+    public function testCreateFromSuperGlobalArrayRedirectUrlSet(): void
     {
         $factory = new UriFactory();
 
-        $uri = $factory->createFromSuperGlobalArray(array(
-            'HTTP_HOST'    => 'example.com',
+        $uri = $factory->createFromSuperGlobalArray([
+            'HTTP_HOST' => 'example.com',
             'REDIRECT_URL' => '/foo',
             'QUERY_STRING' => 'param1=value1',
-        ));
+        ]);
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\Common\\Http\\Uri\\UriInterface',
             $uri
         );
 
-        $this->assertSame('http://example.com/foo?param1=value1', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com/foo?param1=value1', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\UriFactory::createFromSuperGlobalArray
-     * @covers OAuth\Common\Http\Uri\UriFactory::attemptProxyStyleParse
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectScheme
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectHost
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectPort
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectPath
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectQuery
-     * @covers OAuth\Common\Http\Uri\UriFactory::createFromParts
+     * @covers \OAuth\Common\Http\Uri\UriFactory::attemptProxyStyleParse
+     * @covers \OAuth\Common\Http\Uri\UriFactory::createFromParts
+     * @covers \OAuth\Common\Http\Uri\UriFactory::createFromSuperGlobalArray
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectHost
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectPath
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectPort
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectQuery
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectScheme
      */
-    public function testCreateFromSuperGlobalArrayThrowsExceptionOnDetectingPathMissingIndices()
+    public function testCreateFromSuperGlobalArrayThrowsExceptionOnDetectingPathMissingIndices(): void
     {
         $factory = new UriFactory();
 
-        $this->setExpectedException('\\RuntimeException');
+        $this->expectException('\\RuntimeException');
 
-        $uri = $factory->createFromSuperGlobalArray(array(
-            'HTTP_HOST'    => 'example.com',
+        $uri = $factory->createFromSuperGlobalArray([
+            'HTTP_HOST' => 'example.com',
             'QUERY_STRING' => 'param1=value1',
-        ));
+        ]);
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\UriFactory::createFromSuperGlobalArray
-     * @covers OAuth\Common\Http\Uri\UriFactory::attemptProxyStyleParse
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectScheme
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectHost
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectPort
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectPath
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectQuery
-     * @covers OAuth\Common\Http\Uri\UriFactory::createFromParts
+     * @covers \OAuth\Common\Http\Uri\UriFactory::attemptProxyStyleParse
+     * @covers \OAuth\Common\Http\Uri\UriFactory::createFromParts
+     * @covers \OAuth\Common\Http\Uri\UriFactory::createFromSuperGlobalArray
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectHost
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectPath
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectPort
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectQuery
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectScheme
      */
-    public function testCreateFromSuperGlobalArrayWithQueryString()
+    public function testCreateFromSuperGlobalArrayWithQueryString(): void
     {
         $factory = new UriFactory();
 
-        $uri = $factory->createFromSuperGlobalArray(array(
-            'HTTP_HOST'    => 'example.com',
+        $uri = $factory->createFromSuperGlobalArray([
+            'HTTP_HOST' => 'example.com',
             'REQUEST_URI' => '/foo?param1=value1',
             'QUERY_STRING' => 'param1=value1',
-        ));
+        ]);
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\Common\\Http\\Uri\\UriInterface',
             $uri
         );
 
-        $this->assertSame('http://example.com/foo?param1=value1', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com/foo?param1=value1', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\UriFactory::createFromSuperGlobalArray
-     * @covers OAuth\Common\Http\Uri\UriFactory::attemptProxyStyleParse
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectScheme
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectHost
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectPort
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectPath
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectQuery
-     * @covers OAuth\Common\Http\Uri\UriFactory::createFromParts
+     * @covers \OAuth\Common\Http\Uri\UriFactory::attemptProxyStyleParse
+     * @covers \OAuth\Common\Http\Uri\UriFactory::createFromParts
+     * @covers \OAuth\Common\Http\Uri\UriFactory::createFromSuperGlobalArray
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectHost
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectPath
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectPort
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectQuery
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectScheme
      */
-    public function testCreateFromSuperGlobalArrayWithoutQueryString()
+    public function testCreateFromSuperGlobalArrayWithoutQueryString(): void
     {
         $factory = new UriFactory();
 
-        $uri = $factory->createFromSuperGlobalArray(array(
-            'HTTP_HOST'    => 'example.com',
+        $uri = $factory->createFromSuperGlobalArray([
+            'HTTP_HOST' => 'example.com',
             'REQUEST_URI' => '/foo',
-        ));
+        ]);
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\Common\\Http\\Uri\\UriInterface',
             $uri
         );
 
-        $this->assertSame('http://example.com/foo', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com/foo', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\UriFactory::createFromSuperGlobalArray
-     * @covers OAuth\Common\Http\Uri\UriFactory::attemptProxyStyleParse
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectScheme
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectHost
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectPort
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectPath
-     * @covers OAuth\Common\Http\Uri\UriFactory::detectQuery
-     * @covers OAuth\Common\Http\Uri\UriFactory::createFromParts
+     * @covers \OAuth\Common\Http\Uri\UriFactory::attemptProxyStyleParse
+     * @covers \OAuth\Common\Http\Uri\UriFactory::createFromParts
+     * @covers \OAuth\Common\Http\Uri\UriFactory::createFromSuperGlobalArray
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectHost
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectPath
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectPort
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectQuery
+     * @covers \OAuth\Common\Http\Uri\UriFactory::detectScheme
      */
-    public function testCreateFromSuperGlobalArrayHostWithColon()
+    public function testCreateFromSuperGlobalArrayHostWithColon(): void
     {
         $factory = new UriFactory();
 
-        $uri = $factory->createFromSuperGlobalArray(array(
-            'HTTP_HOST'    => 'example.com:80',
+        $uri = $factory->createFromSuperGlobalArray([
+            'HTTP_HOST' => 'example.com:80',
             'REQUEST_URI' => '/foo',
-        ));
+        ]);
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\Common\\Http\\Uri\\UriInterface',
             $uri
         );
 
-        $this->assertSame('http://example.com/foo', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com/foo', $uri->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\Common\Http\Uri\UriFactory::createFromAbsolute
+     * @covers \OAuth\Common\Http\Uri\UriFactory::createFromAbsolute
      */
-    public function testCreateFromAbsolute()
+    public function testCreateFromAbsolute(): void
     {
         $factory = new UriFactory();
 
         $uri = $factory->createFromAbsolute('http://example.com');
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\Common\\Http\\Uri\\UriInterface',
             $uri
         );
 
-        $this->assertSame('http://example.com', $uri->getAbsoluteUri());
+        self::assertSame('http://example.com', $uri->getAbsoluteUri());
     }
 }

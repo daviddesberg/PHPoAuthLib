@@ -6,24 +6,23 @@
  * PHP version 5.4
  *
  * @author     Mukunda Johnson (mukunda.com)
- * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-use OAuth\OAuth2\Service\BattleNet;
-use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Http\Uri\Uri;
+use OAuth\Common\Storage\Session;
+use OAuth\OAuth2\Service\BattleNet;
 
 /** ---------------------------------------------------------------------------
- * Bootstrap the example
+ * Bootstrap the example.
  */
 require_once __DIR__ . '/bootstrap.php';
 
-if( empty( $_GET['code'] ) && !isset($_GET['go'] )) {
+if (empty($_GET['code']) && !isset($_GET['go'])) {
 
     // Empty query; show the startup page.
-    
+
     echo '
     
     <p>Sign-in using Battle.net. Please pick your region:</p>
@@ -37,7 +36,7 @@ if( empty( $_GET['code'] ) && !isset($_GET['go'] )) {
     </p>
     
     ';
-    
+
     die();
 }
 
@@ -54,40 +53,37 @@ $credentials = new Credentials(
     $servicesCredentials['battlenet']['secret'],
     $currentUri->getAbsoluteUri()
 );
- 
-$region = isset($_GET['region']) ? $_GET['region'] : "";
 
-$region_map = array(
+$region = $_GET['region'] ?? '';
+
+$region_map = [
     'us' => BattleNet::API_URI_US, // USA - this is the default if you omit the base API URI.
     'eu' => BattleNet::API_URI_EU, // Europe
     'kr' => BattleNet::API_URI_KR, // Korea
     'tw' => BattleNet::API_URI_TW, // Taiwan
     'cn' => BattleNet::API_URI_CN, // China
-);
+];
 
 // Get base API URI from region.
-$apiuri = isset( $region_map[$region] ) ? new Uri( $region_map[$region] ) : null;
+$apiuri = isset($region_map[$region]) ? new Uri($region_map[$region]) : null;
 
 // Without any scopes, we can get their BattleTag.
-$scopes = array();
+$scopes = [];
 
-$battlenetService = $serviceFactory->createService( 
-                        'battlenet', $credentials, $storage, $scopes, $apiuri );
+$battlenetService = $serviceFactory->createService(
+                        'battlenet', $credentials, $storage, $scopes, $apiuri);
 
-if( !empty($_GET['code']) ) {
+if (!empty($_GET['code'])) {
     // This was a callback request from Battle.net, get the token
-    $token = $battlenetService->requestAccessToken( $_GET['code'] );
+    $token = $battlenetService->requestAccessToken($_GET['code']);
 
     // See https://dev.battle.net/io-docs for OAuth request types.
     //
     // Without any scopes specified, we can get their BattleTag.
-    $result = json_decode( $battlenetService->request('/account/user') );
+    $result = json_decode($battlenetService->request('/account/user'));
 
     echo "Your BattleTag is \"$result->battletag\".";
-
-} elseif( isset($_GET['go']) ) {
-
+} elseif (isset($_GET['go'])) {
     $url = $battlenetService->getAuthorizationUri();
-    header( "Location: $url" );
-    
+    header("Location: $url");
 }

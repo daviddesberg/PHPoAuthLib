@@ -4,3 +4,4 @@ vendor
 examples/init.php
 atlassian-ide-plugin.xml
 nbproject/
+.phpunit.result.cache

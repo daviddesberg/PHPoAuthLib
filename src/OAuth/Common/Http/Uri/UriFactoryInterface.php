@@ -3,21 +3,19 @@
 namespace OAuth\Common\Http\Uri;
 
 /**
- * Factory interface for uniform resource indicators
+ * Factory interface for uniform resource indicators.
  */
 interface UriFactoryInterface
 {
     /**
      * Factory method to build a URI from a super-global $_SERVER array.
      *
-     * @param array $_server
-     *
      * @return UriInterface
      */
     public function createFromSuperGlobalArray(array $_server);
 
     /**
-     * Creates a URI from an absolute URI
+     * Creates a URI from an absolute URI.
      *
      * @param string $absoluteUri
      *
@@ -26,7 +24,7 @@ interface UriFactoryInterface
     public function createFromAbsolute($absoluteUri);
 
     /**
-     * Factory method to build a URI from parts
+     * Factory method to build a URI from parts.
      *
      * @param string $scheme
      * @param string $userInfo

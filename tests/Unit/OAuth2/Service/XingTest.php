@@ -2,17 +2,17 @@
 
 namespace OAuthTest\Unit\OAuth2\Service;
 
-use OAuth\OAuth2\Service\Google;
+use OAuth\OAuth2\Service\Xing;
 use PHPUnit\Framework\TestCase;
 
-class GoogleTest extends TestCase
+class XingTest extends TestCase
 {
     /**
-     * @covers \OAuth\OAuth2\Service\Google::__construct
+     * @covers \OAuth\OAuth2\Service\Xing::__construct
      */
     public function testConstructCorrectInterfaceWithoutCustomUri(): void
     {
-        $service = new Google(
+        $service = new Xing(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
@@ -22,11 +22,11 @@ class GoogleTest extends TestCase
     }
 
     /**
-     * @covers \OAuth\OAuth2\Service\Google::__construct
+     * @covers \OAuth\OAuth2\Service\Xing::__construct
      */
     public function testConstructCorrectInstanceWithoutCustomUri(): void
     {
-        $service = new Google(
+        $service = new Xing(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
@@ -36,11 +36,11 @@ class GoogleTest extends TestCase
     }
 
     /**
-     * @covers \OAuth\OAuth2\Service\Google::__construct
+     * @covers \OAuth\OAuth2\Service\Xing::__construct
      */
     public function testConstructCorrectInstanceWithCustomUri(): void
     {
-        $service = new Google(
+        $service = new Xing(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -52,80 +52,45 @@ class GoogleTest extends TestCase
     }
 
     /**
-     * @covers \OAuth\OAuth2\Service\Google::__construct
-     * @covers \OAuth\OAuth2\Service\Google::getAuthorizationEndpoint
+     * @covers \OAuth\OAuth2\Service\Xing::__construct
+     * @covers \OAuth\OAuth2\Service\Xing::getAuthorizationEndpoint
      */
     public function testGetAuthorizationEndpoint(): void
     {
-        $service = new Google(
+        $service = new Xing(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        self::assertSame(
-            'https://accounts.google.com/o/oauth2/auth?access_type=online',
-            $service->getAuthorizationEndpoint()->getAbsoluteUri()
-        );
-
-        // Verify that 'offine' works
-        $service->setAccessType('offline');
-        self::assertSame(
-            'https://accounts.google.com/o/oauth2/auth?access_type=offline',
-            $service->getAuthorizationEndpoint()->getAbsoluteUri()
-        );
+        self::assertSame('https://api.xing.com/auth/oauth2/authorize', $service->getAuthorizationEndpoint()->getAbsoluteUri());
     }
 
     /**
-     * @covers \OAuth\OAuth2\Service\Google::__construct
-     * @covers \OAuth\OAuth2\Service\Google::getAuthorizationEndpoint
-     */
-    public function testGetAuthorizationEndpointException(): void
-    {
-        $service = new Google(
-            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
-        );
-
-        $this->expectException('OAuth\OAuth2\Service\Exception\InvalidAccessTypeException');
-
-        try {
-            $service->setAccessType('invalid');
-        } catch (InvalidAccessTypeException $e) {
-            return;
-        }
-        self::fail('Expected InvalidAccessTypeException not thrown');
-    }
-
-    /**
-     * @covers \OAuth\OAuth2\Service\Google::__construct
-     * @covers \OAuth\OAuth2\Service\Google::getAccessTokenEndpoint
+     * @covers \OAuth\OAuth2\Service\Xing::__construct
+     * @covers \OAuth\OAuth2\Service\Xing::getAccessTokenEndpoint
      */
     public function testGetAccessTokenEndpoint(): void
     {
-        $service = new Google(
+        $service = new Xing(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        self::assertSame(
-            'https://accounts.google.com/o/oauth2/token',
-            $service->getAccessTokenEndpoint()->getAbsoluteUri()
-        );
+        self::assertSame('https://api.xing.com/auth/oauth2/token', $service->getAccessTokenEndpoint()->getAbsoluteUri());
     }
 
     /**
-     * @covers \OAuth\OAuth2\Service\Google::__construct
-     * @covers \OAuth\OAuth2\Service\Google::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Xing::__construct
+     * @covers \OAuth\OAuth2\Service\Xing::parseAccessTokenResponse
      */
     public function testParseAccessTokenResponseThrowsExceptionOnNulledResponse(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
         $client->expects(self::once())->method('retrieveResponse')->willReturn(null);
 
-        $service = new Google(
+        $service = new Xing(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
@@ -137,15 +102,21 @@ class GoogleTest extends TestCase
     }
 
     /**
-     * @covers \OAuth\OAuth2\Service\Google::__construct
-     * @covers \OAuth\OAuth2\Service\Google::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Xing::__construct
+     * @covers \OAuth\OAuth2\Service\Xing::parseAccessTokenResponse
      */
     public function testParseAccessTokenResponseThrowsExceptionOnError(): void
     {
-        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects(self::once())->method('retrieveResponse')->willReturn('error=some_error');
+        $error = [
+            'error' => 'some_error',
+            'error_description' => 'something went very wrong',
+            'error_uri' => 'this imaginary link contains more information',
+        ];
 
-        $service = new Google(
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturn(json_encode($error));
+
+        $service = new Xing(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
@@ -157,33 +128,15 @@ class GoogleTest extends TestCase
     }
 
     /**
-     * @covers \OAuth\OAuth2\Service\Google::__construct
-     * @covers \OAuth\OAuth2\Service\Google::parseAccessTokenResponse
-     */
-    public function testParseAccessTokenResponseValidWithoutRefreshToken(): void
-    {
-        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects(self::once())->method('retrieveResponse')->willReturn('{"access_token":"foo","expires_in":"bar"}');
-
-        $service = new Google(
-            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $client,
-            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
-        );
-
-        self::assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
-    }
-
-    /**
-     * @covers \OAuth\OAuth2\Service\Google::__construct
-     * @covers \OAuth\OAuth2\Service\Google::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Xing::__construct
+     * @covers \OAuth\OAuth2\Service\Xing::parseAccessTokenResponse
      */
     public function testParseAccessTokenResponseValidWithRefreshToken(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
         $client->expects(self::once())->method('retrieveResponse')->willReturn('{"access_token":"foo","expires_in":"bar","refresh_token":"baz"}');
 
-        $service = new Google(
+        $service = new Xing(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')

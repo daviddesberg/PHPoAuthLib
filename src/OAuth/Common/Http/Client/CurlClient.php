@@ -118,10 +118,6 @@ class CurlClient extends AbstractClient
             curl_setopt($ch, $key, $value);
         }
 
-        if ($this->forceSSL3) {
-            curl_setopt($ch, CURLOPT_SSLVERSION, 3);
-        }
-
         $response     = curl_exec($ch);
         $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 

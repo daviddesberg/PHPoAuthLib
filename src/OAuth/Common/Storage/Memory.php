@@ -2,13 +2,11 @@
 
 namespace OAuth\Common\Storage;
 
-use OAuth\Common\Token\TokenInterface;
-use OAuth\Common\Storage\Exception\TokenNotFoundException;
 use OAuth\Common\Storage\Exception\AuthorizationStateNotFoundException;
+use OAuth\Common\Storage\Exception\TokenNotFoundException;
+use OAuth\Common\Token\TokenInterface;
 
-/*
- * Stores a token in-memory only (destroyed at end of script execution).
- */
+// Stores a token in-memory only (destroyed at end of script execution).
 class Memory implements TokenStorageInterface
 {
     /**
@@ -23,12 +21,12 @@ class Memory implements TokenStorageInterface
 
     public function __construct()
     {
-        $this->tokens = array();
-        $this->states = array();
+        $this->tokens = [];
+        $this->states = [];
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function retrieveAccessToken($service)
     {
@@ -40,7 +38,7 @@ class Memory implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function storeAccessToken($service, TokenInterface $token)
     {
@@ -51,7 +49,7 @@ class Memory implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function hasAccessToken($service)
     {
@@ -59,7 +57,7 @@ class Memory implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function clearToken($service)
     {
@@ -72,18 +70,18 @@ class Memory implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function clearAllTokens()
     {
-        $this->tokens = array();
+        $this->tokens = [];
 
         // allow chaining
         return $this;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function retrieveAuthorizationState($service)
     {
@@ -95,7 +93,7 @@ class Memory implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function storeAuthorizationState($service, $state)
     {
@@ -106,7 +104,7 @@ class Memory implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function hasAuthorizationState($service)
     {
@@ -114,7 +112,7 @@ class Memory implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function clearAuthorizationState($service)
     {
@@ -127,11 +125,11 @@ class Memory implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function clearAllAuthorizationStates()
     {
-        $this->states = array();
+        $this->states = [];
 
         // allow chaining
         return $this;

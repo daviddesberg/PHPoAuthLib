@@ -8,120 +8,120 @@ use PHPUnit\Framework\TestCase;
 class SessionTest extends TestCase
 {
     /**
-     * @covers Session::__construct
+     * @covers \Session::__construct
      *
      * @runInSeparateProcess
      */
-    public function testConstructCorrectInterface()
+    public function testConstructCorrectInterface(): void
     {
         $storage = new Session();
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\TokenStorageInterface', $storage);
+        self::assertInstanceOf('\\OAuth\\Common\\Storage\\TokenStorageInterface', $storage);
     }
 
     /**
-     * @covers Session::__construct
+     * @covers \Session::__construct
      *
      * @runInSeparateProcess
      */
-    public function testConstructWithoutStartingSession()
+    public function testConstructWithoutStartingSession(): void
     {
         session_start();
 
         $storage = new Session(false);
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\TokenStorageInterface', $storage);
+        self::assertInstanceOf('\\OAuth\\Common\\Storage\\TokenStorageInterface', $storage);
     }
 
     /**
-     * @covers Session::__construct
+     * @covers \Session::__construct
      *
      * @runInSeparateProcess
      */
-    public function testConstructTryingToStartWhileSessionAlreadyExists()
+    public function testConstructTryingToStartWhileSessionAlreadyExists(): void
     {
         session_start();
 
         $storage = new Session();
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\TokenStorageInterface', $storage);
+        self::assertInstanceOf('\\OAuth\\Common\\Storage\\TokenStorageInterface', $storage);
     }
 
     /**
-     * @covers Session::__construct
+     * @covers \Session::__construct
      *
      * @runInSeparateProcess
      */
-    public function testConstructWithExistingSessionKey()
+    public function testConstructWithExistingSessionKey(): void
     {
         session_start();
 
-        $_SESSION['lusitanian_oauth_token'] = array();
+        $_SESSION['lusitanian_oauth_token'] = [];
 
         $storage = new Session();
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\TokenStorageInterface', $storage);
+        self::assertInstanceOf('\\OAuth\\Common\\Storage\\TokenStorageInterface', $storage);
     }
 
     /**
-     * @covers Session::__construct
-     * @covers Session::storeAccessToken
+     * @covers \Session::__construct
+     * @covers \Session::storeAccessToken
      *
      * @runInSeparateProcess
      */
-    public function testStoreAccessTokenIsAlreadyArray()
+    public function testStoreAccessTokenIsAlreadyArray(): void
     {
         $storage = new Session();
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\Common\\Storage\\Session',
             $storage->storeAccessToken('foo', $this->createMock('\\OAuth\\Common\\Token\\TokenInterface'))
         );
     }
 
     /**
-     * @covers Session::__construct
-     * @covers Session::storeAccessToken
+     * @covers \Session::__construct
+     * @covers \Session::storeAccessToken
      *
      * @runInSeparateProcess
      */
-    public function testStoreAccessTokenIsNotArray()
+    public function testStoreAccessTokenIsNotArray(): void
     {
         $storage = new Session();
 
         $_SESSION['lusitanian_oauth_token'] = 'foo';
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\Common\\Storage\\Session',
             $storage->storeAccessToken('foo', $this->createMock('\\OAuth\\Common\\Token\\TokenInterface'))
         );
     }
 
     /**
-     * @covers Session::__construct
-     * @covers Session::storeAccessToken
-     * @covers Session::retrieveAccessToken
-     * @covers Session::hasAccessToken
+     * @covers \Session::__construct
+     * @covers \Session::hasAccessToken
+     * @covers \Session::retrieveAccessToken
+     * @covers \Session::storeAccessToken
      *
      * @runInSeparateProcess
      */
-    public function testRetrieveAccessTokenValid()
+    public function testRetrieveAccessTokenValid(): void
     {
         $storage = new Session();
 
         $storage->storeAccessToken('foo', $this->createMock('\\OAuth\\Common\\Token\\TokenInterface'));
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Token\\TokenInterface', $storage->retrieveAccessToken('foo'));
+        self::assertInstanceOf('\\OAuth\\Common\\Token\\TokenInterface', $storage->retrieveAccessToken('foo'));
     }
 
     /**
-     * @covers Session::__construct
-     * @covers Session::retrieveAccessToken
-     * @covers Session::hasAccessToken
+     * @covers \Session::__construct
+     * @covers \Session::hasAccessToken
+     * @covers \Session::retrieveAccessToken
      *
      * @runInSeparateProcess
      */
-    public function testRetrieveAccessTokenThrowsExceptionWhenTokenIsNotFound()
+    public function testRetrieveAccessTokenThrowsExceptionWhenTokenIsNotFound(): void
     {
         $this->expectException('\\OAuth\\Common\\Storage\\Exception\\TokenNotFoundException');
 
@@ -131,93 +131,93 @@ class SessionTest extends TestCase
     }
 
     /**
-     * @covers Session::__construct
-     * @covers Session::storeAccessToken
-     * @covers Session::hasAccessToken
+     * @covers \Session::__construct
+     * @covers \Session::hasAccessToken
+     * @covers \Session::storeAccessToken
      *
      * @runInSeparateProcess
      */
-    public function testHasAccessTokenTrue()
+    public function testHasAccessTokenTrue(): void
     {
         $storage = new Session();
 
         $storage->storeAccessToken('foo', $this->createMock('\\OAuth\\Common\\Token\\TokenInterface'));
 
-        $this->assertTrue($storage->hasAccessToken('foo'));
+        self::assertTrue($storage->hasAccessToken('foo'));
     }
 
     /**
-     * @covers Session::__construct
-     * @covers Session::hasAccessToken
+     * @covers \Session::__construct
+     * @covers \Session::hasAccessToken
      *
      * @runInSeparateProcess
      */
-    public function testHasAccessTokenFalse()
+    public function testHasAccessTokenFalse(): void
     {
         $storage = new Session();
 
-        $this->assertFalse($storage->hasAccessToken('foo'));
+        self::assertFalse($storage->hasAccessToken('foo'));
     }
 
     /**
-     * @covers Session::__construct
-     * @covers Session::clearToken
+     * @covers \Session::__construct
+     * @covers \Session::clearToken
      *
      * @runInSeparateProcess
      */
-    public function testClearTokenIsNotSet()
+    public function testClearTokenIsNotSet(): void
     {
         $storage = new Session();
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\Session', $storage->clearToken('foo'));
+        self::assertInstanceOf('\\OAuth\\Common\\Storage\\Session', $storage->clearToken('foo'));
     }
 
     /**
-     * @covers Session::__construct
-     * @covers Session::storeAccessToken
-     * @covers Session::clearToken
+     * @covers \Session::__construct
+     * @covers \Session::clearToken
+     * @covers \Session::storeAccessToken
      *
      * @runInSeparateProcess
      */
-    public function testClearTokenSet()
+    public function testClearTokenSet(): void
     {
         $storage = new Session();
 
         $storage->storeAccessToken('foo', $this->createMock('\\OAuth\\Common\\Token\\TokenInterface'));
 
-        $this->assertTrue($storage->hasAccessToken('foo'));
-        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\Session', $storage->clearToken('foo'));
-        $this->assertFalse($storage->hasAccessToken('foo'));
+        self::assertTrue($storage->hasAccessToken('foo'));
+        self::assertInstanceOf('\\OAuth\\Common\\Storage\\Session', $storage->clearToken('foo'));
+        self::assertFalse($storage->hasAccessToken('foo'));
     }
 
     /**
-     * @covers Session::__construct
-     * @covers Session::storeAccessToken
-     * @covers Session::clearAllTokens
+     * @covers \Session::__construct
+     * @covers \Session::clearAllTokens
+     * @covers \Session::storeAccessToken
      *
      * @runInSeparateProcess
      */
-    public function testClearAllTokens()
+    public function testClearAllTokens(): void
     {
         $storage = new Session();
 
         $storage->storeAccessToken('foo', $this->createMock('\\OAuth\\Common\\Token\\TokenInterface'));
         $storage->storeAccessToken('bar', $this->createMock('\\OAuth\\Common\\Token\\TokenInterface'));
 
-        $this->assertTrue($storage->hasAccessToken('foo'));
-        $this->assertTrue($storage->hasAccessToken('bar'));
-        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\Session', $storage->clearAllTokens());
-        $this->assertFalse($storage->hasAccessToken('foo'));
-        $this->assertFalse($storage->hasAccessToken('bar'));
+        self::assertTrue($storage->hasAccessToken('foo'));
+        self::assertTrue($storage->hasAccessToken('bar'));
+        self::assertInstanceOf('\\OAuth\\Common\\Storage\\Session', $storage->clearAllTokens());
+        self::assertFalse($storage->hasAccessToken('foo'));
+        self::assertFalse($storage->hasAccessToken('bar'));
     }
 
     /**
-     * @covers Session::__construct
-     * @covers Session::__destruct
+     * @covers \Session::__construct
+     * @covers \Session::__destruct
      *
      * @runInSeparateProcess
      */
-    public function testDestruct()
+    public function testDestruct(): void
     {
         $storage = new Session();
 
@@ -225,22 +225,22 @@ class SessionTest extends TestCase
     }
 
     /**
-     * @covers Session::storeAccessToken
-     * @covers Session::retrieveAccessToken
+     * @covers \Session::retrieveAccessToken
+     * @covers \Session::storeAccessToken
      *
      * @runInSeparateProcess
      */
-    public function testSerializeUnserialize()
+    public function testSerializeUnserialize(): void
     {
-        $mock = $this->createMock('\\OAuth\\Common\\Token\\AbstractToken', array('__sleep'));
-        $mock->expects($this->once())
+        $mock = $this->createMock('\\OAuth\\Common\\Token\\AbstractToken', ['__sleep']);
+        $mock->expects(self::once())
             ->method('__sleep')
-            ->will($this->returnValue(array('accessToken')));
+            ->willReturn(['accessToken']);
 
         $storage = new Session();
         $storage->storeAccessToken('foo', $mock);
         $retrievedToken = $storage->retrieveAccessToken('foo');
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Token\\AbstractToken', $retrievedToken);
+        self::assertInstanceOf('\\OAuth\\Common\\Token\\AbstractToken', $retrievedToken);
     }
 }

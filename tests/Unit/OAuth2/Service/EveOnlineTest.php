@@ -9,9 +9,9 @@ use PHPUnit\Framework\TestCase;
 class EveOnlineTest extends TestCase
 {
     /**
-     * @covers OAuth\OAuth2\Service\EveOnline::__construct
+     * @covers \OAuth\OAuth2\Service\EveOnline::__construct
      */
-    public function testConstructCorrectInterfaceWithoutCustomUri()
+    public function testConstructCorrectInterfaceWithoutCustomUri(): void
     {
         $service = new EveOnline(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -19,13 +19,13 @@ class EveOnlineTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\ServiceInterface', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\ServiceInterface', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\EveOnline::__construct
+     * @covers \OAuth\OAuth2\Service\EveOnline::__construct
      */
-    public function testConstructCorrectInstanceWithoutCustomUri()
+    public function testConstructCorrectInstanceWithoutCustomUri(): void
     {
         $service = new EveOnline(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -33,30 +33,30 @@ class EveOnlineTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\EveOnline::__construct
+     * @covers \OAuth\OAuth2\Service\EveOnline::__construct
      */
-    public function testConstructCorrectInstanceWithCustomUri()
+    public function testConstructCorrectInstanceWithCustomUri(): void
     {
         $service = new EveOnline(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-            array(),
+            [],
             $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\EveOnline::__construct
-     * @covers OAuth\OAuth2\Service\EveOnline::getAuthorizationEndpoint
+     * @covers \OAuth\OAuth2\Service\EveOnline::__construct
+     * @covers \OAuth\OAuth2\Service\EveOnline::getAuthorizationEndpoint
      */
-    public function testGetAuthorizationEndpoint()
+    public function testGetAuthorizationEndpoint(): void
     {
         $service = new EveOnline(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -64,15 +64,15 @@ class EveOnlineTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertSame('https://login.eveonline.com/oauth/authorize',
+        self::assertSame('https://login.eveonline.com/oauth/authorize',
             $service->getAuthorizationEndpoint()->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\EveOnline::__construct
-     * @covers OAuth\OAuth2\Service\EveOnline::getAccessTokenEndpoint
+     * @covers \OAuth\OAuth2\Service\EveOnline::__construct
+     * @covers \OAuth\OAuth2\Service\EveOnline::getAccessTokenEndpoint
      */
-    public function testGetAccessTokenEndpoint()
+    public function testGetAccessTokenEndpoint(): void
     {
         $service = new EveOnline(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -80,25 +80,25 @@ class EveOnlineTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertSame('https://login.eveonline.com/oauth/token',
+        self::assertSame('https://login.eveonline.com/oauth/token',
             $service->getAccessTokenEndpoint()->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\EveOnline::__construct
-     * @covers OAuth\OAuth2\Service\EveOnline::getAuthorizationMethod
+     * @covers \OAuth\OAuth2\Service\EveOnline::__construct
+     * @covers \OAuth\OAuth2\Service\EveOnline::getAuthorizationMethod
      */
-    public function testGetAuthorizationMethod()
+    public function testGetAuthorizationMethod(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(2));
+        $client->expects(self::once())->method('retrieveResponse')->willReturnArgument(2);
 
         $token = $this->createMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
-        $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
-        $token->expects($this->once())->method('getAccessToken')->will($this->returnValue('foo'));
+        $token->expects(self::once())->method('getEndOfLife')->willReturn(TokenInterface::EOL_NEVER_EXPIRES);
+        $token->expects(self::once())->method('getAccessToken')->willReturn('foo');
 
         $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
-        $storage->expects($this->once())->method('retrieveAccessToken')->will($this->returnValue($token));
+        $storage->expects(self::once())->method('retrieveAccessToken')->willReturn($token);
 
         $service = new EveOnline(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -108,18 +108,18 @@ class EveOnlineTest extends TestCase
 
         $headers = $service->request('https://pieterhordijk.com/my/awesome/path');
 
-        $this->assertTrue(array_key_exists('Authorization', $headers));
-        $this->assertTrue(in_array('Bearer foo', $headers, true));
+        self::assertArrayHasKey('Authorization', $headers);
+        self::assertTrue(in_array('Bearer foo', $headers, true));
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\EveOnline::__construct
-     * @covers OAuth\OAuth2\Service\EveOnline::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\EveOnline::__construct
+     * @covers \OAuth\OAuth2\Service\EveOnline::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseThrowsExceptionOnNulledResponse()
+    public function testParseAccessTokenResponseThrowsExceptionOnNulledResponse(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue(null));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn(null);
 
         $service = new EveOnline(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -133,13 +133,13 @@ class EveOnlineTest extends TestCase
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\EveOnline::__construct
-     * @covers OAuth\OAuth2\Service\EveOnline::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\EveOnline::__construct
+     * @covers \OAuth\OAuth2\Service\EveOnline::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseThrowsExceptionOnErrorDescription()
+    public function testParseAccessTokenResponseThrowsExceptionOnErrorDescription(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('error_description=some_error'));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('error_description=some_error');
 
         $service = new EveOnline(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -153,13 +153,13 @@ class EveOnlineTest extends TestCase
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\EveOnline::__construct
-     * @covers OAuth\OAuth2\Service\EveOnline::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\EveOnline::__construct
+     * @covers \OAuth\OAuth2\Service\EveOnline::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseThrowsExceptionOnError()
+    public function testParseAccessTokenResponseThrowsExceptionOnError(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('error=some_error'));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('error=some_error');
 
         $service = new EveOnline(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -173,13 +173,13 @@ class EveOnlineTest extends TestCase
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\EveOnline::__construct
-     * @covers OAuth\OAuth2\Service\EveOnline::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\EveOnline::__construct
+     * @covers \OAuth\OAuth2\Service\EveOnline::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseValidWithoutRefreshToken()
+    public function testParseAccessTokenResponseValidWithoutRefreshToken(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"access_token":"foo","expires_in":"bar"}'));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('{"access_token":"foo","expires_in":"bar"}');
 
         $service = new EveOnline(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -187,17 +187,17 @@ class EveOnlineTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\EveOnline::__construct
-     * @covers OAuth\OAuth2\Service\EveOnline::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\EveOnline::__construct
+     * @covers \OAuth\OAuth2\Service\EveOnline::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseValidWithRefreshToken()
+    public function testParseAccessTokenResponseValidWithRefreshToken(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"access_token":"foo","expires_in":"bar","refresh_token":"baz"}'));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('{"access_token":"foo","expires_in":"bar","refresh_token":"baz"}');
 
         $service = new EveOnline(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -205,6 +205,6 @@ class EveOnlineTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
     }
 }

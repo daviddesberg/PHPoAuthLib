@@ -3,15 +3,14 @@
 namespace OAuthTest\Unit\OAuth2\Service;
 
 use OAuth\OAuth2\Service\Vkontakte;
-use OAuth\Common\Token\TokenInterface;
 use PHPUnit\Framework\TestCase;
 
 class VkontakteTest extends TestCase
 {
     /**
-     * @covers OAuth\OAuth2\Service\Vkontakte::__construct
+     * @covers \OAuth\OAuth2\Service\Vkontakte::__construct
      */
-    public function testConstructCorrectInterfaceWithoutCustomUri()
+    public function testConstructCorrectInterfaceWithoutCustomUri(): void
     {
         $service = new Vkontakte(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -19,13 +18,13 @@ class VkontakteTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\ServiceInterface', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\ServiceInterface', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Vkontakte::__construct
+     * @covers \OAuth\OAuth2\Service\Vkontakte::__construct
      */
-    public function testConstructCorrectInstanceWithoutCustomUri()
+    public function testConstructCorrectInstanceWithoutCustomUri(): void
     {
         $service = new Vkontakte(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -33,30 +32,30 @@ class VkontakteTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Vkontakte::__construct
+     * @covers \OAuth\OAuth2\Service\Vkontakte::__construct
      */
-    public function testConstructCorrectInstanceWithCustomUri()
+    public function testConstructCorrectInstanceWithCustomUri(): void
     {
         $service = new Vkontakte(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-            array(),
+            [],
             $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Vkontakte::__construct
-     * @covers OAuth\OAuth2\Service\Vkontakte::getAuthorizationEndpoint
+     * @covers \OAuth\OAuth2\Service\Vkontakte::__construct
+     * @covers \OAuth\OAuth2\Service\Vkontakte::getAuthorizationEndpoint
      */
-    public function testGetAuthorizationEndpoint()
+    public function testGetAuthorizationEndpoint(): void
     {
         $service = new Vkontakte(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -64,14 +63,14 @@ class VkontakteTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertSame('https://oauth.vk.com/authorize', $service->getAuthorizationEndpoint()->getAbsoluteUri());
+        self::assertSame('https://oauth.vk.com/authorize', $service->getAuthorizationEndpoint()->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Vkontakte::__construct
-     * @covers OAuth\OAuth2\Service\Vkontakte::getAccessTokenEndpoint
+     * @covers \OAuth\OAuth2\Service\Vkontakte::__construct
+     * @covers \OAuth\OAuth2\Service\Vkontakte::getAccessTokenEndpoint
      */
-    public function testGetAccessTokenEndpoint()
+    public function testGetAccessTokenEndpoint(): void
     {
         $service = new Vkontakte(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -79,17 +78,17 @@ class VkontakteTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertSame('https://oauth.vk.com/access_token', $service->getAccessTokenEndpoint()->getAbsoluteUri());
+        self::assertSame('https://oauth.vk.com/access_token', $service->getAccessTokenEndpoint()->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Vkontakte::__construct
-     * @covers OAuth\OAuth2\Service\Vkontakte::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Vkontakte::__construct
+     * @covers \OAuth\OAuth2\Service\Vkontakte::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseThrowsExceptionOnNulledResponse()
+    public function testParseAccessTokenResponseThrowsExceptionOnNulledResponse(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue(null));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn(null);
 
         $service = new Vkontakte(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -103,13 +102,13 @@ class VkontakteTest extends TestCase
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Vkontakte::__construct
-     * @covers OAuth\OAuth2\Service\Vkontakte::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Vkontakte::__construct
+     * @covers \OAuth\OAuth2\Service\Vkontakte::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseThrowsExceptionOnError()
+    public function testParseAccessTokenResponseThrowsExceptionOnError(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('error=some_error'));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('error=some_error');
 
         $service = new Vkontakte(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -123,13 +122,13 @@ class VkontakteTest extends TestCase
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Vkontakte::__construct
-     * @covers OAuth\OAuth2\Service\Vkontakte::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Vkontakte::__construct
+     * @covers \OAuth\OAuth2\Service\Vkontakte::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseValidWithoutRefreshToken()
+    public function testParseAccessTokenResponseValidWithoutRefreshToken(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"access_token":"foo","expires_in":"bar"}'));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('{"access_token":"foo","expires_in":"bar"}');
 
         $service = new Vkontakte(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -137,17 +136,17 @@ class VkontakteTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Vkontakte::__construct
-     * @covers OAuth\OAuth2\Service\Vkontakte::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Vkontakte::__construct
+     * @covers \OAuth\OAuth2\Service\Vkontakte::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseValidWithRefreshToken()
+    public function testParseAccessTokenResponseValidWithRefreshToken(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"access_token":"foo","expires_in":"bar","refresh_token":"baz"}'));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('{"access_token":"foo","expires_in":"bar","refresh_token":"baz"}');
 
         $service = new Vkontakte(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -155,6 +154,6 @@ class VkontakteTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
     }
 }

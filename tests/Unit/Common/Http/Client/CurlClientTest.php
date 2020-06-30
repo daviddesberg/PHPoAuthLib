@@ -8,30 +8,27 @@ use PHPUnit\Framework\TestCase;
 
 class CurlClientTest extends TestCase
 {
-    /**
-     *
-     */
-    public function testConstructCorrectInstance()
+    public function testConstructCorrectInstance(): void
     {
         $client = new CurlClient();
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Http\\Client\\AbstractClient', $client);
+        self::assertInstanceOf('\\OAuth\\Common\\Http\\Client\\AbstractClient', $client);
     }
 
     /**
-     * @covers CurlClient::setForceSSL3
+     * @covers \CurlClient::setForceSSL3
      */
-    public function testSetForceSSL3()
+    public function testSetForceSSL3(): void
     {
         $client = new CurlClient();
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Http\\Client\\CurlClient', $client->setForceSSL3(true));
+        self::assertInstanceOf('\\OAuth\\Common\\Http\\Client\\CurlClient', $client->setForceSSL3(true));
     }
 
     /**
-     * @covers CurlClient::retrieveResponse
+     * @covers \CurlClient::retrieveResponse
      */
-    public function testRetrieveResponseThrowsExceptionOnGetRequestWithBody()
+    public function testRetrieveResponseThrowsExceptionOnGetRequestWithBody(): void
     {
         $this->expectException('\\InvalidArgumentException');
 
@@ -40,15 +37,15 @@ class CurlClientTest extends TestCase
         $client->retrieveResponse(
             $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface'),
             'foo',
-            array(),
+            [],
             'GET'
         );
     }
 
     /**
-     * @covers CurlClient::retrieveResponse
+     * @covers \CurlClient::retrieveResponse
      */
-    public function testRetrieveResponseThrowsExceptionOnGetRequestWithBodyMethodConvertedToUpper()
+    public function testRetrieveResponseThrowsExceptionOnGetRequestWithBodyMethodConvertedToUpper(): void
     {
         $this->expectException('\\InvalidArgumentException');
 
@@ -57,221 +54,221 @@ class CurlClientTest extends TestCase
         $client->retrieveResponse(
             $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface'),
             'foo',
-            array(),
+            [],
             'get'
         );
     }
 
     /**
-     * @covers StreamClient::retrieveResponse
-     * @covers StreamClient::generateStreamContext
+     * @covers \StreamClient::generateStreamContext
+     * @covers \StreamClient::retrieveResponse
      */
-    public function testRetrieveResponseDefaultUserAgent()
+    public function testRetrieveResponseDefaultUserAgent(): void
     {
         $endPoint = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $endPoint->expects($this->any())
+        $endPoint->expects(self::any())
             ->method('getHost')
-            ->will($this->returnValue('httpbin.org'));
-        $endPoint->expects($this->any())
+            ->willReturn('httpbin.org');
+        $endPoint->expects(self::any())
             ->method('getAbsoluteUri')
-            ->will($this->returnValue('http://httpbin.org/get'));
+            ->willReturn('http://httpbin.org/get');
 
         $client = new CurlClient();
 
         $response = $client->retrieveResponse(
             $endPoint,
             '',
-            array(),
+            [],
             'get'
         );
 
         $response = json_decode($response, true);
 
-        $this->assertSame('PHPoAuthLib', $response['headers']['User-Agent']);
+        self::assertSame('PHPoAuthLib', $response['headers']['User-Agent']);
     }
 
     /**
-     * @covers StreamClient::retrieveResponse
-     * @covers StreamClient::generateStreamContext
+     * @covers \StreamClient::generateStreamContext
+     * @covers \StreamClient::retrieveResponse
      */
-    public function testRetrieveResponseCustomUserAgent()
+    public function testRetrieveResponseCustomUserAgent(): void
     {
         $endPoint = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $endPoint->expects($this->any())
+        $endPoint->expects(self::any())
             ->method('getHost')
-            ->will($this->returnValue('httpbin.org'));
-        $endPoint->expects($this->any())
+            ->willReturn('httpbin.org');
+        $endPoint->expects(self::any())
             ->method('getAbsoluteUri')
-            ->will($this->returnValue('http://httpbin.org/get'));
+            ->willReturn('http://httpbin.org/get');
 
         $client = new CurlClient('My Super Awesome Http Client');
 
         $response = $client->retrieveResponse(
             $endPoint,
             '',
-            array(),
+            [],
             'get'
         );
 
         $response = json_decode($response, true);
 
-        $this->assertSame('My Super Awesome Http Client', $response['headers']['User-Agent']);
+        self::assertSame('My Super Awesome Http Client', $response['headers']['User-Agent']);
     }
 
     /**
-     * @covers CurlClient::retrieveResponse
+     * @covers \CurlClient::retrieveResponse
      */
-    public function testRetrieveResponseWithCustomContentType()
+    public function testRetrieveResponseWithCustomContentType(): void
     {
         $endPoint = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $endPoint->expects($this->any())
+        $endPoint->expects(self::any())
             ->method('getHost')
-            ->will($this->returnValue('httpbin.org'));
-        $endPoint->expects($this->any())
+            ->willReturn('httpbin.org');
+        $endPoint->expects(self::any())
             ->method('getAbsoluteUri')
-            ->will($this->returnValue('http://httpbin.org/get'));
+            ->willReturn('http://httpbin.org/get');
 
         $client = new CurlClient();
 
         $response = $client->retrieveResponse(
             $endPoint,
             '',
-            array('Content-Type' => 'foo/bar'),
+            ['Content-Type' => 'foo/bar'],
             'get'
         );
 
         $response = json_decode($response, true);
 
-        $this->assertSame('foo/bar', $response['headers']['Content-Type']);
+        self::assertSame('foo/bar', $response['headers']['Content-Type']);
     }
 
     /**
-     * @covers CurlClient::retrieveResponse
+     * @covers \CurlClient::retrieveResponse
      */
-    public function testRetrieveResponseWithFormUrlEncodedContentType()
+    public function testRetrieveResponseWithFormUrlEncodedContentType(): void
     {
         $endPoint = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $endPoint->expects($this->any())
+        $endPoint->expects(self::any())
             ->method('getHost')
-            ->will($this->returnValue('httpbin.org'));
-        $endPoint->expects($this->any())
+            ->willReturn('httpbin.org');
+        $endPoint->expects(self::any())
             ->method('getAbsoluteUri')
-            ->will($this->returnValue('http://httpbin.org/post'));
+            ->willReturn('http://httpbin.org/post');
 
         $client = new CurlClient();
 
         $response = $client->retrieveResponse(
             $endPoint,
-            array('foo' => 'bar', 'baz' => 'fab'),
-            array(),
+            ['foo' => 'bar', 'baz' => 'fab'],
+            [],
             'POST'
         );
 
         $response = json_decode($response, true);
 
-        $this->assertSame('application/x-www-form-urlencoded', $response['headers']['Content-Type']);
-        $this->assertEquals(array('foo' => 'bar', 'baz' => 'fab'), $response['form']);
+        self::assertSame('application/x-www-form-urlencoded', $response['headers']['Content-Type']);
+        self::assertEquals(['foo' => 'bar', 'baz' => 'fab'], $response['form']);
     }
 
     /**
-     * @covers CurlClient::retrieveResponse
+     * @covers \CurlClient::retrieveResponse
      */
-    public function testRetrieveResponseHost()
+    public function testRetrieveResponseHost(): void
     {
         $endPoint = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $endPoint->expects($this->any())
+        $endPoint->expects(self::any())
             ->method('getHost')
-            ->will($this->returnValue('httpbin.org'));
-        $endPoint->expects($this->any())
+            ->willReturn('httpbin.org');
+        $endPoint->expects(self::any())
             ->method('getAbsoluteUri')
-            ->will($this->returnValue('http://httpbin.org/post'));
+            ->willReturn('http://httpbin.org/post');
 
         $client = new CurlClient();
 
         $response = $client->retrieveResponse(
             $endPoint,
-            array('foo' => 'bar', 'baz' => 'fab'),
-            array(),
+            ['foo' => 'bar', 'baz' => 'fab'],
+            [],
             'POST'
         );
 
         $response = json_decode($response, true);
 
-        $this->assertSame('httpbin.org', $response['headers']['Host']);
+        self::assertSame('httpbin.org', $response['headers']['Host']);
     }
 
     /**
-     * @covers CurlClient::retrieveResponse
+     * @covers \CurlClient::retrieveResponse
      */
-    public function testRetrieveResponsePostRequestWithRequestBodyAsString()
+    public function testRetrieveResponsePostRequestWithRequestBodyAsString(): void
     {
         $endPoint = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $endPoint->expects($this->any())
+        $endPoint->expects(self::any())
             ->method('getHost')
-            ->will($this->returnValue('httpbin.org'));
-        $endPoint->expects($this->any())
+            ->willReturn('httpbin.org');
+        $endPoint->expects(self::any())
             ->method('getAbsoluteUri')
-            ->will($this->returnValue('http://httpbin.org/post'));
+            ->willReturn('http://httpbin.org/post');
 
-        $formData = array('baz' => 'fab', 'foo' => 'bar');
+        $formData = ['baz' => 'fab', 'foo' => 'bar'];
 
         $client = new CurlClient();
 
         $response = $client->retrieveResponse(
             $endPoint,
             $formData,
-            array(),
+            [],
             'POST'
         );
 
         $response = json_decode($response, true);
 
-        $this->assertSame($formData, $response['form']);
+        self::assertSame($formData, $response['form']);
     }
 
     /**
-     * @covers CurlClient::retrieveResponse
+     * @covers \CurlClient::retrieveResponse
      */
-    public function testRetrieveResponsePutRequestWithRequestBodyAsString()
+    public function testRetrieveResponsePutRequestWithRequestBodyAsString(): void
     {
         $endPoint = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $endPoint->expects($this->any())
+        $endPoint->expects(self::any())
             ->method('getHost')
-            ->will($this->returnValue('httpbin.org'));
-        $endPoint->expects($this->any())
+            ->willReturn('httpbin.org');
+        $endPoint->expects(self::any())
             ->method('getAbsoluteUri')
-            ->will($this->returnValue('http://httpbin.org/put'));
+            ->willReturn('http://httpbin.org/put');
 
-        $formData = array('baz' => 'fab', 'foo' => 'bar');
+        $formData = ['baz' => 'fab', 'foo' => 'bar'];
 
         $client = new CurlClient();
 
         $response = $client->retrieveResponse(
             $endPoint,
             $formData,
-            array(),
+            [],
             'PUT'
         );
 
         $response = json_decode($response, true);
 
-        $this->assertSame($formData, $response['form']);
+        self::assertSame($formData, $response['form']);
     }
 
     /**
-     * @covers CurlClient::retrieveResponse
+     * @covers \CurlClient::retrieveResponse
      */
-    public function testRetrieveResponsePutRequestWithRequestBodyAsStringNoRedirects()
+    public function testRetrieveResponsePutRequestWithRequestBodyAsStringNoRedirects(): void
     {
         $endPoint = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $endPoint->expects($this->any())
+        $endPoint->expects(self::any())
             ->method('getHost')
-            ->will($this->returnValue('httpbin.org'));
-        $endPoint->expects($this->any())
+            ->willReturn('httpbin.org');
+        $endPoint->expects(self::any())
             ->method('getAbsoluteUri')
-            ->will($this->returnValue('http://httpbin.org/put'));
+            ->willReturn('http://httpbin.org/put');
 
-        $formData = array('baz' => 'fab', 'foo' => 'bar');
+        $formData = ['baz' => 'fab', 'foo' => 'bar'];
 
         $client = new CurlClient();
 
@@ -280,27 +277,27 @@ class CurlClientTest extends TestCase
         $response = $client->retrieveResponse(
             $endPoint,
             $formData,
-            array(),
+            [],
             'PUT'
         );
 
         $response = json_decode($response, true);
 
-        $this->assertSame($formData, $response['form']);
+        self::assertSame($formData, $response['form']);
     }
 
     /**
-     * @covers CurlClient::retrieveResponse
+     * @covers \CurlClient::retrieveResponse
      */
-    public function testRetrieveResponseWithForcedSsl3()
+    public function testRetrieveResponseWithForcedSsl3(): void
     {
         $endPoint = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $endPoint->expects($this->any())
+        $endPoint->expects(self::any())
             ->method('getHost')
-            ->will($this->returnValue('httpbin.org'));
-        $endPoint->expects($this->any())
+            ->willReturn('httpbin.org');
+        $endPoint->expects(self::any())
             ->method('getAbsoluteUri')
-            ->will($this->returnValue('https://httpbin.org/get'));
+            ->willReturn('https://httpbin.org/get');
 
         $client = new CurlClient();
 
@@ -310,35 +307,34 @@ class CurlClientTest extends TestCase
             $response = $client->retrieveResponse(
                 $endPoint,
                 '',
-                array('Content-Type' => 'foo/bar'),
+                ['Content-Type' => 'foo/bar'],
                 'get'
             );
-        }
-        catch (TokenResponseException $e) {
+        } catch (TokenResponseException $e) {
             if (strpos($e->getMessage(), 'cURL Error # 35') !== false) {
-                $this->markTestSkipped('SSL peer handshake failed: ' . $e->getMessage());
+                self::markTestSkipped('SSL peer handshake failed: ' . $e->getMessage());
             }
         }
 
         $response = json_decode($response, true);
 
-        $this->assertSame('foo/bar', $response['headers']['Content-Type']);
+        self::assertSame('foo/bar', $response['headers']['Content-Type']);
     }
 
     /**
-     * @covers CurlClient::retrieveResponse
+     * @covers \CurlClient::retrieveResponse
      */
-    public function testRetrieveResponseThrowsExceptionOnInvalidUrl()
+    public function testRetrieveResponseThrowsExceptionOnInvalidUrl(): void
     {
         $this->expectException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
         $endPoint = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $endPoint->expects($this->any())
+        $endPoint->expects(self::any())
             ->method('getHost')
-            ->will($this->returnValue('jkehfkefcmekjhcnkerjh'));
-        $endPoint->expects($this->any())
+            ->willReturn('jkehfkefcmekjhcnkerjh');
+        $endPoint->expects(self::any())
             ->method('getAbsoluteUri')
-            ->will($this->returnValue('jkehfkefcmekjhcnkerjh'));
+            ->willReturn('jkehfkefcmekjhcnkerjh');
 
         $client = new CurlClient();
 
@@ -347,41 +343,41 @@ class CurlClientTest extends TestCase
         $response = $client->retrieveResponse(
             $endPoint,
             '',
-            array('Content-Type' => 'foo/bar'),
+            ['Content-Type' => 'foo/bar'],
             'get'
         );
 
         $response = json_decode($response, true);
 
-        $this->assertSame('foo/bar', $response['headers']['Content-Type']);
+        self::assertSame('foo/bar', $response['headers']['Content-Type']);
     }
 
-    public function testAdditionalParameters()
+    public function testAdditionalParameters(): void
     {
         $endPoint = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $endPoint->expects($this->any())
+        $endPoint->expects(self::any())
             ->method('getHost')
-            ->will($this->returnValue('httpbin.org'));
-        $endPoint->expects($this->any())
+            ->willReturn('httpbin.org');
+        $endPoint->expects(self::any())
             ->method('getAbsoluteUri')
-            ->will($this->returnValue('http://httpbin.org/gzip'));
+            ->willReturn('http://httpbin.org/gzip');
 
         $client = new CurlClient();
-        $client->setCurlParameters(array(
+        $client->setCurlParameters([
             CURLOPT_ENCODING => 'gzip',
-        ));
+        ]);
 
         $response = $client->retrieveResponse(
             $endPoint,
             '',
-            array(),
+            [],
             'get'
         );
 
         $response = json_decode($response, true);
 
-        $this->assertNotNull($response);
-        $this->assertSame('gzip', $response['headers']['Accept-Encoding']);
-        $this->assertTrue($response['gzipped']);
+        self::assertNotNull($response);
+        self::assertSame('gzip', $response['headers']['Accept-Encoding']);
+        self::assertTrue($response['gzipped']);
     }
 }

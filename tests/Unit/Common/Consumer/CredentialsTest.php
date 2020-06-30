@@ -6,36 +6,37 @@ use OAuth\Common\Consumer\Credentials;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class CredentialsTest
- * @coversDefaultClass Credentials
+ * Class CredentialsTest.
+ *
+ * @coversDefaultClass \Credentials
  */
 class CredentialsTest extends TestCase
 {
-    public function testConstructCorrectInterface()
+    public function testConstructCorrectInterface(): void
     {
         $credentials = new Credentials('foo', 'bar', 'baz');
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Consumer\\CredentialsInterface', $credentials);
+        self::assertInstanceOf('\\OAuth\\Common\\Consumer\\CredentialsInterface', $credentials);
     }
 
-    public function testGetConsumerId()
+    public function testGetConsumerId(): void
     {
         $credentials = new Credentials('foo', 'bar', 'baz');
 
-        $this->assertSame('foo', $credentials->getConsumerId());
+        self::assertSame('foo', $credentials->getConsumerId());
     }
 
-    public function testGetConsumerSecret()
+    public function testGetConsumerSecret(): void
     {
         $credentials = new Credentials('foo', 'bar', 'baz');
 
-        $this->assertSame('bar', $credentials->getConsumerSecret());
+        self::assertSame('bar', $credentials->getConsumerSecret());
     }
 
-    public function testGetCallbackUrl()
+    public function testGetCallbackUrl(): void
     {
         $credentials = new Credentials('foo', 'bar', 'baz');
 
-        $this->assertSame('baz', $credentials->getCallbackUrl());
+        self::assertSame('baz', $credentials->getCallbackUrl());
     }
 }

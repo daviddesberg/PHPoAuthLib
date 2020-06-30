@@ -2,17 +2,17 @@
 
 namespace OAuthTest\Unit\OAuth2\Service;
 
-use OAuth\OAuth2\Service\GitHub;
 use OAuth\Common\Token\TokenInterface;
+use OAuth\OAuth2\Service\GitHub;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
 class GitHubTest extends TestCase
 {
     /**
-     * @covers OAuth\OAuth2\Service\GitHub::__construct
+     * @covers \OAuth\OAuth2\Service\GitHub::__construct
      */
-    public function testConstructCorrectInterfaceWithoutCustomUri()
+    public function testConstructCorrectInterfaceWithoutCustomUri(): void
     {
         $service = new GitHub(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -20,13 +20,13 @@ class GitHubTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\ServiceInterface', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\ServiceInterface', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\GitHub::__construct
+     * @covers \OAuth\OAuth2\Service\GitHub::__construct
      */
-    public function testConstructCorrectInstanceWithoutCustomUri()
+    public function testConstructCorrectInstanceWithoutCustomUri(): void
     {
         $service = new GitHub(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -34,30 +34,30 @@ class GitHubTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\GitHub::__construct
+     * @covers \OAuth\OAuth2\Service\GitHub::__construct
      */
-    public function testConstructCorrectInstanceWithCustomUri()
+    public function testConstructCorrectInstanceWithCustomUri(): void
     {
         $service = new GitHub(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-            array(),
+            [],
             $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\GitHub::__construct
-     * @covers OAuth\OAuth2\Service\GitHub::getAuthorizationEndpoint
+     * @covers \OAuth\OAuth2\Service\GitHub::__construct
+     * @covers \OAuth\OAuth2\Service\GitHub::getAuthorizationEndpoint
      */
-    public function testGetAuthorizationEndpoint()
+    public function testGetAuthorizationEndpoint(): void
     {
         $service = new GitHub(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -65,14 +65,14 @@ class GitHubTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertSame('https://github.com/login/oauth/authorize', $service->getAuthorizationEndpoint()->getAbsoluteUri());
+        self::assertSame('https://github.com/login/oauth/authorize', $service->getAuthorizationEndpoint()->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\GitHub::__construct
-     * @covers OAuth\OAuth2\Service\GitHub::getAccessTokenEndpoint
+     * @covers \OAuth\OAuth2\Service\GitHub::__construct
+     * @covers \OAuth\OAuth2\Service\GitHub::getAccessTokenEndpoint
      */
-    public function testGetAccessTokenEndpoint()
+    public function testGetAccessTokenEndpoint(): void
     {
         $service = new GitHub(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -80,24 +80,24 @@ class GitHubTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertSame('https://github.com/login/oauth/access_token', $service->getAccessTokenEndpoint()->getAbsoluteUri());
+        self::assertSame('https://github.com/login/oauth/access_token', $service->getAccessTokenEndpoint()->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\GitHub::__construct
-     * @covers OAuth\OAuth2\Service\GitHub::getAuthorizationMethod
+     * @covers \OAuth\OAuth2\Service\GitHub::__construct
+     * @covers \OAuth\OAuth2\Service\GitHub::getAuthorizationMethod
      */
-    public function testGetAuthorizationMethod()
+    public function testGetAuthorizationMethod(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(0));
+        $client->expects(self::once())->method('retrieveResponse')->willReturnArgument(0);
 
         $token = $this->createMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
-        $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
-        $token->expects($this->once())->method('getAccessToken')->will($this->returnValue('foo'));
+        $token->expects(self::once())->method('getEndOfLife')->willReturn(TokenInterface::EOL_NEVER_EXPIRES);
+        $token->expects(self::once())->method('getAccessToken')->willReturn('foo');
 
         $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
-        $storage->expects($this->once())->method('retrieveAccessToken')->will($this->returnValue($token));
+        $storage->expects(self::once())->method('retrieveAccessToken')->willReturn($token);
 
         $service = new GitHub(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -105,20 +105,20 @@ class GitHubTest extends TestCase
             $storage
         );
 
-        $uri         = $service->request('https://pieterhordijk.com/my/awesome/path');
+        $uri = $service->request('https://pieterhordijk.com/my/awesome/path');
         $absoluteUri = parse_url($uri->getAbsoluteUri());
 
-        $this->assertSame('access_token=foo', $absoluteUri['query']);
+        self::assertSame('access_token=foo', $absoluteUri['query']);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\GitHub::__construct
-     * @covers OAuth\OAuth2\Service\GitHub::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\GitHub::__construct
+     * @covers \OAuth\OAuth2\Service\GitHub::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseThrowsExceptionOnNulledResponse()
+    public function testParseAccessTokenResponseThrowsExceptionOnNulledResponse(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue(null));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn(null);
 
         $service = new GitHub(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -132,13 +132,13 @@ class GitHubTest extends TestCase
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\GitHub::__construct
-     * @covers OAuth\OAuth2\Service\GitHub::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\GitHub::__construct
+     * @covers \OAuth\OAuth2\Service\GitHub::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseThrowsExceptionOnError()
+    public function testParseAccessTokenResponseThrowsExceptionOnError(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"error":"some_error"}'));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('{"error":"some_error"}');
 
         $service = new GitHub(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -152,13 +152,13 @@ class GitHubTest extends TestCase
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\GitHub::__construct
-     * @covers OAuth\OAuth2\Service\GitHub::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\GitHub::__construct
+     * @covers \OAuth\OAuth2\Service\GitHub::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseValidWithoutRefreshToken()
+    public function testParseAccessTokenResponseValidWithoutRefreshToken(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"access_token":"foo","expires_in":"bar"}'));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('{"access_token":"foo","expires_in":"bar"}');
 
         $service = new GitHub(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -166,22 +166,22 @@ class GitHubTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\GitHub::__construct
-     * @covers OAuth\OAuth2\Service\GitHub::getExtraOAuthHeaders
+     * @covers \OAuth\OAuth2\Service\GitHub::__construct
+     * @covers \OAuth\OAuth2\Service\GitHub::getExtraOAuthHeaders
      */
-    public function testGetExtraOAuthHeaders()
+    public function testGetExtraOAuthHeaders(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnCallback(function($uri, $params, $extraHeaders) {
+        $client->expects(self::once())->method('retrieveResponse')->willReturnCallback(function ($uri, $params, $extraHeaders) {
             Assert::assertTrue(array_key_exists('Accept', $extraHeaders));
             Assert::assertTrue(in_array('application/json', $extraHeaders, true));
 
             return '{"access_token":"foo","expires_in":"bar"}';
-        }));
+        });
 
         $service = new GitHub(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -189,24 +189,24 @@ class GitHubTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\GitHub::__construct
-     * @covers OAuth\OAuth2\Service\GitHub::getExtraApiHeaders
+     * @covers \OAuth\OAuth2\Service\GitHub::__construct
+     * @covers \OAuth\OAuth2\Service\GitHub::getExtraApiHeaders
      */
-    public function testGetExtraApiHeaders()
+    public function testGetExtraApiHeaders(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(2));
+        $client->expects(self::once())->method('retrieveResponse')->willReturnArgument(2);
 
         $token = $this->createMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
-        $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
-        $token->expects($this->once())->method('getAccessToken')->will($this->returnValue('foo'));
+        $token->expects(self::once())->method('getEndOfLife')->willReturn(TokenInterface::EOL_NEVER_EXPIRES);
+        $token->expects(self::once())->method('getAccessToken')->willReturn('foo');
 
         $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
-        $storage->expects($this->once())->method('retrieveAccessToken')->will($this->returnValue($token));
+        $storage->expects(self::once())->method('retrieveAccessToken')->willReturn($token);
 
         $service = new GitHub(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -216,7 +216,7 @@ class GitHubTest extends TestCase
 
         $headers = $service->request('https://pieterhordijk.com/my/awesome/path');
 
-        $this->assertTrue(array_key_exists('Accept', $headers));
-        $this->assertSame('application/vnd.github.beta+json', $headers['Accept']);
+        self::assertArrayHasKey('Accept', $headers);
+        self::assertSame('application/vnd.github.beta+json', $headers['Accept']);
     }
 }

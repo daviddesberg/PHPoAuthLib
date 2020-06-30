@@ -1,21 +1,20 @@
 <?php
 
 /**
- * Example of retrieving an authentication token of the Mondo finance API
+ * Example of retrieving an authentication token of the Mondo finance API.
  *
  * PHP version 5.6
  *
  * @author     Liam Gladdy <liam@gladdy.co.uk>
- * @copyright  Copyright (c) 2016 The author
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-use OAuth\OAuth2\Service\Mondo;
-use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Storage\Session;
+use OAuth\OAuth2\Service\Mondo;
 
 /**
- * Bootstrap the example
+ * Bootstrap the example.
  */
 require_once __DIR__ . '/bootstrap.php';
 
@@ -30,7 +29,7 @@ $credentials = new Credentials(
 );
 
 // Instantiate the Mondo service using the credentials, http client and storage mechanism for the token
-/** @var $mondoService Mondo */
+/** @var Mondo $mondoService */
 $mondoService = $serviceFactory->createService('mondo', $credentials, $storage);
 
 if (!empty($_GET['code'])) {
@@ -39,9 +38,8 @@ if (!empty($_GET['code'])) {
 
     // Send a request with it
     $result = json_decode($mondoService->request('ping/whoami'), true);
-    
-    echo 'Your unique user id is: ' . $result['user_id'];
 
+    echo 'Your unique user id is: ' . $result['user_id'];
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $mondoService->getAuthorizationUri();
     header('Location: ' . $url);

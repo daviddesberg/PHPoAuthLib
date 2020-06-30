@@ -10,25 +10,25 @@ use PHPUnit\Framework\TestCase;
 
 class QuickBooksTest extends TestCase
 {
-    public function testConstructCorrectInterfaceWithoutCustomUri()
+    public function testConstructCorrectInterfaceWithoutCustomUri(): void
     {
         $service = $this->getQuickBooks();
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\OAuth1\\Service\\ServiceInterface',
             $service
         );
     }
 
-    public function testConstructCorrectInstanceWithoutCustomUri()
+    public function testConstructCorrectInstanceWithoutCustomUri(): void
     {
         $service = $this->getQuickBooks();
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\OAuth1\\Service\\AbstractService',
             $service
         );
     }
 
-    public function testConstructCorrectInstanceWithCustomUri()
+    public function testConstructCorrectInstanceWithCustomUri(): void
     {
         $service = new QuickBooks(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -38,78 +38,74 @@ class QuickBooksTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\OAuth1\\Service\\AbstractService',
             $service
         );
     }
 
-    public function testGetRequestTokenEndpoint()
+    public function testGetRequestTokenEndpoint(): void
     {
         $service = $this->getQuickBooks();
-        $this->assertSame(
+        self::assertSame(
             'https://oauth.intuit.com/oauth/v1/get_request_token',
             $service->getRequestTokenEndpoint()->getAbsoluteUri()
         );
     }
 
-    public function testGetAuthorizationEndpoint()
+    public function testGetAuthorizationEndpoint(): void
     {
         $service = $this->getQuickBooks();
-        $this->assertSame(
+        self::assertSame(
             'https://appcenter.intuit.com/Connect/Begin',
             $service->getAuthorizationEndpoint()->getAbsoluteUri()
         );
     }
 
-    public function testGetAccessTokenEndpoint()
+    public function testGetAccessTokenEndpoint(): void
     {
         $service = $this->getQuickBooks();
-        $this->assertSame(
+        self::assertSame(
             'https://oauth.intuit.com/oauth/v1/get_access_token',
             $service->getAccessTokenEndpoint()->getAbsoluteUri()
         );
     }
 
-    /**
-     * @expectedException \OAuth\Common\Http\Exception\TokenResponseException
-     * @expectedExceptionMessage Error in retrieving token.
-     */
-    public function testParseRequestTokenResponseThrowsExceptionOnNulledResponse()
+    public function testParseRequestTokenResponseThrowsExceptionOnNulledResponse(): void
     {
+        $this->expectException(\OAuth\Common\Http\Exception\TokenResponseException::class);
+        $this->expectExceptionMessage('Error in retrieving token.');
+
         $client = $this->getClientInterfaceMockThatReturns(null);
         $service = $this->getQuickBooks($client);
         $service->requestRequestToken();
     }
 
-    /**
-     * @expectedException \OAuth\Common\Http\Exception\TokenResponseException
-     * @expectedExceptionMessage Error in retrieving token.
-     */
-    public function testParseRequestTokenResponseThrowsExceptionOnResponseNotAnArray()
+    public function testParseRequestTokenResponseThrowsExceptionOnResponseNotAnArray(): void
     {
+        $this->expectException(\OAuth\Common\Http\Exception\TokenResponseException::class);
+        $this->expectExceptionMessage('Error in retrieving token.');
+
         $client = $this->getClientInterfaceMockThatReturns('notanarray');
         $service = $this->getQuickBooks($client);
         $service->requestRequestToken();
     }
 
-    /**
-     * @expectedException \OAuth\Common\Http\Exception\TokenResponseException
-     * @expectedExceptionMessage Error in retrieving token.
-     */
-    public function testParseRequestTokenResponseThrowsExceptionOnResponseCallbackNotSet()
+    public function testParseRequestTokenResponseThrowsExceptionOnResponseCallbackNotSet(): void
     {
+        $this->expectException(\OAuth\Common\Http\Exception\TokenResponseException::class);
+        $this->expectExceptionMessage('Error in retrieving token.');
+
         $client = $this->getClientInterfaceMockThatReturns('foo=bar');
         $service = $this->getQuickBooks($client);
         $service->requestRequestToken();
     }
 
-    /**
-     * @expectedException \OAuth\Common\Http\Exception\TokenResponseException
-     * @expectedExceptionMessage Error in retrieving token.
-     */
-    public function testParseRequestTokenResponseThrowsExceptionOnResponseCallbackNotTrue()
+    public function testParseRequestTokenResponseThrowsExceptionOnResponseCallbackNotTrue(): void
     {
+        $this->expectException(\OAuth\Common\Http\Exception\TokenResponseException::class);
+        $this->expectExceptionMessage('Error in retrieving token.');
+
         $client = $this->getClientInterfaceMockThatReturns(
             'oauth_callback_confirmed=false'
         );
@@ -117,24 +113,23 @@ class QuickBooksTest extends TestCase
         $service->requestRequestToken();
     }
 
-    public function testParseRequestTokenResponseValid()
+    public function testParseRequestTokenResponseValid(): void
     {
         $client = $this->getClientInterfaceMockThatReturns(
             'oauth_callback_confirmed=true&oauth_token=foo&oauth_token_secret=bar'
         );
         $service = $this->getQuickBooks($client);
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\OAuth1\\Token\\StdOAuth1Token',
             $service->requestRequestToken()
         );
     }
 
-    /**
-     * @expectedException \OAuth\Common\Http\Exception\TokenResponseException
-     * @expectedExceptionMessage Error in retrieving token: "bar"
-     */
-    public function testParseAccessTokenResponseThrowsExceptionOnError()
+    public function testParseAccessTokenResponseThrowsExceptionOnError(): void
     {
+        $this->expectException(\OAuth\Common\Http\Exception\TokenResponseException::class);
+        $this->expectExceptionMessage('Error in retrieving token: "bar"');
+
         $token = $this->createMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
         $service = $this->getQuickBooksForRequestingAccessToken(
             $token,
@@ -144,7 +139,7 @@ class QuickBooksTest extends TestCase
         $service->requestAccessToken('foo', 'bar', $token);
     }
 
-    public function testParseAccessTokenResponseValid()
+    public function testParseAccessTokenResponseValid(): void
     {
         $token = $this->createMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
         $service = $this->getQuickBooksForRequestingAccessToken(
@@ -152,17 +147,16 @@ class QuickBooksTest extends TestCase
             'oauth_token=foo&oauth_token_secret=bar'
         );
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\OAuth1\\Token\\StdOAuth1Token',
             $service->requestAccessToken('foo', 'bar', $token)
         );
     }
 
     protected function getQuickBooks(
-        ClientInterface $client = null,
-        TokenStorageInterface $storage = null
-    )
-    {
+        ?ClientInterface $client = null,
+        ?TokenStorageInterface $storage = null
+    ) {
         if (!$client) {
             $client = $this->createMock(
                 '\\OAuth\\Common\\Http\\Client\\ClientInterface'
@@ -186,15 +180,14 @@ class QuickBooksTest extends TestCase
     protected function getQuickBooksForRequestingAccessToken(
         TokenInterface $token,
         $response
-    )
-    {
+    ) {
         $client = $this->getClientInterfaceMockThatReturns($response);
         $storage = $this->createMock(
             '\\OAuth\\Common\\Storage\\TokenStorageInterface'
         );
-        $storage->expects($this->any())
+        $storage->expects(self::any())
             ->method('retrieveAccessToken')
-            ->will($this->returnValue($token));
+            ->willReturn($token);
 
         return $this->getQuickBooks($client, $storage);
     }
@@ -204,9 +197,9 @@ class QuickBooksTest extends TestCase
         $client = $this->createMock(
             '\\OAuth\\Common\\Http\\Client\\ClientInterface'
         );
-        $client->expects($this->once())
+        $client->expects(self::once())
             ->method('retrieveResponse')
-            ->will($this->returnValue($returnValue));
+            ->willReturn($returnValue);
 
         return $client;
     }

@@ -2,16 +2,16 @@
 
 namespace OAuthTest\Unit\OAuth2\Service;
 
-use OAuth\OAuth2\Service\Microsoft;
 use OAuth\Common\Token\TokenInterface;
+use OAuth\OAuth2\Service\Microsoft;
 use PHPUnit\Framework\TestCase;
 
 class MicrosoftTest extends TestCase
 {
     /**
-     * @covers OAuth\OAuth2\Service\Microsoft::__construct
+     * @covers \OAuth\OAuth2\Service\Microsoft::__construct
      */
-    public function testConstructCorrectInterfaceWithoutCustomUri()
+    public function testConstructCorrectInterfaceWithoutCustomUri(): void
     {
         $service = new Microsoft(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -19,13 +19,13 @@ class MicrosoftTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\ServiceInterface', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\ServiceInterface', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Microsoft::__construct
+     * @covers \OAuth\OAuth2\Service\Microsoft::__construct
      */
-    public function testConstructCorrectInstanceWithoutCustomUri()
+    public function testConstructCorrectInstanceWithoutCustomUri(): void
     {
         $service = new Microsoft(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -33,30 +33,30 @@ class MicrosoftTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Microsoft::__construct
+     * @covers \OAuth\OAuth2\Service\Microsoft::__construct
      */
-    public function testConstructCorrectInstanceWithCustomUri()
+    public function testConstructCorrectInstanceWithCustomUri(): void
     {
         $service = new Microsoft(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-            array(),
+            [],
             $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Microsoft::__construct
-     * @covers OAuth\OAuth2\Service\Microsoft::getAuthorizationEndpoint
+     * @covers \OAuth\OAuth2\Service\Microsoft::__construct
+     * @covers \OAuth\OAuth2\Service\Microsoft::getAuthorizationEndpoint
      */
-    public function testGetAuthorizationEndpoint()
+    public function testGetAuthorizationEndpoint(): void
     {
         $service = new Microsoft(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -64,17 +64,17 @@ class MicrosoftTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertSame(
+        self::assertSame(
             'https://login.live.com/oauth20_authorize.srf',
             $service->getAuthorizationEndpoint()->getAbsoluteUri()
         );
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Microsoft::__construct
-     * @covers OAuth\OAuth2\Service\Microsoft::getAccessTokenEndpoint
+     * @covers \OAuth\OAuth2\Service\Microsoft::__construct
+     * @covers \OAuth\OAuth2\Service\Microsoft::getAccessTokenEndpoint
      */
-    public function testGetAccessTokenEndpoint()
+    public function testGetAccessTokenEndpoint(): void
     {
         $service = new Microsoft(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -82,27 +82,27 @@ class MicrosoftTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertSame(
+        self::assertSame(
             'https://login.live.com/oauth20_token.srf',
             $service->getAccessTokenEndpoint()->getAbsoluteUri()
         );
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Microsoft::__construct
-     * @covers OAuth\OAuth2\Service\Microsoft::getAuthorizationMethod
+     * @covers \OAuth\OAuth2\Service\Microsoft::__construct
+     * @covers \OAuth\OAuth2\Service\Microsoft::getAuthorizationMethod
      */
-    public function testGetAuthorizationMethod()
+    public function testGetAuthorizationMethod(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(0));
+        $client->expects(self::once())->method('retrieveResponse')->willReturnArgument(0);
 
         $token = $this->createMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
-        $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
-        $token->expects($this->once())->method('getAccessToken')->will($this->returnValue('foo'));
+        $token->expects(self::once())->method('getEndOfLife')->willReturn(TokenInterface::EOL_NEVER_EXPIRES);
+        $token->expects(self::once())->method('getAccessToken')->willReturn('foo');
 
         $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
-        $storage->expects($this->once())->method('retrieveAccessToken')->will($this->returnValue($token));
+        $storage->expects(self::once())->method('retrieveAccessToken')->willReturn($token);
 
         $service = new Microsoft(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -110,20 +110,20 @@ class MicrosoftTest extends TestCase
             $storage
         );
 
-        $uri         = $service->request('https://pieterhordijk.com/my/awesome/path');
+        $uri = $service->request('https://pieterhordijk.com/my/awesome/path');
         $absoluteUri = parse_url($uri->getAbsoluteUri());
 
-        $this->assertSame('access_token=foo', $absoluteUri['query']);
+        self::assertSame('access_token=foo', $absoluteUri['query']);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Microsoft::__construct
-     * @covers OAuth\OAuth2\Service\Microsoft::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Microsoft::__construct
+     * @covers \OAuth\OAuth2\Service\Microsoft::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseThrowsExceptionOnNulledResponse()
+    public function testParseAccessTokenResponseThrowsExceptionOnNulledResponse(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue(null));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn(null);
 
         $service = new Microsoft(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -137,13 +137,13 @@ class MicrosoftTest extends TestCase
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Microsoft::__construct
-     * @covers OAuth\OAuth2\Service\Microsoft::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Microsoft::__construct
+     * @covers \OAuth\OAuth2\Service\Microsoft::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseThrowsExceptionOnError()
+    public function testParseAccessTokenResponseThrowsExceptionOnError(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('error=some_error'));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('error=some_error');
 
         $service = new Microsoft(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -157,13 +157,13 @@ class MicrosoftTest extends TestCase
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Microsoft::__construct
-     * @covers OAuth\OAuth2\Service\Microsoft::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Microsoft::__construct
+     * @covers \OAuth\OAuth2\Service\Microsoft::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseValidWithoutRefreshToken()
+    public function testParseAccessTokenResponseValidWithoutRefreshToken(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"access_token":"foo","expires_in":"bar"}'));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('{"access_token":"foo","expires_in":"bar"}');
 
         $service = new Microsoft(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -171,17 +171,17 @@ class MicrosoftTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Microsoft::__construct
-     * @covers OAuth\OAuth2\Service\Microsoft::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Microsoft::__construct
+     * @covers \OAuth\OAuth2\Service\Microsoft::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseValidWithRefreshToken()
+    public function testParseAccessTokenResponseValidWithRefreshToken(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"access_token":"foo","expires_in":"bar","refresh_token":"baz"}'));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('{"access_token":"foo","expires_in":"bar","refresh_token":"baz"}');
 
         $service = new Microsoft(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -189,6 +189,6 @@ class MicrosoftTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
     }
 }

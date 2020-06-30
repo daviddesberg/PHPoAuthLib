@@ -5,12 +5,12 @@ namespace OAuthTest\Unit\OAuth1\Service;
 use OAuth\OAuth1\Service\FiveHundredPx;
 use PHPUnit\Framework\TestCase;
 
-class FiveHundredPxTest extends TestCase
+class FiveHundredPx extends TestCase
 {
     /**
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::__construct
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::__construct
      */
-    public function testConstructCorrectInterfaceWithoutCustomUri()
+    public function testConstructCorrectInterfaceWithoutCustomUri(): void
     {
         $service = new FiveHundredPx(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -19,13 +19,13 @@ class FiveHundredPxTest extends TestCase
             $this->createMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth1\\Service\\ServiceInterface', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth1\\Service\\ServiceInterface', $service);
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::__construct
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::__construct
      */
-    public function testConstructCorrectInstanceWithoutCustomUri()
+    public function testConstructCorrectInstanceWithoutCustomUri(): void
     {
         $service = new FiveHundredPx(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -34,13 +34,13 @@ class FiveHundredPxTest extends TestCase
             $this->createMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth1\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth1\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::__construct
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::__construct
      */
-    public function testConstructCorrectInstanceWithCustomUri()
+    public function testConstructCorrectInstanceWithCustomUri(): void
     {
         $service = new FiveHundredPx(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -50,14 +50,14 @@ class FiveHundredPxTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth1\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth1\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::__construct
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::getRequestTokenEndpoint
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::__construct
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::getRequestTokenEndpoint
      */
-    public function testGetRequestTokenEndpoint()
+    public function testGetRequestTokenEndpoint(): void
     {
         $service = new FiveHundredPx(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -66,17 +66,17 @@ class FiveHundredPxTest extends TestCase
             $this->createMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
         );
 
-        $this->assertSame(
+        self::assertSame(
             'https://api.500px.com/v1/oauth/request_token',
             $service->getRequestTokenEndpoint()->getAbsoluteUri()
         );
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::__construct
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::getAuthorizationEndpoint
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::__construct
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::getAuthorizationEndpoint
      */
-    public function testGetAuthorizationEndpoint()
+    public function testGetAuthorizationEndpoint(): void
     {
         $service = new FiveHundredPx(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -85,17 +85,17 @@ class FiveHundredPxTest extends TestCase
             $this->createMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
         );
 
-        $this->assertSame(
+        self::assertSame(
             'https://api.500px.com/v1/oauth/authorize',
             $service->getAuthorizationEndpoint()->getAbsoluteUri()
         );
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::__construct
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::getAccessTokenEndpoint
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::__construct
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::getAccessTokenEndpoint
      */
-    public function testGetAccessTokenEndpoint()
+    public function testGetAccessTokenEndpoint(): void
     {
         $service = new FiveHundredPx(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -104,21 +104,21 @@ class FiveHundredPxTest extends TestCase
             $this->createMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
         );
 
-        $this->assertSame(
+        self::assertSame(
             'https://api.500px.com/v1/oauth/access_token',
             $service->getAccessTokenEndpoint()->getAbsoluteUri()
         );
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::__construct
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::getRequestTokenEndpoint
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::parseRequestTokenResponse
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::__construct
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::getRequestTokenEndpoint
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::parseRequestTokenResponse
      */
-    public function testParseRequestTokenResponseThrowsExceptionOnNulledResponse()
+    public function testParseRequestTokenResponseThrowsExceptionOnNulledResponse(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue(null));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn(null);
 
         $service = new FiveHundredPx(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -133,14 +133,14 @@ class FiveHundredPxTest extends TestCase
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::__construct
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::getRequestTokenEndpoint
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::parseRequestTokenResponse
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::__construct
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::getRequestTokenEndpoint
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::parseRequestTokenResponse
      */
-    public function testParseRequestTokenResponseThrowsExceptionOnResponseNotAnArray()
+    public function testParseRequestTokenResponseThrowsExceptionOnResponseNotAnArray(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('notanarray'));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('notanarray');
 
         $service = new FiveHundredPx(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -155,14 +155,14 @@ class FiveHundredPxTest extends TestCase
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::__construct
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::getRequestTokenEndpoint
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::parseRequestTokenResponse
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::__construct
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::getRequestTokenEndpoint
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::parseRequestTokenResponse
      */
-    public function testParseRequestTokenResponseThrowsExceptionOnResponseCallbackNotSet()
+    public function testParseRequestTokenResponseThrowsExceptionOnResponseCallbackNotSet(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('foo=bar'));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('foo=bar');
 
         $service = new FiveHundredPx(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -177,16 +177,16 @@ class FiveHundredPxTest extends TestCase
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::__construct
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::getRequestTokenEndpoint
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::parseRequestTokenResponse
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::__construct
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::getRequestTokenEndpoint
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::parseRequestTokenResponse
      */
-    public function testParseRequestTokenResponseThrowsExceptionOnResponseCallbackNotTrue()
+    public function testParseRequestTokenResponseThrowsExceptionOnResponseCallbackNotTrue(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue(
+        $client->expects(self::once())->method('retrieveResponse')->willReturn(
             'oauth_callback_confirmed=false'
-        ));
+        );
 
         $service = new FiveHundredPx(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -201,17 +201,17 @@ class FiveHundredPxTest extends TestCase
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::__construct
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::getRequestTokenEndpoint
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::parseRequestTokenResponse
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::parseAccessTokenResponse
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::__construct
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::getRequestTokenEndpoint
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::parseAccessTokenResponse
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::parseRequestTokenResponse
      */
-    public function testParseRequestTokenResponseValid()
+    public function testParseRequestTokenResponseValid(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue(
+        $client->expects(self::once())->method('retrieveResponse')->willReturn(
             'oauth_callback_confirmed=true&oauth_token=foo&oauth_token_secret=bar'
-        ));
+        );
 
         $service = new FiveHundredPx(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -220,23 +220,23 @@ class FiveHundredPxTest extends TestCase
             $this->createMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth1\\Token\\StdOAuth1Token', $service->requestRequestToken());
+        self::assertInstanceOf('\\OAuth\\OAuth1\\Token\\StdOAuth1Token', $service->requestRequestToken());
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::__construct
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::getRequestTokenEndpoint
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::parseAccessTokenResponse
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::__construct
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::getRequestTokenEndpoint
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseThrowsExceptionOnError()
+    public function testParseAccessTokenResponseThrowsExceptionOnError(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('error=bar'));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('error=bar');
 
         $token = $this->createMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
 
         $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
-        $storage->expects($this->any())->method('retrieveAccessToken')->will($this->returnValue($token));
+        $storage->expects(self::any())->method('retrieveAccessToken')->willReturn($token);
 
         $service = new FiveHundredPx(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -251,21 +251,21 @@ class FiveHundredPxTest extends TestCase
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::__construct
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::getRequestTokenEndpoint
-     * @covers OAuth\OAuth1\Service\FiveHundredPx::parseAccessTokenResponse
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::__construct
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::getRequestTokenEndpoint
+     * @covers \OAuth\OAuth1\Service\FiveHundredPx::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseValid()
+    public function testParseAccessTokenResponseValid(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue(
+        $client->expects(self::once())->method('retrieveResponse')->willReturn(
             'oauth_token=foo&oauth_token_secret=bar'
-        ));
+        );
 
         $token = $this->createMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
 
         $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
-        $storage->expects($this->any())->method('retrieveAccessToken')->will($this->returnValue($token));
+        $storage->expects(self::any())->method('retrieveAccessToken')->willReturn($token);
 
         $service = new FiveHundredPx(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -274,6 +274,6 @@ class FiveHundredPxTest extends TestCase
             $this->createMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth1\\Token\\StdOAuth1Token', $service->requestAccessToken('foo', 'bar', $token));
+        self::assertInstanceOf('\\OAuth\\OAuth1\\Token\\StdOAuth1Token', $service->requestAccessToken('foo', 'bar', $token));
     }
 }

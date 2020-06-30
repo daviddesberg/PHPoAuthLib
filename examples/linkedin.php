@@ -1,23 +1,22 @@
 <?php
 
 /**
- * Example of retrieving an authentication token of the Linkedin service
+ * Example of retrieving an authentication token of the Linkedin service.
  *
  * PHP version 5.4
  *
  * @author     David Desberg <david@daviddesberg.com>
  * @author     Pieter Hordijk <info@pieterhordijk.com>
  * @author     Antoine Corcy <contact@sbin.dk>
- * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-use OAuth\OAuth2\Service\Linkedin;
-use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Storage\Session;
+use OAuth\OAuth2\Service\Linkedin;
 
 /**
- * Bootstrap the example
+ * Bootstrap the example.
  */
 require_once __DIR__ . '/bootstrap.php';
 
@@ -32,12 +31,12 @@ $credentials = new Credentials(
 );
 
 // Instantiate the Linkedin service using the credentials, http client and storage mechanism for the token
-/** @var $linkedinService Linkedin */
-$linkedinService = $serviceFactory->createService('linkedin', $credentials, $storage, array('r_basicprofile'));
+/** @var Linkedin $linkedinService */
+$linkedinService = $serviceFactory->createService('linkedin', $credentials, $storage, ['r_basicprofile']);
 
 if (!empty($_GET['code'])) {
     // retrieve the CSRF state parameter
-    $state = isset($_GET['state']) ? $_GET['state'] : null;
+    $state = $_GET['state'] ?? null;
 
     // This was a callback request from linkedin, get the token
     $token = $linkedinService->requestAccessToken($_GET['code'], $state);
@@ -47,7 +46,6 @@ if (!empty($_GET['code'])) {
 
     // Show some of the resultant data
     echo 'Your linkedin first name is ' . $result['firstName'] . ' and your last name is ' . $result['lastName'];
-
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $linkedinService->getAuthorizationUri();
     header('Location: ' . $url);

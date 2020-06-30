@@ -2,14 +2,14 @@
 
 namespace OAuth\OAuth1\Service;
 
-use OAuth\OAuth1\Signature\SignatureInterface;
-use OAuth\OAuth1\Token\StdOAuth1Token;
+use OAuth\Common\Consumer\CredentialsInterface;
+use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\OAuth1\Signature\SignatureInterface;
+use OAuth\OAuth1\Token\StdOAuth1Token;
 
 class Flickr extends AbstractService
 {
@@ -20,7 +20,7 @@ class Flickr extends AbstractService
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
         SignatureInterface $signature,
-        UriInterface $baseApiUri = null
+        ?UriInterface $baseApiUri = null
     ) {
         parent::__construct($credentials, $httpClient, $storage, $signature, $baseApiUri);
         if ($baseApiUri === null) {
@@ -51,6 +51,7 @@ class Flickr extends AbstractService
         } elseif (!isset($data['oauth_callback_confirmed']) || $data['oauth_callback_confirmed'] != 'true') {
             throw new TokenResponseException('Error in retrieving token.');
         }
+
         return $this->parseAccessTokenResponse($responseBody);
     }
 
@@ -75,7 +76,7 @@ class Flickr extends AbstractService
         return $token;
     }
 
-    public function request($path, $method = 'GET', $body = null, array $extraHeaders = array())
+    public function request($path, $method = 'GET', $body = null, array $extraHeaders = [])
     {
         $uri = $this->determineRequestUriFromPath('/', $this->baseApiUri);
         $uri->addToQuery('method', $path);
@@ -90,41 +91,41 @@ class Flickr extends AbstractService
 
         $token = $this->storage->retrieveAccessToken($this->service());
         $extraHeaders = array_merge($this->getExtraApiHeaders(), $extraHeaders);
-        $authorizationHeader = array(
-            'Authorization' => $this->buildAuthorizationHeaderForAPIRequest($method, $uri, $token, $body)
-        );
+        $authorizationHeader = [
+            'Authorization' => $this->buildAuthorizationHeaderForAPIRequest($method, $uri, $token, $body),
+        ];
         $headers = array_merge($authorizationHeader, $extraHeaders);
 
         return $this->httpClient->retrieveResponse($uri, $body, $headers, $method);
     }
 
-    public function requestRest($path, $method = 'GET', $body = null, array $extraHeaders = array())
+    public function requestRest($path, $method = 'GET', $body = null, array $extraHeaders = [])
     {
         return $this->request($path, $method, $body, $extraHeaders);
     }
 
-    public function requestXmlrpc($path, $method = 'GET', $body = null, array $extraHeaders = array())
+    public function requestXmlrpc($path, $method = 'GET', $body = null, array $extraHeaders = [])
     {
         $this->format = 'xmlrpc';
 
         return $this->request($path, $method, $body, $extraHeaders);
     }
 
-    public function requestSoap($path, $method = 'GET', $body = null, array $extraHeaders = array())
+    public function requestSoap($path, $method = 'GET', $body = null, array $extraHeaders = [])
     {
         $this->format = 'soap';
 
         return $this->request($path, $method, $body, $extraHeaders);
     }
 
-    public function requestJson($path, $method = 'GET', $body = null, array $extraHeaders = array())
+    public function requestJson($path, $method = 'GET', $body = null, array $extraHeaders = [])
     {
         $this->format = 'json';
 
         return $this->request($path, $method, $body, $extraHeaders);
     }
 
-    public function requestPhp($path, $method = 'GET', $body = null, array $extraHeaders = array())
+    public function requestPhp($path, $method = 'GET', $body = null, array $extraHeaders = [])
     {
         $this->format = 'php_serial';
 

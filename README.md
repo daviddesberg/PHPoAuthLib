@@ -111,7 +111,6 @@ Extensions
 
 Tests
 ------
-To run the tests, run the command
 ```bash
     composer tests
 ```

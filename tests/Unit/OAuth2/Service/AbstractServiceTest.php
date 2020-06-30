@@ -2,73 +2,73 @@
 
 namespace OAuthTest\Unit\OAuth2\Service;
 
-use OAuthTest\Mocks\OAuth2\Service\Mock;
-use OAuth\Common\Http\Uri\Uri;
+use DateTime;
 use OAuth\Common\Token\TokenInterface;
+use OAuthTest\Mocks\OAuth2\Service\Mock;
 use PHPUnit\Framework\TestCase;
 
 class AbstractServiceTest extends TestCase
 {
     /**
-     * @covers OAuth\OAuth2\Service\AbstractService::__construct
+     * @covers \OAuth\OAuth2\Service\AbstractService::__construct
      */
-    public function testConstructCorrectInterface()
+    public function testConstructCorrectInterface(): void
     {
         $service = $this->getMockForAbstractClass(
             '\\OAuth\\OAuth2\\Service\\AbstractService',
-            array(
+            [
                 $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
                 $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
                 $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-                array(),
-            )
+                [],
+            ]
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\ServiceInterface', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\ServiceInterface', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\AbstractService::__construct
+     * @covers \OAuth\OAuth2\Service\AbstractService::__construct
      */
-    public function testConstructCorrectParent()
+    public function testConstructCorrectParent(): void
     {
         $service = $this->getMockForAbstractClass(
             '\\OAuth\\OAuth2\\Service\\AbstractService',
-            array(
+            [
                 $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
                 $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
                 $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-                array(),
-            )
+                [],
+            ]
         );
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\Common\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\AbstractService::__construct
+     * @covers \OAuth\OAuth2\Service\AbstractService::__construct
      */
-    public function testConstructCorrectParentCustomUri()
+    public function testConstructCorrectParentCustomUri(): void
     {
         $service = $this->getMockForAbstractClass(
             '\\OAuth\\OAuth2\\Service\\AbstractService',
-            array(
+            [
                 $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
                 $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
                 $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-                array(),
+                [],
                 $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface'),
-            )
+            ]
         );
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\Common\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\AbstractService::__construct
-     * @covers OAuth\OAuth2\Service\AbstractService::isValidScope
+     * @covers \OAuth\OAuth2\Service\AbstractService::__construct
+     * @covers \OAuth\OAuth2\Service\AbstractService::isValidScope
      */
-    public function testConstructThrowsExceptionOnInvalidScope()
+    public function testConstructThrowsExceptionOnInvalidScope(): void
     {
         $this->expectException('\\OAuth\\OAuth2\\Service\\Exception\\InvalidScopeException');
 
@@ -76,20 +76,20 @@ class AbstractServiceTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-            array('invalidscope')
+            ['invalidscope']
         );
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\AbstractService::__construct
-     * @covers OAuth\OAuth2\Service\AbstractService::getAuthorizationUri
-     * @covers OAuth\OAuth2\Service\AbstractService::getAuthorizationEndpoint
+     * @covers \OAuth\OAuth2\Service\AbstractService::__construct
+     * @covers \OAuth\OAuth2\Service\AbstractService::getAuthorizationEndpoint
+     * @covers \OAuth\OAuth2\Service\AbstractService::getAuthorizationUri
      */
-    public function testGetAuthorizationUriWithoutParametersOrScopes()
+    public function testGetAuthorizationUriWithoutParametersOrScopes(): void
     {
         $credentials = $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
-        $credentials->expects($this->once())->method('getConsumerId')->will($this->returnValue('foo'));
-        $credentials->expects($this->once())->method('getCallbackUrl')->will($this->returnValue('bar'));
+        $credentials->expects(self::once())->method('getConsumerId')->willReturn('foo');
+        $credentials->expects(self::once())->method('getCallbackUrl')->willReturn('bar');
 
         $service = new Mock(
             $credentials,
@@ -97,22 +97,22 @@ class AbstractServiceTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertSame(
+        self::assertSame(
             'http://pieterhordijk.com/auth?type=web_server&client_id=foo&redirect_uri=bar&response_type=code&scope=',
             $service->getAuthorizationUri()->getAbsoluteUri()
         );
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\AbstractService::__construct
-     * @covers OAuth\OAuth2\Service\AbstractService::getAuthorizationUri
-     * @covers OAuth\OAuth2\Service\AbstractService::getAuthorizationEndpoint
+     * @covers \OAuth\OAuth2\Service\AbstractService::__construct
+     * @covers \OAuth\OAuth2\Service\AbstractService::getAuthorizationEndpoint
+     * @covers \OAuth\OAuth2\Service\AbstractService::getAuthorizationUri
      */
-    public function testGetAuthorizationUriWithParametersWithoutScopes()
+    public function testGetAuthorizationUriWithParametersWithoutScopes(): void
     {
         $credentials = $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
-        $credentials->expects($this->once())->method('getConsumerId')->will($this->returnValue('foo'));
-        $credentials->expects($this->once())->method('getCallbackUrl')->will($this->returnValue('bar'));
+        $credentials->expects(self::once())->method('getConsumerId')->willReturn('foo');
+        $credentials->expects(self::once())->method('getCallbackUrl')->willReturn('bar');
 
         $service = new Mock(
             $credentials,
@@ -120,46 +120,46 @@ class AbstractServiceTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertSame(
+        self::assertSame(
             'http://pieterhordijk.com/auth?foo=bar&baz=beer&type=web_server&client_id=foo&redirect_uri=bar&response_type=code&scope=',
-            $service->getAuthorizationUri(array('foo' => 'bar', 'baz' => 'beer'))->getAbsoluteUri()
+            $service->getAuthorizationUri(['foo' => 'bar', 'baz' => 'beer'])->getAbsoluteUri()
         );
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\AbstractService::__construct
-     * @covers OAuth\OAuth2\Service\AbstractService::isValidScope
-     * @covers OAuth\OAuth2\Service\AbstractService::getAuthorizationUri
-     * @covers OAuth\OAuth2\Service\AbstractService::getAuthorizationEndpoint
+     * @covers \OAuth\OAuth2\Service\AbstractService::__construct
+     * @covers \OAuth\OAuth2\Service\AbstractService::getAuthorizationEndpoint
+     * @covers \OAuth\OAuth2\Service\AbstractService::getAuthorizationUri
+     * @covers \OAuth\OAuth2\Service\AbstractService::isValidScope
      */
-    public function testGetAuthorizationUriWithParametersAndScopes()
+    public function testGetAuthorizationUriWithParametersAndScopes(): void
     {
         $credentials = $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
-        $credentials->expects($this->once())->method('getConsumerId')->will($this->returnValue('foo'));
-        $credentials->expects($this->once())->method('getCallbackUrl')->will($this->returnValue('bar'));
+        $credentials->expects(self::once())->method('getConsumerId')->willReturn('foo');
+        $credentials->expects(self::once())->method('getCallbackUrl')->willReturn('bar');
 
         $service = new Mock(
             $credentials,
             $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-            array('mock', 'mock2')
+            ['mock', 'mock2']
         );
 
-        $this->assertSame(
+        self::assertSame(
             'http://pieterhordijk.com/auth?foo=bar&baz=beer&type=web_server&client_id=foo&redirect_uri=bar&response_type=code&scope=mock+mock2',
-            $service->getAuthorizationUri(array('foo' => 'bar', 'baz' => 'beer'))->getAbsoluteUri()
+            $service->getAuthorizationUri(['foo' => 'bar', 'baz' => 'beer'])->getAbsoluteUri()
         );
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\AbstractService::__construct
-     * @covers OAuth\OAuth2\Service\AbstractService::requestAccessToken
-     * @covers OAuth\OAuth2\Service\AbstractService::getAccessTokenEndpoint
-     * @covers OAuth\OAuth2\Service\AbstractService::getExtraOAuthHeaders
-     * @covers OAuth\OAuth2\Service\AbstractService::parseAccessTokenResponse
-     * @covers OAuth\OAuth2\Service\AbstractService::service
+     * @covers \OAuth\OAuth2\Service\AbstractService::__construct
+     * @covers \OAuth\OAuth2\Service\AbstractService::getAccessTokenEndpoint
+     * @covers \OAuth\OAuth2\Service\AbstractService::getExtraOAuthHeaders
+     * @covers \OAuth\OAuth2\Service\AbstractService::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\AbstractService::requestAccessToken
+     * @covers \OAuth\OAuth2\Service\AbstractService::service
      */
-    public function testRequestAccessToken()
+    public function testRequestAccessToken(): void
     {
         $service = new Mock(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -171,19 +171,19 @@ class AbstractServiceTest extends TestCase
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\AbstractService::__construct
-     * @covers OAuth\OAuth2\Service\AbstractService::request
-     * @covers OAuth\OAuth2\Service\AbstractService::determineRequestUriFromPath
+     * @covers \OAuth\OAuth2\Service\AbstractService::__construct
+     * @covers \OAuth\OAuth2\Service\AbstractService::determineRequestUriFromPath
+     * @covers \OAuth\OAuth2\Service\AbstractService::request
      */
-    public function testRequestThrowsExceptionWhenTokenIsExpired()
+    public function testRequestThrowsExceptionWhenTokenIsExpired(): void
     {
-        $tokenExpiration = new \DateTime('26-03-1984 00:00:00');
+        $tokenExpiration = new DateTime('26-03-1984 00:00:00');
 
         $token = $this->createMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
-        $token->expects($this->any())->method('getEndOfLife')->will($this->returnValue($tokenExpiration->format('U')));
+        $token->expects(self::any())->method('getEndOfLife')->willReturn($tokenExpiration->format('U'));
 
         $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
-        $storage->expects($this->once())->method('retrieveAccessToken')->will($this->returnValue($token));
+        $storage->expects(self::once())->method('retrieveAccessToken')->willReturn($token);
 
         $service = new Mock(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -197,25 +197,25 @@ class AbstractServiceTest extends TestCase
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\AbstractService::__construct
-     * @covers OAuth\OAuth2\Service\AbstractService::request
-     * @covers OAuth\OAuth2\Service\AbstractService::determineRequestUriFromPath
-     * @covers OAuth\OAuth2\Service\AbstractService::getAuthorizationMethod
-     * @covers OAuth\OAuth2\Service\AbstractService::parseAccessTokenResponse
-     * @covers OAuth\OAuth2\Service\AbstractService::service
-     * @covers OAuth\OAuth2\Service\AbstractService::getExtraApiHeaders
+     * @covers \OAuth\OAuth2\Service\AbstractService::__construct
+     * @covers \OAuth\OAuth2\Service\AbstractService::determineRequestUriFromPath
+     * @covers \OAuth\OAuth2\Service\AbstractService::getAuthorizationMethod
+     * @covers \OAuth\OAuth2\Service\AbstractService::getExtraApiHeaders
+     * @covers \OAuth\OAuth2\Service\AbstractService::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\AbstractService::request
+     * @covers \OAuth\OAuth2\Service\AbstractService::service
      */
-    public function testRequestOauthAuthorizationMethod()
+    public function testRequestOauthAuthorizationMethod(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(2));
+        $client->expects(self::once())->method('retrieveResponse')->willReturnArgument(2);
 
         $token = $this->createMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
-        $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
-        $token->expects($this->once())->method('getAccessToken')->will($this->returnValue('foo'));
+        $token->expects(self::once())->method('getEndOfLife')->willReturn(TokenInterface::EOL_NEVER_EXPIRES);
+        $token->expects(self::once())->method('getAccessToken')->willReturn('foo');
 
         $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
-        $storage->expects($this->once())->method('retrieveAccessToken')->will($this->returnValue($token));
+        $storage->expects(self::once())->method('retrieveAccessToken')->willReturn($token);
 
         $service = new Mock(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -225,30 +225,30 @@ class AbstractServiceTest extends TestCase
 
         $headers = $service->request('https://pieterhordijk.com/my/awesome/path');
 
-        $this->assertTrue(array_key_exists('Authorization', $headers));
-        $this->assertTrue(in_array('OAuth foo', $headers, true));
+        self::assertArrayHasKey('Authorization', $headers);
+        self::assertTrue(in_array('OAuth foo', $headers, true));
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\AbstractService::__construct
-     * @covers OAuth\OAuth2\Service\AbstractService::request
-     * @covers OAuth\OAuth2\Service\AbstractService::determineRequestUriFromPath
-     * @covers OAuth\OAuth2\Service\AbstractService::getAuthorizationMethod
-     * @covers OAuth\OAuth2\Service\AbstractService::parseAccessTokenResponse
-     * @covers OAuth\OAuth2\Service\AbstractService::service
-     * @covers OAuth\OAuth2\Service\AbstractService::getExtraApiHeaders
+     * @covers \OAuth\OAuth2\Service\AbstractService::__construct
+     * @covers \OAuth\OAuth2\Service\AbstractService::determineRequestUriFromPath
+     * @covers \OAuth\OAuth2\Service\AbstractService::getAuthorizationMethod
+     * @covers \OAuth\OAuth2\Service\AbstractService::getExtraApiHeaders
+     * @covers \OAuth\OAuth2\Service\AbstractService::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\AbstractService::request
+     * @covers \OAuth\OAuth2\Service\AbstractService::service
      */
-    public function testRequestQueryStringMethod()
+    public function testRequestQueryStringMethod(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(0));
+        $client->expects(self::once())->method('retrieveResponse')->willReturnArgument(0);
 
         $token = $this->createMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
-        $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
-        $token->expects($this->once())->method('getAccessToken')->will($this->returnValue('foo'));
+        $token->expects(self::once())->method('getEndOfLife')->willReturn(TokenInterface::EOL_NEVER_EXPIRES);
+        $token->expects(self::once())->method('getAccessToken')->willReturn('foo');
 
         $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
-        $storage->expects($this->once())->method('retrieveAccessToken')->will($this->returnValue($token));
+        $storage->expects(self::once())->method('retrieveAccessToken')->willReturn($token);
 
         $service = new Mock(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -258,32 +258,32 @@ class AbstractServiceTest extends TestCase
 
         $service->setAuthorizationMethod('querystring');
 
-        $uri         = $service->request('https://pieterhordijk.com/my/awesome/path');
+        $uri = $service->request('https://pieterhordijk.com/my/awesome/path');
         $absoluteUri = parse_url($uri->getAbsoluteUri());
 
-        $this->assertSame('access_token=foo', $absoluteUri['query']);
+        self::assertSame('access_token=foo', $absoluteUri['query']);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\AbstractService::__construct
-     * @covers OAuth\OAuth2\Service\AbstractService::request
-     * @covers OAuth\OAuth2\Service\AbstractService::determineRequestUriFromPath
-     * @covers OAuth\OAuth2\Service\AbstractService::getAuthorizationMethod
-     * @covers OAuth\OAuth2\Service\AbstractService::parseAccessTokenResponse
-     * @covers OAuth\OAuth2\Service\AbstractService::service
-     * @covers OAuth\OAuth2\Service\AbstractService::getExtraApiHeaders
+     * @covers \OAuth\OAuth2\Service\AbstractService::__construct
+     * @covers \OAuth\OAuth2\Service\AbstractService::determineRequestUriFromPath
+     * @covers \OAuth\OAuth2\Service\AbstractService::getAuthorizationMethod
+     * @covers \OAuth\OAuth2\Service\AbstractService::getExtraApiHeaders
+     * @covers \OAuth\OAuth2\Service\AbstractService::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\AbstractService::request
+     * @covers \OAuth\OAuth2\Service\AbstractService::service
      */
-    public function testRequestQueryStringTwoMethod()
+    public function testRequestQueryStringTwoMethod(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(0));
+        $client->expects(self::once())->method('retrieveResponse')->willReturnArgument(0);
 
         $token = $this->createMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
-        $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
-        $token->expects($this->once())->method('getAccessToken')->will($this->returnValue('foo'));
+        $token->expects(self::once())->method('getEndOfLife')->willReturn(TokenInterface::EOL_NEVER_EXPIRES);
+        $token->expects(self::once())->method('getAccessToken')->willReturn('foo');
 
         $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
-        $storage->expects($this->once())->method('retrieveAccessToken')->will($this->returnValue($token));
+        $storage->expects(self::once())->method('retrieveAccessToken')->willReturn($token);
 
         $service = new Mock(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -293,32 +293,32 @@ class AbstractServiceTest extends TestCase
 
         $service->setAuthorizationMethod('querystring2');
 
-        $uri         = $service->request('https://pieterhordijk.com/my/awesome/path');
+        $uri = $service->request('https://pieterhordijk.com/my/awesome/path');
         $absoluteUri = parse_url($uri->getAbsoluteUri());
 
-        $this->assertSame('oauth2_access_token=foo', $absoluteUri['query']);
+        self::assertSame('oauth2_access_token=foo', $absoluteUri['query']);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\AbstractService::__construct
-     * @covers OAuth\OAuth2\Service\AbstractService::request
-     * @covers OAuth\OAuth2\Service\AbstractService::determineRequestUriFromPath
-     * @covers OAuth\OAuth2\Service\AbstractService::getAuthorizationMethod
-     * @covers OAuth\OAuth2\Service\AbstractService::parseAccessTokenResponse
-     * @covers OAuth\OAuth2\Service\AbstractService::service
-     * @covers OAuth\OAuth2\Service\AbstractService::getExtraApiHeaders
+     * @covers \OAuth\OAuth2\Service\AbstractService::__construct
+     * @covers \OAuth\OAuth2\Service\AbstractService::determineRequestUriFromPath
+     * @covers \OAuth\OAuth2\Service\AbstractService::getAuthorizationMethod
+     * @covers \OAuth\OAuth2\Service\AbstractService::getExtraApiHeaders
+     * @covers \OAuth\OAuth2\Service\AbstractService::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\AbstractService::request
+     * @covers \OAuth\OAuth2\Service\AbstractService::service
      */
-    public function testRequestBearerMethod()
+    public function testRequestBearerMethod(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(2));
+        $client->expects(self::once())->method('retrieveResponse')->willReturnArgument(2);
 
         $token = $this->createMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
-        $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
-        $token->expects($this->once())->method('getAccessToken')->will($this->returnValue('foo'));
+        $token->expects(self::once())->method('getEndOfLife')->willReturn(TokenInterface::EOL_NEVER_EXPIRES);
+        $token->expects(self::once())->method('getAccessToken')->willReturn('foo');
 
         $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
-        $storage->expects($this->once())->method('retrieveAccessToken')->will($this->returnValue($token));
+        $storage->expects(self::once())->method('retrieveAccessToken')->willReturn($token);
 
         $service = new Mock(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -330,15 +330,15 @@ class AbstractServiceTest extends TestCase
 
         $headers = $service->request('https://pieterhordijk.com/my/awesome/path');
 
-        $this->assertTrue(array_key_exists('Authorization', $headers));
-        $this->assertTrue(in_array('Bearer foo', $headers, true));
+        self::assertArrayHasKey('Authorization', $headers);
+        self::assertTrue(in_array('Bearer foo', $headers, true));
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\AbstractService::__construct
-     * @covers OAuth\OAuth2\Service\AbstractService::getStorage
+     * @covers \OAuth\OAuth2\Service\AbstractService::__construct
+     * @covers \OAuth\OAuth2\Service\AbstractService::getStorage
      */
-    public function testGetStorage()
+    public function testGetStorage(): void
     {
         $service = new Mock(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -346,17 +346,17 @@ class AbstractServiceTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\TokenStorageInterface', $service->getStorage());
+        self::assertInstanceOf('\\OAuth\\Common\\Storage\\TokenStorageInterface', $service->getStorage());
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\AbstractService::__construct
-     * @covers OAuth\OAuth2\Service\AbstractService::refreshAccessToken
-     * @covers OAuth\OAuth2\Service\AbstractService::getAccessTokenEndpoint
-     * @covers OAuth\OAuth2\Service\AbstractService::getExtraOAuthHeaders
-     * @covers OAuth\OAuth2\Service\AbstractService::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\AbstractService::__construct
+     * @covers \OAuth\OAuth2\Service\AbstractService::getAccessTokenEndpoint
+     * @covers \OAuth\OAuth2\Service\AbstractService::getExtraOAuthHeaders
+     * @covers \OAuth\OAuth2\Service\AbstractService::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\AbstractService::refreshAccessToken
      */
-    public function testRefreshAccessTokenSuccess()
+    public function testRefreshAccessTokenSuccess(): void
     {
         $service = new Mock(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -365,16 +365,16 @@ class AbstractServiceTest extends TestCase
         );
 
         $token = $this->createMock('\\OAuth\\OAuth2\\Token\\StdOAuth2Token');
-        $token->expects($this->once())->method('getRefreshToken')->will($this->returnValue('foo'));
+        $token->expects(self::once())->method('getRefreshToken')->willReturn('foo');
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->refreshAccessToken($token));
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->refreshAccessToken($token));
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\AbstractService::__construct
-     * @covers OAuth\OAuth2\Service\AbstractService::isValidScope
+     * @covers \OAuth\OAuth2\Service\AbstractService::__construct
+     * @covers \OAuth\OAuth2\Service\AbstractService::isValidScope
      */
-    public function testIsValidScopeTrue()
+    public function testIsValidScopeTrue(): void
     {
         $service = new Mock(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -382,14 +382,14 @@ class AbstractServiceTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertTrue($service->isValidScope('mock'));
+        self::assertTrue($service->isValidScope('mock'));
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\AbstractService::__construct
-     * @covers OAuth\OAuth2\Service\AbstractService::isValidScope
+     * @covers \OAuth\OAuth2\Service\AbstractService::__construct
+     * @covers \OAuth\OAuth2\Service\AbstractService::isValidScope
      */
-    public function testIsValidScopeFalse()
+    public function testIsValidScopeFalse(): void
     {
         $service = new Mock(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -397,6 +397,6 @@ class AbstractServiceTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertFalse($service->isValidScope('invalid'));
+        self::assertFalse($service->isValidScope('invalid'));
     }
 }

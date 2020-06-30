@@ -8,9 +8,10 @@ use PHPUnit\Framework\TestCase;
 class XingTest extends TestCase
 {
     private $client;
-    private $storage;
-    private $xing;
 
+    private $storage;
+
+    private $xing;
 
     protected function setUp(): void
     {
@@ -28,29 +29,29 @@ class XingTest extends TestCase
     }
 
     /**
-     * @covers Xing::__construct
+     * @covers \Xing::__construct
      */
-    public function testConstructCorrectInterfaceWithoutCustomUri()
+    public function testConstructCorrectInterfaceWithoutCustomUri(): void
     {
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\OAuth1\\Service\\ServiceInterface', $this->xing
         );
     }
 
     /**
-     * @covers Xing::__construct
+     * @covers \Xing::__construct
      */
-    public function testConstructCorrectInstanceWithoutCustomUri()
+    public function testConstructCorrectInstanceWithoutCustomUri(): void
     {
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\OAuth1\\Service\\AbstractService', $this->xing
         );
     }
 
     /**
-     * @covers Xing::__construct
+     * @covers \Xing::__construct
      */
-    public function testConstructCorrectInstanceWithCustomUri()
+    public function testConstructCorrectInstanceWithCustomUri(): void
     {
         $service = new Xing(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -60,56 +61,56 @@ class XingTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth1\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth1\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers Xing::__construct
-     * @covers Xing::getRequestTokenEndpoint
+     * @covers \Xing::__construct
+     * @covers \Xing::getRequestTokenEndpoint
      */
-    public function testGetRequestTokenEndpoint()
+    public function testGetRequestTokenEndpoint(): void
     {
-        $this->assertSame(
+        self::assertSame(
             'https://api.xing.com/v1/request_token',
             $this->xing->getRequestTokenEndpoint()->getAbsoluteUri()
         );
     }
 
     /**
-     * @covers Xing::__construct
-     * @covers Xing::getAuthorizationEndpoint
+     * @covers \Xing::__construct
+     * @covers \Xing::getAuthorizationEndpoint
      */
-    public function testGetAuthorizationEndpoint()
+    public function testGetAuthorizationEndpoint(): void
     {
-        $this->assertSame(
+        self::assertSame(
             'https://api.xing.com/v1/authorize',
             $this->xing->getAuthorizationEndpoint()->getAbsoluteUri()
         );
     }
 
     /**
-     * @covers Xing::__construct
-     * @covers Xing::getAccessTokenEndpoint
+     * @covers \Xing::__construct
+     * @covers \Xing::getAccessTokenEndpoint
      */
-    public function testGetAccessTokenEndpoint()
+    public function testGetAccessTokenEndpoint(): void
     {
-        $this->assertSame(
+        self::assertSame(
             'https://api.xing.com/v1/access_token',
             $this->xing->getAccessTokenEndpoint()->getAbsoluteUri()
         );
     }
 
     /**
-     * @covers Xing::__construct
-     * @covers Xing::getRequestTokenEndpoint
-     * @covers Xing::parseRequestTokenResponse
+     * @covers \Xing::__construct
+     * @covers \Xing::getRequestTokenEndpoint
+     * @covers \Xing::parseRequestTokenResponse
      */
-    public function testParseRequestTokenResponseThrowsExceptionOnNulledResponse()
+    public function testParseRequestTokenResponseThrowsExceptionOnNulledResponse(): void
     {
         $this->client
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('retrieveResponse')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $this->expectException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
@@ -117,16 +118,16 @@ class XingTest extends TestCase
     }
 
     /**
-     * @covers Xing::__construct
-     * @covers Xing::getRequestTokenEndpoint
-     * @covers Xing::parseRequestTokenResponse
+     * @covers \Xing::__construct
+     * @covers \Xing::getRequestTokenEndpoint
+     * @covers \Xing::parseRequestTokenResponse
      */
-    public function testParseRequestTokenResponseThrowsExceptionOnResponseNotAnArray()
+    public function testParseRequestTokenResponseThrowsExceptionOnResponseNotAnArray(): void
     {
         $this->client
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('retrieveResponse')
-            ->will($this->returnValue('notanarray'));
+            ->willReturn('notanarray');
 
         $this->expectException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
@@ -134,16 +135,16 @@ class XingTest extends TestCase
     }
 
     /**
-     * @covers Xing::__construct
-     * @covers Xing::getRequestTokenEndpoint
-     * @covers Xing::parseRequestTokenResponse
+     * @covers \Xing::__construct
+     * @covers \Xing::getRequestTokenEndpoint
+     * @covers \Xing::parseRequestTokenResponse
      */
-    public function testParseRequestTokenResponseThrowsExceptionOnResponseCallbackNotSet()
+    public function testParseRequestTokenResponseThrowsExceptionOnResponseCallbackNotSet(): void
     {
         $this->client
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('retrieveResponse')
-            ->will($this->returnValue('foo=bar'));
+            ->willReturn('foo=bar');
 
         $this->expectException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
@@ -151,16 +152,16 @@ class XingTest extends TestCase
     }
 
     /**
-     * @covers Xing::__construct
-     * @covers Xing::getRequestTokenEndpoint
-     * @covers Xing::parseRequestTokenResponse
+     * @covers \Xing::__construct
+     * @covers \Xing::getRequestTokenEndpoint
+     * @covers \Xing::parseRequestTokenResponse
      */
-    public function testParseRequestTokenResponseThrowsExceptionOnResponseCallbackNotTrue()
+    public function testParseRequestTokenResponseThrowsExceptionOnResponseCallbackNotTrue(): void
     {
         $this->client
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('retrieveResponse')
-            ->will($this->returnValue('oauth_callback_confirmed=false'));
+            ->willReturn('oauth_callback_confirmed=false');
 
         $this->expectException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
@@ -168,44 +169,44 @@ class XingTest extends TestCase
     }
 
     /**
-     * @covers Xing::__construct
-     * @covers Xing::getRequestTokenEndpoint
-     * @covers Xing::parseRequestTokenResponse
-     * @covers Xing::parseAccessTokenResponse
+     * @covers \Xing::__construct
+     * @covers \Xing::getRequestTokenEndpoint
+     * @covers \Xing::parseAccessTokenResponse
+     * @covers \Xing::parseRequestTokenResponse
      */
-    public function testParseRequestTokenResponseValid()
+    public function testParseRequestTokenResponseValid(): void
     {
         $this->client
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('retrieveResponse')
-            ->will($this->returnValue(
+            ->willReturn(
                 'oauth_callback_confirmed=true&oauth_token=foo&oauth_token_secret=bar'
-            ));
+            );
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\OAuth1\\Token\\StdOAuth1Token',
             $this->xing->requestRequestToken()
         );
     }
 
     /**
-     * @covers Xing::__construct
-     * @covers Xing::getRequestTokenEndpoint
-     * @covers Xing::parseAccessTokenResponse
+     * @covers \Xing::__construct
+     * @covers \Xing::getRequestTokenEndpoint
+     * @covers \Xing::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseThrowsExceptionOnError()
+    public function testParseAccessTokenResponseThrowsExceptionOnError(): void
     {
         $this->client
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('retrieveResponse')
-            ->will($this->returnValue('{"message":"Invalid OAuth signature","error_name":"INVALID_OAUTH_SIGNATURE"}'));
+            ->willReturn('{"message":"Invalid OAuth signature","error_name":"INVALID_OAUTH_SIGNATURE"}');
 
         $token = $this->createMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
 
         $this->storage
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('retrieveAccessToken')
-            ->will($this->returnValue($token));
+            ->willReturn($token);
 
         $this->expectException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
@@ -213,26 +214,25 @@ class XingTest extends TestCase
     }
 
     /**
-     * @covers Xing::__construct
-     * @covers Xing::getRequestTokenEndpoint
-     * @covers Xing::parseAccessTokenResponse
+     * @covers \Xing::__construct
+     * @covers \Xing::getRequestTokenEndpoint
+     * @covers \Xing::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseValid()
+    public function testParseAccessTokenResponseValid(): void
     {
         $this->client
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('retrieveResponse')
-            ->will($this->returnValue('oauth_token=foo&oauth_token_secret=bar'));
+            ->willReturn('oauth_token=foo&oauth_token_secret=bar');
 
         $token = $this->createMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
 
         $this->storage
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('retrieveAccessToken')
-            ->will($this->returnValue($token));
+            ->willReturn($token);
 
-
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\OAuth1\\Token\\StdOAuth1Token',
             $this->xing->requestAccessToken('foo', 'bar', $token)
         );

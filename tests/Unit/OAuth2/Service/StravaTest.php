@@ -3,15 +3,14 @@
 namespace OAuthTest\Unit\OAuth2\Service;
 
 use OAuth\OAuth2\Service\Strava;
-use OAuth\Common\Token\TokenInterface;
 use PHPUnit\Framework\TestCase;
 
 class StravaTest extends TestCase
 {
     /**
-     * @covers OAuth\OAuth2\Service\Strava::__construct
+     * @covers \OAuth\OAuth2\Service\Strava::__construct
      */
-    public function testConstructCorrectInterfaceWithoutCustomUri()
+    public function testConstructCorrectInterfaceWithoutCustomUri(): void
     {
         $service = new Strava(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -19,13 +18,13 @@ class StravaTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\ServiceInterface', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\ServiceInterface', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Strava::__construct
+     * @covers \OAuth\OAuth2\Service\Strava::__construct
      */
-    public function testConstructCorrectInstanceWithoutCustomUri()
+    public function testConstructCorrectInstanceWithoutCustomUri(): void
     {
         $service = new Strava(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -33,30 +32,30 @@ class StravaTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Strava::__construct
+     * @covers \OAuth\OAuth2\Service\Strava::__construct
      */
-    public function testConstructCorrectInstanceWithCustomUri()
+    public function testConstructCorrectInstanceWithCustomUri(): void
     {
         $service = new Strava(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-            array(),
+            [],
             $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Strava::__construct
-     * @covers OAuth\OAuth2\Service\Strava::getAuthorizationEndpoint
+     * @covers \OAuth\OAuth2\Service\Strava::__construct
+     * @covers \OAuth\OAuth2\Service\Strava::getAuthorizationEndpoint
      */
-    public function testGetAuthorizationEndpoint()
+    public function testGetAuthorizationEndpoint(): void
     {
         $service = new Strava(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -64,25 +63,24 @@ class StravaTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertSame(
+        self::assertSame(
             'https://www.strava.com/oauth/authorize?approval_prompt=auto',
             $service->getAuthorizationEndpoint()->getAbsoluteUri()
         );
 
         // Verify that 'offine' works
         $service->setApprouvalPrompt('force');
-        $this->assertSame(
+        self::assertSame(
             'https://www.strava.com/oauth/authorize?approval_prompt=force',
             $service->getAuthorizationEndpoint()->getAbsoluteUri()
         );
-
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Strava::__construct
-     * @covers OAuth\OAuth2\Service\Strava::getAuthorizationEndpoint
+     * @covers \OAuth\OAuth2\Service\Strava::__construct
+     * @covers \OAuth\OAuth2\Service\Strava::getAuthorizationEndpoint
      */
-    public function testGetAuthorizationEndpointException()
+    public function testGetAuthorizationEndpointException(): void
     {
         $service = new Strava(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -97,14 +95,14 @@ class StravaTest extends TestCase
         } catch (InvalidAccessTypeException $e) {
             return;
         }
-        $this->fail('Expected InvalidAccessTypeException not thrown');
+        self::fail('Expected InvalidAccessTypeException not thrown');
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Strava::__construct
-     * @covers OAuth\OAuth2\Service\Strava::getAccessTokenEndpoint
+     * @covers \OAuth\OAuth2\Service\Strava::__construct
+     * @covers \OAuth\OAuth2\Service\Strava::getAccessTokenEndpoint
      */
-    public function testGetAccessTokenEndpoint()
+    public function testGetAccessTokenEndpoint(): void
     {
         $service = new Strava(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -112,20 +110,20 @@ class StravaTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertSame(
+        self::assertSame(
             'https://www.strava.com/oauth/token',
             $service->getAccessTokenEndpoint()->getAbsoluteUri()
         );
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Strava::__construct
-     * @covers OAuth\OAuth2\Service\Strava::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Strava::__construct
+     * @covers \OAuth\OAuth2\Service\Strava::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseThrowsExceptionOnNulledResponse()
+    public function testParseAccessTokenResponseThrowsExceptionOnNulledResponse(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue(null));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn(null);
 
         $service = new Strava(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -139,13 +137,13 @@ class StravaTest extends TestCase
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Strava::__construct
-     * @covers OAuth\OAuth2\Service\Strava::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Strava::__construct
+     * @covers \OAuth\OAuth2\Service\Strava::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseThrowsExceptionOnError()
+    public function testParseAccessTokenResponseThrowsExceptionOnError(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('error=some_error'));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('error=some_error');
 
         $service = new Strava(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -159,13 +157,13 @@ class StravaTest extends TestCase
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Strava::__construct
-     * @covers OAuth\OAuth2\Service\Strava::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Strava::__construct
+     * @covers \OAuth\OAuth2\Service\Strava::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseValid()
+    public function testParseAccessTokenResponseValid(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"access_token":"foo","expires_in":"bar"}'));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('{"access_token":"foo","expires_in":"bar"}');
 
         $service = new Strava(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -173,6 +171,6 @@ class StravaTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
     }
 }

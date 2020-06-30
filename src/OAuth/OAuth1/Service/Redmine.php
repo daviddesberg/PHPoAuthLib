@@ -2,14 +2,15 @@
 
 namespace OAuth\OAuth1\Service;
 
-use OAuth\OAuth1\Signature\SignatureInterface;
-use OAuth\OAuth1\Token\StdOAuth1Token;
+use Exception;
+use OAuth\Common\Consumer\CredentialsInterface;
+use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\OAuth1\Signature\SignatureInterface;
+use OAuth\OAuth1\Token\StdOAuth1Token;
 
 class Redmine extends AbstractService
 {
@@ -23,12 +24,12 @@ class Redmine extends AbstractService
         parent::__construct($credentials, $httpClient, $storage, $signature, $baseApiUri);
 
         if (null === $baseApiUri) {
-            throw new \Exception('baseApiUri is a required argument.');
+            throw new Exception('baseApiUri is a required argument.');
         }
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getRequestTokenEndpoint()
     {

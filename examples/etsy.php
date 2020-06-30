@@ -1,21 +1,20 @@
 <?php
 
 /**
- * Example of retrieving an authentication token of the Etsy service
+ * Example of retrieving an authentication token of the Etsy service.
  *
  * PHP version 5.4
  *
  * @author     Iñaki Abete <inakiabt+github@gmail.com>
- * @copyright  Copyright (c) 2013 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-use OAuth\OAuth1\Service\Etsy;
-use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Storage\Session;
+use OAuth\OAuth1\Service\Etsy;
 
 /**
- * Bootstrap the example
+ * Bootstrap the example.
  */
 require_once __DIR__ . '/bootstrap.php';
 
@@ -30,7 +29,7 @@ $credentials = new Credentials(
 );
 
 // Instantiate the Etsy service using the credentials, http client and storage mechanism for the token
-/** @var $etsyService Etsy */
+/** @var Etsy $etsyService */
 $etsyService = $serviceFactory->createService('Etsy', $credentials, $storage);
 
 if (!empty($_GET['oauth_token'])) {
@@ -47,7 +46,6 @@ if (!empty($_GET['oauth_token'])) {
     $result = json_decode($etsyService->request('/private/users/__SELF__'));
 
     echo 'result: <pre>' . print_r($result, true) . '</pre>';
-
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $response = $etsyService->requestRequestToken();
     $extra = $response->getExtraParams();

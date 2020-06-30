@@ -1,10 +1,7 @@
 <?php
 
 /**
- * @category   OAuth
- * @package    Tests
  * @author     David Desberg <david@daviddesberg.com>
- * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
@@ -22,27 +19,27 @@ class SymfonySessionTest extends TestCase
 
     protected $storage;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         // set it
         $this->session = new Session(new MockArraySessionStorage());
         $this->storage = new SymfonySession($this->session);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         // delete
         $this->storage->getSession()->clear();
-        unset($this->storage);
+        $this->storage = null;
     }
 
     /**
-     * Check that the token survives the constructor
+     * Check that the token survives the constructor.
      */
-    public function testStorageSurvivesConstructor()
+    public function testStorageSurvivesConstructor(): void
     {
         $service = 'Facebook';
-        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param'));
+        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, ['extra' => 'param']);
 
         // act
         $this->storage->storeAccessToken($service, $token);
@@ -51,21 +48,21 @@ class SymfonySessionTest extends TestCase
 
         // assert
         $extraParams = $this->storage->retrieveAccessToken($service)->getExtraParams();
-        $this->assertEquals('param', $extraParams['extra']);
-        $this->assertEquals($token, $this->storage->retrieveAccessToken($service));
+        self::assertEquals('param', $extraParams['extra']);
+        self::assertEquals($token, $this->storage->retrieveAccessToken($service));
     }
 
     /**
      * Check that the token gets properly stored.
      */
-    public function testStorage()
+    public function testStorage(): void
     {
         // arrange
         $service_1 = 'Facebook';
         $service_2 = 'Foursquare';
 
-        $token_1 = new StdOAuth2Token('access_1', 'refresh_1', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param'));
-        $token_2 = new StdOAuth2Token('access_2', 'refresh_2', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param'));
+        $token_1 = new StdOAuth2Token('access_1', 'refresh_1', StdOAuth2Token::EOL_NEVER_EXPIRES, ['extra' => 'param']);
+        $token_2 = new StdOAuth2Token('access_2', 'refresh_2', StdOAuth2Token::EOL_NEVER_EXPIRES, ['extra' => 'param']);
 
         // act
         $this->storage->storeAccessToken($service_1, $token_1);
@@ -73,15 +70,15 @@ class SymfonySessionTest extends TestCase
 
         // assert
         $extraParams = $this->storage->retrieveAccessToken($service_1)->getExtraParams();
-        $this->assertEquals('param', $extraParams['extra']);
-        $this->assertEquals($token_1, $this->storage->retrieveAccessToken($service_1));
-        $this->assertEquals($token_2, $this->storage->retrieveAccessToken($service_2));
+        self::assertEquals('param', $extraParams['extra']);
+        self::assertEquals($token_1, $this->storage->retrieveAccessToken($service_1));
+        self::assertEquals($token_2, $this->storage->retrieveAccessToken($service_2));
     }
 
     /**
      * Test hasAccessToken.
      */
-    public function testHasAccessToken()
+    public function testHasAccessToken(): void
     {
         // arrange
         $service = 'Facebook';
@@ -89,17 +86,17 @@ class SymfonySessionTest extends TestCase
 
         // act
         // assert
-        $this->assertFalse($this->storage->hasAccessToken($service));
+        self::assertFalse($this->storage->hasAccessToken($service));
     }
 
     /**
      * Check that the token gets properly deleted.
      */
-    public function testStorageClears()
+    public function testStorageClears(): void
     {
         // arrange
         $service = 'Facebook';
-        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, array('extra' => 'param'));
+        $token = new StdOAuth2Token('access', 'refresh', StdOAuth2Token::EOL_NEVER_EXPIRES, ['extra' => 'param']);
 
         // act
         $this->storage->storeAccessToken($service, $token);

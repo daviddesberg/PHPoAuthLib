@@ -7,16 +7,17 @@
  *
  * @author  Pedro Amorim <contact@pamorim.fr>
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- * @link    https://dev.netatmo.com/doc/
+ *
+ * @see    https://dev.netatmo.com/doc/
  */
 
-use OAuth\OAuth2\Service\Netatmo;
-use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Http\Client\CurlClient;
+use OAuth\Common\Storage\Session;
+use OAuth\OAuth2\Service\Netatmo;
 
 /**
- * Bootstrap the example
+ * Bootstrap the example.
  */
 require_once __DIR__ . '/bootstrap.php';
 
@@ -30,20 +31,20 @@ $credentials = new Credentials(
     $currentUri->getAbsoluteUri()
 );
 
-$serviceFactory->setHttpClient(new CurlClient);
+$serviceFactory->setHttpClient(new CurlClient());
 
 // Instantiate the Netatmo service using the credentials, http client and storage mechanism for the token
 $NetatmoService = $serviceFactory->createService('Netatmo', $credentials, $storage);
 
 if (!empty($_GET['code'])) {
     // retrieve the CSRF state parameter
-    $state = isset($_GET['state']) ? $_GET['state'] : null;
+    $state = $_GET['state'] ?? null;
     // This was a callback request from Netatmo, get the token
     $token = $NetatmoService->requestAccessToken($_GET['code'], $state);
     // Send a request with it
     $result = json_decode($NetatmoService->request('getuser'), true);
     // Show some of the resultant data
-    echo 'Hello '.$result['body']['mail'];
+    echo 'Hello ' . $result['body']['mail'];
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $NetatmoService->getAuthorizationUri();
     header('Location: ' . $url);

@@ -1,21 +1,20 @@
 <?php
 
 /**
- * Example of retrieving an authentication token of the PayPal service
+ * Example of retrieving an authentication token of the PayPal service.
  *
  * PHP version 5.4
  *
  * @author     Flávio Heleno <flaviohbatista@gmail.com>
- * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-use OAuth\OAuth2\Service\Paypal;
-use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Storage\Session;
+use OAuth\OAuth2\Service\Paypal;
 
 /**
- * Bootstrap the example
+ * Bootstrap the example.
  */
 require_once __DIR__ . '/bootstrap.php';
 
@@ -30,8 +29,8 @@ $credentials = new Credentials(
 );
 
 // Instantiate the PayPal service using the credentials, http client, storage mechanism for the token and profile/openid scopes
-/** @var $paypalService PayPal */
-$paypalService = $serviceFactory->createService('paypal', $credentials, $storage, array('profile', 'openid'));
+/** @var PayPal $paypalService */
+$paypalService = $serviceFactory->createService('paypal', $credentials, $storage, ['profile', 'openid']);
 
 if (!empty($_GET['code'])) {
     // This was a callback request from PayPal, get the token
@@ -42,7 +41,6 @@ if (!empty($_GET['code'])) {
 
     // Show some of the resultant data
     echo 'Your unique PayPal user id is: ' . $result['user_id'] . ' and your name is ' . $result['name'];
-
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $paypalService->getAuthorizationUri();
     header('Location: ' . $url);

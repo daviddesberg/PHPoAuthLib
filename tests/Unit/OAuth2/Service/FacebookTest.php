@@ -2,241 +2,241 @@
 
 namespace OAuthTest\Unit\OAuth2\Service;
 
-use OAuth\OAuth2\Service\Facebook;
 use OAuth\Common\Token\TokenInterface;
+use OAuth\OAuth2\Service\Facebook;
+use PHPUnit\Framework\TestCase;
 
-class FacebookTest extends \PHPUnit_Framework_TestCase
+class FacebookTest extends TestCase
 {
     /**
-     * @covers OAuth\OAuth2\Service\Facebook::__construct
+     * @covers \OAuth\OAuth2\Service\Facebook::__construct
      */
-    public function testConstructCorrectInterfaceWithoutCustomUri()
+    public function testConstructCorrectInterfaceWithoutCustomUri(): void
     {
         $service = new Facebook(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\ServiceInterface', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\ServiceInterface', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Facebook::__construct
+     * @covers \OAuth\OAuth2\Service\Facebook::__construct
      */
-    public function testConstructCorrectInstanceWithoutCustomUri()
+    public function testConstructCorrectInstanceWithoutCustomUri(): void
     {
         $service = new Facebook(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Facebook::__construct
+     * @covers \OAuth\OAuth2\Service\Facebook::__construct
      */
-    public function testConstructCorrectInstanceWithCustomUri()
+    public function testConstructCorrectInstanceWithCustomUri(): void
     {
         $service = new Facebook(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-            array(),
-            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
+            [],
+            $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Facebook::__construct
-     * @covers OAuth\OAuth2\Service\Facebook::getAuthorizationEndpoint
+     * @covers \OAuth\OAuth2\Service\Facebook::__construct
+     * @covers \OAuth\OAuth2\Service\Facebook::getAuthorizationEndpoint
      */
-    public function testGetAuthorizationEndpoint()
+    public function testGetAuthorizationEndpoint(): void
     {
         $service = new Facebook(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertSame('https://www.facebook.com/dialog/oauth', $service->getAuthorizationEndpoint()->getAbsoluteUri());
+        self::assertSame('https://www.facebook.com/dialog/oauth', $service->getAuthorizationEndpoint()->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Facebook::__construct
-     * @covers OAuth\OAuth2\Service\Facebook::getAccessTokenEndpoint
+     * @covers \OAuth\OAuth2\Service\Facebook::__construct
+     * @covers \OAuth\OAuth2\Service\Facebook::getAccessTokenEndpoint
      */
-    public function testGetAccessTokenEndpoint()
+    public function testGetAccessTokenEndpoint(): void
     {
         $service = new Facebook(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertSame('https://graph.facebook.com/oauth/access_token', $service->getAccessTokenEndpoint()->getAbsoluteUri());
+        self::assertSame('https://graph.facebook.com/oauth/access_token', $service->getAccessTokenEndpoint()->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Facebook::__construct
+     * @covers \OAuth\OAuth2\Service\Facebook::__construct
      */
-    public function testGetAuthorizationMethod()
+    public function testGetAuthorizationMethod(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(2));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturnArgument(2);
 
-        $token = $this->getMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
-        $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
-        $token->expects($this->once())->method('getAccessToken')->will($this->returnValue('foo'));
+        $token = $this->createMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
+        $token->expects(self::once())->method('getEndOfLife')->willReturn(TokenInterface::EOL_NEVER_EXPIRES);
+        $token->expects(self::once())->method('getAccessToken')->willReturn('foo');
 
-        $storage = $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
-        $storage->expects($this->once())->method('retrieveAccessToken')->will($this->returnValue($token));
+        $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
+        $storage->expects(self::once())->method('retrieveAccessToken')->willReturn($token);
 
         $service = new Facebook(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $storage
         );
 
         $headers = $service->request('https://pieterhordijk.com/my/awesome/path');
 
-        $this->assertTrue(array_key_exists('Authorization', $headers));
-        $this->assertTrue(in_array('OAuth foo', $headers, true));
+        self::assertArrayHasKey('Authorization', $headers);
+        self::assertTrue(in_array('OAuth foo', $headers, true));
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Facebook::__construct
-     * @covers OAuth\OAuth2\Service\Facebook::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Facebook::__construct
+     * @covers \OAuth\OAuth2\Service\Facebook::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseThrowsExceptionOnError()
+    public function testParseAccessTokenResponseThrowsExceptionOnError(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('error=some_error'));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('error=some_error');
 
         $service = new Facebook(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
+        $this->expectException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
         $service->requestAccessToken('foo');
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Facebook::__construct
-     * @covers OAuth\OAuth2\Service\Facebook::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Facebook::__construct
+     * @covers \OAuth\OAuth2\Service\Facebook::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseValidWithoutRefreshToken()
+    public function testParseAccessTokenResponseValidWithoutRefreshToken(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('access_token=foo&expires=bar'));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('access_token=foo&expires=bar');
 
         $service = new Facebook(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Facebook::__construct
-     * @covers OAuth\OAuth2\Service\Facebook::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Facebook::__construct
+     * @covers \OAuth\OAuth2\Service\Facebook::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseValidWithRefreshToken()
+    public function testParseAccessTokenResponseValidWithRefreshToken(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('access_token=foo&expires=bar&refresh_token=baz'));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('access_token=foo&expires=bar&refresh_token=baz');
 
         $service = new Facebook(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Facebook::__construct
-     * @covers OAuth\OAuth2\Service\Facebook::getDialogUri
+     * @covers \OAuth\OAuth2\Service\Facebook::__construct
+     * @covers \OAuth\OAuth2\Service\Facebook::getDialogUri
      */
-    public function testGetDialogUriRedirectUriMissing()
+    public function testGetDialogUriRedirectUriMissing(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
 
         $service = new Facebook(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->setExpectedException('\\OAuth\\Common\\Exception\\Exception');
+        $this->expectException('\\OAuth\\Common\\Exception\\Exception');
 
-        $service->getDialogUri('feed', array());
+        $service->getDialogUri('feed', []);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Facebook::__construct
-     * @covers OAuth\OAuth2\Service\Facebook::getDialogUri
+     * @covers \OAuth\OAuth2\Service\Facebook::__construct
+     * @covers \OAuth\OAuth2\Service\Facebook::getDialogUri
      */
-    public function testGetDialogUriInstanceofUri()
+    public function testGetDialogUriInstanceofUri(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
 
         $service = new Facebook(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $dialogUri = $service->getDialogUri(
             'feed',
-            array(
+            [
                 'redirect_uri' => 'http://www.facebook.com',
-                'state' => 'Random state'
-            )
+                'state' => 'Random state',
+            ]
         );
-        $this->assertInstanceOf('\\OAuth\\Common\\Http\\Uri\\Uri',$dialogUri);
+        self::assertInstanceOf('\\OAuth\\Common\\Http\\Uri\\Uri', $dialogUri);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Facebook::__construct
-     * @covers OAuth\OAuth2\Service\Facebook::getDialogUri
+     * @covers \OAuth\OAuth2\Service\Facebook::__construct
+     * @covers \OAuth\OAuth2\Service\Facebook::getDialogUri
      */
-    public function testGetDialogUriContainsAppIdAndOtherParameters()
+    public function testGetDialogUriContainsAppIdAndOtherParameters(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $credentials = $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
-        $credentials->expects($this->any())->method('getConsumerId')->will($this->returnValue('application_id'));
-
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $credentials = $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
+        $credentials->expects(self::any())->method('getConsumerId')->willReturn('application_id');
 
         $service = new Facebook(
             $credentials,
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
         $dialogUri = $service->getDialogUri(
             'feed',
-            array(
+            [
                 'redirect_uri' => 'http://www.facebook.com',
-                'state' => 'Random state'
-            )
+                'state' => 'Random state',
+            ]
         );
 
         $queryString = $dialogUri->getQuery();
         parse_str($queryString, $queryArray);
 
-        $this->assertArrayHasKey('app_id', $queryArray);
-        $this->assertArrayHasKey('redirect_uri', $queryArray);
-        $this->assertArrayHasKey('state', $queryArray);
+        self::assertArrayHasKey('app_id', $queryArray);
+        self::assertArrayHasKey('redirect_uri', $queryArray);
+        self::assertArrayHasKey('state', $queryArray);
     }
 }

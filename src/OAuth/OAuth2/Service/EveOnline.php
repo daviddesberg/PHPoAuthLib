@@ -1,10 +1,11 @@
 <?php
 /**
  * Contains EveOnline class.
- * PHP version 5.4
- * @copyright 2014 Michael Cummings
+ * PHP version 5.4.
+ *
  * @author    Michael Cummings <mgcummings@yahoo.com>
  */
+
 namespace OAuth\OAuth2\Service;
 
 use OAuth\Common\Consumer\CredentialsInterface;
@@ -17,7 +18,7 @@ use OAuth\Common\Token\TokenInterface;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 
 /**
- * Class EveOnline
+ * Class EveOnline.
  */
 class EveOnline extends AbstractService
 {
@@ -25,8 +26,8 @@ class EveOnline extends AbstractService
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
+        $scopes = [],
+        ?UriInterface $baseApiUri = null
     ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
 
@@ -37,6 +38,7 @@ class EveOnline extends AbstractService
 
     /**
      * Returns the authorization API endpoint.
+     *
      * @return UriInterface
      */
     public function getAuthorizationEndpoint()
@@ -46,6 +48,7 @@ class EveOnline extends AbstractService
 
     /**
      * Returns the access token API endpoint.
+     *
      * @return UriInterface
      */
     public function getAccessTokenEndpoint()
@@ -59,7 +62,6 @@ class EveOnline extends AbstractService
      * @param string $responseBody
      *
      * @return TokenInterface
-     * @throws TokenResponseException
      */
     protected function parseAccessTokenResponse($responseBody)
     {
@@ -82,8 +84,7 @@ class EveOnline extends AbstractService
             unset($data['refresh_token']);
         }
 
-        unset($data['access_token']);
-        unset($data['expires_in']);
+        unset($data['access_token'], $data['expires_in']);
 
         $token->setExtraParams($data);
 

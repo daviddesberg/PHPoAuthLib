@@ -68,7 +68,7 @@ interface UriInterface
     public function getFragment();
 
     /**
-     * Should return URI user info, masking protected user info data according to rfc3986-3.2.1
+     * Should return URI user info, masking protected user info data according to rfc3986-3.2.1.
      *
      * @return string
      */
@@ -80,42 +80,42 @@ interface UriInterface
     public function setUserInfo($userInfo);
 
     /**
-     * Should return the URI Authority, masking protected user info data according to rfc3986-3.2.1
+     * Should return the URI Authority, masking protected user info data according to rfc3986-3.2.1.
      *
      * @return string
      */
     public function getAuthority();
 
     /**
-     * Should return the URI string, masking protected user info data according to rfc3986-3.2.1
+     * Should return the URI string, masking protected user info data according to rfc3986-3.2.1.
      *
      * @return string the URI string with user protected info masked
      */
     public function __toString();
 
     /**
-     * Should return the URI Authority without masking protected user info data
+     * Should return the URI Authority without masking protected user info data.
      *
      * @return string
      */
     public function getRawAuthority();
 
     /**
-     * Should return the URI user info without masking protected user info data
+     * Should return the URI user info without masking protected user info data.
      *
      * @return string
      */
     public function getRawUserInfo();
 
     /**
-     * Build the full URI based on all the properties
+     * Build the full URI based on all the properties.
      *
      * @return string The full URI without masking user info
      */
     public function getAbsoluteUri();
 
     /**
-     * Build the relative URI based on all the properties
+     * Build the relative URI based on all the properties.
      *
      * @return string The relative URI
      */

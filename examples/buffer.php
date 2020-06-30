@@ -1,22 +1,21 @@
 <?php
 
 /**
- * Example of retrieving an authentication token of the Buffer service
+ * Example of retrieving an authentication token of the Buffer service.
  *
  * PHP version 5.4
  *
  * @author     David Desberg <david@daviddesberg.com>
  * @author     Pieter Hordijk <info@pieterhordijk.com>
- * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-use OAuth\OAuth2\Service\Buffer;
-use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Storage\Session;
+use OAuth\OAuth2\Service\Buffer;
 
 /**
- * Bootstrap the example
+ * Bootstrap the example.
  */
 require_once __DIR__ . '/bootstrap.php';
 
@@ -31,7 +30,7 @@ $credentials = new Credentials(
 );
 
 // Instantiate the buffer service using the credentials, http client and storage mechanism for the token
-/** @var $bufferService buffer */
+/** @var buffer $bufferService */
 $bufferService = $serviceFactory->createService('buffer', $credentials, $storage);
 
 if (!empty($_GET['code'])) {
@@ -43,7 +42,6 @@ if (!empty($_GET['code'])) {
 
     // Show some of the resultant data
     echo 'Your unique user id is: ' . $result['id'] . ' and your plan is ' . $result['plan'];
-
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $bufferService->getAuthorizationUri();
     header('Location: ' . $url);

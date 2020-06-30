@@ -1,20 +1,21 @@
 <?php
 
 /**
- * Example of retrieving an authentication token of the Pinterest service
+ * Example of retrieving an authentication token of the Pinterest service.
  *
  * @author  Pedro Amorim <contact@pamorim.fr>
  * @license http://www.opensource.org/licenses/mit-license.html MIT License
- * @link    https://developers.pinterest.com/docs/api/overview/
+ *
+ * @see    https://developers.pinterest.com/docs/api/overview/
  */
 
-use OAuth\OAuth2\Service\Pinterest;
-use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Http\Client\CurlClient;
+use OAuth\Common\Storage\Session;
+use OAuth\OAuth2\Service\Pinterest;
 
 /**
- * Bootstrap the example
+ * Bootstrap the example.
  */
 require_once __DIR__ . '/bootstrap.php';
 
@@ -27,14 +28,14 @@ $credentials = new Credentials(
     $servicesCredentials['pinterest']['secret'],
     preg_replace('$http://$', 'https://', $currentUri->getAbsoluteUri()) // Pinterest require Https callback's url
 );
-$serviceFactory->setHttpClient(new CurlClient);
+$serviceFactory->setHttpClient(new CurlClient());
 // Instantiate the Pinterest service using the credentials, http client and storage mechanism for the token
-/** @var $pinterestService Pinterest */
+/** @var Pinterest $pinterestService */
 $pinterestService = $serviceFactory->createService('pinterest', $credentials, $storage, [Pinterest::SCOPE_READ_PUBLIC]);
 
 if (!empty($_GET['code'])) {
     // retrieve the CSRF state parameter
-    $state = isset($_GET['state']) ? $_GET['state'] : null;
+    $state = $_GET['state'] ?? null;
     // This was a callback request from pinterest, get the token
     $token = $pinterestService->requestAccessToken($_GET['code'], $state);
     // Show some of the resultant data

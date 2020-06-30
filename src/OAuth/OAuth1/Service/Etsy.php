@@ -2,26 +2,25 @@
 
 namespace OAuth\OAuth1\Service;
 
-use OAuth\OAuth1\Signature\SignatureInterface;
-use OAuth\OAuth1\Token\StdOAuth1Token;
+use OAuth\Common\Consumer\CredentialsInterface;
+use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\OAuth1\Signature\SignatureInterface;
+use OAuth\OAuth1\Token\StdOAuth1Token;
 
 class Etsy extends AbstractService
 {
-
-    protected $scopes = array();
+    protected $scopes = [];
 
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
         SignatureInterface $signature,
-        UriInterface $baseApiUri = null
+        ?UriInterface $baseApiUri = null
     ) {
         parent::__construct($credentials, $httpClient, $storage, $signature, $baseApiUri);
 
@@ -105,24 +104,26 @@ class Etsy extends AbstractService
     }
 
     /**
-     * Set the scopes for permissions
+     * Set the scopes for permissions.
+     *
      * @see https://www.etsy.com/developers/documentation/getting_started/oauth#section_permission_scopes
-     * @param array $scopes
      *
      * @return $this
      */
     public function setScopes(array $scopes)
     {
         if (!is_array($scopes)) {
-            $scopes = array();
+            $scopes = [];
         }
 
         $this->scopes = $scopes;
+
         return $this;
     }
 
     /**
-     * Return the defined scopes
+     * Return the defined scopes.
+     *
      * @return array
      */
     public function getScopes()

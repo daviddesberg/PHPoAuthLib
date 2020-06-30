@@ -2,40 +2,39 @@
 
 namespace OAuth\OAuth2\Service;
 
-use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
+use OAuth\OAuth2\Token\StdOAuth2Token;
 
 class Yahoo extends AbstractService
 {
-
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function getAuthorizationEndpoint()
     {
         return new Uri('https://api.login.yahoo.com/oauth2/request_auth');
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function getAccessTokenEndpoint()
     {
         return new Uri('https://api.login.yahoo.com/oauth2/get_token');
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     protected function getAuthorizationMethod()
     {
         return static::AUTHORIZATION_METHOD_HEADER_BEARER;
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     protected function parseAccessTokenResponse($responseBody)
     {
         $data = json_decode($responseBody, true);
@@ -55,8 +54,7 @@ class Yahoo extends AbstractService
             unset($data['refresh_token']);
         }
 
-        unset($data['access_token']);
-        unset($data['expires_in']);
+        unset($data['access_token'], $data['expires_in']);
 
         $token->setExtraParams($data);
 
@@ -64,13 +62,14 @@ class Yahoo extends AbstractService
     }
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     protected function getExtraOAuthHeaders()
     {
         $encodedCredentials = base64_encode(
             $this->credentials->getConsumerId() . ':' . $this->credentials->getConsumerSecret()
         );
-        return array('Authorization' => 'Basic ' . $encodedCredentials);
+
+        return ['Authorization' => 'Basic ' . $encodedCredentials];
     }
 }

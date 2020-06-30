@@ -1,22 +1,21 @@
 <?php
 
 /**
- * Example of retrieving an authentication token of the FitBit service
+ * Example of retrieving an authentication token of the FitBit service.
  *
  * PHP version 5.4
  *
  * @author     David Desberg <david@daviddesberg.com>
  * @author     Pieter Hordijk <info@pieterhordijk.com>
- * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-use OAuth\OAuth1\Service\FitBit;
-use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Storage\Session;
+use OAuth\OAuth1\Service\FitBit;
 
 /**
- * Bootstrap the example
+ * Bootstrap the example.
  */
 require_once __DIR__ . '/bootstrap.php';
 
@@ -31,7 +30,7 @@ $credentials = new Credentials(
 );
 
 // Instantiate the FitBit service using the credentials, http client and storage mechanism for the token
-/** @var $fitbitService FitBit */
+/** @var FitBit $fitbitService */
 $fitbitService = $serviceFactory->createService('FitBit', $credentials, $storage);
 
 if (!empty($_GET['oauth_token'])) {
@@ -48,12 +47,11 @@ if (!empty($_GET['oauth_token'])) {
     $result = json_decode($fitbitService->request('user/-/profile.json'));
 
     echo 'result: <pre>' . print_r($result, true) . '</pre>';
-
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     // extra request needed for oauth1 to request a request token :-)
     $token = $fitbitService->requestRequestToken();
 
-    $url = $fitbitService->getAuthorizationUri(array('oauth_token' => $token->getRequestToken()));
+    $url = $fitbitService->getAuthorizationUri(['oauth_token' => $token->getRequestToken()]);
     header('Location: ' . $url);
 } else {
     $url = $currentUri->getRelativeUri() . '?go=go';

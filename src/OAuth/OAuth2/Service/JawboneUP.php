@@ -2,59 +2,58 @@
 
 namespace OAuth\OAuth2\Service;
 
-use OAuth\OAuth2\Token\StdOAuth2Token;
-use OAuth\Common\Http\Exception\TokenResponseException;
-use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Client\ClientInterface;
-use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\Common\Http\Exception\TokenResponseException;
+use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\OAuth2\Token\StdOAuth2Token;
 
 /**
  * Jawbone UP service.
  *
  * @author Andrii Gakhov <andrii.gakhov@gmail.com>
- * @link https://jawbone.com/up/developer/authentication
+ *
+ * @see https://jawbone.com/up/developer/authentication
  */
 class JawboneUP extends AbstractService
 {
     /**
-     * Defined scopes
+     * Defined scopes.
      *
-     *
-     * @link https://jawbone.com/up/developer/authentication
+     * @see https://jawbone.com/up/developer/authentication
      */
     // general information scopes
-    const SCOPE_BASIC_READ          = 'basic_read';
-    const SCOPE_EXTENDED_READ       = 'extended_read';
-    const SCOPE_LOCATION_READ       = 'location_read';
-    const SCOPE_FRIENDS_READ        = 'friends_read';
+    const SCOPE_BASIC_READ = 'basic_read';
+    const SCOPE_EXTENDED_READ = 'extended_read';
+    const SCOPE_LOCATION_READ = 'location_read';
+    const SCOPE_FRIENDS_READ = 'friends_read';
     // mood scopes
-    const SCOPE_MOOD_READ           = 'mood_read';
-    const SCOPE_MOOD_WRITE          = 'mood_write';
+    const SCOPE_MOOD_READ = 'mood_read';
+    const SCOPE_MOOD_WRITE = 'mood_write';
     // move scopes
-    const SCOPE_MOVE_READ           = 'move_read';
-    const SCOPE_MOVE_WRITE          = 'move_write';
+    const SCOPE_MOVE_READ = 'move_read';
+    const SCOPE_MOVE_WRITE = 'move_write';
     // sleep scopes
-    const SCOPE_SLEEP_READ          = 'sleep_read';
-    const SCOPE_SLEEP_WRITE         = 'sleep_write';
+    const SCOPE_SLEEP_READ = 'sleep_read';
+    const SCOPE_SLEEP_WRITE = 'sleep_write';
     // meal scopes
-    const SCOPE_MEAL_READ           = 'meal_read';
-    const SCOPE_MEAL_WRITE          = 'meal_write';
+    const SCOPE_MEAL_READ = 'meal_read';
+    const SCOPE_MEAL_WRITE = 'meal_write';
     // weight scopes
-    const SCOPE_WEIGHT_READ         = 'weight_read';
-    const SCOPE_WEIGHT_WRITE        = 'weight_write';
+    const SCOPE_WEIGHT_READ = 'weight_read';
+    const SCOPE_WEIGHT_WRITE = 'weight_write';
     // generic event scopes
-    const SCOPE_GENERIC_EVENT_READ  = 'generic_event_read';
+    const SCOPE_GENERIC_EVENT_READ = 'generic_event_read';
     const SCOPE_GENERIC_EVENT_WRITE = 'generic_event_write';
-
 
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
+        $scopes = [],
+        ?UriInterface $baseApiUri = null
     ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
 
@@ -66,15 +65,15 @@ class JawboneUP extends AbstractService
     /**
      * {@inheritdoc}
      */
-    public function getAuthorizationUri(array $additionalParameters = array())
+    public function getAuthorizationUri(array $additionalParameters = [])
     {
         $parameters = array_merge(
             $additionalParameters,
-            array(
-                'client_id'     => $this->credentials->getConsumerId(),
-                'redirect_uri'  => $this->credentials->getCallbackUrl(),
+            [
+                'client_id' => $this->credentials->getConsumerId(),
+                'redirect_uri' => $this->credentials->getCallbackUrl(),
                 'response_type' => 'code',
-            )
+            ]
         );
 
         $parameters['scope'] = implode(' ', $this->scopes);
@@ -134,8 +133,7 @@ class JawboneUP extends AbstractService
             unset($data['refresh_token']);
         }
 
-        unset($data['access_token']);
-        unset($data['expires_in']);
+        unset($data['access_token'], $data['expires_in']);
 
         $token->setExtraParams($data);
 

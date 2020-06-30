@@ -1,23 +1,22 @@
 <?php
 
 /**
- * Example of retrieving an authentication token of the DeviantArt service
+ * Example of retrieving an authentication token of the DeviantArt service.
  *
  * PHP version 5.4
  *
  * @author     Benjamin Bender <bb@codepoet.de>
  * @author     David Desberg <david@daviddesberg.com>
  * @author     Pieter Hordijk <info@pieterhordijk.com>
- * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-use OAuth\OAuth2\Service\Facebook;
-use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Storage\Session;
+use OAuth\OAuth2\Service\Facebook;
 
 /**
- * Bootstrap the example
+ * Bootstrap the example.
  */
 require_once __DIR__ . '/bootstrap.php';
 
@@ -32,8 +31,8 @@ $credentials = new Credentials(
 );
 
 // Instantiate the DeviantArt service using the credentials, http client and storage mechanism for the token
-/** @var $deviantArtService DeviantArt */
-$deviantArtService = $serviceFactory->createService('DeviantArt', $credentials, $storage, array('browse'));
+/** @var DeviantArt $deviantArtService */
+$deviantArtService = $serviceFactory->createService('DeviantArt', $credentials, $storage, ['browse']);
 
 if (!empty($_GET['code'])) {
     // This was a callback request from facebook, get the token
@@ -44,7 +43,6 @@ if (!empty($_GET['code'])) {
 
     // Show some of the resultant data
     echo 'Your DeviantArt username is: ' . $result['username'];
-
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $deviantArtService->getAuthorizationUri();
     header('Location: ' . $url);

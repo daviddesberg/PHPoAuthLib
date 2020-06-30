@@ -3,49 +3,40 @@
 namespace OAuth\Unit\Common\Consumer;
 
 use OAuth\Common\Consumer\Credentials;
+use PHPUnit\Framework\TestCase;
 
-class CredentialsTest extends \PHPUnit_Framework_TestCase
+/**
+ * Class CredentialsTest.
+ *
+ * @coversDefaultClass \Credentials
+ */
+class CredentialsTest extends TestCase
 {
-    /**
-     * @covers OAuth\Common\Consumer\Credentials::__construct
-     */
-    public function testConstructCorrectInterface()
+    public function testConstructCorrectInterface(): void
     {
         $credentials = new Credentials('foo', 'bar', 'baz');
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Consumer\\CredentialsInterface', $credentials);
+        self::assertInstanceOf('\\OAuth\\Common\\Consumer\\CredentialsInterface', $credentials);
     }
 
-    /**
-     * @covers OAuth\Common\Consumer\Credentials::__construct
-     * @covers OAuth\Common\Consumer\Credentials::getConsumerId
-     */
-    public function testGetConsumerId()
+    public function testGetConsumerId(): void
     {
         $credentials = new Credentials('foo', 'bar', 'baz');
 
-        $this->assertSame('foo', $credentials->getConsumerId());
+        self::assertSame('foo', $credentials->getConsumerId());
     }
 
-    /**
-     * @covers OAuth\Common\Consumer\Credentials::__construct
-     * @covers OAuth\Common\Consumer\Credentials::getConsumerSecret
-     */
-    public function testGetConsumerSecret()
+    public function testGetConsumerSecret(): void
     {
         $credentials = new Credentials('foo', 'bar', 'baz');
 
-        $this->assertSame('bar', $credentials->getConsumerSecret());
+        self::assertSame('bar', $credentials->getConsumerSecret());
     }
 
-    /**
-     * @covers OAuth\Common\Consumer\Credentials::__construct
-     * @covers OAuth\Common\Consumer\Credentials::getCallbackUrl
-     */
-    public function testGetCallbackUrl()
+    public function testGetCallbackUrl(): void
     {
         $credentials = new Credentials('foo', 'bar', 'baz');
 
-        $this->assertSame('baz', $credentials->getCallbackUrl());
+        self::assertSame('baz', $credentials->getCallbackUrl());
     }
 }

@@ -3,323 +3,317 @@
 namespace OAuthTest\Unit\OAuth1\Signature;
 
 use OAuth\OAuth1\Signature\Signature;
+use PHPUnit\Framework\TestCase;
 
-class SignatureTest extends \PHPUnit_Framework_TestCase
+class SignatureTest extends TestCase
 {
     /**
-     * @covers OAuth\OAuth1\Signature\Signature::__construct
+     * @covers \OAuth\OAuth1\Signature\Signature::__construct
      */
-    public function testConstructCorrectInterface()
+    public function testConstructCorrectInterface(): void
     {
-        $signature = new Signature($this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'));
+        $signature = new Signature($this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'));
 
-        $this->assertInstanceOf('\\OAuth\\OAuth1\\Signature\\SignatureInterface', $signature);
+        self::assertInstanceOf('\\OAuth\\OAuth1\\Signature\\SignatureInterface', $signature);
     }
 
     /**
-     * @covers OAuth\OAuth1\Signature\Signature::__construct
-     * @covers OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
+     * @covers \OAuth\OAuth1\Signature\Signature::__construct
+     * @covers \OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
      */
-    public function testSetHashingAlgorithm()
+    public function testSetHashingAlgorithm(): void
     {
-        $signature = new Signature($this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'));
+        $signature = new Signature($this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'));
 
-        $this->assertNull($signature->setHashingAlgorithm('foo'));
+        self::assertNull($signature->setHashingAlgorithm('foo'));
     }
 
     /**
-     * @covers OAuth\OAuth1\Signature\Signature::__construct
-     * @covers OAuth\OAuth1\Signature\Signature::setTokenSecret
+     * @covers \OAuth\OAuth1\Signature\Signature::__construct
+     * @covers \OAuth\OAuth1\Signature\Signature::setTokenSecret
      */
-    public function testSetTokenSecret()
+    public function testSetTokenSecret(): void
     {
-        $signature = new Signature($this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'));
+        $signature = new Signature($this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'));
 
-        $this->assertNull($signature->setTokenSecret('foo'));
+        self::assertNull($signature->setTokenSecret('foo'));
     }
 
     /**
-     * @covers OAuth\OAuth1\Signature\Signature::__construct
-     * @covers OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
-     * @covers OAuth\OAuth1\Signature\Signature::setTokenSecret
-     * @covers OAuth\OAuth1\Signature\Signature::getSignature
-     * @covers OAuth\OAuth1\Signature\Signature::buildSignatureDataString
-     * @covers OAuth\OAuth1\Signature\Signature::hash
-     * @covers OAuth\OAuth1\Signature\Signature::getSigningKey
+     * @covers \OAuth\OAuth1\Signature\Signature::__construct
+     * @covers \OAuth\OAuth1\Signature\Signature::buildSignatureDataString
+     * @covers \OAuth\OAuth1\Signature\Signature::getSignature
+     * @covers \OAuth\OAuth1\Signature\Signature::getSigningKey
+     * @covers \OAuth\OAuth1\Signature\Signature::hash
+     * @covers \OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
+     * @covers \OAuth\OAuth1\Signature\Signature::setTokenSecret
      */
-    public function testGetSignatureBareUri()
+    public function testGetSignatureBareUri(): void
     {
-        $credentials = $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
-        $credentials->expects($this->any())
+        $credentials = $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
+        $credentials->expects(self::any())
             ->method('getConsumerSecret')
-            ->will($this->returnValue('foo'));
-
+            ->willReturn('foo');
 
         $signature = new Signature($credentials);
 
         $signature->setHashingAlgorithm('HMAC-SHA1');
         $signature->setTokenSecret('foo');
 
-        $uri = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $uri->expects($this->any())
+        $uri = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $uri->expects(self::any())
             ->method('getQuery')
-            ->will($this->returnValue(''));
-        $uri->expects($this->any())
+            ->willReturn('');
+        $uri->expects(self::any())
             ->method('getScheme')
-            ->will($this->returnValue('http'));
-        $uri->expects($this->any())
+            ->willReturn('http');
+        $uri->expects(self::any())
             ->method('getRawAuthority')
-            ->will($this->returnValue(''));
-        $uri->expects($this->any())
+            ->willReturn('');
+        $uri->expects(self::any())
             ->method('getPath')
-            ->will($this->returnValue('/foo'));
+            ->willReturn('/foo');
 
-        $this->assertSame('uoCpiII/Lg/cPiF0XrU2pj4eGFQ=', $signature->getSignature($uri, array('pee' => 'haa')));
+        self::assertSame('uoCpiII/Lg/cPiF0XrU2pj4eGFQ=', $signature->getSignature($uri, ['pee' => 'haa']));
     }
 
     /**
-     * @covers OAuth\OAuth1\Signature\Signature::__construct
-     * @covers OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
-     * @covers OAuth\OAuth1\Signature\Signature::setTokenSecret
-     * @covers OAuth\OAuth1\Signature\Signature::getSignature
-     * @covers OAuth\OAuth1\Signature\Signature::buildSignatureDataString
-     * @covers OAuth\OAuth1\Signature\Signature::hash
-     * @covers OAuth\OAuth1\Signature\Signature::getSigningKey
+     * @covers \OAuth\OAuth1\Signature\Signature::__construct
+     * @covers \OAuth\OAuth1\Signature\Signature::buildSignatureDataString
+     * @covers \OAuth\OAuth1\Signature\Signature::getSignature
+     * @covers \OAuth\OAuth1\Signature\Signature::getSigningKey
+     * @covers \OAuth\OAuth1\Signature\Signature::hash
+     * @covers \OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
+     * @covers \OAuth\OAuth1\Signature\Signature::setTokenSecret
      */
-    public function testGetSignatureWithQueryString()
+    public function testGetSignatureWithQueryString(): void
     {
-        $credentials = $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
-        $credentials->expects($this->any())
+        $credentials = $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
+        $credentials->expects(self::any())
             ->method('getConsumerSecret')
-            ->will($this->returnValue('foo'));
-
+            ->willReturn('foo');
 
         $signature = new Signature($credentials);
 
         $signature->setHashingAlgorithm('HMAC-SHA1');
         $signature->setTokenSecret('foo');
 
-        $uri = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $uri->expects($this->any())
+        $uri = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $uri->expects(self::any())
             ->method('getQuery')
-            ->will($this->returnValue('param1=value1'));
-        $uri->expects($this->any())
+            ->willReturn('param1=value1');
+        $uri->expects(self::any())
             ->method('getScheme')
-            ->will($this->returnValue('http'));
-        $uri->expects($this->any())
+            ->willReturn('http');
+        $uri->expects(self::any())
             ->method('getRawAuthority')
-            ->will($this->returnValue(''));
-        $uri->expects($this->any())
+            ->willReturn('');
+        $uri->expects(self::any())
             ->method('getPath')
-            ->will($this->returnValue('/foo'));
+            ->willReturn('/foo');
 
-        $this->assertSame('LxtD+WjJBRppIUvEI79iQ7I0hSo=', $signature->getSignature($uri, array('pee' => 'haa')));
+        self::assertSame('LxtD+WjJBRppIUvEI79iQ7I0hSo=', $signature->getSignature($uri, ['pee' => 'haa']));
     }
 
     /**
-     * @covers OAuth\OAuth1\Signature\Signature::__construct
-     * @covers OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
-     * @covers OAuth\OAuth1\Signature\Signature::setTokenSecret
-     * @covers OAuth\OAuth1\Signature\Signature::getSignature
-     * @covers OAuth\OAuth1\Signature\Signature::buildSignatureDataString
-     * @covers OAuth\OAuth1\Signature\Signature::hash
-     * @covers OAuth\OAuth1\Signature\Signature::getSigningKey
+     * @covers \OAuth\OAuth1\Signature\Signature::__construct
+     * @covers \OAuth\OAuth1\Signature\Signature::buildSignatureDataString
+     * @covers \OAuth\OAuth1\Signature\Signature::getSignature
+     * @covers \OAuth\OAuth1\Signature\Signature::getSigningKey
+     * @covers \OAuth\OAuth1\Signature\Signature::hash
+     * @covers \OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
+     * @covers \OAuth\OAuth1\Signature\Signature::setTokenSecret
      */
-    public function testGetSignatureWithAuthority()
+    public function testGetSignatureWithAuthority(): void
     {
-        $credentials = $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
-        $credentials->expects($this->any())
+        $credentials = $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
+        $credentials->expects(self::any())
             ->method('getConsumerSecret')
-            ->will($this->returnValue('foo'));
-
+            ->willReturn('foo');
 
         $signature = new Signature($credentials);
 
         $signature->setHashingAlgorithm('HMAC-SHA1');
         $signature->setTokenSecret('foo');
 
-        $uri = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $uri->expects($this->any())
+        $uri = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $uri->expects(self::any())
             ->method('getQuery')
-            ->will($this->returnValue('param1=value1'));
-        $uri->expects($this->any())
+            ->willReturn('param1=value1');
+        $uri->expects(self::any())
             ->method('getScheme')
-            ->will($this->returnValue('http'));
-        $uri->expects($this->any())
+            ->willReturn('http');
+        $uri->expects(self::any())
             ->method('getRawAuthority')
-            ->will($this->returnValue('peehaa:pass'));
-        $uri->expects($this->any())
+            ->willReturn('peehaa:pass');
+        $uri->expects(self::any())
             ->method('getPath')
-            ->will($this->returnValue('/foo'));
+            ->willReturn('/foo');
 
-        $this->assertSame('MHvkRndIntLrxiPkjkiCNsMEqv4=', $signature->getSignature($uri, array('pee' => 'haa')));
+        self::assertSame('MHvkRndIntLrxiPkjkiCNsMEqv4=', $signature->getSignature($uri, ['pee' => 'haa']));
     }
 
     /**
-     * @covers OAuth\OAuth1\Signature\Signature::__construct
-     * @covers OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
-     * @covers OAuth\OAuth1\Signature\Signature::setTokenSecret
-     * @covers OAuth\OAuth1\Signature\Signature::getSignature
-     * @covers OAuth\OAuth1\Signature\Signature::buildSignatureDataString
-     * @covers OAuth\OAuth1\Signature\Signature::hash
-     * @covers OAuth\OAuth1\Signature\Signature::getSigningKey
+     * @covers \OAuth\OAuth1\Signature\Signature::__construct
+     * @covers \OAuth\OAuth1\Signature\Signature::buildSignatureDataString
+     * @covers \OAuth\OAuth1\Signature\Signature::getSignature
+     * @covers \OAuth\OAuth1\Signature\Signature::getSigningKey
+     * @covers \OAuth\OAuth1\Signature\Signature::hash
+     * @covers \OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
+     * @covers \OAuth\OAuth1\Signature\Signature::setTokenSecret
      */
-    public function testGetSignatureWithBarePathNonExplicitTrailingHostSlash()
+    public function testGetSignatureWithBarePathNonExplicitTrailingHostSlash(): void
     {
-        $credentials = $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
-        $credentials->expects($this->any())
+        $credentials = $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
+        $credentials->expects(self::any())
             ->method('getConsumerSecret')
-            ->will($this->returnValue('foo'));
-
+            ->willReturn('foo');
 
         $signature = new Signature($credentials);
 
         $signature->setHashingAlgorithm('HMAC-SHA1');
         $signature->setTokenSecret('foo');
 
-        $uri = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $uri->expects($this->any())
+        $uri = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $uri->expects(self::any())
             ->method('getQuery')
-            ->will($this->returnValue('param1=value1'));
-        $uri->expects($this->any())
+            ->willReturn('param1=value1');
+        $uri->expects(self::any())
             ->method('getScheme')
-            ->will($this->returnValue('http'));
-        $uri->expects($this->any())
+            ->willReturn('http');
+        $uri->expects(self::any())
             ->method('getRawAuthority')
-            ->will($this->returnValue('peehaa:pass'));
-        $uri->expects($this->any())
+            ->willReturn('peehaa:pass');
+        $uri->expects(self::any())
             ->method('getPath')
-            ->will($this->returnValue('/'));
-        $uri->expects($this->any())
+            ->willReturn('/');
+        $uri->expects(self::any())
             ->method('hasExplicitTrailingHostSlash')
-            ->will($this->returnValue(false));
+            ->willReturn(false);
 
-        $this->assertSame('iFELDoiI5Oj9ixB3kHzoPvBpq0w=', $signature->getSignature($uri, array('pee' => 'haa')));
+        self::assertSame('iFELDoiI5Oj9ixB3kHzoPvBpq0w=', $signature->getSignature($uri, ['pee' => 'haa']));
     }
 
     /**
-     * @covers OAuth\OAuth1\Signature\Signature::__construct
-     * @covers OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
-     * @covers OAuth\OAuth1\Signature\Signature::setTokenSecret
-     * @covers OAuth\OAuth1\Signature\Signature::getSignature
-     * @covers OAuth\OAuth1\Signature\Signature::buildSignatureDataString
-     * @covers OAuth\OAuth1\Signature\Signature::hash
-     * @covers OAuth\OAuth1\Signature\Signature::getSigningKey
+     * @covers \OAuth\OAuth1\Signature\Signature::__construct
+     * @covers \OAuth\OAuth1\Signature\Signature::buildSignatureDataString
+     * @covers \OAuth\OAuth1\Signature\Signature::getSignature
+     * @covers \OAuth\OAuth1\Signature\Signature::getSigningKey
+     * @covers \OAuth\OAuth1\Signature\Signature::hash
+     * @covers \OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
+     * @covers \OAuth\OAuth1\Signature\Signature::setTokenSecret
      */
-    public function testGetSignatureWithBarePathWithExplicitTrailingHostSlash()
+    public function testGetSignatureWithBarePathWithExplicitTrailingHostSlash(): void
     {
-        $credentials = $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
-        $credentials->expects($this->any())
+        $credentials = $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
+        $credentials->expects(self::any())
             ->method('getConsumerSecret')
-            ->will($this->returnValue('foo'));
-
+            ->willReturn('foo');
 
         $signature = new Signature($credentials);
 
         $signature->setHashingAlgorithm('HMAC-SHA1');
         $signature->setTokenSecret('foo');
 
-        $uri = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $uri->expects($this->any())
+        $uri = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $uri->expects(self::any())
             ->method('getQuery')
-            ->will($this->returnValue('param1=value1'));
-        $uri->expects($this->any())
+            ->willReturn('param1=value1');
+        $uri->expects(self::any())
             ->method('getScheme')
-            ->will($this->returnValue('http'));
-        $uri->expects($this->any())
+            ->willReturn('http');
+        $uri->expects(self::any())
             ->method('getRawAuthority')
-            ->will($this->returnValue('peehaa:pass'));
-        $uri->expects($this->any())
+            ->willReturn('peehaa:pass');
+        $uri->expects(self::any())
             ->method('getPath')
-            ->will($this->returnValue('/'));
-        $uri->expects($this->any())
+            ->willReturn('/');
+        $uri->expects(self::any())
             ->method('hasExplicitTrailingHostSlash')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
-        $this->assertSame('IEhUsArSTLvbQ3QYr0zzn+Rxpjg=', $signature->getSignature($uri, array('pee' => 'haa')));
+        self::assertSame('IEhUsArSTLvbQ3QYr0zzn+Rxpjg=', $signature->getSignature($uri, ['pee' => 'haa']));
     }
 
     /**
-     * @covers OAuth\OAuth1\Signature\Signature::__construct
-     * @covers OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
-     * @covers OAuth\OAuth1\Signature\Signature::setTokenSecret
-     * @covers OAuth\OAuth1\Signature\Signature::getSignature
-     * @covers OAuth\OAuth1\Signature\Signature::buildSignatureDataString
-     * @covers OAuth\OAuth1\Signature\Signature::hash
-     * @covers OAuth\OAuth1\Signature\Signature::getSigningKey
+     * @covers \OAuth\OAuth1\Signature\Signature::__construct
+     * @covers \OAuth\OAuth1\Signature\Signature::buildSignatureDataString
+     * @covers \OAuth\OAuth1\Signature\Signature::getSignature
+     * @covers \OAuth\OAuth1\Signature\Signature::getSigningKey
+     * @covers \OAuth\OAuth1\Signature\Signature::hash
+     * @covers \OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
+     * @covers \OAuth\OAuth1\Signature\Signature::setTokenSecret
      */
-    public function testGetSignatureNoTokenSecretSet()
+    public function testGetSignatureNoTokenSecretSet(): void
     {
-        $credentials = $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
-        $credentials->expects($this->any())
+        $credentials = $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
+        $credentials->expects(self::any())
             ->method('getConsumerSecret')
-            ->will($this->returnValue('foo'));
-
+            ->willReturn('foo');
 
         $signature = new Signature($credentials);
 
         $signature->setHashingAlgorithm('HMAC-SHA1');
 
-        $uri = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $uri->expects($this->any())
+        $uri = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $uri->expects(self::any())
             ->method('getQuery')
-            ->will($this->returnValue('param1=value1'));
-        $uri->expects($this->any())
+            ->willReturn('param1=value1');
+        $uri->expects(self::any())
             ->method('getScheme')
-            ->will($this->returnValue('http'));
-        $uri->expects($this->any())
+            ->willReturn('http');
+        $uri->expects(self::any())
             ->method('getRawAuthority')
-            ->will($this->returnValue('peehaa:pass'));
-        $uri->expects($this->any())
+            ->willReturn('peehaa:pass');
+        $uri->expects(self::any())
             ->method('getPath')
-            ->will($this->returnValue('/'));
-        $uri->expects($this->any())
+            ->willReturn('/');
+        $uri->expects(self::any())
             ->method('hasExplicitTrailingHostSlash')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
-        $this->assertSame('YMHF7FYmLq7wzGnnHWYtd1VoBBE=', $signature->getSignature($uri, array('pee' => 'haa')));
+        self::assertSame('YMHF7FYmLq7wzGnnHWYtd1VoBBE=', $signature->getSignature($uri, ['pee' => 'haa']));
     }
 
     /**
-     * @covers OAuth\OAuth1\Signature\Signature::__construct
-     * @covers OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
-     * @covers OAuth\OAuth1\Signature\Signature::setTokenSecret
-     * @covers OAuth\OAuth1\Signature\Signature::getSignature
-     * @covers OAuth\OAuth1\Signature\Signature::buildSignatureDataString
-     * @covers OAuth\OAuth1\Signature\Signature::hash
-     * @covers OAuth\OAuth1\Signature\Signature::getSigningKey
+     * @covers \OAuth\OAuth1\Signature\Signature::__construct
+     * @covers \OAuth\OAuth1\Signature\Signature::buildSignatureDataString
+     * @covers \OAuth\OAuth1\Signature\Signature::getSignature
+     * @covers \OAuth\OAuth1\Signature\Signature::getSigningKey
+     * @covers \OAuth\OAuth1\Signature\Signature::hash
+     * @covers \OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
+     * @covers \OAuth\OAuth1\Signature\Signature::setTokenSecret
      */
-    public function testGetSignatureThrowsExceptionOnUnsupportedAlgo()
+    public function testGetSignatureThrowsExceptionOnUnsupportedAlgo(): void
     {
-        $this->setExpectedException('\\OAuth\\OAuth1\\Signature\\Exception\\UnsupportedHashAlgorithmException');
+        $this->expectException('\\OAuth\\OAuth1\\Signature\\Exception\\UnsupportedHashAlgorithmException');
 
-        $credentials = $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
-        $credentials->expects($this->any())
+        $credentials = $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface');
+        $credentials->expects(self::any())
             ->method('getConsumerSecret')
-            ->will($this->returnValue('foo'));
-
+            ->willReturn('foo');
 
         $signature = new Signature($credentials);
 
         $signature->setHashingAlgorithm('UnsupportedAlgo');
 
-        $uri = $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
-        $uri->expects($this->any())
+        $uri = $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface');
+        $uri->expects(self::any())
             ->method('getQuery')
-            ->will($this->returnValue('param1=value1'));
-        $uri->expects($this->any())
+            ->willReturn('param1=value1');
+        $uri->expects(self::any())
             ->method('getScheme')
-            ->will($this->returnValue('http'));
-        $uri->expects($this->any())
+            ->willReturn('http');
+        $uri->expects(self::any())
             ->method('getRawAuthority')
-            ->will($this->returnValue('peehaa:pass'));
-        $uri->expects($this->any())
+            ->willReturn('peehaa:pass');
+        $uri->expects(self::any())
             ->method('getPath')
-            ->will($this->returnValue('/'));
-        $uri->expects($this->any())
+            ->willReturn('/');
+        $uri->expects(self::any())
             ->method('hasExplicitTrailingHostSlash')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
-        $signature->getSignature($uri, array('pee' => 'haa'));
+        $signature->getSignature($uri, ['pee' => 'haa']);
     }
 }

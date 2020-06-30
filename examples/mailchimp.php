@@ -1,24 +1,23 @@
 <?php
 
 /**
- * Example of retrieving an authentication token of the Mailchimp service
+ * Example of retrieving an authentication token of the Mailchimp service.
  *
  * PHP version 5.4
  *
  * @author     David Desberg <david@daviddesberg.com>
  * @author     Hannes Van De Vreken <vandevreken.hannes@gmail.com>
- * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-use OAuth\OAuth2\Service\Mailchimp;
-use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Storage\Session;
+use OAuth\OAuth2\Service\Mailchimp;
 
 $_SERVER['SERVER_PORT'] = 80;
 
 /**
- * Bootstrap the example
+ * Bootstrap the example.
  */
 require_once __DIR__ . '/bootstrap.php';
 
@@ -33,8 +32,8 @@ $credentials = new Credentials(
 );
 
 // Instantiate the Mailchimp service using the credentials, http client and storage mechanism for the token
-/** @var $mailchimpService Mailchimp */
-$mailchimpService = $serviceFactory->createService('mailchimp', $credentials, $storage, array());
+/** @var Mailchimp $mailchimpService */
+$mailchimpService = $serviceFactory->createService('mailchimp', $credentials, $storage, []);
 
 if (!empty($_GET['code'])) {
     // This was a callback request from mailchimp, get the token
@@ -44,8 +43,8 @@ if (!empty($_GET['code'])) {
     $result = $mailchimpService->request('/users/profile.json');
 
     header('Content-Type: application/json');
-    echo $result; exit;
-
+    echo $result;
+    exit;
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $mailchimpService->getAuthorizationUri();
     header('Location: ' . $url);

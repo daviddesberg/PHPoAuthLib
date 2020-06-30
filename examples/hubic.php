@@ -7,16 +7,17 @@
  *
  * @author      Pedro Amorim <contact@pamorim.fr>
  * @license     http://www.opensource.org/licenses/mit-license.html  MIT License
- * @link        https://api.hubic.com/docs/
+ *
+ * @see        https://api.hubic.com/docs/
  */
 
-use OAuth\OAuth2\Service\Hubic;
-use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Http\Client\CurlClient;
+use OAuth\Common\Storage\Session;
+use OAuth\OAuth2\Service\Hubic;
 
 /**
- * Bootstrap the example
+ * Bootstrap the example.
  */
 require_once __DIR__ . '/bootstrap.php';
 
@@ -30,17 +31,17 @@ $credentials = new Credentials(
     $currentUri->getAbsoluteUri()
 );
 
-$scopes = array(
+$scopes = [
     Hubic::SCOPE_USAGE_GET,
     Hubic::SCOPE_ACCOUNT_GET,
     Hubic::SCOPE_GETALLLINKS_GET,
     Hubic::SCOPE_LINKS_ALL,
-);
+];
 
-$serviceFactory->setHttpClient(new CurlClient);
+$serviceFactory->setHttpClient(new CurlClient());
 
 // Instantiate the Hubic service using the credentials, http client and storage mechanism for the token
-/** @var $hubicService Hubic */
+/** @var Hubic $hubicService */
 $hubicService = $serviceFactory->createService('hubic', $credentials, $storage, $scopes);
 
 if (!empty($_GET['code'])) {
@@ -50,8 +51,7 @@ if (!empty($_GET['code'])) {
     // Send a request with it
     $result = json_decode($hubicService->request('https://api.hubic.com/1.0/account'), true);
     // Show some of the resultant data
-    echo 'Hello '.ucfirst($result['firstname']).' '.strtoupper($result['lastname']).' ('.$result['email'].')';
-
+    echo 'Hello ' . ucfirst($result['firstname']) . ' ' . strtoupper($result['lastname']) . ' (' . $result['email'] . ')';
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     $url = $hubicService->getAuthorizationUri();
     // var_dump($url);

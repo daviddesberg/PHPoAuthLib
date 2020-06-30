@@ -2,188 +2,189 @@
 
 namespace OAuthTest\Unit\Common\Token;
 
-use \OAuth\Common\Token\AbstractToken;
+use OAuth\Common\Token\AbstractToken;
+use PHPUnit\Framework\TestCase;
 
-class AbstractTokenTest extends \PHPUnit_Framework_TestCase
+class AbstractTokenTest extends TestCase
 {
     /**
-     * @covers OAuth\Common\Token\AbstractToken::__construct
+     * @covers \OAuth\Common\Token\AbstractToken::__construct
      */
-    public function testConstructCorrectInterface()
+    public function testConstructCorrectInterface(): void
     {
         $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken');
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Token\\TokenInterface', $token);
+        self::assertInstanceOf('\\OAuth\\Common\\Token\\TokenInterface', $token);
     }
 
     /**
-     * @covers OAuth\Common\Token\AbstractToken::__construct
-     * @covers OAuth\Common\Token\AbstractToken::getAccessToken
+     * @covers \OAuth\Common\Token\AbstractToken::__construct
+     * @covers \OAuth\Common\Token\AbstractToken::getAccessToken
      */
-    public function testGetAccessTokenNotSet()
+    public function testGetAccessTokenNotSet(): void
     {
         $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken');
 
-        $this->assertNull($token->getAccessToken());
+        self::assertNull($token->getAccessToken());
     }
 
     /**
-     * @covers OAuth\Common\Token\AbstractToken::__construct
-     * @covers OAuth\Common\Token\AbstractToken::getAccessToken
+     * @covers \OAuth\Common\Token\AbstractToken::__construct
+     * @covers \OAuth\Common\Token\AbstractToken::getAccessToken
      */
-    public function testGetAccessTokenSet()
+    public function testGetAccessTokenSet(): void
     {
-        $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken', array('foo'));
+        $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken', ['foo']);
 
-        $this->assertSame('foo', $token->getAccessToken());
+        self::assertSame('foo', $token->getAccessToken());
     }
 
     /**
-     * @covers OAuth\Common\Token\AbstractToken::__construct
-     * @covers OAuth\Common\Token\AbstractToken::getAccessToken
-     * @covers OAuth\Common\Token\AbstractToken::setAccessToken
+     * @covers \OAuth\Common\Token\AbstractToken::__construct
+     * @covers \OAuth\Common\Token\AbstractToken::getAccessToken
+     * @covers \OAuth\Common\Token\AbstractToken::setAccessToken
      */
-    public function testSetAccessToken()
+    public function testSetAccessToken(): void
     {
         $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken');
 
         $token->setAccessToken('foo');
 
-        $this->assertSame('foo', $token->getAccessToken());
+        self::assertSame('foo', $token->getAccessToken());
     }
 
     /**
-     * @covers OAuth\Common\Token\AbstractToken::__construct
-     * @covers OAuth\Common\Token\AbstractToken::getRefreshToken
+     * @covers \OAuth\Common\Token\AbstractToken::__construct
+     * @covers \OAuth\Common\Token\AbstractToken::getRefreshToken
      */
-    public function testGetRefreshToken()
+    public function testGetRefreshToken(): void
     {
         $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken');
 
-        $this->assertNull($token->getRefreshToken());
+        self::assertNull($token->getRefreshToken());
     }
 
     /**
-     * @covers OAuth\Common\Token\AbstractToken::__construct
-     * @covers OAuth\Common\Token\AbstractToken::getRefreshToken
+     * @covers \OAuth\Common\Token\AbstractToken::__construct
+     * @covers \OAuth\Common\Token\AbstractToken::getRefreshToken
      */
-    public function testGetRefreshTokenSet()
+    public function testGetRefreshTokenSet(): void
     {
-        $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken', array('foo', 'bar'));
+        $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken', ['foo', 'bar']);
 
-        $this->assertSame('bar', $token->getRefreshToken());
+        self::assertSame('bar', $token->getRefreshToken());
     }
 
     /**
-     * @covers OAuth\Common\Token\AbstractToken::__construct
-     * @covers OAuth\Common\Token\AbstractToken::getRefreshToken
-     * @covers OAuth\Common\Token\AbstractToken::setRefreshToken
+     * @covers \OAuth\Common\Token\AbstractToken::__construct
+     * @covers \OAuth\Common\Token\AbstractToken::getRefreshToken
+     * @covers \OAuth\Common\Token\AbstractToken::setRefreshToken
      */
-    public function testSetRefreshToken()
+    public function testSetRefreshToken(): void
     {
         $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken');
 
         $token->setRefreshToken('foo');
 
-        $this->assertSame('foo', $token->getRefreshToken());
+        self::assertSame('foo', $token->getRefreshToken());
     }
 
     /**
-     * @covers OAuth\Common\Token\AbstractToken::__construct
-     * @covers OAuth\Common\Token\AbstractToken::getExtraParams
+     * @covers \OAuth\Common\Token\AbstractToken::__construct
+     * @covers \OAuth\Common\Token\AbstractToken::getExtraParams
      */
-    public function testGetExtraParamsNotSet()
+    public function testGetExtraParamsNotSet(): void
     {
         $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken');
 
-        $this->assertSame(array(), $token->getExtraParams());
+        self::assertSame([], $token->getExtraParams());
     }
 
     /**
-     * @covers OAuth\Common\Token\AbstractToken::__construct
-     * @covers OAuth\Common\Token\AbstractToken::getExtraParams
+     * @covers \OAuth\Common\Token\AbstractToken::__construct
+     * @covers \OAuth\Common\Token\AbstractToken::getExtraParams
      */
-    public function testGetExtraParamsSet()
+    public function testGetExtraParamsSet(): void
     {
-        $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken', array('foo', 'bar', null, array('foo', 'bar')));
+        $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken', ['foo', 'bar', null, ['foo', 'bar']]);
 
-        $this->assertEquals(array('foo', 'bar'), $token->getExtraParams());
+        self::assertEquals(['foo', 'bar'], $token->getExtraParams());
     }
 
     /**
-     * @covers OAuth\Common\Token\AbstractToken::__construct
-     * @covers OAuth\Common\Token\AbstractToken::setExtraParams
-     * @covers OAuth\Common\Token\AbstractToken::getExtraParams
+     * @covers \OAuth\Common\Token\AbstractToken::__construct
+     * @covers \OAuth\Common\Token\AbstractToken::getExtraParams
+     * @covers \OAuth\Common\Token\AbstractToken::setExtraParams
      */
-    public function testSetExtraParams()
-    {
-        $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken');
-
-        $token->setExtraParams(array('foo', 'bar'));
-
-        $this->assertSame(array('foo', 'bar'), $token->getExtraParams());
-    }
-
-    /**
-     * @covers OAuth\Common\Token\AbstractToken::__construct
-     * @covers OAuth\Common\Token\AbstractToken::setLifetime
-     * @covers OAuth\Common\Token\AbstractToken::getEndOfLife
-     */
-    public function testGetEndOfLifeNotSet()
+    public function testSetExtraParams(): void
     {
         $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken');
 
-        $this->assertSame(AbstractToken::EOL_UNKNOWN, $token->getEndOfLife());
+        $token->setExtraParams(['foo', 'bar']);
+
+        self::assertSame(['foo', 'bar'], $token->getExtraParams());
     }
 
     /**
-     * @covers OAuth\Common\Token\AbstractToken::__construct
-     * @covers OAuth\Common\Token\AbstractToken::setLifetime
-     * @covers OAuth\Common\Token\AbstractToken::getEndOfLife
+     * @covers \OAuth\Common\Token\AbstractToken::__construct
+     * @covers \OAuth\Common\Token\AbstractToken::getEndOfLife
+     * @covers \OAuth\Common\Token\AbstractToken::setLifetime
      */
-    public function testGetEndOfLifeZero()
+    public function testGetEndOfLifeNotSet(): void
     {
-        $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken', array('foo', 'bar', 0));
+        $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken');
 
-        $this->assertSame(AbstractToken::EOL_NEVER_EXPIRES, $token->getEndOfLife());
+        self::assertSame(AbstractToken::EOL_UNKNOWN, $token->getEndOfLife());
     }
 
     /**
-     * @covers OAuth\Common\Token\AbstractToken::__construct
-     * @covers OAuth\Common\Token\AbstractToken::setLifetime
-     * @covers OAuth\Common\Token\AbstractToken::getEndOfLife
+     * @covers \OAuth\Common\Token\AbstractToken::__construct
+     * @covers \OAuth\Common\Token\AbstractToken::getEndOfLife
+     * @covers \OAuth\Common\Token\AbstractToken::setLifetime
      */
-    public function testGetEndOfLifeNeverExpires()
+    public function testGetEndOfLifeZero(): void
     {
-        $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken', array('foo', 'bar', AbstractToken::EOL_NEVER_EXPIRES));
+        $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken', ['foo', 'bar', 0]);
 
-        $this->assertSame(AbstractToken::EOL_NEVER_EXPIRES, $token->getEndOfLife());
+        self::assertSame(AbstractToken::EOL_NEVER_EXPIRES, $token->getEndOfLife());
     }
 
     /**
-     * @covers OAuth\Common\Token\AbstractToken::__construct
-     * @covers OAuth\Common\Token\AbstractToken::setLifetime
-     * @covers OAuth\Common\Token\AbstractToken::getEndOfLife
+     * @covers \OAuth\Common\Token\AbstractToken::__construct
+     * @covers \OAuth\Common\Token\AbstractToken::getEndOfLife
+     * @covers \OAuth\Common\Token\AbstractToken::setLifetime
      */
-    public function testGetEndOfLifeNeverExpiresFiveMinutes()
+    public function testGetEndOfLifeNeverExpires(): void
     {
-        $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken', array('foo', 'bar', 5 * 60));
+        $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken', ['foo', 'bar', AbstractToken::EOL_NEVER_EXPIRES]);
 
-        $this->assertSame(time() + (5*60), $token->getEndOfLife());
+        self::assertSame(AbstractToken::EOL_NEVER_EXPIRES, $token->getEndOfLife());
     }
 
     /**
-     * @covers OAuth\Common\Token\AbstractToken::__construct
-     * @covers OAuth\Common\Token\AbstractToken::setLifetime
-     * @covers OAuth\Common\Token\AbstractToken::getEndOfLife
-     * @covers OAuth\Common\Token\AbstractToken::setEndOfLife
+     * @covers \OAuth\Common\Token\AbstractToken::__construct
+     * @covers \OAuth\Common\Token\AbstractToken::getEndOfLife
+     * @covers \OAuth\Common\Token\AbstractToken::setLifetime
      */
-    public function testSetEndOfLife()
+    public function testGetEndOfLifeNeverExpiresFiveMinutes(): void
+    {
+        $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken', ['foo', 'bar', 5 * 60]);
+
+        self::assertSame(time() + (5 * 60), $token->getEndOfLife());
+    }
+
+    /**
+     * @covers \OAuth\Common\Token\AbstractToken::__construct
+     * @covers \OAuth\Common\Token\AbstractToken::getEndOfLife
+     * @covers \OAuth\Common\Token\AbstractToken::setEndOfLife
+     * @covers \OAuth\Common\Token\AbstractToken::setLifetime
+     */
+    public function testSetEndOfLife(): void
     {
         $token = $this->getMockForAbstractClass('\\OAuth\\Common\\Token\\AbstractToken');
 
         $token->setEndOfLife(10);
 
-        $this->assertSame(10, $token->getEndOfLife());
+        self::assertSame(10, $token->getEndOfLife());
     }
 }

@@ -5,14 +5,12 @@ namespace OAuth\Common\Http\Uri;
 use RuntimeException;
 
 /**
- * Factory class for uniform resource indicators
+ * Factory class for uniform resource indicators.
  */
 class UriFactory implements UriFactoryInterface
 {
     /**
      * Factory method to build a URI from a super-global $_SERVER array.
-     *
-     * @param array $_server
      *
      * @return UriInterface
      */
@@ -42,7 +40,7 @@ class UriFactory implements UriFactoryInterface
     }
 
     /**
-     * Factory method to build a URI from parts
+     * Factory method to build a URI from parts.
      *
      * @param string $scheme
      * @param string $userInfo
@@ -71,7 +69,7 @@ class UriFactory implements UriFactoryInterface
     /**
      * @param array $_server
      *
-     * @return UriInterface|null
+     * @return null|UriInterface
      */
     private function attemptProxyStyleParse($_server)
     {
@@ -89,8 +87,6 @@ class UriFactory implements UriFactoryInterface
      * @param array $_server
      *
      * @return string
-     *
-     * @throws RuntimeException
      */
     private function detectPath($_server)
     {
@@ -111,13 +107,11 @@ class UriFactory implements UriFactoryInterface
     }
 
     /**
-     * @param array $_server
-     *
      * @return string
      */
     private function detectHost(array $_server)
     {
-        $host = isset($_server['HTTP_HOST']) ? $_server['HTTP_HOST'] : '';
+        $host = $_server['HTTP_HOST'] ?? '';
 
         if (strstr($host, ':')) {
             $host = parse_url($host, PHP_URL_HOST);
@@ -127,27 +121,23 @@ class UriFactory implements UriFactoryInterface
     }
 
     /**
-     * @param array $_server
-     *
      * @return string
      */
     private function detectPort(array $_server)
     {
-        return isset($_server['SERVER_PORT']) ? $_server['SERVER_PORT'] : 80;
+        return $_server['SERVER_PORT'] ?? 80;
     }
 
     /**
-     * @param array $_server
-     *
      * @return string
      */
     private function detectQuery(array $_server)
     {
-        return isset($_server['QUERY_STRING']) ? $_server['QUERY_STRING'] : '';
+        return $_server['QUERY_STRING'] ?? '';
     }
 
     /**
-     * Determine URI scheme component from superglobal array
+     * Determine URI scheme component from superglobal array.
      *
      * When using ISAPI with IIS, the value will be "off" if the request was
      * not made through the HTTPS protocol. As a result, we filter the
@@ -161,8 +151,8 @@ class UriFactory implements UriFactoryInterface
     {
         if (isset($_server['HTTPS']) && filter_var($_server['HTTPS'], FILTER_VALIDATE_BOOLEAN)) {
             return 'https';
-        } else {
-            return 'http';
         }
+
+        return 'http';
     }
 }

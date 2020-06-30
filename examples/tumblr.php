@@ -1,22 +1,21 @@
 <?php
 
 /**
- * Example of retrieving an authentication token of the Tumblr service
+ * Example of retrieving an authentication token of the Tumblr service.
  *
  * PHP version 5.4
  *
  * @author     David Desberg <david@daviddesberg.com>
  * @author     Pieter Hordijk <info@pieterhordijk.com>
- * @copyright  Copyright (c) 2012 The authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  */
 
-use OAuth\OAuth1\Service\Tumblr;
-use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Storage\Session;
+use OAuth\OAuth1\Service\Tumblr;
 
 /**
- * Bootstrap the example
+ * Bootstrap the example.
  */
 require_once __DIR__ . '/bootstrap.php';
 
@@ -32,7 +31,7 @@ $credentials = new Credentials(
 );
 
 // Instantiate the tumblr service using the credentials, http client and storage mechanism for the token
-/** @var $tumblrService Tumblr */
+/** @var Tumblr $tumblrService */
 $tumblrService = $serviceFactory->createService('tumblr', $credentials, $storage);
 
 if (!empty($_GET['oauth_token'])) {
@@ -49,12 +48,11 @@ if (!empty($_GET['oauth_token'])) {
     $result = json_decode($tumblrService->request('user/info'));
 
     echo 'result: <pre>' . print_r($result, true) . '</pre>';
-
 } elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
     // extra request needed for oauth1 to request a request token :-)
     $token = $tumblrService->requestRequestToken();
 
-    $url = $tumblrService->getAuthorizationUri(array('oauth_token' => $token->getRequestToken()));
+    $url = $tumblrService->getAuthorizationUri(['oauth_token' => $token->getRequestToken()]);
     header('Location: ' . $url);
 } else {
     $url = $currentUri->getRelativeUri() . '?go=go';

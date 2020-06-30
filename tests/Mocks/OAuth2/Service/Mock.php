@@ -2,16 +2,16 @@
 
 namespace OAuthTest\Mocks\OAuth2\Service;
 
-use OAuth\OAuth2\Service\AbstractService;
 use OAuth\Common\Http\Uri\Uri;
+use OAuth\OAuth2\Service\AbstractService;
 use OAuth\OAuth2\Token\StdOAuth2Token;
 
 class Mock extends AbstractService
 {
-    const SCOPE_MOCK   = 'mock';
+    const SCOPE_MOCK = 'mock';
     const SCOPE_MOCK_2 = 'mock2';
 
-    private $authorizationMethod = null;
+    private $authorizationMethod;
 
     public function getAuthorizationEndpoint()
     {
@@ -29,7 +29,7 @@ class Mock extends AbstractService
     }
 
     // this allows us to set different auth methods for tests
-    public function setAuthorizationMethod($method)
+    public function setAuthorizationMethod($method): void
     {
         $this->authorizationMethod = $method;
     }
@@ -42,7 +42,7 @@ class Mock extends AbstractService
      */
     protected function getAuthorizationMethod()
     {
-        switch($this->authorizationMethod) {
+        switch ($this->authorizationMethod) {
             case 'querystring':
                 return static::AUTHORIZATION_METHOD_QUERY_STRING;
 

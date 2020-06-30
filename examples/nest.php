@@ -1,20 +1,21 @@
 <?php
 
 /**
- * Example of retrieving an authentication token of the Nest service
+ * Example of retrieving an authentication token of the Nest service.
  *
  * @author  Pedro Amorim <contact@pamorim.fr>
  * @license http://www.opensource.org/licenses/mit-license.html MIT License
- * @link    https://developer.nest.com/documentation
+ *
+ * @see    https://developer.nest.com/documentation
  */
 
-use OAuth\OAuth2\Service\Nest;
-use OAuth\Common\Storage\Session;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Http\Client\CurlClient;
+use OAuth\Common\Storage\Session;
+use OAuth\OAuth2\Service\Nest;
 
 /**
- * Bootstrap the example
+ * Bootstrap the example.
  */
 require_once __DIR__ . '/bootstrap.php';
 
@@ -28,14 +29,14 @@ $credentials = new Credentials(
     $currentUri->getAbsoluteUri()
 );
 
-$serviceFactory->setHttpClient(new CurlClient);
+$serviceFactory->setHttpClient(new CurlClient());
 // Instantiate the Nest service using the credentials, http client and storage mechanism for the token
-/** @var $nestService Nest */
+/** @var Nest $nestService */
 $nestService = $serviceFactory->createService('nest', $credentials, $storage);
 
 if (!empty($_GET['code'])) {
     // retrieve the CSRF state parameter
-    $state = isset($_GET['state']) ? $_GET['state'] : null;
+    $state = $_GET['state'] ?? null;
     // This was a callback request from nest, get the token
     $token = $nestService->requestAccessToken($_GET['code'], $state);
     // Show some of the resultant data

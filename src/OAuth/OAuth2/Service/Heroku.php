@@ -2,42 +2,44 @@
 
 namespace OAuth\OAuth2\Service;
 
-use OAuth\OAuth2\Token\StdOAuth2Token;
-use OAuth\Common\Http\Exception\TokenResponseException;
-use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Client\ClientInterface;
-use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\Common\Http\Exception\TokenResponseException;
+use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\OAuth2\Token\StdOAuth2Token;
 
 /**
  * Heroku service.
  *
  * @author Thomas Welton <thomaswelton@me.com>
- * @link https://devcenter.heroku.com/articles/oauth
+ *
+ * @see https://devcenter.heroku.com/articles/oauth
  */
 class Heroku extends AbstractService
 {
     /**
-     * Defined scopes
-     * @link https://devcenter.heroku.com/articles/oauth#scopes
+     * Defined scopes.
+     *
+     * @see https://devcenter.heroku.com/articles/oauth#scopes
      */
-    const SCOPE_GLOBAL          = 'global';
-    const SCOPE_IDENTITY        = 'identity';
-    const SCOPE_READ            = 'read';
-    const SCOPE_WRITE           = 'write';
-    const SCOPE_READ_PROTECTED  = 'read-protected';
+    const SCOPE_GLOBAL = 'global';
+    const SCOPE_IDENTITY = 'identity';
+    const SCOPE_READ = 'read';
+    const SCOPE_WRITE = 'write';
+    const SCOPE_READ_PROTECTED = 'read-protected';
     const SCOPE_WRITE_PROTECTED = 'write-protected';
 
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
+        $scopes = [],
+        ?UriInterface $baseApiUri = null
     ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
 
@@ -83,7 +85,7 @@ class Heroku extends AbstractService
             throw new TokenResponseException(
                 sprintf(
                     'Error in retrieving token: "%s"',
-                    isset($data['error_description']) ? $data['error_description'] : $data['error']
+                    $data['error_description'] ?? $data['error']
                 )
             );
         }
@@ -97,8 +99,7 @@ class Heroku extends AbstractService
             unset($data['refresh_token']);
         }
 
-        unset($data['access_token']);
-        unset($data['expires_in']);
+        unset($data['access_token'], $data['expires_in']);
 
         $token->setExtraParams($data);
 
@@ -110,7 +111,7 @@ class Heroku extends AbstractService
      */
     protected function getExtraOAuthHeaders()
     {
-        return array('Accept' => 'application/vnd.heroku+json; version=3');
+        return ['Accept' => 'application/vnd.heroku+json; version=3'];
     }
 
     /**
@@ -118,6 +119,6 @@ class Heroku extends AbstractService
      */
     protected function getExtraApiHeaders()
     {
-        return array('Accept' => 'application/vnd.heroku+json; version=3', 'Content-Type' => 'application/json');
+        return ['Accept' => 'application/vnd.heroku+json; version=3', 'Content-Type' => 'application/json'];
     }
 }

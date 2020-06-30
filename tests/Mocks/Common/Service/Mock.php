@@ -2,8 +2,8 @@
 
 namespace OAuthTest\Mocks\Common\Service;
 
-use OAuth\Common\Service\AbstractService;
 use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\Common\Service\AbstractService;
 
 class Mock extends AbstractService
 {
@@ -20,18 +20,16 @@ class Mock extends AbstractService
      *
      * @return string
      */
-    public function request($path, $method = 'GET', $body = null, array $extraHeaders = array())
+    public function request($path, $method = 'GET', $body = null, array $extraHeaders = [])
     {
     }
 
     /**
      * Returns the url to redirect to for authorization purposes.
      *
-     * @param array $additionalParameters
-     *
      * @return UriInterface
      */
-    public function getAuthorizationUri(array $additionalParameters = array())
+    public function getAuthorizationUri(array $additionalParameters = [])
     {
     }
 
@@ -53,7 +51,7 @@ class Mock extends AbstractService
     {
     }
 
-    public function testDetermineRequestUriFromPath($path, UriInterface $baseApiUri = null)
+    public function testDetermineRequestUriFromPath($path, ?UriInterface $baseApiUri = null)
     {
         return $this->determineRequestUriFromPath($path, $baseApiUri);
     }

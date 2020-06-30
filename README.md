@@ -2,7 +2,7 @@ PHPoAuthLib
 ===========
 **NOTE: I'm looking for someone who could help to maintain this package alongside me, just because I don't have a ton of time to devote to it. However, I'm still going to keep trying to pay attention to PRs, etc.**
 
-PHPoAuthLib provides oAuth support in PHP 5.3+ and is very easy to integrate with any project which requires an oAuth client.
+PHPoAuthLib provides oAuth support in PHP 7.2+ and is very easy to integrate with any project which requires an oAuth client.
 
 [![Build Status](https://travis-ci.org/Lusitanian/PHPoAuthLib.png?branch=master)](https://travis-ci.org/Lusitanian/PHPoAuthLib)
 [![Code Coverage](https://scrutinizer-ci.com/g/Lusitanian/PHPoAuthLib/badges/coverage.png?s=a0a15bebfda49e79f9ce289b00c6dfebd18fc98e)](https://scrutinizer-ci.com/g/Lusitanian/PHPoAuthLib/)
@@ -15,26 +15,14 @@ Installation
 This library can be found on [Packagist](https://packagist.org/packages/lusitanian/oauth).
 The recommended way to install this is through [composer](http://getcomposer.org).
 
-Edit your `composer.json` and add:
-
-```json
-{
-    "require": {
-        "lusitanian/oauth": "~0.3"
-    }
-}
-```
-
-And install dependencies:
 
 ```bash
-$ curl -sS https://getcomposer.org/installer | php
-$ php composer.phar install
+    composer require lusitanian/oauth
 ```
 
 Features
 --------
-- PSR-0 compliant for easy interoperability
+- PSR-4 
 - Fully extensible in every facet.
     - You can implement any service with any custom requirements by extending the protocol version's `AbstractService` implementation.
     - You can use any HTTP client you desire, just create a class utilizing it which implements `OAuth\Common\Http\ClientInterface` (two implementations are included)
@@ -123,4 +111,7 @@ Extensions
 
 Tests
 ------
-To run the tests, you must install dependencies with `composer install --dev`
+To run the tests, run the command
+```bash
+    composer tests
+```

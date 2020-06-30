@@ -1,6 +1,6 @@
 {
     "name": "lusitanian/oauth",
-    "description": "PHP 5.3+ oAuth 1/2 Library",
+    "description": "PHP 7.2 oAuth 1/2 Library",
     "keywords": ["oauth", "authentication", "authorization", "security"],
     "license": "MIT",
     "authors": [
@@ -17,6 +17,18 @@
             "email": "elliotchance@gmail.com"
         }
     ],
+    "scripts" : {
+        "tests" : [
+            "./vendor/bin/phpunit"
+        ],
+        "check" : [
+            "./vendor/bin/php-cs-fixer fix --ansi --dry-run --diff",
+            "./vendor/bin/phpunit --color=always"
+        ],
+        "fix": [
+            "./vendor/bin/php-cs-fixer fix --ansi"
+        ]
+    },
     "require": {
         "php": "^7.2"
     },
@@ -26,8 +38,9 @@
         "ext-json": "*",
         "symfony/http-foundation": "~2.1",
         "predis/predis": "0.8.*@dev",
-        "squizlabs/php_codesniffer": "2.*",
-        "phpunit/phpunit": "8.5"
+        "phpunit/phpunit": "8.5",
+        "squizlabs/php_codesniffer": "^3.5",
+        "friendsofphp/php-cs-fixer": "^2.16"
     },
     "suggest": {
         "symfony/http-foundation": "Allows using the Symfony Session storage backend.",

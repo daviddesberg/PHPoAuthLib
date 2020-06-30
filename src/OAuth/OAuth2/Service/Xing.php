@@ -2,13 +2,13 @@
 
 namespace OAuth\OAuth2\Service;
 
-use OAuth\OAuth2\Token\StdOAuth2Token;
+use OAuth\Common\Consumer\CredentialsInterface;
+use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\OAuth2\Token\StdOAuth2Token;
 
 /**
  * @see https://dev.xing.com/docs/authentication
@@ -19,10 +19,10 @@ class Xing extends AbstractService
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null,
+        $scopes = [],
+        ?UriInterface $baseApiUri = null,
         $stateParameterInAutUrl = false,
-        $apiVersion = ""
+        $apiVersion = ''
     ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, $stateParameterInAutUrl, $apiVersion);
 
@@ -79,9 +79,7 @@ class Xing extends AbstractService
         $token->setLifeTime($data['expires_in']);
         $token->setRefreshToken($data['refresh_token']);
 
-        unset($data['access_token']);
-        unset($data['expires_in']);
-        unset($data['refresh_token']);
+        unset($data['access_token'], $data['expires_in'], $data['refresh_token']);
 
         $token->setExtraParams($data);
 

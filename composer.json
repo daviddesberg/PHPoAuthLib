@@ -19,7 +19,7 @@
     ],
     "scripts" : {
         "tests" : [
-            "./vendor/bin/phpunit"
+            "./vendor/bin/phpunit --color=always"
         ],
         "check" : [
             "./vendor/bin/php-cs-fixer fix --ansi --dry-run --diff",

@@ -44,7 +44,6 @@ Included service implementations
     - Scoop.it!
     - Tumblr
     - Twitter
-    - Xing
     - Yahoo
 - OAuth2
     - Amazon
@@ -86,6 +85,7 @@ Included service implementations
     - Ustream
     - Vimeo
     - Vkontakte
+    - Xing
     - Yahoo
     - Yammer
 - more to come!

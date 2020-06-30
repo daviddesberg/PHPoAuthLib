@@ -21,6 +21,9 @@
         "php": ">=5.3.0"
     },
     "require-dev": {
+        "ext-dom": "*",
+        "ext-curl": "*",
+        "ext-json": "*",
         "symfony/http-foundation": "~2.1",
         "predis/predis": "0.8.*@dev",
         "phpunit/phpunit": "3.7.*",

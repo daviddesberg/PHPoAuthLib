@@ -90,7 +90,7 @@ class GitHubTest extends TestCase
     public function testGetAuthorizationMethod(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects(self::once())->method('retrieveResponse')->willReturnArgument(0);
+        $client->expects(self::once())->method('retrieveResponse')->willReturnArgument(2);
 
         $token = $this->createMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
         $token->expects(self::once())->method('getEndOfLife')->willReturn(TokenInterface::EOL_NEVER_EXPIRES);
@@ -105,10 +105,9 @@ class GitHubTest extends TestCase
             $storage
         );
 
-        $uri = $service->request('https://pieterhordijk.com/my/awesome/path');
-        $absoluteUri = parse_url($uri->getAbsoluteUri());
-
-        self::assertSame('access_token=foo', $absoluteUri['query']);
+        $headers = $service->request('https://pieterhordijk.com/my/awesome/path');
+        self::assertArrayHasKey('Authorization', $headers);
+        self::assertTrue(in_array('token foo', $headers, true));
     }
 
     /**

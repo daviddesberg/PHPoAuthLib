@@ -216,6 +216,6 @@ class GitHubTest extends TestCase
         $headers = $service->request('https://pieterhordijk.com/my/awesome/path');
 
         self::assertArrayHasKey('Accept', $headers);
-        self::assertSame('application/vnd.github.beta+json', $headers['Accept']);
+        self::assertSame('application/vnd.github.v3+json', $headers['Accept']);
     }
 }

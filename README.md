@@ -92,7 +92,14 @@ Included service implementations
 
 Examples
 --------
-Examples of basic usage are located in the examples/ directory.
+```bash
+    php -S localhost:8000 -t examples
+```
+Then point your browser to:
+```text
+    http://localhost:8000/
+```
+
 
 Usage
 ------
@@ -113,14 +120,4 @@ Tests
 ------
 ```bash
     composer tests
-```
-
-Learn by example
-----------------
-```bash
-    php -S localhost:8000 -t examples
-```
-Then point your browser to:
-```text
-    http://localhost:8000/
 ```

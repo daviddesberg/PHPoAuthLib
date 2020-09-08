@@ -81,7 +81,6 @@ HTML;
     public function getForm(): string
     {
         return  <<<HTML
-            <h1>Vkontakte</h1>
             <form>
               <div class="form-group">
                 <label for="exampleInputEmail1">key</label>

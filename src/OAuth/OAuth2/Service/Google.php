@@ -165,7 +165,7 @@ class Google extends AbstractService
      */
     public function getAccessTokenEndpoint()
     {
-        return new Uri('https://accounts.google.com/o/oauth2/token');
+        return new Uri('https://oauth2.googleapis.com/token');
     }
 
     /**

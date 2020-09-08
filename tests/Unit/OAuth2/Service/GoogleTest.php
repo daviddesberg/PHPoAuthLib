@@ -111,7 +111,7 @@ class GoogleTest extends TestCase
         );
 
         self::assertSame(
-            'https://accounts.google.com/o/oauth2/token',
+            'https://oauth2.googleapis.com/token',
             $service->getAccessTokenEndpoint()->getAbsoluteUri()
         );
     }

@@ -159,7 +159,7 @@ class GitHub extends AbstractService
      */
     protected function getAuthorizationMethod()
     {
-        return static::AUTHORIZATION_METHOD_QUERY_STRING;
+        return static::AUTHORIZATION_METHOD_HEADER_TOKEN;
     }
 
     /**
@@ -203,7 +203,7 @@ class GitHub extends AbstractService
      */
     protected function getExtraApiHeaders()
     {
-        return ['Accept' => 'application/vnd.github.beta+json'];
+        return ['Accept' => 'application/vnd.github.v3+json'];
     }
 
     /**

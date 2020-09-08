@@ -65,7 +65,7 @@ class LinkedinTest extends TestCase
         );
 
         self::assertSame(
-            'https://www.linkedin.com/uas/oauth2/authorization',
+            'https://www.linkedin.com/oauth/v2/authorization',
             $service->getAuthorizationEndpoint()->getAbsoluteUri()
         );
     }
@@ -83,7 +83,7 @@ class LinkedinTest extends TestCase
         );
 
         self::assertSame(
-            'https://www.linkedin.com/uas/oauth2/accessToken',
+            'https://www.linkedin.com/oauth/v2/accessToken',
             $service->getAccessTokenEndpoint()->getAbsoluteUri()
         );
     }

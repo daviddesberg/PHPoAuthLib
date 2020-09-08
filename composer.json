@@ -40,7 +40,9 @@
         "predis/predis": "0.8.*@dev",
         "phpunit/phpunit": "8.5",
         "squizlabs/php_codesniffer": "^3.5",
-        "friendsofphp/php-cs-fixer": "^2.16"
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "symfony/var-dumper": "^5.1",
+        "symfony/finder": "^5.1"
     },
     "suggest": {
         "symfony/http-foundation": "Allows using the Symfony Session storage backend.",

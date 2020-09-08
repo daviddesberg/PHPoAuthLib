@@ -105,4 +105,34 @@ class Vkontakte extends AbstractService
     {
         return static::AUTHORIZATION_METHOD_QUERY_STRING;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function requestAccessToken($code, $state = null)
+    {
+        if (null !== $state) {
+            $this->validateAuthorizationState($state);
+        }
+
+        $bodyParams = [
+            'code' => $code,
+            'client_id' => $this->credentials->getConsumerId(),
+            'client_secret' => $this->credentials->getConsumerSecret(),
+            'redirect_uri' => $this->credentials->getCallbackUrl(),
+            'grant_type' => 'client_credentials',
+
+        ];
+
+        $responseBody = $this->httpClient->retrieveResponse(
+            $this->getAccessTokenEndpoint(),
+            $bodyParams,
+            $this->getExtraOAuthHeaders()
+        );
+
+        $token = $this->parseAccessTokenResponse($responseBody);
+        $this->storage->storeAccessToken($this->service(), $token);
+
+        return $token;
+    }
 }

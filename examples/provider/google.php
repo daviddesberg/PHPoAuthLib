@@ -6,7 +6,6 @@ use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Storage\Session;
 use OAuth\Helper\Example;
 use OAuth\OAuth2\Service\Google;
-use OAuth\OAuth2\Service\Vkontakte;
 
 require_once __DIR__.'/../bootstrap.php';
 

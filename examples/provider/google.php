@@ -12,6 +12,7 @@ require_once __DIR__.'/../bootstrap.php';
 $helper = new Example();
 $storage = new Session();
 $client = new CurlClient();
+$helper->setTitle('Google');
 
 if (empty($_GET)) {
     echo $helper->getContent();

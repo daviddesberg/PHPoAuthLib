@@ -6,14 +6,13 @@ use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Storage\Session;
 use OAuth\Helper\Example;
 use OAuth\OAuth2\Service\Vkontakte;
-use OAuth\OAuth2\Token\StdOAuth2Token;
 
 require_once __DIR__.'/../bootstrap.php';
 
 $helper = new Example();
 $storage = new Session();
 $client = new CurlClient();
-
+$helper->setTitle('Vkontakte');
 if (empty($_GET)) {
     echo $helper->getContent();
 } elseif (!empty($_GET['key']) && !empty($_GET['secret']) && $_GET['oauth'] !== 'redirect') {

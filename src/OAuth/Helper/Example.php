@@ -13,6 +13,7 @@ class Example
      * @var Finder
      */
     private $finder;
+    private $title;
 
     public function __construct()
     {
@@ -33,10 +34,11 @@ class Example
 
     public function getHeader(): string
     {
+        $title = $this->title;
         return <<<HTML
 <html>
 <head>
-    <title></title>
+    <title>$title</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -67,6 +69,7 @@ class Example
                 </div>
             </div>
         </div>
+        <h1>$title</h1>
 HTML;
     }
 
@@ -115,11 +118,16 @@ HTML;
         return  'http://' .  $_SERVER['HTTP_HOST'] .   $_SERVER['PHP_SELF'] . '?oauth=redirect&key='. urldecode($_GET['key']) . '&secret=' . urldecode($_GET['secret']);
     }
 
-    public function getErrorMessage($exception)
+    public function getErrorMessage($exception): void
     {
         echo '<div class="alert alert-danger">' . $exception->getMessage() . '</div>';
         echo '<pre>';
         print_r($exception) ;
         echo '</pre>';
+    }
+
+    public function setTitle(string $title): void
+    {
+        $this->title = 'PHPoAuthLib - ' .  $title;
     }
 }

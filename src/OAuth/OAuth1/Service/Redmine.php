@@ -28,7 +28,7 @@ class Redmine extends AbstractService
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getRequestTokenEndpoint()
     {

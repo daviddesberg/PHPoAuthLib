@@ -28,7 +28,7 @@ class ScoopIt extends AbstractService
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getRequestTokenEndpoint()
     {

@@ -49,7 +49,7 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function retrieveAccessToken($service)
     {
@@ -67,7 +67,7 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function storeAccessToken($service, TokenInterface $token)
     {
@@ -80,7 +80,7 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function hasAccessToken($service)
     {
@@ -94,7 +94,7 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function clearToken($service)
     {
@@ -106,7 +106,7 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function clearAllTokens()
     {
@@ -131,7 +131,7 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function retrieveAuthorizationState($service)
     {
@@ -149,7 +149,7 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function storeAuthorizationState($service, $state)
     {
@@ -162,7 +162,7 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function hasAuthorizationState($service)
     {
@@ -176,7 +176,7 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function clearAuthorizationState($service)
     {
@@ -188,7 +188,7 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function clearAllAuthorizationStates()
     {

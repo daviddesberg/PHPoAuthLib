@@ -82,7 +82,7 @@ class DoliStorage implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function retrieveAccessToken($service)
     {
@@ -94,7 +94,7 @@ class DoliStorage implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function storeAccessToken($service, TokenInterface $token)
     {
@@ -137,7 +137,7 @@ class DoliStorage implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function hasAccessToken($service)
     {
@@ -162,7 +162,7 @@ class DoliStorage implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function clearToken($service)
     {
@@ -184,7 +184,7 @@ class DoliStorage implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function clearAllTokens()
     {
@@ -196,7 +196,7 @@ class DoliStorage implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function retrieveAuthorizationState($service)
     {
@@ -208,7 +208,7 @@ class DoliStorage implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function storeAuthorizationState($service, $state)
     {
@@ -245,7 +245,7 @@ class DoliStorage implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function hasAuthorizationState($service)
     {
@@ -265,7 +265,7 @@ class DoliStorage implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function clearAuthorizationState($service)
     {
@@ -285,7 +285,7 @@ class DoliStorage implements TokenStorageInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function clearAllAuthorizationStates()
     {

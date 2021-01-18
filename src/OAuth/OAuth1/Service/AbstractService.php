@@ -24,7 +24,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     protected $baseApiUri;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __construct(
         CredentialsInterface $credentials,
@@ -42,7 +42,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function requestRequestToken()
     {
@@ -72,7 +72,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function requestAccessToken($token, $verifier, $tokenSecret = null)
     {

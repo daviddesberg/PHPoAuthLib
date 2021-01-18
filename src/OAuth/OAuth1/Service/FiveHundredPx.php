@@ -48,7 +48,7 @@ class FiveHundredPx extends AbstractService
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getRequestTokenEndpoint()
     {

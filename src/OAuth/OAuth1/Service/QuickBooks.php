@@ -106,7 +106,7 @@ class QuickBooks extends AbstractService
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function request(
         $path,

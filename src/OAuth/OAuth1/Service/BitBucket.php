@@ -28,7 +28,7 @@ class BitBucket extends AbstractService
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getRequestTokenEndpoint()
     {

@@ -133,7 +133,7 @@ class CurlClient extends AbstractClient
             if (empty($errStr)) {
                 throw new TokenResponseException('Failed to request resource.', $responseCode);
             }
-            throw new TokenResponseException('cURL Error # ' . $errNo.': ' . $errStr, $responseCode);
+            throw new TokenResponseException('cURL Error # ' . $errNo . ': ' . $errStr, $responseCode);
         }
 
         curl_close($ch);

@@ -5,7 +5,7 @@ namespace OAuth\Common\Http\Uri;
 use RuntimeException;
 
 /**
- * Factory class for uniform resource indicators
+ * Factory class for uniform resource indicators.
  */
 class UriFactory implements UriFactoryInterface
 {
@@ -42,7 +42,7 @@ class UriFactory implements UriFactoryInterface
     }
 
     /**
-     * Factory method to build a URI from parts
+     * Factory method to build a URI from parts.
      *
      * @param string $scheme
      * @param string $userInfo
@@ -71,7 +71,7 @@ class UriFactory implements UriFactoryInterface
     /**
      * @param array $_server
      *
-     * @return UriInterface|null
+     * @return null|UriInterface
      */
     private function attemptProxyStyleParse($_server)
     {
@@ -117,7 +117,7 @@ class UriFactory implements UriFactoryInterface
      */
     private function detectHost(array $_server)
     {
-        $host = isset($_server['HTTP_HOST']) ? $_server['HTTP_HOST'] : '';
+        $host = $_server['HTTP_HOST'] ?? '';
 
         if (strstr($host, ':')) {
             $host = parse_url($host, PHP_URL_HOST);
@@ -133,7 +133,7 @@ class UriFactory implements UriFactoryInterface
      */
     private function detectPort(array $_server)
     {
-        return isset($_server['SERVER_PORT']) ? $_server['SERVER_PORT'] : 80;
+        return $_server['SERVER_PORT'] ?? 80;
     }
 
     /**
@@ -143,7 +143,7 @@ class UriFactory implements UriFactoryInterface
      */
     private function detectQuery(array $_server)
     {
-        return isset($_server['QUERY_STRING']) ? $_server['QUERY_STRING'] : '';
+        return $_server['QUERY_STRING'] ?? '';
     }
 
     /**
@@ -161,8 +161,8 @@ class UriFactory implements UriFactoryInterface
     {
         if (isset($_server['HTTPS']) && filter_var($_server['HTTPS'], FILTER_VALIDATE_BOOLEAN)) {
             return 'https';
-        } else {
-            return 'http';
         }
+
+        return 'http';
     }
 }

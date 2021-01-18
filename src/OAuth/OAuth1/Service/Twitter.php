@@ -2,29 +2,29 @@
 
 namespace OAuth\OAuth1\Service;
 
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Exception\Exception;
-use OAuth\Common\Http\Client\ClientInterface;
-use OAuth\Common\Http\Exception\TokenResponseException;
-use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Http\Uri\UriInterface;
-use OAuth\Common\Storage\TokenStorageInterface;
 use OAuth\OAuth1\Signature\SignatureInterface;
 use OAuth\OAuth1\Token\StdOAuth1Token;
+use OAuth\Common\Http\Exception\TokenResponseException;
+use OAuth\Common\Http\Uri\Uri;
+use OAuth\Common\Consumer\CredentialsInterface;
+use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\Common\Exception\Exception;
 
 class Twitter extends AbstractService
 {
-    const ENDPOINT_AUTHENTICATE = 'https://api.twitter.com/oauth/authenticate';
-    const ENDPOINT_AUTHORIZE = 'https://api.twitter.com/oauth/authorize';
+    const ENDPOINT_AUTHENTICATE = "https://api.twitter.com/oauth/authenticate";
+    const ENDPOINT_AUTHORIZE    = "https://api.twitter.com/oauth/authorize";
 
-    protected $authorizationEndpoint = self::ENDPOINT_AUTHENTICATE;
+    protected $authorizationEndpoint   = self::ENDPOINT_AUTHENTICATE;
 
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
         SignatureInterface $signature,
-        ?UriInterface $baseApiUri = null
+        UriInterface $baseApiUri = null
     ) {
         parent::__construct($credentials, $httpClient, $storage, $signature, $baseApiUri);
 
@@ -50,14 +50,15 @@ class Twitter extends AbstractService
         && $this->authorizationEndpoint != self::ENDPOINT_AUTHORIZE) {
             $this->authorizationEndpoint = self::ENDPOINT_AUTHENTICATE;
         }
-
         return new Uri($this->authorizationEndpoint);
     }
 
     /**
-     * @param mixed $endpoint
+     * @param string $authorizationEndpoint
+     *
+     * @throws Exception
      */
-    public function setAuthorizationEndpoint($endpoint): void
+    public function setAuthorizationEndpoint($endpoint)
     {
         if ($endpoint != self::ENDPOINT_AUTHENTICATE && $endpoint != self::ENDPOINT_AUTHORIZE) {
             throw new Exception(
@@ -102,7 +103,7 @@ class Twitter extends AbstractService
             throw new TokenResponseException('Unable to parse response: ' . $responseBody);
         } elseif (isset($data['error'])) {
             throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');
-        } elseif (!isset($data['oauth_token']) || !isset($data['oauth_token_secret'])) {
+        } elseif (!isset($data["oauth_token"]) || !isset($data["oauth_token_secret"])) {
             throw new TokenResponseException('Invalid response. OAuth Token data not set: ' . $responseBody);
         }
 

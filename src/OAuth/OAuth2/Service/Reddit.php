@@ -2,44 +2,44 @@
 
 namespace OAuth\OAuth2\Service;
 
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\Common\Consumer\CredentialsInterface;
+use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\OAuth2\Token\StdOAuth2Token;
+use OAuth\Common\Http\Uri\UriInterface;
 
 class Reddit extends AbstractService
 {
     /**
-     * Defined scopes.
+     * Defined scopes
      *
-     * @see http://www.reddit.com/dev/api/oauth
+     * @link http://www.reddit.com/dev/api/oauth
      */
     // User scopes
-    const SCOPE_EDIT = 'edit';
-    const SCOPE_HISTORY = 'history';
-    const SCOPE_IDENTITY = 'identity';
-    const SCOPE_MYSUBREDDITS = 'mysubreddits';
-    const SCOPE_PRIVATEMESSAGES = 'privatemessages';
-    const SCOPE_READ = 'read';
-    const SCOPE_SAVE = 'save';
-    const SCOPE_SUBMIT = 'submit';
-    const SCOPE_SUBSCRIBE = 'subscribe';
-    const SCOPE_VOTE = 'vote';
+    const SCOPE_EDIT                         = 'edit';
+    const SCOPE_HISTORY                      = 'history';
+    const SCOPE_IDENTITY                     = 'identity';
+    const SCOPE_MYSUBREDDITS                 = 'mysubreddits';
+    const SCOPE_PRIVATEMESSAGES              = 'privatemessages';
+    const SCOPE_READ                         = 'read';
+    const SCOPE_SAVE                         = 'save';
+    const SCOPE_SUBMIT                       = 'submit';
+    const SCOPE_SUBSCRIBE                    = 'subscribe';
+    const SCOPE_VOTE                         = 'vote';
     // Mod Scopes
-    const SCOPE_MODCONFIG = 'modconfig';
-    const SCOPE_MODFLAIR = 'modflair';
-    const SCOPE_MODLOG = 'modlog';
-    const SCOPE_MODPOST = 'modpost';
+    const SCOPE_MODCONFIG                    = 'modconfig';
+    const SCOPE_MODFLAIR                     = 'modflair';
+    const SCOPE_MODLOG                       = 'modlog';
+    const SCOPE_MODPOST                      = 'modpost';
 
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
-        $scopes = [],
-        ?UriInterface $baseApiUri = null
+        $scopes = array(),
+        UriInterface $baseApiUri = null
     ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, true);
 
@@ -94,7 +94,8 @@ class Reddit extends AbstractService
             unset($data['refresh_token']);
         }
 
-        unset($data['access_token'], $data['expires_in']);
+        unset($data['access_token']);
+        unset($data['expires_in']);
 
         $token->setExtraParams($data);
 
@@ -107,7 +108,7 @@ class Reddit extends AbstractService
     protected function getExtraOAuthHeaders()
     {
         // Reddit uses a Basic OAuth header
-        return ['Authorization' => 'Basic ' .
-            base64_encode($this->credentials->getConsumerId() . ':' . $this->credentials->getConsumerSecret()), ];
+        return array('Authorization' => 'Basic ' .
+            base64_encode($this->credentials->getConsumerId() . ':' . $this->credentials->getConsumerSecret()));
     }
 }

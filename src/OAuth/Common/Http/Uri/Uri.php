@@ -71,8 +71,10 @@ class Uri implements UriInterface
 
     /**
      * @param string $uri
+     *
+     * @throws \InvalidArgumentException
      */
-    protected function parseUri($uri): void
+    protected function parseUri($uri)
     {
         if (false === ($uriParts = parse_url($uri))) {
             // congratulations if you've managed to get parse_url to fail,
@@ -104,8 +106,8 @@ class Uri implements UriInterface
             $this->path = '/';
         }
 
-        $this->query = $uriParts['query'] ?? '';
-        $this->fragment = $uriParts['fragment'] ?? '';
+        $this->query = isset($uriParts['query']) ? $uriParts['query'] : '';
+        $this->fragment = isset($uriParts['fragment']) ? $uriParts['fragment'] : '';
 
         $userInfo = '';
         if (!empty($uriParts['user'])) {
@@ -132,11 +134,11 @@ class Uri implements UriInterface
         // after the first colon (":") character found within a userinfo
         // subcomponent unless the data after the colon is the empty string
         // (indicating no password)"
-        if ($colonPos !== false && strlen($rawUserInfo) - 1 > $colonPos) {
+        if ($colonPos !== false && strlen($rawUserInfo)-1 > $colonPos) {
             return substr($rawUserInfo, 0, $colonPos) . ':********';
+        } else {
+            return $rawUserInfo;
         }
-
-        return $rawUserInfo;
     }
 
     /**
@@ -211,7 +213,7 @@ class Uri implements UriInterface
      */
     public function getAuthority()
     {
-        $authority = $this->userInfo ? $this->userInfo . '@' : '';
+        $authority = $this->userInfo ? $this->userInfo.'@' : '';
         $authority .= $this->host;
 
         if ($this->explicitPortSpecified) {
@@ -226,7 +228,7 @@ class Uri implements UriInterface
      */
     public function getRawAuthority()
     {
-        $authority = $this->rawUserInfo ? $this->rawUserInfo . '@' : '';
+        $authority = $this->rawUserInfo ? $this->rawUserInfo.'@' : '';
         $authority .= $this->host;
 
         if ($this->explicitPortSpecified) {
@@ -306,7 +308,7 @@ class Uri implements UriInterface
     /**
      * @param $path
      */
-    public function setPath($path): void
+    public function setPath($path)
     {
         if (empty($path)) {
             $this->path = '/';
@@ -322,7 +324,7 @@ class Uri implements UriInterface
     /**
      * @param string $query
      */
-    public function setQuery($query): void
+    public function setQuery($query)
     {
         $this->query = $query;
     }
@@ -331,18 +333,18 @@ class Uri implements UriInterface
      * @param string $var
      * @param string $val
      */
-    public function addToQuery($var, $val): void
+    public function addToQuery($var, $val)
     {
         if (strlen($this->query) > 0) {
             $this->query .= '&';
         }
-        $this->query .= http_build_query([$var => $val], '', '&');
+        $this->query .= http_build_query(array($var => $val), '', '&');
     }
 
     /**
      * @param string $fragment
      */
-    public function setFragment($fragment): void
+    public function setFragment($fragment)
     {
         $this->fragment = $fragment;
     }
@@ -350,26 +352,28 @@ class Uri implements UriInterface
     /**
      * @param string $scheme
      */
-    public function setScheme($scheme): void
+    public function setScheme($scheme)
     {
         $this->scheme = $scheme;
     }
 
+
     /**
      * @param string $userInfo
      */
-    public function setUserInfo($userInfo): void
+    public function setUserInfo($userInfo)
     {
         $this->userInfo = $userInfo ? $this->protectUserInfo($userInfo) : '';
         $this->rawUserInfo = $userInfo;
     }
 
+
     /**
      * @param int $port
      */
-    public function setPort($port): void
+    public function setPort($port)
     {
-        $this->port = (int) $port;
+        $this->port = intval($port);
 
         if (('https' === $this->scheme && $this->port === 443) || ('http' === $this->scheme && $this->port === 80)) {
             $this->explicitPortSpecified = false;
@@ -381,7 +385,7 @@ class Uri implements UriInterface
     /**
      * @param string $host
      */
-    public function setHost($host): void
+    public function setHost($host)
     {
         $this->host = $host;
     }

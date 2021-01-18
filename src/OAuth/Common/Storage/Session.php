@@ -2,9 +2,9 @@
 
 namespace OAuth\Common\Storage;
 
-use OAuth\Common\Storage\Exception\AuthorizationStateNotFoundException;
-use OAuth\Common\Storage\Exception\TokenNotFoundException;
 use OAuth\Common\Token\TokenInterface;
+use OAuth\Common\Storage\Exception\TokenNotFoundException;
+use OAuth\Common\Storage\Exception\AuthorizationStateNotFoundException;
 
 /**
  * Stores a token in a PHP session.
@@ -27,7 +27,7 @@ class Session implements TokenStorageInterface
     protected $stateVariableName;
 
     /**
-     * @param bool $startSession whether or not to start the session upon construction
+     * @param bool $startSession Whether or not to start the session upon construction.
      * @param string $sessionVariableName the variable name to use within the _SESSION superglobal
      * @param string $stateVariableName
      */
@@ -44,15 +44,15 @@ class Session implements TokenStorageInterface
         $this->sessionVariableName = $sessionVariableName;
         $this->stateVariableName = $stateVariableName;
         if (!isset($_SESSION[$sessionVariableName])) {
-            $_SESSION[$sessionVariableName] = [];
+            $_SESSION[$sessionVariableName] = array();
         }
         if (!isset($_SESSION[$stateVariableName])) {
-            $_SESSION[$stateVariableName] = [];
+            $_SESSION[$stateVariableName] = array();
         }
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function retrieveAccessToken($service)
     {
@@ -64,7 +64,7 @@ class Session implements TokenStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function storeAccessToken($service, TokenInterface $token)
     {
@@ -75,9 +75,9 @@ class Session implements TokenStorageInterface
         ) {
             $_SESSION[$this->sessionVariableName][$service] = $serializedToken;
         } else {
-            $_SESSION[$this->sessionVariableName] = [
+            $_SESSION[$this->sessionVariableName] = array(
                 $service => $serializedToken,
-            ];
+            );
         }
 
         // allow chaining
@@ -85,7 +85,7 @@ class Session implements TokenStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function hasAccessToken($service)
     {
@@ -93,7 +93,7 @@ class Session implements TokenStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function clearToken($service)
     {
@@ -106,7 +106,7 @@ class Session implements TokenStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function clearAllTokens()
     {
@@ -117,7 +117,7 @@ class Session implements TokenStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function storeAuthorizationState($service, $state)
     {
@@ -126,9 +126,9 @@ class Session implements TokenStorageInterface
         ) {
             $_SESSION[$this->stateVariableName][$service] = $state;
         } else {
-            $_SESSION[$this->stateVariableName] = [
+            $_SESSION[$this->stateVariableName] = array(
                 $service => $state,
-            ];
+            );
         }
 
         // allow chaining
@@ -136,7 +136,7 @@ class Session implements TokenStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function hasAuthorizationState($service)
     {
@@ -144,7 +144,7 @@ class Session implements TokenStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function retrieveAuthorizationState($service)
     {
@@ -156,7 +156,7 @@ class Session implements TokenStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function clearAuthorizationState($service)
     {
@@ -169,7 +169,7 @@ class Session implements TokenStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function clearAllAuthorizationStates()
     {
@@ -188,9 +188,7 @@ class Session implements TokenStorageInterface
 
     /**
      * Determine if the session has started.
-     *
      * @url http://stackoverflow.com/a/18542272/1470961
-     *
      * @return bool
      */
     protected function sessionHasStarted()

@@ -2,49 +2,49 @@
 
 namespace OAuth\OAuth2\Service;
 
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\Common\Consumer\CredentialsInterface;
+use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\OAuth2\Token\StdOAuth2Token;
+use OAuth\Common\Http\Uri\UriInterface;
 
 class Vkontakte extends AbstractService
 {
     /**
-     * Defined scopes.
+     * Defined scopes
      *
-     * @see http://vk.com/dev/permissions
+     * @link http://vk.com/dev/permissions
      */
-    const SCOPE_EMAIL = 'email';
-    const SCOPE_NOTIFY = 'notify';
-    const SCOPE_FRIENDS = 'friends';
-    const SCOPE_PHOTOS = 'photos';
-    const SCOPE_AUDIO = 'audio';
-    const SCOPE_VIDEO = 'video';
-    const SCOPE_DOCS = 'docs';
-    const SCOPE_NOTES = 'notes';
-    const SCOPE_PAGES = 'pages';
-    const SCOPE_APP_LINK = '';
-    const SCOPE_STATUS = 'status';
-    const SCOPE_OFFERS = 'offers';
-    const SCOPE_QUESTIONS = 'questions';
-    const SCOPE_WALL = 'wall';
-    const SCOPE_GROUPS = 'groups';
-    const SCOPE_MESSAGES = 'messages';
+    const SCOPE_EMAIL         = 'email';
+    const SCOPE_NOTIFY        = 'notify';
+    const SCOPE_FRIENDS       = 'friends';
+    const SCOPE_PHOTOS        = 'photos';
+    const SCOPE_AUDIO         = 'audio';
+    const SCOPE_VIDEO         = 'video';
+    const SCOPE_DOCS          = 'docs';
+    const SCOPE_NOTES         = 'notes';
+    const SCOPE_PAGES         = 'pages';
+    const SCOPE_APP_LINK      = '';
+    const SCOPE_STATUS        = 'status';
+    const SCOPE_OFFERS        = 'offers';
+    const SCOPE_QUESTIONS     = 'questions';
+    const SCOPE_WALL          = 'wall';
+    const SCOPE_GROUPS        = 'groups';
+    const SCOPE_MESSAGES      = 'messages';
     const SCOPE_NOTIFICATIONS = 'notifications';
-    const SCOPE_STATS = 'stats';
-    const SCOPE_ADS = 'ads';
-    const SCOPE_OFFLINE = 'offline';
-    const SCOPE_NOHTTPS = 'nohttps';
+    const SCOPE_STATS         = 'stats';
+    const SCOPE_ADS           = 'ads';
+    const SCOPE_OFFLINE       = 'offline';
+    const SCOPE_NOHTTPS       = 'nohttps';
 
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
-        $scopes = [],
-        ?UriInterface $baseApiUri = null
+        $scopes = array(),
+        UriInterface $baseApiUri = null
     ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
 
@@ -91,48 +91,19 @@ class Vkontakte extends AbstractService
             unset($data['refresh_token']);
         }
 
-        unset($data['access_token'], $data['expires_in']);
+        unset($data['access_token']);
+        unset($data['expires_in']);
 
         $token->setExtraParams($data);
 
         return $token;
     }
-
+    
     /**
      * {@inheritdoc}
      */
     protected function getAuthorizationMethod()
     {
         return static::AUTHORIZATION_METHOD_QUERY_STRING;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function requestAccessToken($code, $state = null)
-    {
-        if (null !== $state) {
-            $this->validateAuthorizationState($state);
-        }
-
-        $bodyParams = [
-            'code' => $code,
-            'client_id' => $this->credentials->getConsumerId(),
-            'client_secret' => $this->credentials->getConsumerSecret(),
-            'redirect_uri' => $this->credentials->getCallbackUrl(),
-            'grant_type' => 'client_credentials',
-
-        ];
-
-        $responseBody = $this->httpClient->retrieveResponse(
-            $this->getAccessTokenEndpoint(),
-            $bodyParams,
-            $this->getExtraOAuthHeaders()
-        );
-
-        $token = $this->parseAccessTokenResponse($responseBody);
-        $this->storage->storeAccessToken($this->service(), $token);
-
-        return $token;
     }
 }

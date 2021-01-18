@@ -2,12 +2,14 @@
 
 namespace OAuth\Common\Storage;
 
-use OAuth\Common\Storage\Exception\AuthorizationStateNotFoundException;
-use OAuth\Common\Storage\Exception\TokenNotFoundException;
 use OAuth\Common\Token\TokenInterface;
+use OAuth\Common\Storage\Exception\TokenNotFoundException;
+use OAuth\Common\Storage\Exception\AuthorizationStateNotFoundException;
 use Predis\Client as Predis;
 
-// Stores a token in a Redis server. Requires the Predis library available at https://github.com/nrk/predis
+/**
+ * Stores a token in a Redis server. Requires the Predis library available at https://github.com/nrk/predis
+ */
 class Redis implements TokenStorageInterface
 {
     /**
@@ -35,19 +37,19 @@ class Redis implements TokenStorageInterface
     /**
      * @param Predis $redis An instantiated and connected redis client
      * @param string $key The key to store the token under in redis
-     * @param string $stateKey the key to store the state under in redis
+     * @param string $stateKey The key to store the state under in redis.
      */
     public function __construct(Predis $redis, $key, $stateKey)
     {
         $this->redis = $redis;
         $this->key = $key;
         $this->stateKey = $stateKey;
-        $this->cachedTokens = [];
-        $this->cachedStates = [];
+        $this->cachedTokens = array();
+        $this->cachedStates = array();
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function retrieveAccessToken($service)
     {
@@ -65,7 +67,7 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function storeAccessToken($service, TokenInterface $token)
     {
@@ -78,7 +80,7 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function hasAccessToken($service)
     {
@@ -92,7 +94,7 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function clearToken($service)
     {
@@ -104,12 +106,12 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function clearAllTokens()
     {
         // memory
-        $this->cachedTokens = [];
+        $this->cachedTokens = array();
 
         // redis
         $keys = $this->redis->hkeys($this->key);
@@ -117,7 +119,7 @@ class Redis implements TokenStorageInterface
 
         // pipeline for performance
         $this->redis->pipeline(
-            function ($pipe) use ($keys, $me): void {
+            function ($pipe) use ($keys, $me) {
                 foreach ($keys as $k) {
                     $pipe->hdel($me->getKey(), $k);
                 }
@@ -129,7 +131,7 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function retrieveAuthorizationState($service)
     {
@@ -147,7 +149,7 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function storeAuthorizationState($service, $state)
     {
@@ -160,7 +162,7 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function hasAuthorizationState($service)
     {
@@ -174,7 +176,7 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function clearAuthorizationState($service)
     {
@@ -186,12 +188,12 @@ class Redis implements TokenStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function clearAllAuthorizationStates()
     {
         // memory
-        $this->cachedStates = [];
+        $this->cachedStates = array();
 
         // redis
         $keys = $this->redis->hkeys($this->stateKey);
@@ -199,7 +201,7 @@ class Redis implements TokenStorageInterface
 
         // pipeline for performance
         $this->redis->pipeline(
-            function ($pipe) use ($keys, $me): void {
+            function ($pipe) use ($keys, $me) {
                 foreach ($keys as $k) {
                     $pipe->hdel($me->getKey(), $k);
                 }

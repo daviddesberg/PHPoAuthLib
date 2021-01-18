@@ -47,6 +47,9 @@ interface TokenInterface
      */
     public function setLifetime($lifetime);
 
+    /**
+     * @param array $extraParams
+     */
     public function setExtraParams(array $extraParams);
 
     /**

@@ -3,6 +3,7 @@
 namespace OAuth\Common\Storage;
 
 use OAuth\Common\Token\TokenInterface;
+use OAuth\Common\Storage\Exception\TokenNotFoundException;
 
 /**
  * All token storage providers must implement this interface.
@@ -10,21 +11,26 @@ use OAuth\Common\Token\TokenInterface;
 interface TokenStorageInterface
 {
     /**
-     * @param string $service
+     * Function to retrieve access token
+     *
+     * @param string $service   service name
      *
      * @return TokenInterface
+     *
+     * @throws TokenNotFoundException
      */
     public function retrieveAccessToken($service);
 
     /**
-     * @param string         $service
+     * @param string         $service   service name
+     * @param TokenInterface $token     token
      *
      * @return TokenStorageInterface
      */
     public function storeAccessToken($service, TokenInterface $token);
 
     /**
-     * @param string $service
+     * @param string $service   service name
      *
      * @return bool
      */
@@ -33,7 +39,7 @@ interface TokenStorageInterface
     /**
      * Delete the users token. Aka, log out.
      *
-     * @param string $service
+     * @param string $service   service name
      *
      * @return TokenStorageInterface
      */
@@ -48,37 +54,37 @@ interface TokenStorageInterface
     public function clearAllTokens();
 
     /**
-     * Store the authorization state related to a given service.
+     * Store the authorization state related to a given service
      *
-     * @param string $service
-     * @param string $state
+     * @param string $service   service name
+     * @param string $state     state of authorization
      *
      * @return TokenStorageInterface
      */
     public function storeAuthorizationState($service, $state);
 
     /**
-     * Check if an authorization state for a given service exists.
+     * Check if an authorization state for a given service exists
      *
-     * @param string $service
+     * @param string $service   service name
      *
      * @return bool
      */
     public function hasAuthorizationState($service);
 
     /**
-     * Retrieve the authorization state for a given service.
+     * Retrieve the authorization state for a given service
      *
-     * @param string $service
+     * @param string $service   service name
      *
      * @return string
      */
     public function retrieveAuthorizationState($service);
 
     /**
-     * Clear the authorization state of a given service.
+     * Clear the authorization state of a given service
      *
-     * @param string $service
+     * @param string $service   service name
      *
      * @return TokenStorageInterface
      */

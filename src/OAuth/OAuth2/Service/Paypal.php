@@ -2,43 +2,41 @@
 
 namespace OAuth\OAuth2\Service;
 
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\Common\Consumer\CredentialsInterface;
+use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\OAuth2\Token\StdOAuth2Token;
+use OAuth\Common\Http\Uri\UriInterface;
 
 /**
  * PayPal service.
  *
  * @author Flávio Heleno <flaviohbatista@gmail.com>
- *
- * @see https://developer.paypal.com/webapps/developer/docs/integration/direct/log-in-with-paypal/detailed/
+ * @link https://developer.paypal.com/webapps/developer/docs/integration/direct/log-in-with-paypal/detailed/
  */
 class Paypal extends AbstractService
 {
     /**
-     * Defined scopes.
-     *
-     * @see https://developer.paypal.com/webapps/developer/docs/integration/direct/log-in-with-paypal/detailed/
+     * Defined scopes
+     * @link https://developer.paypal.com/webapps/developer/docs/integration/direct/log-in-with-paypal/detailed/
      * @see  #attributes
      */
-    const SCOPE_OPENID = 'openid';
-    const SCOPE_PROFILE = 'profile';
+    const SCOPE_OPENID           = 'openid';
+    const SCOPE_PROFILE          = 'profile';
     const SCOPE_PAYPALATTRIBUTES = 'https://uri.paypal.com/services/paypalattributes';
-    const SCOPE_EMAIL = 'email';
-    const SCOPE_ADDRESS = 'address';
-    const SCOPE_PHONE = 'phone';
-    const SCOPE_EXPRESSCHECKOUT = 'https://uri.paypal.com/services/expresscheckout';
+    const SCOPE_EMAIL            = 'email';
+    const SCOPE_ADDRESS          = 'address';
+    const SCOPE_PHONE            = 'phone';
+    const SCOPE_EXPRESSCHECKOUT  = 'https://uri.paypal.com/services/expresscheckout';
 
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
-        $scopes = [],
-        ?UriInterface $baseApiUri = null
+        $scopes = array(),
+        UriInterface $baseApiUri = null
     ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
 
@@ -95,7 +93,8 @@ class Paypal extends AbstractService
             unset($data['refresh_token']);
         }
 
-        unset($data['access_token'], $data['expires_in']);
+        unset($data['access_token']);
+        unset($data['expires_in']);
 
         $token->setExtraParams($data);
 

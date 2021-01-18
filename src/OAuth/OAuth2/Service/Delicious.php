@@ -4,27 +4,25 @@
  *
  * @author  Pedro Amorim <contact@pamorim.fr>
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- *
- * @see    https://github.com/SciDevs/delicious-api/blob/master/api/oauth.md
+ * @link    https://github.com/SciDevs/delicious-api/blob/master/api/oauth.md
  */
 
 namespace OAuth\OAuth2\Service;
 
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\Common\Consumer\CredentialsInterface;
+use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\OAuth2\Token\StdOAuth2Token;
+use OAuth\Common\Http\Uri\UriInterface;
 
 /**
  * Delicious service.
  *
  * @author  Pedro Amorim <contact@pamorim.fr>
  * @license http://www.opensource.org/licenses/mit-license.html  MIT License
- *
- * @see    https://github.com/SciDevs/delicious-api/blob/master/api/oauth.md
+ * @link    https://github.com/SciDevs/delicious-api/blob/master/api/oauth.md
  */
 class Delicious extends AbstractService
 {
@@ -32,8 +30,8 @@ class Delicious extends AbstractService
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
-        $scopes = [],
-        ?UriInterface $baseApiUri = null
+        $scopes = array(),
+        UriInterface $baseApiUri = null
     ) {
         parent::__construct(
             $credentials,
@@ -55,6 +53,7 @@ class Delicious extends AbstractService
     public function getAuthorizationEndpoint()
     {
         return new Uri('https://delicious.com/auth/authorize');
+
     }
 
     /**
@@ -107,8 +106,8 @@ class Delicious extends AbstractService
         return $token;
     }
 
-    // Special, delicious didn't respect the oauth2 RFC and need a grant_type='code'
 
+    // Special, delicious didn't respect the oauth2 RFC and need a grant_type='code'
     /**
      * {@inheritdoc}
      */
@@ -118,13 +117,13 @@ class Delicious extends AbstractService
             $this->validateAuthorizationState($state);
         }
 
-        $bodyParams = [
-            'code' => $code,
-            'client_id' => $this->credentials->getConsumerId(),
+        $bodyParams = array(
+            'code'          => $code,
+            'client_id'     => $this->credentials->getConsumerId(),
             'client_secret' => $this->credentials->getConsumerSecret(),
-            'redirect_uri' => $this->credentials->getCallbackUrl(),
-            'grant_type' => 'code',
-        ];
+            'redirect_uri'  => $this->credentials->getCallbackUrl(),
+            'grant_type'    => 'code',
+        );
 
         $responseBody = $this->httpClient->retrieveResponse(
             $this->getAccessTokenEndpoint(),

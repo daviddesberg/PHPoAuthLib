@@ -4,29 +4,27 @@
  *
  * @author  Pedro Amorim <contact@pamorim.fr>
  * @license http://www.opensource.org/licenses/mit-license.html MIT License
- *
- * @see    https://developer.vimeo.com/
- * @see    https://developer.vimeo.com/api/authentication
+ * @link    https://developer.vimeo.com/
+ * @link    https://developer.vimeo.com/api/authentication
  */
 
 namespace OAuth\OAuth2\Service;
 
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\Common\Consumer\CredentialsInterface;
+use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\OAuth2\Token\StdOAuth2Token;
+use OAuth\Common\Http\Uri\UriInterface;
 
 /**
  * Vimeo service.
  *
  * @author  Pedro Amorim <contact@pamorim.fr>
  * @license http://www.opensource.org/licenses/mit-license.html MIT License
- *
- * @see    https://developer.vimeo.com/
- * @see    https://developer.vimeo.com/api/authentication
+ * @link    https://developer.vimeo.com/
+ * @link    https://developer.vimeo.com/api/authentication
  */
 class Vimeo extends AbstractService
 {
@@ -36,34 +34,33 @@ class Vimeo extends AbstractService
     const HEADER_ACCEPT = 'application/vnd.vimeo.*+json;version=3.2';
 
     /**
-     * Scopes.
-     *
+     * Scopes
      * @see  https://developer.vimeo.com/api/authentication#scope
      */
     // View public videos
-    const SCOPE_PUBLIC = 'public';
+    const SCOPE_PUBLIC    = 'public';
     // View private videos
-    const SCOPE_PRIVATE = 'private';
+    const SCOPE_PRIVATE   = 'private';
     // View Vimeo On Demand purchase history
     const SCOPE_PURCHASED = 'purchased';
     // Create new videos, groups, albums, etc.
-    const SCOPE_CREATE = 'create';
+    const SCOPE_CREATE    = 'create';
     // Edit videos, groups, albums, etc.
-    const SCOPE_EDIT = 'edit';
+    const SCOPE_EDIT      = 'edit';
     // Delete videos, groups, albums, etc.
-    const SCOPE_DELETE = 'delete';
+    const SCOPE_DELETE    = 'delete';
     // Interact with a video on behalf of a user, such as liking
     // a video or adding it to your watch later queue
-    const SCOPE_INTERACT = 'interact';
+    const SCOPE_INTERACT  = 'interact';
     // Upload a video
-    const SCOPE_UPLOAD = 'upload';
+    const SCOPE_UPLOAD    = 'upload';
 
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
-        $scopes = [],
-        ?UriInterface $baseApiUri = null
+        $scopes = array(),
+        UriInterface $baseApiUri = null
     ) {
         parent::__construct(
             $credentials,
@@ -146,7 +143,7 @@ class Vimeo extends AbstractService
      */
     protected function getExtraOAuthHeaders()
     {
-        return ['Accept' => self::HEADER_ACCEPT];
+        return array('Accept' => self::HEADER_ACCEPT);
     }
 
     /**
@@ -154,6 +151,6 @@ class Vimeo extends AbstractService
      */
     protected function getExtraApiHeaders()
     {
-        return ['Accept' => self::HEADER_ACCEPT];
+        return array('Accept' => self::HEADER_ACCEPT);
     }
 }

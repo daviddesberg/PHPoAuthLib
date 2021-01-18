@@ -2,14 +2,14 @@
 
 namespace OAuth\OAuth1\Service;
 
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\OAuth1\Token\StdOAuth1Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\OAuth1\Signature\SignatureInterface;
-use OAuth\OAuth1\Token\StdOAuth1Token;
 
 class QuickBooks extends AbstractService
 {
@@ -21,7 +21,7 @@ class QuickBooks extends AbstractService
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
         SignatureInterface $signature,
-        ?UriInterface $baseApiUri = null
+        UriInterface $baseApiUri = null
     ) {
         parent::__construct(
             $credentials,
@@ -88,7 +88,6 @@ class QuickBooks extends AbstractService
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
             $message = 'Error in retrieving token: "' . $data['error'] . '"';
-
             throw new TokenResponseException($message);
         }
 
@@ -107,16 +106,15 @@ class QuickBooks extends AbstractService
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function request(
         $path,
         $method = 'GET',
         $body = null,
-        array $extraHeaders = []
+        array $extraHeaders = array()
     ) {
         $extraHeaders['Accept'] = 'application/json';
-
         return parent::request($path, $method, $body, $extraHeaders);
     }
 }

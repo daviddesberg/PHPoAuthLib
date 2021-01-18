@@ -4,40 +4,38 @@
  *
  * @author  Pedro Amorim <contact@pamorim.fr>
  * @license http://www.opensource.org/licenses/mit-license.html MIT License
- *
- * @see    http://strava.github.io/
- * @see    http://strava.github.io/api/v3/oauth/
+ * @link    http://strava.github.io/
+ * @link    http://strava.github.io/api/v3/oauth/
  */
 
 namespace OAuth\OAuth2\Service;
 
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\Common\Consumer\CredentialsInterface;
+use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\OAuth2\Service\Exception\InvalidAccessTypeException;
-use OAuth\OAuth2\Token\StdOAuth2Token;
 
 /**
  * Strava service.
  *
  * @author  Pedro Amorim <contact@pamorim.fr>
  * @license http://www.opensource.org/licenses/mit-license.html MIT License
- *
- * @see    http://strava.github.io/
- * @see    http://strava.github.io/api/v3/oauth/
+ * @link    http://strava.github.io/
+ * @link    http://strava.github.io/api/v3/oauth/
  */
 class Strava extends AbstractService
 {
     /**
-     * Scopes.
+     * Scopes
      */
     // default
-    const SCOPE_PUBLIC = 'public';
+    const SCOPE_PUBLIC       = 'public';
     // Modify activities, upload on the user’s behalf
-    const SCOPE_WRITE = 'write';
+    const SCOPE_WRITE        = 'write';
     // View private activities and data within privacy zones
     const SCOPE_VIEW_PRIVATE = 'view_private';
 
@@ -47,11 +45,11 @@ class Strava extends AbstractService
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
-        $scopes = [],
-        ?UriInterface $baseApiUri = null
+        $scopes = array(),
+        UriInterface $baseApiUri = null
     ) {
         if (empty($scopes)) {
-            $scopes = [self::SCOPE_PUBLIC];
+            $scopes = array(self::SCOPE_PUBLIC);
         }
 
         parent::__construct(
@@ -130,9 +128,9 @@ class Strava extends AbstractService
         return $token;
     }
 
-    public function setApprouvalPrompt($prompt): void
+    public function setApprouvalPrompt($prompt)
     {
-        if (!in_array($prompt, ['auto', 'force'], true)) {
+        if (!in_array($prompt, array('auto', 'force'), true)) {
             // @todo Maybe could we rename this exception
             throw new InvalidAccessTypeException('Invalid approuvalPrompt, expected either auto or force.');
         }

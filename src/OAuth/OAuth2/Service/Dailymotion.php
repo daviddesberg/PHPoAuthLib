@@ -2,57 +2,56 @@
 
 namespace OAuth\OAuth2\Service;
 
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\Common\Consumer\CredentialsInterface;
+use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\OAuth2\Token\StdOAuth2Token;
+use OAuth\Common\Http\Uri\UriInterface;
 
 /**
  * Dailymotion service.
  *
  * @author Mouhamed SEYE <mouhamed@seye.pro>
- *
- * @see http://www.dailymotion.com/doc/api/authentication.html
+ * @link http://www.dailymotion.com/doc/api/authentication.html
  */
 class Dailymotion extends AbstractService
 {
     /**
-     * Scopes.
+     * Scopes
      *
      * @var string
      */
-    const SCOPE_EMAIL = 'email';
-    const SCOPE_PROFILE = 'userinfo';
-    const SCOPE_VIDEOS = 'manage_videos';
-    const SCOPE_COMMENTS = 'manage_comments';
-    const SCOPE_PLAYLIST = 'manage_playlists';
-    const SCOPE_TILES = 'manage_tiles';
-    const SCOPE_SUBSCRIPTIONS = 'manage_subscriptions';
-    const SCOPE_FRIENDS = 'manage_friends';
-    const SCOPE_FAVORITES = 'manage_favorites';
-    const SCOPE_GROUPS = 'manage_groups';
+    const SCOPE_EMAIL         = 'email',
+          SCOPE_PROFILE       = 'userinfo',
+          SCOPE_VIDEOS        = 'manage_videos',
+          SCOPE_COMMENTS      = 'manage_comments',
+          SCOPE_PLAYLIST      = 'manage_playlists',
+          SCOPE_TILES         = 'manage_tiles',
+          SCOPE_SUBSCRIPTIONS = 'manage_subscriptions',
+          SCOPE_FRIENDS       = 'manage_friends',
+          SCOPE_FAVORITES     = 'manage_favorites',
+          SCOPE_GROUPS        = 'manage_groups';
 
     /**
-     * Dialog form factors.
+     * Dialog form factors
      *
      * @var string
      */
-    const DISPLAY_PAGE = 'page';
-    const DISPLAY_POPUP = 'popup';
-    const DISPLAY_MOBILE = 'mobile';
+    const DISPLAY_PAGE   = 'page',
+          DISPLAY_POPUP  = 'popup',
+          DISPLAY_MOBILE = 'mobile';
 
     /**
-     * {@inheritdoc}
-     */
+    * {@inheritdoc}
+    */
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
-        $scopes = [],
-        ?UriInterface $baseApiUri = null
+        $scopes = array(),
+        UriInterface $baseApiUri = null
     ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
 
@@ -98,7 +97,7 @@ class Dailymotion extends AbstractService
             throw new TokenResponseException(
                 sprintf(
                     'Error in retrieving token: "%s"',
-                    $data['error_description'] ?? $data['error']
+                    isset($data['error_description']) ? $data['error_description'] : $data['error']
                 )
             );
         }
@@ -112,7 +111,8 @@ class Dailymotion extends AbstractService
             unset($data['refresh_token']);
         }
 
-        unset($data['access_token'], $data['expires_in']);
+        unset($data['access_token']);
+        unset($data['expires_in']);
 
         $token->setExtraParams($data);
 
@@ -124,6 +124,6 @@ class Dailymotion extends AbstractService
      */
     protected function getExtraOAuthHeaders()
     {
-        return ['Accept' => 'application/json'];
+        return array('Accept' => 'application/json');
     }
 }

@@ -2,42 +2,43 @@
 
 namespace OAuth\OAuth2\Service;
 
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\Common\Exception\Exception;
+use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\Common\Consumer\CredentialsInterface;
+use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\OAuth2\Token\StdOAuth2Token;
+use OAuth\Common\Http\Uri\UriInterface;
 
 class DeviantArt extends AbstractService
 {
     /**
-     * DeviantArt www url - used to build dialog urls.
+     * DeviantArt www url - used to build dialog urls
      */
     const WWW_URL = 'https://www.deviantart.com/';
 
     /**
-     * Defined scopes.
+     * Defined scopes
      *
      * If you don't think this is scary you should not be allowed on the web at all
      *
-     * @see https://www.deviantart.com/developers/authentication
-     * @see https://www.deviantart.com/developers/http/v1/20150217
+     * @link https://www.deviantart.com/developers/authentication
+     * @link https://www.deviantart.com/developers/http/v1/20150217
      */
-    const SCOPE_FEED = 'feed';
-    const SCOPE_BROWSE = 'browse';
-    const SCOPE_COMMENT = 'comment.post';
-    const SCOPE_STASH = 'stash';
-    const SCOPE_USER = 'user';
-    const SCOPE_USERMANAGE = 'user.manage';
+    const SCOPE_FEED                       = 'feed';
+    const SCOPE_BROWSE                     = 'browse';
+    const SCOPE_COMMENT                    = 'comment.post';
+    const SCOPE_STASH                      = 'stash';
+    const SCOPE_USER                       = 'user';
+    const SCOPE_USERMANAGE                 = 'user.manage';
 
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
-        $scopes = [],
-        ?UriInterface $baseApiUri = null
+        $scopes = array(),
+        UriInterface $baseApiUri = null
     ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
 
@@ -67,6 +68,7 @@ class DeviantArt extends AbstractService
      */
     protected function parseAccessTokenResponse($responseBody)
     {
+
         $data = json_decode($responseBody, true);
 
         if (null === $data || !is_array($data)) {
@@ -87,7 +89,8 @@ class DeviantArt extends AbstractService
             unset($data['refresh_token']);
         }
 
-        unset($data['access_token'], $data['expires_in']);
+        unset($data['access_token']);
+        unset($data['expires_in']);
 
         $token->setExtraParams($data);
 

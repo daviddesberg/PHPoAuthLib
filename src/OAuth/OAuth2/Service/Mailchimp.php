@@ -2,13 +2,13 @@
 
 namespace OAuth\OAuth2\Service;
 
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\Common\Consumer\CredentialsInterface;
+use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\OAuth2\Token\StdOAuth2Token;
+use OAuth\Common\Http\Uri\UriInterface;
 
 class Mailchimp extends AbstractService
 {
@@ -16,12 +16,12 @@ class Mailchimp extends AbstractService
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
-        $scopes = [],
-        ?UriInterface $baseApiUri = null
+        $scopes = array(),
+        UriInterface $baseApiUri = null
     ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
 
-        if (null === $this->baseApiUri && $storage->hasAccessToken($this->service())) {
+        if (is_null($this->baseApiUri) && $storage->hasAccessToken($this->service())) {
             $this->setBaseApiUri($storage->retrieveAccessToken($this->service()));
         }
     }
@@ -80,9 +80,9 @@ class Mailchimp extends AbstractService
     /**
      * {@inheritdoc}
      */
-    public function request($path, $method = 'GET', $body = null, array $extraHeaders = [])
+    public function request($path, $method = 'GET', $body = null, array $extraHeaders = array())
     {
-        if (null === $this->baseApiUri) {
+        if (is_null($this->baseApiUri)) {
             $this->setBaseApiUri($this->storage->retrieveAccessToken($this->service()));
         }
 
@@ -91,20 +91,22 @@ class Mailchimp extends AbstractService
 
     /**
      * Set the right base endpoint.
+     *
+     * @param StdOAuth2Token $token
      */
     protected function setBaseApiUri(StdOAuth2Token $token)
     {
         // Make request uri.
-        $endpoint = 'https://login.mailchimp.com/oauth2/metadata?oauth_token=' . $token->getAccessToken();
+        $endpoint = 'https://login.mailchimp.com/oauth2/metadata?oauth_token='. $token->getAccessToken();
 
         // Grab meta data about the token.
-        $response = $this->httpClient->retrieveResponse(new Uri($endpoint), [], [], 'GET');
+        $response = $this->httpClient->retrieveResponse(new Uri($endpoint), array(), array(), 'GET');
 
         // Parse JSON.
         $meta = json_decode($response, true);
 
         // Set base api uri.
-        $this->baseApiUri = new Uri('https://' . $meta['dc'] . '.api.mailchimp.com/2.0/');
+        $this->baseApiUri = new Uri('https://'. $meta['dc'] .'.api.mailchimp.com/2.0/');
 
         // Allow chaining.
         return $this;

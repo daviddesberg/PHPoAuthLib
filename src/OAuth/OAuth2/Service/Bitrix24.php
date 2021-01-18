@@ -2,9 +2,13 @@
 
 namespace OAuth\OAuth2\Service;
 
+use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\OAuth2\Token\StdOAuth2Token;
+use OAuth\Common\Consumer\CredentialsInterface;
+use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\Common\Http\Uri\UriInterface;
 
 class Bitrix24 extends AbstractService
 {
@@ -54,7 +58,7 @@ class Bitrix24 extends AbstractService
 
         $responseBody = $this->httpClient->retrieveResponse(
             $this->getAccessTokenUri($code),
-            [],
+            array(),
             $this->getExtraOAuthHeaders(),
             'GET'
         );
@@ -70,14 +74,14 @@ class Bitrix24 extends AbstractService
      */
     public function getAccessTokenUri($code)
     {
-        $parameters = [
-            'code' => $code,
-            'client_id' => $this->credentials->getConsumerId(),
+        $parameters = array(
+            'code'          => $code,
+            'client_id'     => $this->credentials->getConsumerId(),
             'client_secret' => $this->credentials->getConsumerSecret(),
-            'redirect_uri' => $this->credentials->getCallbackUrl(),
-            'grant_type' => 'authorization_code',
-            'scope' => $this->scopes,
-        ];
+            'redirect_uri'  => $this->credentials->getCallbackUrl(),
+            'grant_type'    => 'authorization_code',
+            'scope'         => $this->scopes
+        );
 
         $parameters['scope'] = implode(' ', $this->scopes);
 
@@ -112,7 +116,8 @@ class Bitrix24 extends AbstractService
             unset($data['refresh_token']);
         }
 
-        unset($data['access_token'], $data['expires_in']);
+        unset($data['access_token']);
+        unset($data['expires_in']);
 
         $token->setExtraParams($data);
 

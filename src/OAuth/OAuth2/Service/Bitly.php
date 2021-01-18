@@ -2,13 +2,13 @@
 
 namespace OAuth\OAuth2\Service;
 
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\Common\Consumer\CredentialsInterface;
+use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\OAuth2\Token\StdOAuth2Token;
+use OAuth\Common\Http\Uri\UriInterface;
 
 class Bitly extends AbstractService
 {
@@ -16,8 +16,8 @@ class Bitly extends AbstractService
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
-        $scopes = [],
-        ?UriInterface $baseApiUri = null
+        $scopes = array(),
+        UriInterface $baseApiUri = null
     ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
 
@@ -83,13 +83,13 @@ class Bitly extends AbstractService
             $this->validateAuthorizationState($state);
         }
 
-        $bodyParams = [
-            'code' => $code,
-            'client_id' => $this->credentials->getConsumerId(),
+        $bodyParams = array(
+            'code'          => $code,
+            'client_id'     => $this->credentials->getConsumerId(),
             'client_secret' => $this->credentials->getConsumerSecret(),
-            'redirect_uri' => $this->credentials->getCallbackUrl(),
-            'grant_type' => 'authorization_code',
-        ];
+            'redirect_uri'  => $this->credentials->getCallbackUrl(),
+            'grant_type'    => 'authorization_code',
+        );
 
         $responseBody = $this->httpClient->retrieveResponse(
             $this->getAccessTokenEndpoint(),
@@ -100,7 +100,7 @@ class Bitly extends AbstractService
         // we can scream what we want that we want bitly to return a json encoded string (format=json), but the
         // WOAH WATCH YOUR LANGUAGE ;) service doesn't seem to like screaming, hence we need to manually
         // parse the result
-        $parsedResult = [];
+        $parsedResult = array();
         parse_str($responseBody, $parsedResult);
 
         $token = $this->parseAccessTokenResponse(json_encode($parsedResult));

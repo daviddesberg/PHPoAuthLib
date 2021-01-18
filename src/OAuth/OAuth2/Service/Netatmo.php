@@ -4,49 +4,45 @@
  *
  * @author  Pedro Amorim <contact@pamorim.fr>
  * @license http://www.opensource.org/licenses/mit-license.html MIT License
- *
- * @see    https://dev.netatmo.com/doc/
+ * @link    https://dev.netatmo.com/doc/
  */
 
 namespace OAuth\OAuth2\Service;
 
-use OAuth\Common\Consumer\CredentialsInterface;
-use OAuth\Common\Http\Client\ClientInterface;
+use OAuth\OAuth2\Token\StdOAuth2Token;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\Uri;
-use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\Common\Consumer\CredentialsInterface;
+use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\OAuth2\Token\StdOAuth2Token;
+use OAuth\Common\Http\Uri\UriInterface;
 
 /**
  * Netatmo service.
  *
  * @author  Pedro Amorim <contact@pamorim.fr>
  * @license http://www.opensource.org/licenses/mit-license.html MIT License
- *
- * @see    https://dev.netatmo.com/doc/
+ * @link    https://dev.netatmo.com/doc/
  */
 class Netatmo extends AbstractService
 {
-    /**
-     * SCOPES.
-     *
-     * @see https://dev.netatmo.com/doc/authentication/scopes
-     */
+
+    // SCOPES
+    // @link https://dev.netatmo.com/doc/authentication/scopes
 
     // Used to read weather station's data (devicelist, getmeasure)
-    const SCOPE_STATION_READ = 'read_station';
+    const SCOPE_STATION_READ        = 'read_station';
     // Used to read thermostat's data (devicelist, getmeasure, getthermstate)
-    const SCOPE_THERMOSTAT_READ = 'read_thermostat';
+    const SCOPE_THERMOSTAT_READ     = 'read_thermostat';
     // Used to configure the thermostat (syncschedule, setthermpoint)
-    const SCOPE_THERMOSTAT_WRITE = 'write_thermostat';
+    const SCOPE_THERMOSTAT_WRITE    = 'write_thermostat';
 
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
-        $scopes = [],
-        ?UriInterface $baseApiUri = null
+        $scopes = array(),
+        UriInterface $baseApiUri = null
     ) {
         parent::__construct(
             $credentials,
@@ -67,7 +63,8 @@ class Netatmo extends AbstractService
      */
     public function getAuthorizationEndpoint()
     {
-        return new Uri($this->baseApiUri . 'oauth2/authorize');
+        return new Uri($this->baseApiUri.'oauth2/authorize');
+
     }
 
     /**
@@ -75,7 +72,7 @@ class Netatmo extends AbstractService
      */
     public function getAccessTokenEndpoint()
     {
-        return new Uri($this->baseApiUri . 'oauth2/token');
+        return new Uri($this->baseApiUri.'oauth2/token');
     }
 
     /**
@@ -110,7 +107,8 @@ class Netatmo extends AbstractService
             unset($data['refresh_token']);
         }
 
-        unset($data['access_token'], $data['expires_in']);
+        unset($data['access_token']);
+        unset($data['expires_in']);
 
         $token->setExtraParams($data);
 

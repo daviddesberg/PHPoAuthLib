@@ -22,14 +22,16 @@ interface ServiceInterface
      *
      * @return string
      */
-    public function request($path, $method = 'GET', $body = null, array $extraHeaders = []);
+    public function request($path, $method = 'GET', $body = null, array $extraHeaders = array());
 
     /**
      * Returns the url to redirect to for authorization purposes.
      *
+     * @param array $additionalParameters
+     *
      * @return UriInterface
      */
-    public function getAuthorizationUri(array $additionalParameters = []);
+    public function getAuthorizationUri(array $additionalParameters = array());
 
     /**
      * Returns the authorization API endpoint.

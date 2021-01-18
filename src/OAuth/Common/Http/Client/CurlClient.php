@@ -2,11 +2,12 @@
 
 namespace OAuth\Common\Http\Client;
 
+use InvalidArgumentException;
 use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Http\Uri\UriInterface;
 
 /**
- * Client implementation for cURL
+ * Client implementation for cURL.
  */
 class CurlClient extends AbstractClient
 {
@@ -19,18 +20,18 @@ class CurlClient extends AbstractClient
     private $forceSSL3 = false;
 
     /**
-     * Additional parameters (as `key => value` pairs) to be passed to `curl_setopt`
+     * Additional parameters (as `key => value` pairs) to be passed to `curl_setopt`.
      *
      * @var array
      */
-    private $parameters = array();
+    private $parameters = [];
 
     /**
-     * Additional `curl_setopt` parameters
+     * Additional `curl_setopt` parameters.
      *
      * @param array $parameters
      */
-    public function setCurlParameters(array $parameters)
+    public function setCurlParameters(array $parameters): void
     {
         $this->parameters = $parameters;
     }
@@ -64,7 +65,7 @@ class CurlClient extends AbstractClient
     public function retrieveResponse(
         UriInterface $endpoint,
         $requestBody,
-        array $extraHeaders = array(),
+        array $extraHeaders = [],
         $method = 'POST'
     ) {
         // Normalize method name
@@ -73,14 +74,14 @@ class CurlClient extends AbstractClient
         $this->normalizeHeaders($extraHeaders);
 
         if ($method === 'GET' && !empty($requestBody)) {
-            throw new \InvalidArgumentException('No body expected for "GET" request.');
+            throw new InvalidArgumentException('No body expected for "GET" request.');
         }
 
         if (!isset($extraHeaders['Content-Type']) && $method === 'POST' && is_array($requestBody)) {
             $extraHeaders['Content-Type'] = 'Content-Type: application/x-www-form-urlencoded';
         }
 
-        $extraHeaders['Host']       = 'Host: '.$endpoint->getHost();
+        $extraHeaders['Host'] = 'Host: ' . $endpoint->getHost();
         $extraHeaders['Connection'] = 'Connection: close';
 
         $ch = curl_init();
@@ -122,17 +123,17 @@ class CurlClient extends AbstractClient
             curl_setopt($ch, CURLOPT_SSLVERSION, 3);
         }
 
-        $response     = curl_exec($ch);
+        $response = curl_exec($ch);
         $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
         if (false === $response) {
-            $errNo  = curl_errno($ch);
+            $errNo = curl_errno($ch);
             $errStr = curl_error($ch);
             curl_close($ch);
             if (empty($errStr)) {
                 throw new TokenResponseException('Failed to request resource.', $responseCode);
             }
-            throw new TokenResponseException('cURL Error # '.$errNo.': '.$errStr, $responseCode);
+            throw new TokenResponseException('cURL Error # ' . $errNo.': ' . $errStr, $responseCode);
         }
 
         curl_close($ch);

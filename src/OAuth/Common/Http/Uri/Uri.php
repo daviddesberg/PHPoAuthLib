@@ -74,7 +74,7 @@ class Uri implements UriInterface
      *
      * @throws \InvalidArgumentException
      */
-    protected function parseUri($uri)
+    protected function parseUri($uri): void
     {
         if (false === ($uriParts = parse_url($uri))) {
             // congratulations if you've managed to get parse_url to fail,
@@ -106,8 +106,8 @@ class Uri implements UriInterface
             $this->path = '/';
         }
 
-        $this->query = isset($uriParts['query']) ? $uriParts['query'] : '';
-        $this->fragment = isset($uriParts['fragment']) ? $uriParts['fragment'] : '';
+        $this->query = $uriParts['query'] ?? '';
+        $this->fragment = $uriParts['fragment'] ?? '';
 
         $userInfo = '';
         if (!empty($uriParts['user'])) {
@@ -134,11 +134,11 @@ class Uri implements UriInterface
         // after the first colon (":") character found within a userinfo
         // subcomponent unless the data after the colon is the empty string
         // (indicating no password)"
-        if ($colonPos !== false && strlen($rawUserInfo)-1 > $colonPos) {
+        if ($colonPos !== false && strlen($rawUserInfo) - 1 > $colonPos) {
             return substr($rawUserInfo, 0, $colonPos) . ':********';
-        } else {
-            return $rawUserInfo;
         }
+
+        return $rawUserInfo;
     }
 
     /**
@@ -213,7 +213,7 @@ class Uri implements UriInterface
      */
     public function getAuthority()
     {
-        $authority = $this->userInfo ? $this->userInfo.'@' : '';
+        $authority = $this->userInfo ? $this->userInfo . '@' : '';
         $authority .= $this->host;
 
         if ($this->explicitPortSpecified) {
@@ -228,7 +228,7 @@ class Uri implements UriInterface
      */
     public function getRawAuthority()
     {
-        $authority = $this->rawUserInfo ? $this->rawUserInfo.'@' : '';
+        $authority = $this->rawUserInfo ? $this->rawUserInfo . '@' : '';
         $authority .= $this->host;
 
         if ($this->explicitPortSpecified) {
@@ -308,7 +308,7 @@ class Uri implements UriInterface
     /**
      * @param $path
      */
-    public function setPath($path)
+    public function setPath($path): void
     {
         if (empty($path)) {
             $this->path = '/';

@@ -28,26 +28,23 @@ if (!$helper->isCli()) {
         $status = $result ? 'passed' : 'failed';
         echo "<li>{$label} ... <span class='{$status}'>{$status}</span></li>";
     }
-    echo '</ul>';
-
-    ?>
+    echo '</ul>'; ?>
     <h2>Select provider for check</h2>
     <ul>
         <?php
-        /** @var  SplFileInfo $files */
+        /** @var SplFileInfo $files */
         foreach ($helper->getFinder() as $files) {
             $basename = $files->getBasename();
-            echo '<li><a href="/provider/'.$basename.'">'.$basename.'</a></li>';
-        }
-        ?>
+            echo '<li><a href="/provider/' . $basename . '">' . $basename . '</a></li>';
+        } ?>
     </ul>
 
     <?php
 } else {
-    echo 'Requirement check:' . PHP_EOL;
-    foreach ($requirements as $label => $result) {
-        $status = $result ? '32m passed' : '31m failed';
-        echo "{$label} ... \033[{$status}\033[0m" . PHP_EOL;
-    }
-}
+            echo 'Requirement check:' . PHP_EOL;
+            foreach ($requirements as $label => $result) {
+                $status = $result ? '32m passed' : '31m failed';
+                echo "{$label} ... \033[{$status}\033[0m" . PHP_EOL;
+            }
+        }
 ?>

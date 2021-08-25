@@ -10,42 +10,39 @@
  */
 
 use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Http\Client\CurlClient;
+use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Storage\Session;
+use OAuth\Helper\Example;
 use OAuth\OAuth2\Service\Ustream;
 
-/**
- * Bootstrap the example.
- */
-require_once __DIR__ . '/bootstrap.php';
+require_once __DIR__ . '/../bootstrap.php';
 
-// Session storage
+$helper = new Example();
 $storage = new Session();
+$client = new CurlClient();
 
-// Setup the credentials for the requests
-$credentials = new Credentials(
-    $servicesCredentials['ustream']['key'],
-    $servicesCredentials['ustream']['secret'],
-    $currentUri->getAbsoluteUri()
-);
+$helper->setTitle('Instagram');
 
-// Instantiate the Ustream service using the credentials, http client and storage mechanism for the token
-/** @var Ustream $ustream */
-$ustream = $serviceFactory->createService('Ustream', $credentials, $storage, ['identity']);
+if (empty($_GET)) {
+    echo $helper->getContent();
+} elseif (!empty($_GET['key']) && !empty($_GET['secret']) && $_GET['oauth'] !== 'redirect') {
+    $credentials = new Credentials($_GET['key'], $_GET['secret'], $helper->getCurrentUrl());
+    $service = new Ustream($credentials, $client, $storage);
+    echo $helper->getHeader();
+    echo '<a href="' . $service->getAuthorizationUri() . '">get access token</a>';
+    echo $helper->getFooter();
+} elseif (!empty($_GET['code'])) {
+    $credentials = new Credentials($_GET['key'], $_GET['secret'], $helper->getCurrentUrl());
+    $service = new Ustream($credentials, $client, $storage);
 
-if (!empty($_GET['code'])) {
-    // retrieve the CSRF state parameter
-    $state = $_GET['state'] ?? null;
+    echo $helper->getHeader();
 
-    // This was a callback request from Ustream, get the token
-    $ustream->requestAccessToken($_GET['code'], $state);
-
-    $result = json_decode($ustream->request('users/self.json'), true);
-
-    echo 'Your unique Ustream user id is: ' . $result['id'] . ' and your username is ' . $result['username'];
-} elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
-    $url = $ustream->getAuthorizationUri();
-    header('Location: ' . $url);
-} else {
-    $url = $currentUri->getRelativeUri() . '?go=go';
-    echo "<a href='$url'>Login with Ustream!</a>";
+    try {
+        $token = $service->requestAccessToken($_GET['code']);
+        echo 'access token: ' . $token->getAccessToken();
+    } catch (TokenResponseException $exception) {
+        $helper->getErrorMessage($exception);
+    }
+    echo $helper->getFooter();
 }

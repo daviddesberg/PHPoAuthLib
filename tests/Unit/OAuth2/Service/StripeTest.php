@@ -2,8 +2,8 @@
 
 namespace OAuthTest\Unit\OAuth2\Service;
 
-use OAuth\OAuth2\Service\Stripe;
 use OAuth\Common\Token\TokenInterface;
+use OAuth\OAuth2\Service\Stripe;
 use PHPUnit\Framework\TestCase;
 
 class StripeTest extends TestCase
@@ -45,7 +45,7 @@ class StripeTest extends TestCase
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-            array(),
+            [],
             $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
 
@@ -95,14 +95,14 @@ class StripeTest extends TestCase
     public function testGetAuthorizationMethod(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(0));
+        $client->expects(self::once())->method('retrieveResponse')->willReturnArgument(0);
 
         $token = $this->createMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
-        $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
-        $token->expects($this->once())->method('getAccessToken')->will($this->returnValue('foo'));
+        $token->expects(self::once())->method('getEndOfLife')->willReturn(TokenInterface::EOL_NEVER_EXPIRES);
+        $token->expects(self::once())->method('getAccessToken')->willReturn('foo');
 
         $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
-        $storage->expects($this->once())->method('retrieveAccessToken')->will($this->returnValue($token));
+        $storage->expects(self::once())->method('retrieveAccessToken')->willReturn($token);
 
         $service = new Stripe(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -110,7 +110,7 @@ class StripeTest extends TestCase
             $storage
         );
 
-        $uri         = $service->request('https://luisrpalanca.com/my/awesome/path');
+        $uri = $service->request('https://luisrpalanca.com/my/awesome/path');
         $absoluteUri = parse_url($uri->getAbsoluteUri());
 
         self::assertSame('access_token=foo', $absoluteUri['query']);
@@ -123,7 +123,7 @@ class StripeTest extends TestCase
     public function testParseAccessTokenResponseThrowsExceptionOnNulledResponse(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue(null));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn(null);
 
         $service = new Stripe(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -140,10 +140,10 @@ class StripeTest extends TestCase
      * @covers \OAuth\OAuth2\Service\Stripe::__construct
      * @covers \OAuth\OAuth2\Service\Stripe::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseThrowsExceptionOnError()
+    public function testParseAccessTokenResponseThrowsExceptionOnError(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())
+        $client->expects(self::once())
             ->method('retrieveResponse')->willReturn('error=some_error');
 
         $service = new Stripe(
@@ -161,10 +161,10 @@ class StripeTest extends TestCase
      * @covers \OAuth\OAuth2\Service\Stripe::__construct
      * @covers \OAuth\OAuth2\Service\Stripe::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseValidWithoutRefreshToken()
+    public function testParseAccessTokenResponseValidWithoutRefreshToken(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"access_token":"foo","expires_in":"bar"}'));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('{"access_token":"foo","expires_in":"bar"}');
 
         $service = new Stripe(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -179,10 +179,10 @@ class StripeTest extends TestCase
      * @covers \OAuth\OAuth2\Service\Stripe::__construct
      * @covers \OAuth\OAuth2\Service\Stripe::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseValidWithRefreshToken()
+    public function testParseAccessTokenResponseValidWithRefreshToken(): void
     {
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"access_token":"foo","expires_in":"bar","refresh_token":"baz"}'));
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('{"access_token":"foo","expires_in":"bar","refresh_token":"baz"}');
 
         $service = new Stripe(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
@@ -193,4 +193,3 @@ class StripeTest extends TestCase
         self::assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
     }
 }
-

@@ -2,13 +2,13 @@
 
 namespace OAuth\OAuth2\Service;
 
-use OAuth\OAuth2\Token\StdOAuth2Token;
-use OAuth\Common\Http\Exception\TokenResponseException;
-use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Client\ClientInterface;
-use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\Common\Http\Exception\TokenResponseException;
+use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\OAuth2\Token\StdOAuth2Token;
 
 class Stripe extends AbstractService
 {
@@ -19,8 +19,8 @@ class Stripe extends AbstractService
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
+        $scopes = [],
+        ?UriInterface $baseApiUri = null
     ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
 
@@ -60,7 +60,7 @@ class Stripe extends AbstractService
     {
         $data = json_decode($responseBody, true);
 
-        if (null === $data || ! is_array($data)) {
+        if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
             throw new TokenResponseException('Error in retrieving token: "' . $data['error'] . '"');

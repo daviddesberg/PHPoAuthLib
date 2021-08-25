@@ -14,7 +14,7 @@ class Bitrix24 extends TestCase
      */
     public function testConstructCorrectInstanceWithCustomUri(): void
     {
-        $service = new Bitrix24(
+        $service = new self(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -31,7 +31,7 @@ class Bitrix24 extends TestCase
      */
     public function testGetAuthorizationEndpoint(): void
     {
-        $service = new Bitrix24(
+        $service = new self(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -48,7 +48,7 @@ class Bitrix24 extends TestCase
      */
     public function testGetAccessTokenEndpoint(): void
     {
-        $service = new Bitrix24(
+        $service = new self(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -75,7 +75,7 @@ class Bitrix24 extends TestCase
         $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
         $storage->expects(self::once())->method('retrieveAccessToken')->willReturn($token);
 
-        $service = new Bitrix24(
+        $service = new self(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $storage,
@@ -98,7 +98,7 @@ class Bitrix24 extends TestCase
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
         $client->expects(self::once())->method('retrieveResponse')->willReturn(null);
 
-        $service = new Bitrix24(
+        $service = new self(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -120,7 +120,7 @@ class Bitrix24 extends TestCase
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
         $client->expects(self::once())->method('retrieveResponse')->willReturn('{"error":"some_error"}');
 
-        $service = new Bitrix24(
+        $service = new self(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -142,7 +142,7 @@ class Bitrix24 extends TestCase
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
         $client->expects(self::once())->method('retrieveResponse')->willReturn('{"access_token":"foo","expires_in":"bar"}');
 
-        $service = new Bitrix24(
+        $service = new self(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -167,7 +167,7 @@ class Bitrix24 extends TestCase
             return '{"access_token":"foo","expires_in":"bar"}';
         });
 
-        $service = new Bitrix24(
+        $service = new self(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),

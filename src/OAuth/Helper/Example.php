@@ -14,6 +14,8 @@ class Example
      */
     private $finder;
 
+    private $title;
+
     public function __construct()
     {
         $this->finder = new Finder();
@@ -24,19 +26,21 @@ class Example
         return PHP_SAPI === 'cli';
     }
 
-
     public function getFinder(): Finder
     {
         $this->finder->in(__DIR__ . '/../../../examples/provider/');
+
         return $this->finder;
     }
 
     public function getHeader(): string
     {
+        $title = $this->title;
+
         return <<<HTML
 <html>
 <head>
-    <title></title>
+    <title>$title</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -67,6 +71,7 @@ class Example
                 </div>
             </div>
         </div>
+        <h1>$title</h1>
 HTML;
     }
 
@@ -97,10 +102,9 @@ HTML;
 
     public function getContent(): string
     {
-
-        $response  = $this->getHeader();
-        $response  .= $this->getForm();
-        $response  .= $this->getFooter();
+        $response = $this->getHeader();
+        $response .= $this->getForm();
+        $response .= $this->getFooter();
 
         return $response;
     }
@@ -112,14 +116,19 @@ HTML;
 
     public function getCurrentUrl(): string
     {
-        return  'http://' .  $_SERVER['HTTP_HOST'] .   $_SERVER['PHP_SELF'] . '?oauth=redirect&key='. urldecode($_GET['key']) . '&secret=' . urldecode($_GET['secret']);
+        return  'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] . '?oauth=redirect&key=' . urldecode($_GET['key']) . '&secret=' . urldecode($_GET['secret']);
     }
 
-    public function getErrorMessage($exception)
+    public function getErrorMessage($exception): void
     {
         echo '<div class="alert alert-danger">' . $exception->getMessage() . '</div>';
         echo '<pre>';
-        print_r($exception) ;
+        print_r($exception);
         echo '</pre>';
+    }
+
+    public function setTitle(string $title): void
+    {
+        $this->title = 'PHPoAuthLib - ' . $title;
     }
 }

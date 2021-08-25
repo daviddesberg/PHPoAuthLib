@@ -10,41 +10,38 @@
  */
 
 use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Http\Client\CurlClient;
+use OAuth\Common\Http\Exception\TokenResponseException;
 use OAuth\Common\Storage\Session;
+use OAuth\Helper\Example;
 use OAuth\OAuth2\Service\Amazon;
 
-/**
- * Bootstrap the example.
- */
-require_once __DIR__ . '/bootstrap.php';
+require_once __DIR__ . '/../bootstrap.php';
 
-// Session storage
+$helper = new Example();
 $storage = new Session();
+$client = new CurlClient();
 
-// Setup the credentials for the requests
-$credentials = new Credentials(
-    $servicesCredentials['amazon']['key'],
-    $servicesCredentials['amazon']['secret'],
-    $currentUri->getAbsoluteUri()
-);
+$helper->setTitle('Amazon');
+if (empty($_GET)) {
+    echo $helper->getContent();
+} elseif (!empty($_GET['key']) && !empty($_GET['secret']) && $_GET['oauth'] !== 'redirect') {
+    $credentials = new Credentials($_GET['key'], $_GET['secret'], $helper->getCurrentUrl());
+    $service = new Amazon($credentials, $client, $storage);
+    echo $helper->getHeader();
+    echo '<a href="' . $service->getAuthorizationUri() . '">get access token</a>';
+    echo $helper->getFooter();
+} elseif (!empty($_GET['code'])) {
+    $credentials = new Credentials($_GET['key'], $_GET['secret'], $helper->getCurrentUrl());
+    $service = new Amazon($credentials, $client, $storage);
 
-// Instantiate the Amazon service using the credentials, http client, storage mechanism for the token and profile scope
-/** @var Amazon $amazonService */
-$amazonService = $serviceFactory->createService('amazon', $credentials, $storage, ['profile']);
+    echo $helper->getHeader();
 
-if (!empty($_GET['code'])) {
-    // This was a callback request from Amazon, get the token
-    $token = $amazonService->requestAccessToken($_GET['code']);
-
-    // Send a request with it
-    $result = json_decode($amazonService->request('/user/profile'), true);
-
-    // Show some of the resultant data
-    echo 'Your unique Amazon user id is: ' . $result['user_id'] . ' and your name is ' . $result['name'];
-} elseif (!empty($_GET['go']) && $_GET['go'] === 'go') {
-    $url = $amazonService->getAuthorizationUri();
-    header('Location: ' . $url);
-} else {
-    $url = $currentUri->getRelativeUri() . '?go=go';
-    echo "<a href='$url'>Login with Amazon!</a>";
+    try {
+        $token = $service->requestAccessToken($_GET['code']);
+        echo 'access token: ' . $token->getAccessToken();
+    } catch (TokenResponseException $exception) {
+        $helper->getErrorMessage($exception);
+    }
+    echo $helper->getFooter();
 }

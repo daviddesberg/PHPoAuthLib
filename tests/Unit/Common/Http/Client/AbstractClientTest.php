@@ -62,7 +62,7 @@ class AbstractClientTest extends TestCase
             '31i71casekey' => '31i71casekey: 31i71casevalue',
         ];
 
-        $client->normalizeHeaders($original);
+        $original = $client->normalizeHeaders($original);
 
         self::assertSame($goal, $original);
     }

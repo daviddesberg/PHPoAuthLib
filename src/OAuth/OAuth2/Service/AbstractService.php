@@ -152,7 +152,6 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
                 )
             );
         }
-
         // add the token where it may be needed
         if (static::AUTHORIZATION_METHOD_HEADER_OAUTH === $this->getAuthorizationMethod()) {
             $extraHeaders = array_merge(['Authorization' => 'OAuth ' . $token->getAccessToken()], $extraHeaders);
@@ -164,6 +163,8 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
             $uri->addToQuery('apikey', $token->getAccessToken());
         } elseif (static::AUTHORIZATION_METHOD_QUERY_STRING_V4 === $this->getAuthorizationMethod()) {
             $uri->addToQuery('auth', $token->getAccessToken());
+        } elseif (static::AUTHORIZATION_METHOD_QUERY_STRING_V5 === $this->getAuthorizationMethod()) {
+            $uri->addToQuery('oauth_token', $token->getAccessToken());
         } elseif (static::AUTHORIZATION_METHOD_HEADER_BEARER === $this->getAuthorizationMethod()) {
             $extraHeaders = array_merge(['Authorization' => 'Bearer ' . $token->getAccessToken()], $extraHeaders);
         } elseif (static::AUTHORIZATION_METHOD_HEADER_TOKEN === $this->getAuthorizationMethod()) {
@@ -171,7 +172,6 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         }
 
         $extraHeaders = array_merge($this->getExtraApiHeaders(), $extraHeaders);
-
         return $this->httpClient->retrieveResponse($uri, $body, $extraHeaders, $method);
     }
 

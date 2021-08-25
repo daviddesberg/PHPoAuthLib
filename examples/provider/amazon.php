@@ -27,18 +27,18 @@ if (empty($_GET)) {
     echo $helper->getContent();
 } elseif (!empty($_GET['key']) && !empty($_GET['secret']) && $_GET['oauth'] !== 'redirect') {
     $credentials = new Credentials($_GET['key'], $_GET['secret'], $helper->getCurrentUrl());
-    $vkService = new Amazon($credentials, $client, $storage);
+    $service = new Amazon($credentials, $client, $storage);
     echo $helper->getHeader();
-    echo '<a href="' . $vkService->getAuthorizationUri() . '">get access token</a>';
+    echo '<a href="' . $service->getAuthorizationUri() . '">get access token</a>';
     echo $helper->getFooter();
 } elseif (!empty($_GET['code'])) {
     $credentials = new Credentials($_GET['key'], $_GET['secret'], $helper->getCurrentUrl());
-    $vkService = new Amazon($credentials, $client, $storage);
+    $service = new Amazon($credentials, $client, $storage);
 
     echo $helper->getHeader();
 
     try {
-        $token = $vkService->requestAccessToken($_GET['code']);
+        $token = $service->requestAccessToken($_GET['code']);
         echo 'access token: ' . $token->getAccessToken();
     } catch (TokenResponseException $exception) {
         $helper->getErrorMessage($exception);

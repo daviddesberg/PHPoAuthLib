@@ -8,7 +8,7 @@ use OAuth\Helper\Example;
 use OAuth\OAuth2\Service\Instagram;
 
 
-require_once __DIR__.'/../bootstrap.php';
+require_once __DIR__ . '/../bootstrap.php';
 
 $helper = new Example();
 $storage = new Session();
@@ -23,7 +23,7 @@ if (empty($_GET)) {
     $credentials = new Credentials($_GET['key'], $_GET['secret'], $helper->getCurrentUrl());
     $service = new Instagram($credentials, $client, $storage);
     echo $helper->getHeader();
-    echo '<a href="'.$service->getAuthorizationUri().'">get access token</a>';
+    echo '<a href="' . $service->getAuthorizationUri() . '">get access token</a>';
     echo $helper->getFooter();
 } elseif (!empty($_GET['code'])) {
     $credentials = new Credentials($_GET['key'], $_GET['secret'], $helper->getCurrentUrl());

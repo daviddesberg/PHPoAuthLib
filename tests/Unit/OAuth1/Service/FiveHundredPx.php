@@ -12,7 +12,7 @@ class FiveHundredPx extends TestCase
      */
     public function testConstructCorrectInterfaceWithoutCustomUri(): void
     {
-        $service = new FiveHundredPx(
+        $service = new self(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -27,7 +27,7 @@ class FiveHundredPx extends TestCase
      */
     public function testConstructCorrectInstanceWithoutCustomUri(): void
     {
-        $service = new FiveHundredPx(
+        $service = new self(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -42,7 +42,7 @@ class FiveHundredPx extends TestCase
      */
     public function testConstructCorrectInstanceWithCustomUri(): void
     {
-        $service = new FiveHundredPx(
+        $service = new self(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -59,7 +59,7 @@ class FiveHundredPx extends TestCase
      */
     public function testGetRequestTokenEndpoint(): void
     {
-        $service = new FiveHundredPx(
+        $service = new self(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -78,7 +78,7 @@ class FiveHundredPx extends TestCase
      */
     public function testGetAuthorizationEndpoint(): void
     {
-        $service = new FiveHundredPx(
+        $service = new self(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -97,7 +97,7 @@ class FiveHundredPx extends TestCase
      */
     public function testGetAccessTokenEndpoint(): void
     {
-        $service = new FiveHundredPx(
+        $service = new self(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -120,7 +120,7 @@ class FiveHundredPx extends TestCase
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
         $client->expects(self::once())->method('retrieveResponse')->willReturn(null);
 
-        $service = new FiveHundredPx(
+        $service = new self(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -142,7 +142,7 @@ class FiveHundredPx extends TestCase
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
         $client->expects(self::once())->method('retrieveResponse')->willReturn('notanarray');
 
-        $service = new FiveHundredPx(
+        $service = new self(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -164,7 +164,7 @@ class FiveHundredPx extends TestCase
         $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
         $client->expects(self::once())->method('retrieveResponse')->willReturn('foo=bar');
 
-        $service = new FiveHundredPx(
+        $service = new self(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -188,7 +188,7 @@ class FiveHundredPx extends TestCase
             'oauth_callback_confirmed=false'
         );
 
-        $service = new FiveHundredPx(
+        $service = new self(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -213,7 +213,7 @@ class FiveHundredPx extends TestCase
             'oauth_callback_confirmed=true&oauth_token=foo&oauth_token_secret=bar'
         );
 
-        $service = new FiveHundredPx(
+        $service = new self(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
@@ -238,7 +238,7 @@ class FiveHundredPx extends TestCase
         $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
         $storage->expects(self::any())->method('retrieveAccessToken')->willReturn($token);
 
-        $service = new FiveHundredPx(
+        $service = new self(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $storage,
@@ -267,7 +267,7 @@ class FiveHundredPx extends TestCase
         $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
         $storage->expects(self::any())->method('retrieveAccessToken')->willReturn($token);
 
-        $service = new FiveHundredPx(
+        $service = new self(
             $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $storage,

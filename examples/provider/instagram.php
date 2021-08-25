@@ -7,7 +7,6 @@ use OAuth\Common\Storage\Session;
 use OAuth\Helper\Example;
 use OAuth\OAuth2\Service\Instagram;
 
-
 require_once __DIR__ . '/../bootstrap.php';
 
 $helper = new Example();
@@ -15,7 +14,6 @@ $storage = new Session();
 $client = new CurlClient();
 
 $helper->setTitle('Instagram');
-
 
 if (empty($_GET)) {
     echo $helper->getContent();
@@ -30,6 +28,7 @@ if (empty($_GET)) {
     $service = new Instagram($credentials, $client, $storage);
 
     echo $helper->getHeader();
+
     try {
         $token = $service->requestAccessToken($_GET['code']);
         echo 'access token: ' . $token->getAccessToken();
@@ -38,4 +37,3 @@ if (empty($_GET)) {
     }
     echo $helper->getFooter();
 }
-

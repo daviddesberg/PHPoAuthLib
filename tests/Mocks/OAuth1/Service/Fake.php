@@ -2,12 +2,12 @@
 
 namespace OAuthTest\Mocks\OAuth1\Service;
 
-use OAuth\OAuth1\Service\AbstractService;
 use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Client\ClientInterface;
-use OAuth\Common\Storage\TokenStorageInterface;
-use OAuth\OAuth1\Signature\SignatureInterface;
 use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\OAuth1\Service\AbstractService;
+use OAuth\OAuth1\Signature\SignatureInterface;
 
 class Fake extends AbstractService
 {
@@ -16,42 +16,42 @@ class Fake extends AbstractService
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
         SignatureInterface $signature,
-        UriInterface $baseApiUri = null
+        ?UriInterface $baseApiUri = null
     ) {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getRequestTokenEndpoint()
+    public function getRequestTokenEndpoint(): void
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getAuthorizationEndpoint()
+    public function getAuthorizationEndpoint(): void
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getAccessTokenEndpoint()
+    public function getAccessTokenEndpoint(): void
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function parseRequestTokenResponse($responseBody)
+    protected function parseRequestTokenResponse($responseBody): void
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function parseAccessTokenResponse($responseBody)
+    protected function parseAccessTokenResponse($responseBody): void
     {
     }
 }

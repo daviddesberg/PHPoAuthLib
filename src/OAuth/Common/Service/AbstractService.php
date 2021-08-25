@@ -3,18 +3,18 @@
 namespace OAuth\Common\Service;
 
 use OAuth\Common\Consumer\CredentialsInterface;
+use OAuth\Common\Exception\Exception;
 use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Http\Uri\UriInterface;
-use OAuth\Common\Exception\Exception;
 use OAuth\Common\Storage\TokenStorageInterface;
 
 /**
- * Abstract OAuth service, version-agnostic
+ * Abstract OAuth service, version-agnostic.
  */
 abstract class AbstractService implements ServiceInterface
 {
-    /** @var Credentials */
+    /** @var CredentialsInterface */
     protected $credentials;
 
     /** @var ClientInterface */
@@ -23,11 +23,6 @@ abstract class AbstractService implements ServiceInterface
     /** @var TokenStorageInterface */
     protected $storage;
 
-    /**
-     * @param CredentialsInterface  $credentials
-     * @param ClientInterface       $httpClient
-     * @param TokenStorageInterface $storage
-     */
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
@@ -39,14 +34,12 @@ abstract class AbstractService implements ServiceInterface
     }
 
     /**
-     * @param UriInterface|string $path
+     * @param string|UriInterface $path
      * @param UriInterface        $baseApiUri
      *
      * @return UriInterface
-     *
-     * @throws Exception
      */
-    protected function determineRequestUriFromPath($path, UriInterface $baseApiUri = null)
+    protected function determineRequestUriFromPath($path, ?UriInterface $baseApiUri = null)
     {
         if ($path instanceof UriInterface) {
             $uri = $path;
@@ -78,7 +71,7 @@ abstract class AbstractService implements ServiceInterface
     }
 
     /**
-     * Accessor to the storage adapter to be able to retrieve tokens
+     * Accessor to the storage adapter to be able to retrieve tokens.
      *
      * @return TokenStorageInterface
      */

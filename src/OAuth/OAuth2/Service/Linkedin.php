@@ -2,48 +2,54 @@
 
 namespace OAuth\OAuth2\Service;
 
-use OAuth\OAuth2\Token\StdOAuth2Token;
-use OAuth\Common\Http\Exception\TokenResponseException;
-use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Client\ClientInterface;
-use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\Common\Http\Exception\TokenResponseException;
+use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\OAuth2\Token\StdOAuth2Token;
 
 /**
  * Linkedin service.
  *
  * @author Antoine Corcy <contact@sbin.dk>
- * @link http://developer.linkedin.com/documents/authentication
+ *
+ * @see http://developer.linkedin.com/documents/authentication
  */
 class Linkedin extends AbstractService
 {
     /**
-     * Defined scopes
-     * @link http://developer.linkedin.com/documents/authentication#granting
+     * Defined scopes.
+     *
+     * @see https://docs.microsoft.com/en-us/linkedin/shared/authentication/authorization-code-flow?context=linkedin/context
      */
-    const SCOPE_R_BASICPROFILE      = 'r_basicprofile';
-    const SCOPE_R_FULLPROFILE       = 'r_fullprofile';
-    const SCOPE_R_EMAILADDRESS      = 'r_emailaddress';
-    const SCOPE_R_NETWORK           = 'r_network';
-    const SCOPE_R_CONTACTINFO       = 'r_contactinfo';
-    const SCOPE_RW_NUS              = 'rw_nus';
-    const SCOPE_RW_COMPANY_ADMIN    = 'rw_company_admin';
-    const SCOPE_RW_GROUPS           = 'rw_groups';
-    const SCOPE_W_MESSAGES          = 'w_messages';
-    const SCOPE_W_SHARE             = 'w_share';
+    const SCOPE_R_LITEPROFILE = 'r_liteprofile';
+    const SCOPE_R_FULLPROFILE = 'r_fullprofile';
+    const SCOPE_R_EMAILADDRESS = 'r_emailaddress';
+    const SCOPE_R_NETWORK = 'r_network';
+    const SCOPE_R_CONTACTINFO = 'r_contactinfo';
+    const SCOPE_RW_NUS = 'rw_nus';
+    const SCOPE_RW_COMPANY_ADMIN = 'rw_company_admin';
+    const SCOPE_RW_GROUPS = 'rw_groups';
+    const SCOPE_W_MESSAGES = 'w_messages';
+    const SCOPE_W_MEMBER_SOCIAL = 'w_member_social';
 
     public function __construct(
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
+        $scopes = [],
+        ?UriInterface $baseApiUri = null
     ) {
+        if (count($scopes) === 0) {
+            $scopes = [self::SCOPE_R_LITEPROFILE, self::SCOPE_R_EMAILADDRESS];
+        }
+
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, true);
 
         if (null === $baseApiUri) {
-            $this->baseApiUri = new Uri('https://api.linkedin.com/v1/');
+            $this->baseApiUri = new Uri('https://api.linkedin.com/v2/');
         }
     }
 
@@ -52,7 +58,7 @@ class Linkedin extends AbstractService
      */
     public function getAuthorizationEndpoint()
     {
-        return new Uri('https://www.linkedin.com/uas/oauth2/authorization');
+        return new Uri('https://www.linkedin.com/oauth/v2/authorization');
     }
 
     /**
@@ -60,7 +66,7 @@ class Linkedin extends AbstractService
      */
     public function getAccessTokenEndpoint()
     {
-        return new Uri('https://www.linkedin.com/uas/oauth2/accessToken');
+        return new Uri('https://www.linkedin.com/oauth/v2/accessToken');
     }
 
     /**
@@ -93,8 +99,7 @@ class Linkedin extends AbstractService
             unset($data['refresh_token']);
         }
 
-        unset($data['access_token']);
-        unset($data['expires_in']);
+        unset($data['access_token'], $data['expires_in']);
 
         $token->setExtraParams($data);
 

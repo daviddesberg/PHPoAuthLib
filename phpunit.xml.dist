@@ -1,29 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="true"
-         backupStaticAttributes="false"
-         bootstrap="tests/bootstrap.php"
-         colors="false"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         forceCoversAnnotation="false"
-         mapTestClassNameToCoveredClassName="false"
-         processIsolation="false"
-         stopOnError="false"
-         stopOnFailure="false"
-         stopOnIncomplete="false"
-         stopOnSkipped="false"
-         testSuiteLoaderFile="./vendor/phpunit/phpunit/PHPUnit/Runner/StandardTestSuiteLoader.php"
-         strict="false"
-         verbose="false">
+<phpunit bootstrap="./vendor/autoload.php"
+         backupGlobals="true"
+         colors="true"
+>
     <testsuites>
-        <testsuite name="Unit">
-            <directory>tests/Unit</directory>
+        <testsuite name="Unit test ">
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
-            <directory suffix=".php">src/</directory>
+            <directory suffix=".php">./src/</directory>
             <exclude>
                 <file>src/OAuth/bootstrap.php</file>
                 <file>src/OAuth/Common/Exception/Exception.php</file>

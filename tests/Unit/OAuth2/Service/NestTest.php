@@ -2,211 +2,212 @@
 
 namespace OAuthTest\Unit\OAuth2\Service;
 
-use OAuth\OAuth2\Service\Nest;
 use OAuth\Common\Token\TokenInterface;
+use OAuth\OAuth2\Service\Nest;
+use PHPUnit\Framework\TestCase;
 
-class NestTest extends \PHPUnit_Framework_TestCase
+class NestTest extends TestCase
 {
     /**
-     * @covers OAuth\OAuth2\Service\Nest::__construct
+     * @covers \OAuth\OAuth2\Service\Nest::__construct
      */
-    public function testConstructCorrectInterfaceWithoutCustomUri()
+    public function testConstructCorrectInterfaceWithoutCustomUri(): void
     {
         $service = new Nest(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\ServiceInterface', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\ServiceInterface', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Nest::__construct
+     * @covers \OAuth\OAuth2\Service\Nest::__construct
      */
-    public function testConstructCorrectInstanceWithoutCustomUri()
+    public function testConstructCorrectInstanceWithoutCustomUri(): void
     {
         $service = new Nest(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Nest::__construct
+     * @covers \OAuth\OAuth2\Service\Nest::__construct
      */
-    public function testConstructCorrectInstanceWithCustomUri()
+    public function testConstructCorrectInstanceWithCustomUri(): void
     {
         $service = new Nest(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-            array(),
-            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
+            [],
+            $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Nest::__construct
-     * @covers OAuth\OAuth2\Service\Nest::getAuthorizationEndpoint
+     * @covers \OAuth\OAuth2\Service\Nest::__construct
+     * @covers \OAuth\OAuth2\Service\Nest::getAuthorizationEndpoint
      */
-    public function testGetAuthorizationEndpoint()
+    public function testGetAuthorizationEndpoint(): void
     {
         $service = new Nest(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertSame(
+        self::assertSame(
             'https://home.nest.com/login/oauth2',
             $service->getAuthorizationEndpoint()->getAbsoluteUri()
         );
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Nest::__construct
-     * @covers OAuth\OAuth2\Service\Nest::getAccessTokenEndpoint
+     * @covers \OAuth\OAuth2\Service\Nest::__construct
+     * @covers \OAuth\OAuth2\Service\Nest::getAccessTokenEndpoint
      */
-    public function testGetAccessTokenEndpoint()
+    public function testGetAccessTokenEndpoint(): void
     {
         $service = new Nest(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertSame(
+        self::assertSame(
             'https://api.home.nest.com/oauth2/access_token',
             $service->getAccessTokenEndpoint()->getAbsoluteUri()
         );
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Nest::__construct
-     * @covers OAuth\OAuth2\Service\Nest::getAuthorizationMethod
+     * @covers \OAuth\OAuth2\Service\Nest::__construct
+     * @covers \OAuth\OAuth2\Service\Nest::getAuthorizationMethod
      */
-    public function testGetAuthorizationMethod()
+    public function testGetAuthorizationMethod(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(0));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturnArgument(0);
 
-        $token = $this->getMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
-        $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
-        $token->expects($this->once())->method('getAccessToken')->will($this->returnValue('foo'));
+        $token = $this->createMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
+        $token->expects(self::once())->method('getEndOfLife')->willReturn(TokenInterface::EOL_NEVER_EXPIRES);
+        $token->expects(self::once())->method('getAccessToken')->willReturn('foo');
 
-        $storage = $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
-        $storage->expects($this->once())->method('retrieveAccessToken')->will($this->returnValue($token));
+        $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
+        $storage->expects(self::once())->method('retrieveAccessToken')->willReturn($token);
 
         $service = new Nest(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $storage
         );
 
-        $uri         = $service->request('https://pieterhordijk.com/my/awesome/path');
+        $uri = $service->request('https://pieterhordijk.com/my/awesome/path');
         $absoluteUri = parse_url($uri->getAbsoluteUri());
-        $this->assertSame('auth=foo', $absoluteUri['query']);
+        self::assertSame('auth=foo', $absoluteUri['query']);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Nest::__construct
-     * @covers OAuth\OAuth2\Service\Nest::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Nest::__construct
+     * @covers \OAuth\OAuth2\Service\Nest::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseThrowsExceptionOnNulledResponse()
+    public function testParseAccessTokenResponseThrowsExceptionOnNulledResponse(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue(null));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturn(null);
 
         $service = new Nest(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
+        $this->expectException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
         $service->requestAccessToken('foo');
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Nest::__construct
-     * @covers OAuth\OAuth2\Service\Nest::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Nest::__construct
+     * @covers \OAuth\OAuth2\Service\Nest::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseThrowsExceptionOnErrorDescription()
+    public function testParseAccessTokenResponseThrowsExceptionOnErrorDescription(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('error_description=some_error'));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('error_description=some_error');
 
         $service = new Nest(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
+        $this->expectException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
         $service->requestAccessToken('foo');
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Nest::__construct
-     * @covers OAuth\OAuth2\Service\Nest::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Nest::__construct
+     * @covers \OAuth\OAuth2\Service\Nest::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseThrowsExceptionOnError()
+    public function testParseAccessTokenResponseThrowsExceptionOnError(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('error=some_error'));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('error=some_error');
 
         $service = new Nest(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
+        $this->expectException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
         $service->requestAccessToken('foo');
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Nest::__construct
-     * @covers OAuth\OAuth2\Service\Nest::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Nest::__construct
+     * @covers \OAuth\OAuth2\Service\Nest::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseValidWithoutRefreshToken()
+    public function testParseAccessTokenResponseValidWithoutRefreshToken(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"access_token":"foo","expires_in":"bar"}'));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('{"access_token":"foo","expires_in":"bar"}');
 
         $service = new Nest(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Nest::__construct
-     * @covers OAuth\OAuth2\Service\Nest::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Nest::__construct
+     * @covers \OAuth\OAuth2\Service\Nest::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseValidWithRefreshToken()
+    public function testParseAccessTokenResponseValidWithRefreshToken(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"access_token":"foo","expires_in":"bar","refresh_token":"baz"}'));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('{"access_token":"foo","expires_in":"bar","refresh_token":"baz"}');
 
         $service = new Nest(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
     }
 }

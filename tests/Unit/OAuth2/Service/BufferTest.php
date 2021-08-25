@@ -2,149 +2,150 @@
 
 namespace OAuthTest\Unit\OAuth2\Service;
 
-use OAuth\OAuth2\Service\Buffer;
 use OAuth\Common\Token\TokenInterface;
+use OAuth\OAuth2\Service\Buffer;
+use PHPUnit\Framework\TestCase;
 
-class BufferTest extends \PHPUnit_Framework_TestCase
+class BufferTest extends TestCase
 {
     /**
-     * @covers OAuth\OAuth2\Service\Buffer::__construct
+     * @covers \OAuth\OAuth2\Service\Buffer::__construct
      */
-    public function testConstructCorrectInterfaceWithoutCustomUri()
+    public function testConstructCorrectInterfaceWithoutCustomUri(): void
     {
         $service = new Buffer(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\ServiceInterface', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\ServiceInterface', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Buffer::__construct
+     * @covers \OAuth\OAuth2\Service\Buffer::__construct
      */
-    public function testConstructCorrectInstanceWithoutCustomUri()
+    public function testConstructCorrectInstanceWithoutCustomUri(): void
     {
         $service = new Buffer(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Buffer::__construct
+     * @covers \OAuth\OAuth2\Service\Buffer::__construct
      */
-    public function testConstructCorrectInstanceWithCustomUri()
+    public function testConstructCorrectInstanceWithCustomUri(): void
     {
         $service = new Buffer(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-            array(),
-            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
+            [],
+            $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Buffer::__construct
-     * @covers OAuth\OAuth2\Service\Buffer::getAuthorizationEndpoint
+     * @covers \OAuth\OAuth2\Service\Buffer::__construct
+     * @covers \OAuth\OAuth2\Service\Buffer::getAuthorizationEndpoint
      */
-    public function testGetAuthorizationEndpoint()
+    public function testGetAuthorizationEndpoint(): void
     {
         $service = new Buffer(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertSame('https://bufferapp.com/oauth2/authorize', $service->getAuthorizationEndpoint()->getAbsoluteUri());
+        self::assertSame('https://bufferapp.com/oauth2/authorize', $service->getAuthorizationEndpoint()->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Buffer::__construct
-     * @covers OAuth\OAuth2\Service\Buffer::getAccessTokenEndpoint
+     * @covers \OAuth\OAuth2\Service\Buffer::__construct
+     * @covers \OAuth\OAuth2\Service\Buffer::getAccessTokenEndpoint
      */
-    public function testGetAccessTokenEndpoint()
+    public function testGetAccessTokenEndpoint(): void
     {
         $service = new Buffer(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertSame('https://api.bufferapp.com/1/oauth2/token.json', $service->getAccessTokenEndpoint()->getAbsoluteUri());
+        self::assertSame('https://api.bufferapp.com/1/oauth2/token.json', $service->getAccessTokenEndpoint()->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Buffer::__construct
-     * @covers OAuth\OAuth2\Service\Buffer::getAuthorizationMethod
+     * @covers \OAuth\OAuth2\Service\Buffer::__construct
+     * @covers \OAuth\OAuth2\Service\Buffer::getAuthorizationMethod
      */
-    public function testGetAuthorizationMethod()
+    public function testGetAuthorizationMethod(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnArgument(0));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturnArgument(0);
 
-        $token = $this->getMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
-        $token->expects($this->once())->method('getEndOfLife')->will($this->returnValue(TokenInterface::EOL_NEVER_EXPIRES));
-        $token->expects($this->once())->method('getAccessToken')->will($this->returnValue('foo'));
+        $token = $this->createMock('\\OAuth\\OAuth2\\Token\\TokenInterface');
+        $token->expects(self::once())->method('getEndOfLife')->willReturn(TokenInterface::EOL_NEVER_EXPIRES);
+        $token->expects(self::once())->method('getAccessToken')->willReturn('foo');
 
-        $storage = $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
-        $storage->expects($this->once())->method('retrieveAccessToken')->will($this->returnValue($token));
+        $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
+        $storage->expects(self::once())->method('retrieveAccessToken')->willReturn($token);
 
         $service = new Buffer(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $storage
         );
 
-        $uri         = $service->request('https://pieterhordijk.com/my/awesome/path');
+        $uri = $service->request('https://pieterhordijk.com/my/awesome/path');
         $absoluteUri = parse_url($uri->getAbsoluteUri());
 
-        $this->assertSame('access_token=foo', $absoluteUri['query']);
+        self::assertSame('access_token=foo', $absoluteUri['query']);
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Buffer::__construct
-     * @covers OAuth\OAuth2\Service\Buffer::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Buffer::__construct
+     * @covers \OAuth\OAuth2\Service\Buffer::parseAccessTokenResponse
      */
-    public function testParseAccessTokenResponseThrowsExceptionOnError()
+    public function testParseAccessTokenResponseThrowsExceptionOnError(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('error=some_error'));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('error=some_error');
 
         $service = new Buffer(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->setExpectedException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
+        $this->expectException('\\OAuth\\Common\\Http\\Exception\\TokenResponseException');
 
         $service->requestAccessToken('foo');
     }
 
     /**
-     * @covers OAuth\OAuth2\Service\Buffer::__construct
-     * @covers OAuth\OAuth2\Service\Buffer::parseAccessTokenResponse
-     * @covers OAuth\OAuth2\Service\Buffer::requestAccessToken
+     * @covers \OAuth\OAuth2\Service\Buffer::__construct
+     * @covers \OAuth\OAuth2\Service\Buffer::parseAccessTokenResponse
+     * @covers \OAuth\OAuth2\Service\Buffer::requestAccessToken
      */
-    public function testParseAccessTokenResponseValid()
+    public function testParseAccessTokenResponseValid(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('{"access_token":"foo"}'));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('{"access_token":"foo"}');
 
         $service = new Buffer(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
+        self::assertInstanceOf('\\OAuth\\OAuth2\\Token\\StdOAuth2Token', $service->requestAccessToken('foo'));
     }
 }

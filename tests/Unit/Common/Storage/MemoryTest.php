@@ -3,56 +3,57 @@
 namespace OAuthTest\Unit\Common\Storage;
 
 use OAuth\Common\Storage\Memory;
+use PHPUnit\Framework\TestCase;
 
-class MemoryTest extends \PHPUnit_Framework_TestCase
+class MemoryTest extends TestCase
 {
     /**
-     * @covers OAuth\Common\Storage\Memory::__construct
+     * @covers \OAuth\Common\Storage\Memory::__construct
      */
-    public function testConstructCorrectInterface()
+    public function testConstructCorrectInterface(): void
     {
         $storage = new Memory();
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\TokenStorageInterface', $storage);
+        self::assertInstanceOf('\\OAuth\\Common\\Storage\\TokenStorageInterface', $storage);
     }
 
     /**
-     * @covers OAuth\Common\Storage\Memory::__construct
-     * @covers OAuth\Common\Storage\Memory::storeAccessToken
+     * @covers \OAuth\Common\Storage\Memory::__construct
+     * @covers \OAuth\Common\Storage\Memory::storeAccessToken
      */
-    public function testStoreAccessToken()
+    public function testStoreAccessToken(): void
     {
         $storage = new Memory();
 
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             '\\OAuth\\Common\\Storage\\Memory',
-            $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'))
+            $storage->storeAccessToken('foo', $this->createMock('\\OAuth\\Common\\Token\\TokenInterface'))
         );
     }
 
     /**
-     * @covers OAuth\Common\Storage\Memory::__construct
-     * @covers OAuth\Common\Storage\Memory::storeAccessToken
-     * @covers OAuth\Common\Storage\Memory::retrieveAccessToken
-     * @covers OAuth\Common\Storage\Memory::hasAccessToken
+     * @covers \OAuth\Common\Storage\Memory::__construct
+     * @covers \OAuth\Common\Storage\Memory::hasAccessToken
+     * @covers \OAuth\Common\Storage\Memory::retrieveAccessToken
+     * @covers \OAuth\Common\Storage\Memory::storeAccessToken
      */
-    public function testRetrieveAccessTokenValid()
+    public function testRetrieveAccessTokenValid(): void
     {
         $storage = new Memory();
 
-        $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
+        $storage->storeAccessToken('foo', $this->createMock('\\OAuth\\Common\\Token\\TokenInterface'));
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Token\\TokenInterface', $storage->retrieveAccessToken('foo'));
+        self::assertInstanceOf('\\OAuth\\Common\\Token\\TokenInterface', $storage->retrieveAccessToken('foo'));
     }
 
     /**
-     * @covers OAuth\Common\Storage\Memory::__construct
-     * @covers OAuth\Common\Storage\Memory::retrieveAccessToken
-     * @covers OAuth\Common\Storage\Memory::hasAccessToken
+     * @covers \OAuth\Common\Storage\Memory::__construct
+     * @covers \OAuth\Common\Storage\Memory::hasAccessToken
+     * @covers \OAuth\Common\Storage\Memory::retrieveAccessToken
      */
-    public function testRetrieveAccessTokenThrowsExceptionWhenTokenIsNotFound()
+    public function testRetrieveAccessTokenThrowsExceptionWhenTokenIsNotFound(): void
     {
-        $this->setExpectedException('\\OAuth\\Common\\Storage\\Exception\\TokenNotFoundException');
+        $this->expectException('\\OAuth\\Common\\Storage\\Exception\\TokenNotFoundException');
 
         $storage = new Memory();
 
@@ -60,73 +61,73 @@ class MemoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers OAuth\Common\Storage\Memory::__construct
-     * @covers OAuth\Common\Storage\Memory::storeAccessToken
-     * @covers OAuth\Common\Storage\Memory::hasAccessToken
+     * @covers \OAuth\Common\Storage\Memory::__construct
+     * @covers \OAuth\Common\Storage\Memory::hasAccessToken
+     * @covers \OAuth\Common\Storage\Memory::storeAccessToken
      */
-    public function testHasAccessTokenTrue()
+    public function testHasAccessTokenTrue(): void
     {
         $storage = new Memory();
 
-        $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
+        $storage->storeAccessToken('foo', $this->createMock('\\OAuth\\Common\\Token\\TokenInterface'));
 
-        $this->assertTrue($storage->hasAccessToken('foo'));
+        self::assertTrue($storage->hasAccessToken('foo'));
     }
 
     /**
-     * @covers OAuth\Common\Storage\Memory::__construct
-     * @covers OAuth\Common\Storage\Memory::hasAccessToken
+     * @covers \OAuth\Common\Storage\Memory::__construct
+     * @covers \OAuth\Common\Storage\Memory::hasAccessToken
      */
-    public function testHasAccessTokenFalse()
+    public function testHasAccessTokenFalse(): void
     {
         $storage = new Memory();
 
-        $this->assertFalse($storage->hasAccessToken('foo'));
+        self::assertFalse($storage->hasAccessToken('foo'));
     }
 
     /**
-     * @covers OAuth\Common\Storage\Memory::__construct
-     * @covers OAuth\Common\Storage\Memory::clearToken
+     * @covers \OAuth\Common\Storage\Memory::__construct
+     * @covers \OAuth\Common\Storage\Memory::clearToken
      */
-    public function testClearTokenIsNotSet()
+    public function testClearTokenIsNotSet(): void
     {
         $storage = new Memory();
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\Memory', $storage->clearToken('foo'));
+        self::assertInstanceOf('\\OAuth\\Common\\Storage\\Memory', $storage->clearToken('foo'));
     }
 
     /**
-     * @covers OAuth\Common\Storage\Memory::__construct
-     * @covers OAuth\Common\Storage\Memory::storeAccessToken
-     * @covers OAuth\Common\Storage\Memory::clearToken
+     * @covers \OAuth\Common\Storage\Memory::__construct
+     * @covers \OAuth\Common\Storage\Memory::clearToken
+     * @covers \OAuth\Common\Storage\Memory::storeAccessToken
      */
-    public function testClearTokenSet()
+    public function testClearTokenSet(): void
     {
         $storage = new Memory();
 
-        $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
+        $storage->storeAccessToken('foo', $this->createMock('\\OAuth\\Common\\Token\\TokenInterface'));
 
-        $this->assertTrue($storage->hasAccessToken('foo'));
-        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\Memory', $storage->clearToken('foo'));
-        $this->assertFalse($storage->hasAccessToken('foo'));
+        self::assertTrue($storage->hasAccessToken('foo'));
+        self::assertInstanceOf('\\OAuth\\Common\\Storage\\Memory', $storage->clearToken('foo'));
+        self::assertFalse($storage->hasAccessToken('foo'));
     }
 
     /**
-     * @covers OAuth\Common\Storage\Memory::__construct
-     * @covers OAuth\Common\Storage\Memory::storeAccessToken
-     * @covers OAuth\Common\Storage\Memory::clearAllTokens
+     * @covers \OAuth\Common\Storage\Memory::__construct
+     * @covers \OAuth\Common\Storage\Memory::clearAllTokens
+     * @covers \OAuth\Common\Storage\Memory::storeAccessToken
      */
-    public function testClearAllTokens()
+    public function testClearAllTokens(): void
     {
         $storage = new Memory();
 
-        $storage->storeAccessToken('foo', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
-        $storage->storeAccessToken('bar', $this->getMock('\\OAuth\\Common\\Token\\TokenInterface'));
+        $storage->storeAccessToken('foo', $this->createMock('\\OAuth\\Common\\Token\\TokenInterface'));
+        $storage->storeAccessToken('bar', $this->createMock('\\OAuth\\Common\\Token\\TokenInterface'));
 
-        $this->assertTrue($storage->hasAccessToken('foo'));
-        $this->assertTrue($storage->hasAccessToken('bar'));
-        $this->assertInstanceOf('\\OAuth\\Common\\Storage\\Memory', $storage->clearAllTokens());
-        $this->assertFalse($storage->hasAccessToken('foo'));
-        $this->assertFalse($storage->hasAccessToken('bar'));
+        self::assertTrue($storage->hasAccessToken('foo'));
+        self::assertTrue($storage->hasAccessToken('bar'));
+        self::assertInstanceOf('\\OAuth\\Common\\Storage\\Memory', $storage->clearAllTokens());
+        self::assertFalse($storage->hasAccessToken('foo'));
+        self::assertFalse($storage->hasAccessToken('bar'));
     }
 }

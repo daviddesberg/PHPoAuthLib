@@ -2,66 +2,68 @@
 
 namespace OAuthTest\Unit\Common\Http;
 
-class AbstractClientTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class AbstractClientTest extends TestCase
 {
     /**
-     * @covers OAuth\Common\Http\Client\AbstractClient::__construct
+     * @covers \OAuth\Common\Http\Client\AbstractClient::__construct
      */
-    public function testConstructCorrectInterface()
+    public function testConstructCorrectInterface(): void
     {
         $client = $this->getMockForAbstractClass('\\OAuth\\Common\\Http\\Client\\AbstractClient');
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Http\\Client\\ClientInterface', $client);
+        self::assertInstanceOf('\\OAuth\\Common\\Http\\Client\\ClientInterface', $client);
     }
 
     /**
-     * @covers OAuth\Common\Http\Client\AbstractClient::__construct
-     * @covers OAuth\Common\Http\Client\AbstractClient::setMaxRedirects
+     * @covers \OAuth\Common\Http\Client\AbstractClient::__construct
+     * @covers \OAuth\Common\Http\Client\AbstractClient::setMaxRedirects
      */
-    public function testSetMaxRedirects()
+    public function testSetMaxRedirects(): void
     {
         $client = $this->getMockForAbstractClass('\\OAuth\\Common\\Http\\Client\\AbstractClient');
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Http\\Client\\AbstractClient', $client->setMaxRedirects(10));
-        $this->assertInstanceOf('\\OAuth\\Common\\Http\\Client\\ClientInterface', $client->setMaxRedirects(10));
+        self::assertInstanceOf('\\OAuth\\Common\\Http\\Client\\AbstractClient', $client->setMaxRedirects(10));
+        self::assertInstanceOf('\\OAuth\\Common\\Http\\Client\\ClientInterface', $client->setMaxRedirects(10));
     }
 
     /**
-     * @covers OAuth\Common\Http\Client\AbstractClient::__construct
-     * @covers OAuth\Common\Http\Client\AbstractClient::setTimeout
+     * @covers \OAuth\Common\Http\Client\AbstractClient::__construct
+     * @covers \OAuth\Common\Http\Client\AbstractClient::setTimeout
      */
-    public function testSetTimeout()
+    public function testSetTimeout(): void
     {
         $client = $this->getMockForAbstractClass('\\OAuth\\Common\\Http\\Client\\AbstractClient');
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Http\\Client\\AbstractClient', $client->setTimeout(25));
-        $this->assertInstanceOf('\\OAuth\\Common\\Http\\Client\\ClientInterface', $client->setTimeout(25));
+        self::assertInstanceOf('\\OAuth\\Common\\Http\\Client\\AbstractClient', $client->setTimeout(25));
+        self::assertInstanceOf('\\OAuth\\Common\\Http\\Client\\ClientInterface', $client->setTimeout(25));
     }
 
     /**
-     * @covers OAuth\Common\Http\Client\AbstractClient::__construct
-     * @covers OAuth\Common\Http\Client\AbstractClient::normalizeHeaders
+     * @covers \OAuth\Common\Http\Client\AbstractClient::__construct
+     * @covers \OAuth\Common\Http\Client\AbstractClient::normalizeHeaders
      */
-    public function testNormalizeHeaders()
+    public function testNormalizeHeaders(): void
     {
         $client = $this->getMockForAbstractClass('\\OAuth\\Common\\Http\\Client\\AbstractClient');
 
-        $original = array(
+        $original = [
             'lowercasekey' => 'lowercasevalue',
             'UPPERCASEKEY' => 'UPPERCASEVALUE',
             'mIxEdCaSeKey' => 'MiXeDcAsEvAlUe',
             '31i71casekey' => '31i71casevalue',
-        );
+        ];
 
-        $goal = array(
+        $goal = [
             'lowercasekey' => 'Lowercasekey: lowercasevalue',
             'UPPERCASEKEY' => 'Uppercasekey: UPPERCASEVALUE',
             'mIxEdCaSeKey' => 'Mixedcasekey: MiXeDcAsEvAlUe',
             '31i71casekey' => '31i71casekey: 31i71casevalue',
-        );
+        ];
 
-        $client->normalizeHeaders($original);
+        $original = $client->normalizeHeaders($original);
 
-        $this->assertSame($goal, $original);
+        self::assertSame($goal, $original);
     }
 }

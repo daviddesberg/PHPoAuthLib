@@ -3,240 +3,241 @@
 namespace OAuthTest\Unit\OAuth1\Service;
 
 use OAuthTest\Mocks\OAuth1\Service\Mock;
+use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\TestCase;
 
-class AbstractServiceTest extends \PHPUnit_Framework_TestCase
+class AbstractServiceTest extends TestCase
 {
     /**
-     * @covers OAuth\OAuth1\Service\AbstractService::__construct
+     * @covers \AbstractService::__construct
      */
-    public function testConstructCorrectInterface()
+    public function testConstructCorrectInterface(): void
     {
         $service = $this->getMockForAbstractClass(
             '\\OAuth\\OAuth1\\Service\\AbstractService',
-            array(
-                $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-                $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-                $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-                $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
-                $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface'),
-            )
+            [
+                $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+                $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+                $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
+                $this->createMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
+                $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface'),
+            ]
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth1\\Service\\ServiceInterface', $service);
+        self::assertInstanceOf('\\OAuth\\OAuth1\\Service\\ServiceInterface', $service);
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\AbstractService::__construct
+     * @covers \AbstractService::__construct
      */
-    public function testConstructCorrectParent()
+    public function testConstructCorrectParent(): void
     {
         $service = $this->getMockForAbstractClass(
             '\\OAuth\\OAuth1\\Service\\AbstractService',
-            array(
-                $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-                $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-                $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-                $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
-                $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface'),
-            )
+            [
+                $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+                $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+                $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
+                $this->createMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
+                $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface'),
+            ]
         );
 
-        $this->assertInstanceOf('\\OAuth\\Common\\Service\\AbstractService', $service);
+        self::assertInstanceOf('\\OAuth\\Common\\Service\\AbstractService', $service);
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\AbstractService::requestRequestToken
-     * @covers OAuth\OAuth1\Service\AbstractService::buildAuthorizationHeaderForTokenRequest
-     * @covers OAuth\OAuth1\Service\AbstractService::getBasicAuthorizationHeaderInfo
-     * @covers OAuth\OAuth1\Service\AbstractService::generateNonce
-     * @covers OAuth\OAuth1\Service\AbstractService::getSignatureMethod
-     * @covers OAuth\OAuth1\Service\AbstractService::getVersion
-     * @covers OAuth\OAuth1\Service\AbstractService::getExtraOAuthHeaders
-     * @covers OAuth\OAuth1\Service\AbstractService::parseRequestTokenResponse
+     * @covers \AbstractService::buildAuthorizationHeaderForTokenRequest
+     * @covers \AbstractService::generateNonce
+     * @covers \AbstractService::getBasicAuthorizationHeaderInfo
+     * @covers \AbstractService::getExtraOAuthHeaders
+     * @covers \AbstractService::getSignatureMethod
+     * @covers \AbstractService::getVersion
+     * @covers \AbstractService::parseRequestTokenResponse
+     * @covers \AbstractService::requestRequestToken
      */
-    public function testRequestRequestTokenBuildAuthHeaderTokenRequestWithoutParams()
+    public function testRequestRequestTokenBuildAuthHeaderTokenRequestWithoutParams(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnCallback(function($endpoint, $array, $headers) {
-            \PHPUnit_Framework_Assert::assertSame('http://pieterhordijk.com/token', $endpoint->getAbsoluteUri());
-        }));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturnCallback(function ($endpoint, $array, $headers): void {
+            Assert::assertSame('http://pieterhordijk.com/token', $endpoint->getAbsoluteUri());
+        });
 
         $service = new Mock(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
+            $this->createMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth1\\Token\\StdOAuth1Token', $service->requestRequestToken());
+        self::assertInstanceOf('\\OAuth\\OAuth1\\Token\\StdOAuth1Token', $service->requestRequestToken());
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\AbstractService::getAuthorizationUri
-     * @covers OAuth\OAuth1\Service\AbstractService::getAuthorizationEndpoint
+     * @covers \AbstractService::getAuthorizationEndpoint
+     * @covers \AbstractService::getAuthorizationUri
      */
-    public function testGetAuthorizationUriWithoutParameters()
+    public function testGetAuthorizationUriWithoutParameters(): void
     {
         $service = new Mock(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
+            $this->createMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
 
-        $this->assertSame('http://pieterhordijk.com/auth', $service->getAuthorizationUri()->getAbsoluteUri());
+        self::assertSame('http://pieterhordijk.com/auth', $service->getAuthorizationUri()->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\AbstractService::getAuthorizationUri
-     * @covers OAuth\OAuth1\Service\AbstractService::getAuthorizationEndpoint
+     * @covers \AbstractService::getAuthorizationEndpoint
+     * @covers \AbstractService::getAuthorizationUri
      */
-    public function testGetAuthorizationUriWithParameters()
+    public function testGetAuthorizationUriWithParameters(): void
     {
         $service = new Mock(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
-            $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
-            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface'),
+            $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface'),
+            $this->createMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
 
-        $this->assertSame('http://pieterhordijk.com/auth?foo=bar&baz=beer', $service->getAuthorizationUri(array(
+        self::assertSame('http://pieterhordijk.com/auth?foo=bar&baz=beer', $service->getAuthorizationUri([
             'foo' => 'bar',
             'baz' => 'beer',
-        ))->getAbsoluteUri());
+        ])->getAbsoluteUri());
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\AbstractService::requestAccessToken
-     * @covers OAuth\OAuth1\Service\AbstractService::service
-     * @covers OAuth\OAuth1\Service\AbstractService::buildAuthorizationHeaderForAPIRequest
-     * @covers OAuth\OAuth1\Service\AbstractService::getBasicAuthorizationHeaderInfo
-     * @covers OAuth\OAuth1\Service\AbstractService::generateNonce
-     * @covers OAuth\OAuth1\Service\AbstractService::getSignatureMethod
-     * @covers OAuth\OAuth1\Service\AbstractService::getVersion
-     * @covers OAuth\OAuth1\Service\AbstractService::getAccessTokenEndpoint
-     * @covers OAuth\OAuth1\Service\AbstractService::getExtraOAuthHeaders
-     * @covers OAuth\OAuth1\Service\AbstractService::parseAccessTokenResponse
+     * @covers \AbstractService::buildAuthorizationHeaderForAPIRequest
+     * @covers \AbstractService::generateNonce
+     * @covers \AbstractService::getAccessTokenEndpoint
+     * @covers \AbstractService::getBasicAuthorizationHeaderInfo
+     * @covers \AbstractService::getExtraOAuthHeaders
+     * @covers \AbstractService::getSignatureMethod
+     * @covers \AbstractService::getVersion
+     * @covers \AbstractService::parseAccessTokenResponse
+     * @covers \AbstractService::requestAccessToken
+     * @covers \AbstractService::service
      */
-    public function testRequestAccessTokenWithoutSecret()
+    public function testRequestAccessTokenWithoutSecret(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnCallback(function($endpoint, $array, $headers) {
-            \PHPUnit_Framework_Assert::assertSame('http://pieterhordijk.com/access', $endpoint->getAbsoluteUri());
-        }));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturnCallback(function ($endpoint, $array, $headers): void {
+            Assert::assertSame('http://pieterhordijk.com/access', $endpoint->getAbsoluteUri());
+        });
 
-        $token = $this->getMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
-        $token->expects($this->once())->method('getRequestTokenSecret')->will($this->returnValue('baz'));
+        $token = $this->createMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
+        $token->expects(self::once())->method('getRequestTokenSecret')->willReturn('baz');
 
-        $storage = $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
-        $storage->expects($this->any())->method('retrieveAccessToken')->will($this->returnValue($token));
+        $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
+        $storage->expects(self::any())->method('retrieveAccessToken')->willReturn($token);
 
         $service = new Mock(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $storage,
-            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
+            $this->createMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth1\\Token\\StdOAuth1Token', $service->requestAccessToken('foo', 'bar'));
+        self::assertInstanceOf('\\OAuth\\OAuth1\\Token\\StdOAuth1Token', $service->requestAccessToken('foo', 'bar'));
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\AbstractService::requestAccessToken
-     * @covers OAuth\OAuth1\Service\AbstractService::service
-     * @covers OAuth\OAuth1\Service\AbstractService::buildAuthorizationHeaderForAPIRequest
-     * @covers OAuth\OAuth1\Service\AbstractService::getBasicAuthorizationHeaderInfo
-     * @covers OAuth\OAuth1\Service\AbstractService::generateNonce
-     * @covers OAuth\OAuth1\Service\AbstractService::getSignatureMethod
-     * @covers OAuth\OAuth1\Service\AbstractService::getVersion
-     * @covers OAuth\OAuth1\Service\AbstractService::getAccessTokenEndpoint
-     * @covers OAuth\OAuth1\Service\AbstractService::getExtraOAuthHeaders
-     * @covers OAuth\OAuth1\Service\AbstractService::parseAccessTokenResponse
+     * @covers \AbstractService::buildAuthorizationHeaderForAPIRequest
+     * @covers \AbstractService::generateNonce
+     * @covers \AbstractService::getAccessTokenEndpoint
+     * @covers \AbstractService::getBasicAuthorizationHeaderInfo
+     * @covers \AbstractService::getExtraOAuthHeaders
+     * @covers \AbstractService::getSignatureMethod
+     * @covers \AbstractService::getVersion
+     * @covers \AbstractService::parseAccessTokenResponse
+     * @covers \AbstractService::requestAccessToken
+     * @covers \AbstractService::service
      */
-    public function testRequestAccessTokenWithSecret()
+    public function testRequestAccessTokenWithSecret(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnCallback(function($endpoint, $array, $headers) {
-            \PHPUnit_Framework_Assert::assertSame('http://pieterhordijk.com/access', $endpoint->getAbsoluteUri());
-        }));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturnCallback(function ($endpoint, $array, $headers): void {
+            Assert::assertSame('http://pieterhordijk.com/access', $endpoint->getAbsoluteUri());
+        });
 
-        $token = $this->getMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
+        $token = $this->createMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
 
-        $storage = $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
-        $storage->expects($this->any())->method('retrieveAccessToken')->will($this->returnValue($token));
+        $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
+        $storage->expects(self::any())->method('retrieveAccessToken')->willReturn($token);
 
         $service = new Mock(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $storage,
-            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
+            $this->createMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
 
-        $this->assertInstanceOf('\\OAuth\\OAuth1\\Token\\StdOAuth1Token', $service->requestAccessToken('foo', 'bar', $token));
+        self::assertInstanceOf('\\OAuth\\OAuth1\\Token\\StdOAuth1Token', $service->requestAccessToken('foo', 'bar', $token));
     }
 
     /**
-     * @covers OAuth\OAuth1\Service\AbstractService::request
-     * @covers OAuth\OAuth1\Service\AbstractService::determineRequestUriFromPath
-     * @covers OAuth\OAuth1\Service\AbstractService::service
-     * @covers OAuth\OAuth1\Service\AbstractService::getExtraApiHeaders
-     * @covers OAuth\OAuth1\Service\AbstractService::buildAuthorizationHeaderForAPIRequest
-     * @covers OAuth\OAuth1\Service\AbstractService::getBasicAuthorizationHeaderInfo
-     * @covers OAuth\OAuth1\Service\AbstractService::generateNonce
-     * @covers OAuth\OAuth1\Service\AbstractService::getSignatureMethod
-     * @covers OAuth\OAuth1\Service\AbstractService::getVersion
+     * @covers \AbstractService::buildAuthorizationHeaderForAPIRequest
+     * @covers \AbstractService::determineRequestUriFromPath
+     * @covers \AbstractService::generateNonce
+     * @covers \AbstractService::getBasicAuthorizationHeaderInfo
+     * @covers \AbstractService::getExtraApiHeaders
+     * @covers \AbstractService::getSignatureMethod
+     * @covers \AbstractService::getVersion
+     * @covers \AbstractService::request
+     * @covers \AbstractService::service
      */
-    public function testRequest()
+    public function testRequest(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('response!'));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('response!');
 
-        $token = $this->getMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
+        $token = $this->createMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
         //$token->expects($this->once())->method('getRequestTokenSecret')->will($this->returnValue('baz'));
 
-        $storage = $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
-        $storage->expects($this->any())->method('retrieveAccessToken')->will($this->returnValue($token));
+        $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
+        $storage->expects(self::any())->method('retrieveAccessToken')->willReturn($token);
 
         $service = new Mock(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $storage,
-            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
+            $this->createMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
 
-        $this->assertSame('response!', $service->request('/my/awesome/path'));
+        self::assertSame('response!', $service->request('/my/awesome/path'));
     }
 
     /**
      * This test only captures a regression in php 5.3.
      *
-     * @covers OAuth\OAuth1\Service\AbstractService::request
+     * @covers \AbstractService::request
      */
-    public function testRequestNonArrayBody()
+    public function testRequestNonArrayBody(): void
     {
-        $client = $this->getMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
-        $client->expects($this->once())->method('retrieveResponse')->will($this->returnValue('response!'));
+        $client = $this->createMock('\\OAuth\\Common\\Http\\Client\\ClientInterface');
+        $client->expects(self::once())->method('retrieveResponse')->willReturn('response!');
 
-        $token = $this->getMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
+        $token = $this->createMock('\\OAuth\\OAuth1\\Token\\TokenInterface');
 
-        $storage = $this->getMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
-        $storage->expects($this->any())->method('retrieveAccessToken')->will($this->returnValue($token));
+        $storage = $this->createMock('\\OAuth\\Common\\Storage\\TokenStorageInterface');
+        $storage->expects(self::any())->method('retrieveAccessToken')->willReturn($token);
 
         $service = new Mock(
-            $this->getMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
+            $this->createMock('\\OAuth\\Common\\Consumer\\CredentialsInterface'),
             $client,
             $storage,
-            $this->getMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
-            $this->getMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
+            $this->createMock('\\OAuth\\OAuth1\\Signature\\SignatureInterface'),
+            $this->createMock('\\OAuth\\Common\\Http\\Uri\\UriInterface')
         );
 
-        $this->assertSame('response!', $service->request('/my/awesome/path', 'GET', 'A text body'));
+        self::assertSame('response!', $service->request('/my/awesome/path', 'GET', 'A text body'));
     }
-
 }

@@ -21,11 +21,8 @@ class Signature implements SignatureInterface
     /**
      * @var string
      */
-    protected $tokenSecret = null;
+    protected $tokenSecret;
 
-    /**
-     * @param CredentialsInterface $credentials
-     */
     public function __construct(CredentialsInterface $credentials)
     {
         $this->credentials = $credentials;
@@ -34,7 +31,7 @@ class Signature implements SignatureInterface
     /**
      * @param string $algorithm
      */
-    public function setHashingAlgorithm($algorithm)
+    public function setHashingAlgorithm($algorithm): void
     {
         $this->algorithm = $algorithm;
     }
@@ -42,14 +39,12 @@ class Signature implements SignatureInterface
     /**
      * @param string $token
      */
-    public function setTokenSecret($token)
+    public function setTokenSecret($token): void
     {
         $this->tokenSecret = $token;
     }
 
     /**
-     * @param UriInterface $uri
-     * @param array        $params
      * @param string       $method
      *
      * @return string
@@ -81,8 +76,6 @@ class Signature implements SignatureInterface
     }
 
     /**
-     * @param array $signatureData
-     *
      * @return string
      */
     protected function buildSignatureDataString(array $signatureData)
@@ -115,8 +108,6 @@ class Signature implements SignatureInterface
      * @param string $data
      *
      * @return string
-     *
-     * @throws UnsupportedHashAlgorithmException
      */
     protected function hash($data)
     {

@@ -2,13 +2,13 @@
 
 namespace OAuth\OAuth2\Service;
 
-use OAuth\OAuth2\Token\StdOAuth2Token;
-use OAuth\Common\Http\Exception\TokenResponseException;
-use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Client\ClientInterface;
-use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\Common\Http\Exception\TokenResponseException;
+use OAuth\Common\Http\Uri\Uri;
 use OAuth\Common\Http\Uri\UriInterface;
+use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\OAuth2\Token\StdOAuth2Token;
 
 class GitHub extends AbstractService
 {
@@ -17,7 +17,7 @@ class GitHub extends AbstractService
      */
 
     /**
-     * Public read-only access (includes public user profile info, public repo info, and gists)
+     * Public read-only access (includes public user profile info, public repo info, and gists).
      */
     const SCOPE_READONLY = '';
 
@@ -128,8 +128,8 @@ class GitHub extends AbstractService
         CredentialsInterface $credentials,
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
-        $scopes = array(),
-        UriInterface $baseApiUri = null
+        $scopes = [],
+        ?UriInterface $baseApiUri = null
     ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
 
@@ -159,7 +159,7 @@ class GitHub extends AbstractService
      */
     protected function getAuthorizationMethod()
     {
-        return static::AUTHORIZATION_METHOD_QUERY_STRING;
+        return static::AUTHORIZATION_METHOD_HEADER_TOKEN;
     }
 
     /**
@@ -187,13 +187,13 @@ class GitHub extends AbstractService
     }
 
     /**
-     * Used to configure response type -- we want JSON from github, default is query string format
+     * Used to configure response type -- we want JSON from github, default is query string format.
      *
      * @return array
      */
     protected function getExtraOAuthHeaders()
     {
-        return array('Accept' => 'application/json');
+        return ['Accept' => 'application/json'];
     }
 
     /**
@@ -203,7 +203,7 @@ class GitHub extends AbstractService
      */
     protected function getExtraApiHeaders()
     {
-        return array('Accept' => 'application/vnd.github.beta+json');
+        return ['Accept' => 'application/vnd.github.v3+json'];
     }
 
     /**

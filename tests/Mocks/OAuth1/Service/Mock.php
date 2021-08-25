@@ -2,8 +2,8 @@
 
 namespace OAuthTest\Mocks\OAuth1\Service;
 
-use OAuth\OAuth1\Service\AbstractService;
 use OAuth\Common\Http\Uri\Uri;
+use OAuth\OAuth1\Service\AbstractService;
 use OAuth\OAuth1\Token\StdOAuth1Token;
 
 class Mock extends AbstractService

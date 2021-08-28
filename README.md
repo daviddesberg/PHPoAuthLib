@@ -76,6 +76,7 @@ Included service implementations
     - PayPal
     - Pinterest
     - Pocket
+    - PowerSchool
     - Reddit
     - RunKeeper
     - Salesforce

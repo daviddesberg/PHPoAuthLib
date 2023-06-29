@@ -125,6 +125,6 @@ abstract class AbstractToken implements TokenInterface
 
     public function __sleep()
     {
-        return ['accessToken'];
+        return ['accessToken','accessTokenSecret','refreshToken','endOfLife'];
     }
 }

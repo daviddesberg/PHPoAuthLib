@@ -29,7 +29,7 @@ class Signature implements SignatureInterface
     }
 
     /**
-     * @param string $algorithm
+     * @param  string $algorithm
      */
     public function setHashingAlgorithm($algorithm): void
     {
@@ -37,21 +37,44 @@ class Signature implements SignatureInterface
     }
 
     /**
-     * @param string $token
+     * @param  string $token
      */
     public function setTokenSecret($token): void
     {
         $this->tokenSecret = $token;
     }
 
+    public function flattenArray($array, $prefix = '')
+    {
+        $result = [];
+
+        foreach ($array as $key => $value) {
+            if ($prefix == '') {
+                $newKey = $key;
+            } else {
+                $newKey = $prefix . '[' . $key . ']';
+            }
+
+            if (is_array($value)) {
+                $result += $this->flattenArray($value, $newKey);
+            } else {
+                $result[$newKey] = $value;
+            }
+        }
+
+        return $result;
+    }
+
     /**
-     * @param string       $method
+     * @param  string $method
      *
      * @return string
      */
     public function getSignature(UriInterface $uri, array $params, $method = 'POST')
     {
         parse_str($uri->getQuery(), $queryStringData);
+
+        $queryStringData = $this->flattenArray($queryStringData);
 
         foreach (array_merge($queryStringData, $params) as $key => $value) {
             $signatureData[rawurlencode($key)] = rawurlencode($value);
@@ -105,7 +128,7 @@ class Signature implements SignatureInterface
     }
 
     /**
-     * @param string $data
+     * @param  string $data
      *
      * @return string
      */
@@ -114,6 +137,8 @@ class Signature implements SignatureInterface
         switch (strtoupper($this->algorithm)) {
             case 'HMAC-SHA1':
                 return hash_hmac('sha1', $data, $this->getSigningKey(), true);
+            case 'HMAC-SHA256':
+                return hash_hmac('sha256', $data, $this->getSigningKey(), true);
             default:
                 throw new UnsupportedHashAlgorithmException(
                     'Unsupported hashing algorithm (' . $this->algorithm . ') used.'

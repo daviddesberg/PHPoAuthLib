@@ -2,7 +2,7 @@
 
 namespace OAuth\Common\Storage;
 
-use OAuth\Common\Token\TokenInterface;
+use OAuth\OAuth1\Token\TokenInterface;
 
 /**
  * All token storage providers must implement this interface.

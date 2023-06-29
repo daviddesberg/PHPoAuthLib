@@ -274,7 +274,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     protected function getSignatureMethod()
     {
-        return 'HMAC-SHA1';
+        return 'HMAC-SHA256';
     }
 
     /**

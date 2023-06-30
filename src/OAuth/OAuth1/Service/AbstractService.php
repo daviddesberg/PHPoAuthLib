@@ -118,11 +118,11 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      * Sends an authenticated API request to the path provided.
      * If the path provided is not an absolute URI, the base API Uri (must be passed into constructor) will be used.
      *
-     * @param string|UriInterface $path
-     * @param string              $method       HTTP method
-     * @param array               $body         Request body if applicable (key/value pairs)
-     * @param array               $extraHeaders Extra headers if applicable.
-     *                                          These will override service-specific any defaults.
+     * @param  string|UriInterface $path
+     * @param  string              $method       HTTP method
+     * @param  array               $body         Request body if applicable (key/value pairs)
+     * @param  array               $extraHeaders Extra headers if applicable.
+     *                                           These will override service-specific any defaults.
      *
      * @return string
      */
@@ -178,6 +178,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
 
         $authorizationHeader = 'OAuth ';
         $delimiter = '';
+
         foreach ($parameters as $key => $value) {
             $authorizationHeader .= $delimiter . rawurlencode($key) . '="' . rawurlencode($value) . '"';
 
@@ -190,9 +191,9 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     /**
      * Builds the authorization header for an authenticated API request.
      *
-     * @param string         $method
-     * @param UriInterface   $uri        The uri the request is headed
-     * @param array          $bodyParams Request body if applicable (key/value pairs)
+     * @param  string       $method
+     * @param  UriInterface $uri        The uri the request is headed
+     * @param  array        $bodyParams Request body if applicable (key/value pairs)
      *
      * @return string
      */
@@ -211,6 +212,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
         $authParameters = array_merge($authParameters, ['oauth_token' => $token->getAccessToken()]);
 
         $signatureParams = (is_array($bodyParams)) ? array_merge($authParameters, $bodyParams) : $authParameters;
+
         $authParameters['oauth_signature'] = $this->signature->getSignature($uri, $signatureParams, $method);
 
         if (is_array($bodyParams) && isset($bodyParams['oauth_session_handle'])) {
@@ -238,12 +240,12 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     {
         $dateTime = new DateTime();
         $headerParameters = [
-            'oauth_callback' => $this->credentials->getCallbackUrl(),
-            'oauth_consumer_key' => $this->credentials->getConsumerId(),
-            'oauth_nonce' => $this->generateNonce(),
+            'oauth_callback'         => $this->credentials->getCallbackUrl(),
+            'oauth_consumer_key'     => $this->credentials->getConsumerId(),
+            'oauth_nonce'            => $this->generateNonce(),
             'oauth_signature_method' => $this->getSignatureMethod(),
-            'oauth_timestamp' => $dateTime->format('U'),
-            'oauth_version' => $this->getVersion(),
+            'oauth_timestamp'        => $dateTime->format('U'),
+            'oauth_version'          => $this->getVersion(),
         ];
 
         return $headerParameters;
@@ -252,7 +254,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     /**
      * Pseudo random string generator used to build a unique string to sign each request.
      *
-     * @param int $length
+     * @param  int $length
      *
      * @return string
      */
@@ -294,7 +296,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      *
      * @abstract
      *
-     * @param string $responseBody
+     * @param  string $responseBody
      *
      * @return TokenInterface
      */
@@ -305,7 +307,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      *
      * @abstract
      *
-     * @param string $responseBody
+     * @param  string $responseBody
      *
      * @return TokenInterface
      */

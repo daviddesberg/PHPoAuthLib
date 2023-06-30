@@ -75,6 +75,7 @@ class Signature implements SignatureInterface
         parse_str($uri->getQuery(), $queryStringData);
 
         $queryStringData = $this->flattenArray($queryStringData);
+        $params = $this->flattenArray($params);
 
         foreach (array_merge($queryStringData, $params) as $key => $value) {
             $signatureData[rawurlencode($key)] = rawurlencode($value);

@@ -246,7 +246,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
             'oauth_nonce' => $this->generateNonce(),
             'oauth_signature_method' => $this->getSignatureMethod(),
             'oauth_timestamp' => $dateTime->format('U'),
-            'oauth_version' => $this->getVersion(),
+            'oauth_version' => '1.0',
         ];
 
         return $headerParameters;

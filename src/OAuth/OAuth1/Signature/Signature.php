@@ -114,6 +114,8 @@ class Signature implements SignatureInterface
         switch (strtoupper($this->algorithm)) {
             case 'HMAC-SHA1':
                 return hash_hmac('sha1', $data, $this->getSigningKey(), true);
+            case 'HMAC-SHA256':
+                return hash_hmac('sha256', $data, $this->getSigningKey(), true);
             default:
                 throw new UnsupportedHashAlgorithmException(
                     'Unsupported hashing algorithm (' . $this->algorithm . ') used.'

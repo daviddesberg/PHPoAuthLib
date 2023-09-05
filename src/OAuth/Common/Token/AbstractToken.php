@@ -122,9 +122,4 @@ abstract class AbstractToken implements TokenInterface
         && $this->getEndOfLife() !== TokenInterface::EOL_UNKNOWN
         && time() > $this->getEndOfLife();
     }
-
-    public function __sleep()
-    {
-        return ['accessToken'];
-    }
 }

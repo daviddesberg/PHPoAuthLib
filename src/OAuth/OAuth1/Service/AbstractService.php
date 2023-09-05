@@ -23,6 +23,9 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
     /** @var null|UriInterface */
     protected $baseApiUri;
 
+    /** @var string */
+    protected $signatureMethod = 'HMAC-SHA1';
+
     /**
      * {@inheritdoc}
      */
@@ -243,7 +246,7 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
             'oauth_nonce' => $this->generateNonce(),
             'oauth_signature_method' => $this->getSignatureMethod(),
             'oauth_timestamp' => $dateTime->format('U'),
-            'oauth_version' => $this->getVersion(),
+            'oauth_version' => '1.0',
         ];
 
         return $headerParameters;
@@ -274,17 +277,18 @@ abstract class AbstractService extends BaseAbstractService implements ServiceInt
      */
     protected function getSignatureMethod()
     {
-        return 'HMAC-SHA1';
+        return $this->signatureMethod;
     }
 
     /**
-     * This returns the version used in the authorization header of the requests.
+     * Set the signature method.
+     * Currently supported: 'HMAC-SHA1' and 'HMAC-SHA256'
      *
-     * @return string
+     * @param string $method
      */
-    protected function getVersion()
+    protected function setSignatureMethod($method)
     {
-        return '1.0';
+        $this->signatureMethod = (string) $method;
     }
 
     /**

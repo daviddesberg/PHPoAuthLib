@@ -1,5 +1,5 @@
 {
-    "name": "lusitanian/oauth",
+    "name": "jeroenvermeulen/oauth",
     "description": "PHP 7.2 oAuth 1/2 Library",
     "keywords": ["oauth", "authentication", "authorization", "security"],
     "license": "MIT",
@@ -15,7 +15,11 @@
         {
             "name": "Elliot Chance",
             "email": "elliotchance@gmail.com"
-        }
+        },
+        {
+            "name": "Jeroen Vermeulen",
+            "email": "info@jeroenvermeulen.eu"
+        }        
     ],
     "scripts" : {
         "tests" : [

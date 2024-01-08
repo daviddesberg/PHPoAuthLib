@@ -53,11 +53,8 @@ class Signature implements SignatureInterface
     {
         parse_str($uri->getQuery(), $queryStringData);
 
-        foreach (array_merge($queryStringData, $params) as $key => $value) {
-            $signatureData[rawurlencode($key)] = rawurlencode($value);
-        }
-
-        ksort($signatureData);
+        $signatureData = array_merge($queryStringData, $params);
+        $this->ksortRecursive($signatureData);
 
         // determine base uri
         $baseUri = $uri->getScheme() . '://' . $uri->getRawAuthority();
@@ -70,25 +67,10 @@ class Signature implements SignatureInterface
 
         $baseString = strtoupper($method) . '&';
         $baseString .= rawurlencode($baseUri) . '&';
-        $baseString .= rawurlencode($this->buildSignatureDataString($signatureData));
+        // The url paramaters are first encoded induvidually by http_build_query, then the result is encoded again.
+        $baseString .= rawurlencode(http_build_query($signatureData, '', '&', PHP_QUERY_RFC3986));
 
         return base64_encode($this->hash($baseString));
-    }
-
-    /**
-     * @return string
-     */
-    protected function buildSignatureDataString(array $signatureData)
-    {
-        $signatureString = '';
-        $delimiter = '';
-        foreach ($signatureData as $key => $value) {
-            $signatureString .= $delimiter . $key . '=' . $value;
-
-            $delimiter = '&';
-        }
-
-        return $signatureString;
     }
 
     /**
@@ -119,5 +101,22 @@ class Signature implements SignatureInterface
                     'Unsupported hashing algorithm (' . $this->algorithm . ') used.'
                 );
         }
+    }
+
+    /**
+     * Rescursively sorts an array by key.
+     * @param string $data
+     *
+     * @return string
+     */
+    protected function ksortRecursive(&$array, $sort_flags = SORT_REGULAR) {
+        if (!is_array($array)) {
+            return false;
+        }
+        ksort($array, $sort_flags);
+        foreach ($array as &$arr) {
+            $this->ksortRecursive($arr, $sort_flags);
+        }
+        return true;
     }
 }

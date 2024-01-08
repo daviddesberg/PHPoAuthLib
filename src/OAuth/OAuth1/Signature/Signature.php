@@ -53,7 +53,7 @@ class Signature implements SignatureInterface
     {
         parse_str($uri->getQuery(), $queryStringData);
 
-        $signatureData = $this->urlEncodeArray(array_merge($queryStringData, $params));
+        $signatureData = array_merge($queryStringData, $params);
 
         // determine base uri
         $baseUri = $uri->getScheme() . '://' . $uri->getRawAuthority();
@@ -66,11 +66,10 @@ class Signature implements SignatureInterface
 
         $baseString = strtoupper($method) . '&';
         $baseString .= rawurlencode($baseUri) . '&';
-        $baseString .= rawurlencode(http_build_query($signatureData, '', '&'));
+        $baseString .= http_build_query($signatureData, '', '&', PHP_QUERY_RFC3986);
 
         return base64_encode($this->hash($baseString));
     }
-
 
     /**
      * @return string
@@ -116,26 +115,5 @@ class Signature implements SignatureInterface
                     'Unsupported hashing algorithm (' . $this->algorithm . ') used.'
                 );
         }
-    }
-
-    /**
-     * URL encodes both keys and values in an array, recusively.
-     * Sorts the array by key after encoding.
-     *
-     * @param array $data
-     * @return array
-     */
-    protected function urlEncodeArray(array $data)
-    {
-        $result = [];
-        foreach ($data as $key => $value) {
-            if (is_array($value)) {
-                $result[rawurlencode($key)] = $this->rawUrlEncodeArray($value);
-            } else {
-                $result[rawurlencode($key)] = rawurlencode($value);
-            }
-        }
-        ksort($result);
-        return $result;
     }
 }

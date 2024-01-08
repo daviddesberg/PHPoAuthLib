@@ -41,7 +41,6 @@ class SignatureTest extends TestCase
 
     /**
      * @covers \OAuth\OAuth1\Signature\Signature::__construct
-     * @covers \OAuth\OAuth1\Signature\Signature::buildSignatureDataString
      * @covers \OAuth\OAuth1\Signature\Signature::getSignature
      * @covers \OAuth\OAuth1\Signature\Signature::getSigningKey
      * @covers \OAuth\OAuth1\Signature\Signature::hash
@@ -79,7 +78,6 @@ class SignatureTest extends TestCase
 
     /**
      * @covers \OAuth\OAuth1\Signature\Signature::__construct
-     * @covers \OAuth\OAuth1\Signature\Signature::buildSignatureDataString
      * @covers \OAuth\OAuth1\Signature\Signature::getSignature
      * @covers \OAuth\OAuth1\Signature\Signature::getSigningKey
      * @covers \OAuth\OAuth1\Signature\Signature::hash
@@ -117,7 +115,6 @@ class SignatureTest extends TestCase
 
     /**
      * @covers \OAuth\OAuth1\Signature\Signature::__construct
-     * @covers \OAuth\OAuth1\Signature\Signature::buildSignatureDataString
      * @covers \OAuth\OAuth1\Signature\Signature::getSignature
      * @covers \OAuth\OAuth1\Signature\Signature::getSigningKey
      * @covers \OAuth\OAuth1\Signature\Signature::hash
@@ -155,7 +152,6 @@ class SignatureTest extends TestCase
 
     /**
      * @covers \OAuth\OAuth1\Signature\Signature::__construct
-     * @covers \OAuth\OAuth1\Signature\Signature::buildSignatureDataString
      * @covers \OAuth\OAuth1\Signature\Signature::getSignature
      * @covers \OAuth\OAuth1\Signature\Signature::getSigningKey
      * @covers \OAuth\OAuth1\Signature\Signature::hash
@@ -196,7 +192,6 @@ class SignatureTest extends TestCase
 
     /**
      * @covers \OAuth\OAuth1\Signature\Signature::__construct
-     * @covers \OAuth\OAuth1\Signature\Signature::buildSignatureDataString
      * @covers \OAuth\OAuth1\Signature\Signature::getSignature
      * @covers \OAuth\OAuth1\Signature\Signature::getSigningKey
      * @covers \OAuth\OAuth1\Signature\Signature::hash
@@ -237,7 +232,6 @@ class SignatureTest extends TestCase
 
     /**
      * @covers \OAuth\OAuth1\Signature\Signature::__construct
-     * @covers \OAuth\OAuth1\Signature\Signature::buildSignatureDataString
      * @covers \OAuth\OAuth1\Signature\Signature::getSignature
      * @covers \OAuth\OAuth1\Signature\Signature::getSigningKey
      * @covers \OAuth\OAuth1\Signature\Signature::hash
@@ -277,7 +271,6 @@ class SignatureTest extends TestCase
 
     /**
      * @covers \OAuth\OAuth1\Signature\Signature::__construct
-     * @covers \OAuth\OAuth1\Signature\Signature::buildSignatureDataString
      * @covers \OAuth\OAuth1\Signature\Signature::getSignature
      * @covers \OAuth\OAuth1\Signature\Signature::getSigningKey
      * @covers \OAuth\OAuth1\Signature\Signature::hash

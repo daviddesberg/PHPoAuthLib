@@ -44,6 +44,7 @@ class SignatureTest extends TestCase
      * @covers \OAuth\OAuth1\Signature\Signature::getSignature
      * @covers \OAuth\OAuth1\Signature\Signature::getSigningKey
      * @covers \OAuth\OAuth1\Signature\Signature::hash
+     * @covers \OAuth\OAuth1\Signature\Signature::ksortRecursive
      * @covers \OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
      * @covers \OAuth\OAuth1\Signature\Signature::setTokenSecret
      */
@@ -81,6 +82,7 @@ class SignatureTest extends TestCase
      * @covers \OAuth\OAuth1\Signature\Signature::getSignature
      * @covers \OAuth\OAuth1\Signature\Signature::getSigningKey
      * @covers \OAuth\OAuth1\Signature\Signature::hash
+     * @covers \OAuth\OAuth1\Signature\Signature::ksortRecursive
      * @covers \OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
      * @covers \OAuth\OAuth1\Signature\Signature::setTokenSecret
      */
@@ -118,6 +120,7 @@ class SignatureTest extends TestCase
      * @covers \OAuth\OAuth1\Signature\Signature::getSignature
      * @covers \OAuth\OAuth1\Signature\Signature::getSigningKey
      * @covers \OAuth\OAuth1\Signature\Signature::hash
+     * @covers \OAuth\OAuth1\Signature\Signature::ksortRecursive
      * @covers \OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
      * @covers \OAuth\OAuth1\Signature\Signature::setTokenSecret
      */
@@ -155,6 +158,7 @@ class SignatureTest extends TestCase
      * @covers \OAuth\OAuth1\Signature\Signature::getSignature
      * @covers \OAuth\OAuth1\Signature\Signature::getSigningKey
      * @covers \OAuth\OAuth1\Signature\Signature::hash
+     * @covers \OAuth\OAuth1\Signature\Signature::ksortRecursive
      * @covers \OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
      * @covers \OAuth\OAuth1\Signature\Signature::setTokenSecret
      */
@@ -195,6 +199,7 @@ class SignatureTest extends TestCase
      * @covers \OAuth\OAuth1\Signature\Signature::getSignature
      * @covers \OAuth\OAuth1\Signature\Signature::getSigningKey
      * @covers \OAuth\OAuth1\Signature\Signature::hash
+     * @covers \OAuth\OAuth1\Signature\Signature::ksortRecursive
      * @covers \OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
      * @covers \OAuth\OAuth1\Signature\Signature::setTokenSecret
      */
@@ -235,6 +240,7 @@ class SignatureTest extends TestCase
      * @covers \OAuth\OAuth1\Signature\Signature::getSignature
      * @covers \OAuth\OAuth1\Signature\Signature::getSigningKey
      * @covers \OAuth\OAuth1\Signature\Signature::hash
+     * @covers \OAuth\OAuth1\Signature\Signature::ksortRecursive
      * @covers \OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
      * @covers \OAuth\OAuth1\Signature\Signature::setTokenSecret
      */
@@ -274,6 +280,7 @@ class SignatureTest extends TestCase
      * @covers \OAuth\OAuth1\Signature\Signature::getSignature
      * @covers \OAuth\OAuth1\Signature\Signature::getSigningKey
      * @covers \OAuth\OAuth1\Signature\Signature::hash
+     * @covers \OAuth\OAuth1\Signature\Signature::ksortRecursive
      * @covers \OAuth\OAuth1\Signature\Signature::setHashingAlgorithm
      * @covers \OAuth\OAuth1\Signature\Signature::setTokenSecret
      */

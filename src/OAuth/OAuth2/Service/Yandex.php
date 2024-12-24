@@ -24,7 +24,7 @@ class Yandex extends AbstractService
         ClientInterface $httpClient,
         TokenStorageInterface $storage,
         $scopes = array(),
-        UriInterface $baseApiUri = null
+        ?UriInterface $baseApiUri = null
     ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri);
 

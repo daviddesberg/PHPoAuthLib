@@ -64,8 +64,7 @@ abstract class AbstractClient implements ClientInterface
         // Normalize headers
         array_walk(
             $headers,
-            function (&$val, &$key) {
-                $key = ucfirst(strtolower($key));
+            function (&$val, $key) {
                 $val = ucfirst(strtolower($key)) . ': ' . $val;
             }
         );
